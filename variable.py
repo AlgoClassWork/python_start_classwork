@@ -12,3 +12,15 @@ adult_price = 3699
 child_price = 1100
 total = adults*adult_price + children*child_price
 print('Полная стоимость:', total)
+
+
+
+people = 3
+
+luggage = 890
+transport = 875
+health = 1345
+passport = 2199
+
+total = (luggage + transport + health + passport) * people
+print('Стоимость страхования семьи:', total)
