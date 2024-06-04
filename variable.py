@@ -24,3 +24,9 @@ passport = 2199
 
 total = (luggage + transport + health + passport) * people
 print('Стоимость страхования семьи:', total)
+
+
+surname = input('Введите фамилию:')
+country = input('Введите страну отдыха:')
+season = input('Введите время года:' )
+print('Запрос -', surname, country, season, '- отправлен')
