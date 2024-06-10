@@ -6,3 +6,15 @@ while tovar != 0:
     total = total + tovar
 
 print('Стоимость всех покупок:', total)
+
+
+
+#автомат для выдачи талонов
+talon = input('Введите 0 — получить талон, 1 — выключить аппарат:')
+count = 1
+while talon != '1':
+    if talon == '0':
+        print('талон номер',count)
+        count += 1
+        
+    talon = input('Введите 0 — получить талон, 1 — выключить аппарат:')
