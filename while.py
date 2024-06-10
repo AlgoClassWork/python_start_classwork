@@ -15,3 +15,13 @@ while category != 'end':
     category = input('Категория (end - завершить):')
 
 print('Всего категорий товаров:', count)
+
+
+attempts = 0
+promo = ''
+while attempts <3 and promo != 'fresh':
+    promo = input('Введите промокод:')
+    attempts += 1
+    
+if promo == 'fresh':
+    print('Принято с попытки №', attempts)
