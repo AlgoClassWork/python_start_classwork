@@ -35,3 +35,20 @@ for i in range(1,4):
         print('Поздравляем! Вы угадали с попытки №',i)
         break
 
+
+number = input('Введите 1 - рекомендация, 2 - розыгрыш, off - завершить')
+while number != 'off':
+   if number == '1':
+       preference = input('Введите предпочтение:')
+       if preference == 'спорт':
+           print('Подкаст Убойный спорт')
+       else:
+           print('Новый альбом Канье Уэста')
+   elif number == '2':
+       for i in range(1, 4):
+           if input('Введите название группы') == 'Queen':
+               print('Вы выиграли билет на концерт!')
+               break
+   number = input('Введите 1 - рекомендация, 2 - розыгрыш, off - завершить')
+
+
