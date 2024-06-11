@@ -19,3 +19,11 @@ for i in range(count):
     name = input('Введите имя:')
     print('Добро пожаловать,',name)
 print('Групповой чат создан!')
+
+
+
+#проверка логина на содержание запрещенных символов
+login = input('Введите логин:')
+for symbol in login:
+    if symbol in '=?*^$№@_':
+        print('Запрещённый символ:', symbol)
