@@ -27,3 +27,11 @@ login = input('Введите логин:')
 for symbol in login:
     if symbol in '=?*^$№@_':
         print('Запрещённый символ:', symbol)
+
+
+for i in range(1,4):
+    game = input('Введите название игры:')
+    if game == 'FIFA':
+        print('Поздравляем! Вы угадали с попытки №',i)
+        break
+
