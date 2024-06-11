@@ -12,3 +12,10 @@ for i in range(count):
     mark = int(input('Оценка:'))
     total += mark
 print('Среднее:', total/count)
+
+
+count = int(input('Число участников:'))
+for i in range(count):
+    name = input('Введите имя:')
+    print('Добро пожаловать,',name)
+print('Групповой чат создан!')
