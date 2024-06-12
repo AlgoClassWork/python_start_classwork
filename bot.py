@@ -4,9 +4,17 @@ print('Могу с тобой сыграть и продать тебе хлам
 
 otvet = input('Что бы вы от меня хотели?').lower()
 
-while otvet.find('пок') == -1:
-    if otvet.find('шут') != -1:
+while otvet.find('пока') == -1:
+    if otvet.find('шутк') != -1:
         print('Заходит как то негр в бар и ...')
+    elif otvet.find('аним') != -1:
+        genre = input('Введите жанр:')
+        if genre == 'приключение':
+            print('НОРУТО')
+        elif genre == 'экшен':
+            print('Атака титаника')
+        else:
+            print('Таких жанров я не знаю')
     else:
         print('Я тебя не понимаю!')
     otvet = input('Что бы вы от меня хотели?').lower()
