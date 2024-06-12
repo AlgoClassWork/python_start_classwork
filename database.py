@@ -37,6 +37,11 @@ while question != 'off':
         print('Должности наших сотрудников:')
         for surname in database:
             print(surname.split()[0],'-',database[surname]['должность'])
+    elif question == 'проекты':
+        name = input('Последний проект какого сотрудника вас интересует')
+        for surname in database:
+            if name == surname.split()[0]:
+                print('Последний проект:',database[surname]['проекты'][-1])
 
     question = input('Что бы хотели узнать о наших сотрудниках?')
     
