@@ -1,3 +1,4 @@
+from random import randint
 print('Привет меня зовут Василий')
 print('Вот что я умею:')
 print('Рассказывать шутки, рекомендовать китайские мультики')
@@ -14,4 +15,17 @@ while otvet.find('досвид') == -1:
             print('Мальчишник в вегасе, Тупой и еще тупее, Борат')
         else:
             print('Такого жанра у нас еще не добавили')
+    elif otvet.find('игр') != -1:
+        win_num = randint(1,100)
+        for i in range(7):
+            num = int(input('Введите число'))
+            if num > win_num:
+                print('Загаданое число меньше')
+            elif num < win_num:
+                print('Загаданое число больше')
+            else:
+                print('Вы выйграли пачку сухариков')
+                break
+            
+
     otvet = input('Что бы вы хотели?').lower()
