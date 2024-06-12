@@ -33,7 +33,10 @@ while question != 'off':
             if database[surname]['эффективность'] == max_effect:
                 samyi_krutoi = surname
         print('Самый эффективный сотрудник:', samyi_krutoi)
-            
+    elif question == 'должности':
+        print('Должности наших сотрудников:')
+        for surname in database:
+            print(surname.split()[0],'-',database[surname]['должность'])
 
     question = input('Что бы хотели узнать о наших сотрудниках?')
     
