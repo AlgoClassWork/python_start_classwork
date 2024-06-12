@@ -30,6 +30,23 @@ while otvet.find('пока') == -1:
                 break
         if win_num != num:
             print('Азазазаза ты ...')
+    elif otvet.find('куп') != -1:
+        print('Добро пожаловать в Генадий шоп')
+        print('у нас вы можете купить')
+        print('слезы крокодила, мясо шимпанзе, голова пришельца')
+        money = int(input('Сколько у вас деняк?'))
+        tovar = input('Что вы хотите купить?')
+        while money > 0 and tovar != 'выйти':
+            if tovar == 'слезы':
+                money -= 20
+                print('Не плачьте у вас осталось',money,'$')
+            elif tovar == 'мясо':
+                money -= 5
+                print('Очень сочное но у вас осталось', money , "$")
+            else:
+                print('Ну ты дядя даешь у нас такого нет!')
+            tovar = input('Что нибудь еще?')
+        print('Приятно было отнять ваши кровные')
     else:
         print('Я тебя не понимаю!')
     otvet = input('Что бы вы от меня хотели?').lower()
