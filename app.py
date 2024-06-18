@@ -16,6 +16,26 @@ class QuizApp(QWidget):
         self.show()
 
     def init_ui(self):
+        self.setStyleSheet("""QWidget {
+                            font-size: 20px;}
+                            QPushButton {
+                            font-size: 20px;
+                            background-color: green;
+                            color: white;
+                            text-align: center;
+                            text-decoration: none;
+                            display: inline-block;
+                            margin: 4px 2px;
+                            cursor: pointer;
+                            border-radius: 12px;
+                            }
+                            QLabel {
+                                font-size:25px;
+                            }
+                           QGroupBox {
+                           font-size: 18px;
+                           font-weight: bold;
+                           }""")
         self.btn_OK = QPushButton('Ответить')
         self.question = QLabel('Самый сложный вопрос в мире!')
 
@@ -55,7 +75,7 @@ class QuizApp(QWidget):
         layout_card = QVBoxLayout()
         layout_card.addLayout(layout_line1,stretch=2)
         layout_card.addLayout(layout_line2,stretch=6)
-        layout_line3.addLayout(layout_line3,stretch=1)
+        layout_card.addLayout(layout_line3,stretch=1)
         layout_card.setSpacing(5)
 
         self.setLayout(layout_card)
