@@ -1,11 +1,9 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QHBoxLayout, QVBoxLayout,
     QLabel, QPushButton, QRadioButton,
-    QGroupBox, QButtonGroup
-)
+    QGroupBox, QButtonGroup)
+
 
 class QuizApp(QWidget):
     def __init__(self):
