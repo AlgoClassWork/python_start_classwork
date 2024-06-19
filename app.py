@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import (
         QApplication, QWidget, QVBoxLayout, 
         QGroupBox, QRadioButton,  
         QPushButton, QLabel)
+from random import randint, shuffle
 
 #БАЗА ДАННЫХ
 class Question():
@@ -17,8 +18,6 @@ question_list.append(Question('Когда родился Австрийский 
 question_list.append(Question('Почему небо голубое','из за Голубей','низнаю','хз','потому что'))
 question_list.append(Question('Почему в рф запретили голубой цвет','потому что его нет на флаге','из за голубей','захотелось','низнаю'))
        
-
-
 #ИНТЕРФЕЙС
 app = QApplication([])
 window = QWidget()
@@ -60,6 +59,16 @@ layout_card.addWidget(RadioGroupBox)
 layout_card.addWidget(AnsGroupBox)
 layout_card.addWidget(btn_OK)
 #ФУНКЦИОНАЛ
+buttons = [rbtn_1,rbtn_2,rbtn_3,rbtn_4]
+
+def ask(quest: Question):
+    shuffle(buttons)
+    buttons[0].setText(quest.right_answer)
+    buttons[1].setText(quest.wrong1)
+    buttons[2].setText(quest.wrong2)
+    buttons[3].setText(quest.wrong3)
+    lb_Question.setText(quest.question)
+    lb_Correct.setText(quest.right_answer)
 
 def check_answer():
     RadioGroupBox.hide()
@@ -70,6 +79,10 @@ def next_question():
     RadioGroupBox.show()
     AnsGroupBox.hide()
     btn_OK.setText('Ответить')
+
+    cur_question = randint(0, len(question_list)-1)
+    quest = question_list[cur_question]
+    ask(quest)
 
 def click_OK():
     if btn_OK.text() == 'Ответить':
