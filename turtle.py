@@ -1,37 +1,40 @@
 from turtle import *
- 
-def fence_link(col):
-    pensize(2)
-    color("black",col)
-    begin_fill()
-    left(90)
-    forward(100)
-    right(30)
-    forward(42)
-    right(120)
-    forward(42)
-    right(30)
-    forward(100)
-    right(90)
-    forward(42)
-    left(180)
-    end_fill()
 
-#допиши программу
-penup()
-goto(-150,0)
-pendown()
+def svetofor(wich_color_on):
 
-otvet = input('Что отрисовать приемную или главный корпус ')
-if otvet == 'приемная':
-    for i in range(4):
-        fence_link('green')
-        forward(42)
-if otvet == 'главный корпус':
-    for i in range(3):
-        fence_link('blue')
-        forward(42)
+    penup()
+    goto(0,110)
+    pendown()
+    color('red')
+    if wich_color_on.find('красный') != -1:
+        begin_fill()
+        circle(50)
+        end_fill()
+    else:
+        circle(50)
 
+    penup()
+    goto(0,0)
+    pendown()
+    color('yellow')
+    if wich_color_on.find('желтый') != -1:
+        begin_fill()
+        circle(50)
+        end_fill()
+    else:
+        circle(50)
 
-hideturtle()
+    penup()
+    goto(0,-110)
+    pendown()
+    color('green')
+    if wich_color_on == 'зеленый':
+        begin_fill()
+        circle(50)
+        end_fill()
+    else:
+        circle(50)
+
+otvet = input('Какой свет сейчас горит?')
+svetofor(otvet)
 exitonclick()
