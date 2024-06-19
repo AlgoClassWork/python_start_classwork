@@ -1,26 +1,26 @@
 from turtle import *
 
 pensize(2)
-color("red")
-begin_fill()
-circle(50)
-end_fill()
-#допиши программу
-penup()
-goto(-32,37)
-pendown()
 
-color('white')
-begin_fill()
-forward(65)
-left(90)
-forward(20)
-left(90)
-forward(65)
-left(90)
-forward(20)
-left(90)
-end_fill()
+def day():
+    color('yellow')
+    begin_fill()
+    for i in range(18):
+        forward(100)
+        left(100)
+    end_fill()
 
-hideturtle()
+def night():
+    color('bisque')
+    begin_fill()
+    circle(50)
+    end_fill()
+
+
+otvet = input('Какое сейчас время суток?')
+if otvet == 'день':
+    day()
+if otvet == 'ночь':
+    night()
+
 exitonclick()
