@@ -1,26 +1,30 @@
 from turtle import *
-
-pensize(2)
-
-def day():
-    color('yellow')
+ 
+def fence_link():
+    pensize(2)
+    color("black","orange")
     begin_fill()
-    for i in range(18):
-        forward(100)
-        left(100)
+    left(90)
+    forward(100)
+    right(30)
+    forward(42)
+    right(120)
+    forward(42)
+    right(30)
+    forward(100)
+    right(90)
+    forward(42)
+    left(180)
     end_fill()
 
-def night():
-    color('bisque')
-    begin_fill()
-    circle(50)
-    end_fill()
+#допиши программу
+penup()
+goto(-150,0)
+pendown()
 
+for i in range(6):
+    fence_link()
+    forward(42)
 
-otvet = input('Какое сейчас время суток?')
-if otvet == 'день':
-    day()
-if otvet == 'ночь':
-    night()
-
+hideturtle()
 exitonclick()
