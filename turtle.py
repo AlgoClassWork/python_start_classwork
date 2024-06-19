@@ -1,40 +1,34 @@
 from turtle import *
 
-def svetofor(wich_color_on):
-
-    penup()
-    goto(0,110)
-    pendown()
+def svetofor(svet):
+    goto(0,90)
     color('red')
-    if wich_color_on.find('красный') != -1:
+    if svet.find('красный') != -1:
         begin_fill()
-        circle(50)
+        circle(30)
         end_fill()
     else:
-        circle(50)
+        circle(30)
 
-    penup()
     goto(0,0)
-    pendown()
     color('yellow')
-    if wich_color_on.find('желтый') != -1:
+    if svet.find('желтый') != -1:
         begin_fill()
-        circle(50)
+        circle(30)
         end_fill()
     else:
-        circle(50)
+        circle(30)
 
-    penup()
-    goto(0,-110)
-    pendown()
+    goto(0,-90)
     color('green')
-    if wich_color_on == 'зеленый':
+    if svet.find('зеленый') != -1:
         begin_fill()
-        circle(50)
+        circle(30)
         end_fill()
     else:
-        circle(50)
+        circle(30)
 
-otvet = input('Какой свет сейчас горит?')
+otvet = input('Какой сейчас горит свет')
 svetofor(otvet)
+
 exitonclick()
