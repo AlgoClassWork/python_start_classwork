@@ -1,8 +1,8 @@
 from turtle import *
  
-def fence_link():
+def fence_link(col):
     pensize(2)
-    color("black","orange")
+    color("black",col)
     begin_fill()
     left(90)
     forward(100)
@@ -22,9 +22,16 @@ penup()
 goto(-150,0)
 pendown()
 
-for i in range(6):
-    fence_link()
-    forward(42)
+otvet = input('Что отрисовать приемную или главный корпус ')
+if otvet == 'приемная':
+    for i in range(4):
+        fence_link('green')
+        forward(42)
+if otvet == 'главный корпус':
+    for i in range(3):
+        fence_link('blue')
+        forward(42)
+
 
 hideturtle()
 exitonclick()
