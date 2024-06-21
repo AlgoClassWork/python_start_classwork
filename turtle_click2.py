@@ -23,10 +23,18 @@ naruto.color('black','orange')
 naruto.speed(10)
 naruto.left(240)
 
-def catch(x,y):
-    gleb.write('Вай!')
-    
-gleb.onclick(catch)
+def catch_gleb(x,y):
+  gleb.left(180)
+
+def catch_adolf(x,y):
+  adolf.left(180)
+
+def catch_naruto(x,y):
+  naruto.left(180)
+
+gleb.onclick(catch_gleb)
+adolf.onclick(catch_adolf)
+naruto.onclick(catch_naruto)
 
 while True:
   gleb.forward(5)
