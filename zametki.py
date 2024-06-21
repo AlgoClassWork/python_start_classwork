@@ -3,11 +3,34 @@ from PyQt5.QtWidgets import (
     QVBoxLayout, QListWidget, QPushButton, QLineEdit,
     QLabel)
 
+style = """
+QListWidget, QTextEdit, QLineEdit {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+QPushButton {
+    background-color: gray;
+    color: black;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+QPushButton:hover {
+    background-color: skyblue;
+}
+
+QLabel, QPushButton {
+    font-weight: bold;
+}"""
+
 #ИНТЕРФЕЙС ПРИЛОЖЕНИЯ
 app = QApplication([]) # создаем приложение
 window = QWidget()     # создаем главное окно
 window.setWindowTitle('Гениальные заметки') #меняем заголовок окна
 window.resize(900,600)
+window.setStyleSheet(style)
 text_field = QTextEdit() # поле для ввода текста
 #часть интерфейса для управления заметками
 notes_info = QLabel('Список заметок:')
