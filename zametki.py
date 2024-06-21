@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import (
     QWidget, QApplication, QTextEdit, QHBoxLayout,
-    QVBoxLayout, QListWidget, QPushButton, QLineEdit)
+    QVBoxLayout, QListWidget, QPushButton, QLineEdit,
+    QLabel)
 
 #ИНТЕРФЕЙС ПРИЛОЖЕНИЯ
 app = QApplication([]) # создаем приложение
@@ -9,11 +10,13 @@ window.setWindowTitle('Гениальные заметки') #меняем за�
 window.resize(900,600)
 text_field = QTextEdit() # поле для ввода текста
 #часть интерфейса для управления заметками
+notes_info = QLabel('Список заметок:')
 notes_list = QListWidget() # создаем список с заметками
 create_note = QPushButton('Создать заметку')
 delete_note = QPushButton('Удалить заметку')
 save_note = QPushButton('Сохранить заметку')
 #часть интерфейса для управления тегами
+tags_info = QLabel('Список тегов:')
 tags_list = QListWidget() # создаем список с заметками
 create_tag = QPushButton('Создать тег')
 delete_tag = QPushButton('Удалить тег')
@@ -26,12 +29,14 @@ v_line = QVBoxLayout() # создаем линию для правой част�
 h1_line = QHBoxLayout() # new
 h2_line = QHBoxLayout() #new
 #добовляем все что связано с заметками
+v_line.addWidget(notes_info)
 v_line.addWidget(notes_list)
 h1_line.addWidget(create_note) # new
 h1_line.addWidget(delete_note) # new
 v_line.addLayout(h1_line) # new
 v_line.addWidget(save_note)
 #добовляем все что связано с тегами
+v_line.addWidget(tags_info)
 v_line.addWidget(tags_list)
 v_line.addWidget(search_field)
 h2_line.addWidget(create_tag) # new
