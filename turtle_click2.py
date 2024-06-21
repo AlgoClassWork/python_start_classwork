@@ -23,6 +23,13 @@ naruto.color('black','orange')
 naruto.speed(10)
 naruto.left(240)
 
+def finish(t1,t2,t3):
+  t1_outside = abs(t1.xcor()) > 200 or abs(t1.ycor) > 200 
+  t2_outside = abs(t2.xcor()) > 200 or abs(t2.ycor) > 200 
+  t3_outside = abs(t3.xcor()) > 200 or abs(t3.ycor) > 200 
+  game_over = t1_outside or t2_outside or t3_outside 
+  return game_over
+
 def catch_gleb(x,y):
   gleb.left(180)
 
