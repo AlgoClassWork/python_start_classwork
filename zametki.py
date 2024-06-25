@@ -102,14 +102,39 @@ def del_note():
         tags_list.clear()
         text_field.clear()
         notes_list.addItems(notes)
-    
+
+def add_tag():
+    if notes_list.selectedItems():
+        key = notes_list.selectedItems()[0].text()
+        tag = search_field.text()
+        if not tag in notes[key]['теги'] and tag != '':
+            notes[key]['теги'].append(tag)
+            tags_list.clear()
+            tags_list.addItems(notes[key]['теги'])
+
+        with open('notes.json', 'w',encoding='UTF-8') as file:
+            json.dump(notes,file,ensure_ascii=False)
+
+def del_tag():
+    if notes_list.selectedItems():
+        key = notes_list.selectedItems()[0].text()
+        tag = tags_list.selectedItems()[0].text()
+        notes[key]['теги'].remove(tag)
+        tags_list.clear()
+        tags_list.addItems(notes[key]['теги'])
+        with open('notes.json', 'w',encoding='UTF-8') as file:
+            json.dump(notes,file,ensure_ascii=False)
 
     
 # ПОДПИСКИ НА СОБЫТИЯ
 notes_list.itemClicked.connect(show_note)
+
 create_note.clicked.connect(add_note)
 save_note.clicked.connect(safe_note)
 delete_note.clicked.connect(del_note)
+
+create_tag.clicked.connect(add_tag)
+delete_tag.clicked.connect(del_tag)
 
 #ЗАПУСК ПРИЛОЖЕНИЯ
 with open('notes.json','r',encoding='UTF-8') as file:
