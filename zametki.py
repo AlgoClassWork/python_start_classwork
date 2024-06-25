@@ -79,10 +79,11 @@ def show_note():
 
 def add_note():
     note_name, ok = QInputDialog().getText(window,'Добавить заметку','Название заметки: ')
-    notes[note_name] = {"текст": "", "теги": []}
-    with open('notes.json', 'w',encoding='UTF-8') as file:
-        json.dump(notes,file,ensure_ascii=False)
-    notes_list.addItem(note_name)
+    if note_name != '':
+        notes[note_name] = {"текст": "", "теги": []}
+        with open('notes.json', 'w',encoding='UTF-8') as file:
+            json.dump(notes,file,ensure_ascii=False)
+        notes_list.addItem(note_name)
 
 def safe_note():
      key = notes_list.selectedItems()[0].text()
@@ -91,6 +92,16 @@ def safe_note():
      with open('notes.json', 'w',encoding='UTF-8') as file:
         json.dump(notes,file,ensure_ascii=False)
 
+def del_note():
+    if notes_list.selectedItems():
+        key = notes_list.selectedItems()[0].text()
+        del notes[key]
+        with open('notes.json', 'w',encoding='UTF-8') as file:
+            json.dump(notes,file,ensure_ascii=False)
+        notes_list.clear()
+        tags_list.clear()
+        text_field.clear()
+        notes_list.addItems(notes)
     
 
     
@@ -98,6 +109,7 @@ def safe_note():
 notes_list.itemClicked.connect(show_note)
 create_note.clicked.connect(add_note)
 save_note.clicked.connect(safe_note)
+delete_note.clicked.connect(del_note)
 
 #ЗАПУСК ПРИЛОЖЕНИЯ
 with open('notes.json','r',encoding='UTF-8') as file:
