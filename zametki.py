@@ -1,10 +1,12 @@
+import json
 from PyQt5.QtWidgets import (
     QWidget, QApplication, QTextEdit, QHBoxLayout,
     QVBoxLayout, QListWidget, QPushButton, QLineEdit,
-    QLabel)
+    QLabel, QInputDialog)
+
 
 style = """
-QListWidget, QTextEdit, QLineEdit {
+    QListWidget, QTextEdit, QLineEdit {
     border: 1px solid black;
     border-radius: 5px;
     padding: 5px;
@@ -66,10 +68,28 @@ h2_line.addWidget(create_tag) # new
 h2_line.addWidget(delete_tag) # new
 v_line.addLayout(h2_line) # new
 v_line.addWidget(search_tag)
-#размещение второстепенных линий
 main_layout.addLayout(v_line)
+# ФУНКЦИОНАЛ
+
+def show_note():
+    key = notes_list.selectedItems()[0].text()
+    text_field.setText(notes[key]['текст'])
+    tags_list.clear() # надо поигратся
+    tags_list.addItems(notes[key]['теги'])
+
+def add_note():
+    note_name, ok = QInputDialog().getText(window,'Добавить заметку','Название заметки: ')
+
+# ПОДПИСКИ НА СОБЫТИЯ
+notes_list.itemClicked.connect(show_note)
+create_note.clicked.connect(add_note)
 
 #ЗАПУСК ПРИЛОЖЕНИЯ
+with open('notes.json','r',encoding='UTF-8') as file:
+    notes = json.load(file)
+
+notes_list.addItems(notes)
+
 window.setLayout(main_layout) # установка главной линии
 window.show() # отображение окна
 app.exec() # не закрывать приложение пока не нажмем на крестик
