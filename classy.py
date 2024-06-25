@@ -7,6 +7,7 @@ class Hero:
     
     def info(self):
         print('На поле битвы появляется',self.name)
+        print('В руках он держит',self.weapon)
 
 knight = Hero('Артур','меч',100,10)
 enemy = Hero('Адольф','сирюкен',90,9)
