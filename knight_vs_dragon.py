@@ -1,3 +1,5 @@
+from random import randint
+
 class Person:
     def __init__(self,name,health,damage,weapon):
         self.name = name
@@ -11,13 +13,16 @@ class Person:
 
     def udar(self,enemy):
         print(self.name,'наносит удар при помощи',self.weapon,enemy.name)
-        enemy.health -= self.damage
-        print('Здоровье',enemy.health)
+        num = randint(1,3)
+        if num == 1:
+            enemy.health -= self.damage
+        if num == 2:
+            enemy.health -= self.damage * 2
+            print('крит')
+        if num == 3:
+            print('промах')
 
 knight = Person(name='Олег',health=100,damage=10,weapon='меч')
-razboinik = Person(name='Адольф',health=90,damage=9,weapon='сирюкен')
+razboinik = Person(name='Адольф',health=100,damage=10,weapon='сирюкен')
 dragon = Person(name='Смауг',health=200,damage=50,weapon='фаербол')
 
-while knight.health > 0 and razboinik.health > 0:
-    knight.udar(razboinik)
-    razboinik.udar(knight)
