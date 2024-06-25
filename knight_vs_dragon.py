@@ -1,4 +1,5 @@
 from random import randint
+from time import sleep
 
 class Person:
     def __init__(self,name,health,damage,weapon):
@@ -22,7 +23,38 @@ class Person:
         if num == 3:
             print('промах')
 
-knight = Person(name='Олег',health=100,damage=10,weapon='меч')
-razboinik = Person(name='Адольф',health=100,damage=10,weapon='сирюкен')
+knight = Person(name='Олег',health=150,damage=30,weapon='меч')
+razboinik = Person(name='Адольф',health=150,damage=30,weapon='сирюкен')
 dragon = Person(name='Смауг',health=200,damage=50,weapon='фаербол')
+
+print('Бравый рыцарь по имени',knight.name,'\n')
+sleep(1)
+print('пошел в поход за головой дракона','\n')
+sleep(1)
+print('по пути он встретил заброшенный немецкий бункер','\n')
+sleep(1)
+print('из него выглядывает какое то существо','\n')
+sleep(1)
+otvet = input('Хотите сразится?')
+if otvet == 'да':
+    print('Вы повстречали самого',razboinik.name,'\n')
+    sleep(1)
+    print('Оказывается он выжил после 45','\n')
+    sleep(1)
+    print('Да начнется сражение','\n')
+    sleep(1)
+    while knight.health > 0 and razboinik.health > 0:
+        knight.udar(razboinik)
+        print('\n')
+        razboinik.udar(knight)
+        print('\n')
+    if knight.health > razboinik.health:
+        print('Победил',knight.name,'\n')
+        print('Теперь он стал сильнее','\n')
+        knight.health += 100
+        knight.damage *= 2
+        print('Теперь его статы равны',knight.health,'/', knight.damage,'\n')
+    else:
+        print(knight.name,'пал в этом не легком бою','\n')
+
 
