@@ -79,6 +79,14 @@ def show_note():
 
 def add_note():
     note_name, ok = QInputDialog().getText(window,'Добавить заметку','Название заметки: ')
+    notes[note_name] = {"текст": "", "теги": []}
+    with open('notes.json', 'w',encoding='UTF-8') as file:
+        json.dump(notes,file,ensure_ascii=False)
+    notes_list.addItem(note_name)
+    
+
+    
+
 
 # ПОДПИСКИ НА СОБЫТИЯ
 notes_list.itemClicked.connect(show_note)
@@ -89,6 +97,7 @@ with open('notes.json','r',encoding='UTF-8') as file:
     notes = json.load(file)
 
 notes_list.addItems(notes)
+
 
 window.setLayout(main_layout) # установка главной линии
 window.show() # отображение окна
