@@ -125,7 +125,31 @@ def del_tag():
         with open('notes.json', 'w',encoding='UTF-8') as file:
             json.dump(notes,file,ensure_ascii=False)
 
-    
+def search():
+    tag = search_field.text()
+    if search_tag.text() == 'Поиск' and tag != '':
+        notes_filtred = {}
+        for note in notes:
+            if tag in notes[note]['теги']:
+                notes_filtred[note] = notes[note]
+
+        search_field.clear()
+        notes_list.clear()
+        tags_list.clear()
+
+        notes_list.addItems(notes_filtred)
+        search_tag.setText('Сбросить')
+
+    elif search_tag.text() == 'Сбросить':
+        search_field.clear()
+        notes_list.clear()
+        tags_list.clear()
+
+        notes_list.addItems(notes)
+        search_tag.setText('Поиск')
+
+
+
 # ПОДПИСКИ НА СОБЫТИЯ
 notes_list.itemClicked.connect(show_note)
 
@@ -135,7 +159,7 @@ delete_note.clicked.connect(del_note)
 
 create_tag.clicked.connect(add_tag)
 delete_tag.clicked.connect(del_tag)
-
+search_tag.clicked.connect(search)
 #ЗАПУСК ПРИЛОЖЕНИЯ
 with open('notes.json','r',encoding='UTF-8') as file:
     notes = json.load(file)
