@@ -83,14 +83,21 @@ def add_note():
     with open('notes.json', 'w',encoding='UTF-8') as file:
         json.dump(notes,file,ensure_ascii=False)
     notes_list.addItem(note_name)
-    
+
+def safe_note():
+     key = notes_list.selectedItems()[0].text()
+     text = text_field.toPlainText()
+     notes[key]['текст'] = text
+     with open('notes.json', 'w',encoding='UTF-8') as file:
+        json.dump(notes,file,ensure_ascii=False)
 
     
 
-
+    
 # ПОДПИСКИ НА СОБЫТИЯ
 notes_list.itemClicked.connect(show_note)
 create_note.clicked.connect(add_note)
+save_note.clicked.connect(safe_note)
 
 #ЗАПУСК ПРИЛОЖЕНИЯ
 with open('notes.json','r',encoding='UTF-8') as file:
