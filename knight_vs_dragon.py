@@ -50,11 +50,27 @@ if otvet == 'да':
         print('\n')
     if knight.health > razboinik.health:
         print('Победил',knight.name,'\n')
+        sleep(1)
         print('Теперь он стал сильнее','\n')
         knight.health += 100
         knight.damage *= 2
         print('Теперь его статы равны',knight.health,'/', knight.damage,'\n')
+        sleep(1)
+        print('Наконец наш герой добрался до пещеры дракона','\n')
+        sleep(1)
+        print('Да начнется битва','\n')
+        while knight.health > 0 and dragon.health > 0:
+            knight.udar(dragon)
+            print('\n')
+            dragon.udar(knight)
+            print('\n')
+        if knight.health > dragon.health:
+            print('Победил',knight.name,'\n')
+            sleep(1)
+            print('Теперь он может забрать голову дракона и купить себе оружию броню и пачку сухариков')
+        else:
+            print('В следующий раз одевай шапку')
+        
     else:
         print(knight.name,'пал в этом не легком бою','\n')
-
 
