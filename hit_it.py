@@ -1,5 +1,5 @@
 from turtle import *
-
+# Описываем наших персонажей
 class Sprite(Turtle):
     def __init__(self,col,forma,x,y):
         super().__init__()
@@ -8,12 +8,19 @@ class Sprite(Turtle):
         self.shape(forma)
         self.goto(x,y)
         self.setheading(90)
-
-
+# Создаем наших игровых персонажей
 player = Sprite(x=0,y=-150,forma='turtle',col='yellow')
 enemy1 = Sprite(x=150,y=50,forma='square',col='red')
 enemy2 = Sprite(x=-150,y=-50,forma='square',col='red')
 goal = Sprite(x=0,y=150,forma='triangle',col='green')
+# Создаем обьект экрана
+screen = player.getscreen()
+screen.listen()
+# Подписки на события клавиатуры
+screen.onkey(player.move_up,'Up')
+screen.onkey(player.move_down,'Down')
+screen.onkey(player.move_left,'Left')
+screen.onkey(player.move_right,'Right')
 
 
 
