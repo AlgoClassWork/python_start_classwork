@@ -15,7 +15,7 @@ class ImageEditor():
         gray.save(new_filename)
 
     def blur(self):
-        blur = self.filter(ImageFilter.BLUR)
+        blur = self.original.filter(ImageFilter.BLUR)
         # автонейминг
         self.modified.append(blur)
         temp_filename = self.filename.split('.')
