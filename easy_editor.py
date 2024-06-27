@@ -1,7 +1,9 @@
+import os
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QVBoxLayout, QHBoxLayout,
-    QPushButton, QListWidget, QLabel)
+    QPushButton, QListWidget, QLabel,
+    QFileDialog)
 
 app = QApplication([])
 
@@ -78,7 +80,16 @@ QLabel {
     margin-bottom: 10px; /* Отступ снизу */
 }
 """
-
+# Функционал
+def show_files():
+    workdir = QFileDialog.getExistingDirectory()
+    filenames = os.listdir(workdir)
+    files.clear()
+    for file in filenames:
+        if file.endswith('.jpeg') or file.endswith('.png'):
+            files.addItem(file)
+# Подписки
+folder.clicked.connect(show_files)
 # Применение стилей к главному окну
 window.setStyleSheet(style)
 
@@ -88,3 +99,5 @@ window.show()
 
 # Запуск приложения
 app.exec()
+
+
