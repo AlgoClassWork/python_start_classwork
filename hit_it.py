@@ -27,10 +27,23 @@ class Sprite(Turtle):
 
     def collide(self,turtle):
         dist = self.distance(turtle.xcor(),turtle.ycor())
+        print(dist)
         if dist < 30:
             return True
         else:
             return False
+    
+    def patrul(self,turtle):
+        self.setheading(180)
+        turtle.setheading(0)
+        for i in range(50):
+            self.forward(5)
+            turtle.forward(5)
+        self.left(180)
+        turtle.left(180)
+        for i in range(50):
+            self.forward(5)
+            turtle.forward(5)
 # Создаем наших игровых персонажей
 player = Sprite(x=0,y=-150,forma='turtle',col='yellow')
 enemy1 = Sprite(x=150,y=50,forma='square',col='red')
@@ -63,6 +76,10 @@ while game:
         goal.hideturtle()
         enemy2.write('YOU LOSE',font=('Arial',20,'bold'))
         game = False
+    
+
+    enemy1.patrul(enemy2)
+
 
 
 
