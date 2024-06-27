@@ -1,13 +1,13 @@
 from turtle import *
 # Описываем наших персонажей
 class Sprite(Turtle):
-    def __init__(self,col,forma,x,y):
+    def __init__(self,col,forma,x,y,naapravlenie):
         super().__init__()
         self.penup()
         self.color('black',col)
         self.shape(forma)
         self.goto(x,y)
-        self.setheading(90)
+        self.setheading(naapravlenie)
 
     def move_up(self):
         self.setheading(90)
@@ -34,10 +34,10 @@ class Sprite(Turtle):
             
 
 # Создаем наших игровых персонажей
-player = Sprite(x=0,y=-150,forma='turtle',col='yellow')
-enemy1 = Sprite(x=150,y=50,forma='square',col='red')
-enemy2 = Sprite(x=-150,y=-50,forma='square',col='red')
-goal = Sprite(x=0,y=150,forma='triangle',col='green')
+player = Sprite(x=0,y=-150,forma='turtle',col='yellow',naapravlenie=90)
+enemy1 = Sprite(x=150,y=50,forma='square',col='red',naapravlenie=180)
+enemy2 = Sprite(x=-150,y=-50,forma='square',col='red',naapravlenie=0)
+goal = Sprite(x=0,y=150,forma='triangle',col='green',naapravlenie=270)
 # Создаем обьект экрана
 screen = player.getscreen()
 screen.listen()
@@ -51,7 +51,7 @@ screen.onkey(player.move_right,'Right')
 while True:
     if player.collide(goal):
         goal.write('WIN',font=('Arial',25,'bold'))
-        
+
         goal.hideturtle()
         enemy1.hideturtle()
         enemy2.hideturtle()
@@ -65,7 +65,12 @@ while True:
         enemy2.hideturtle()
         player.hideturtle()
 
+    for i in range(50):
+        enemy1.forward(5)
+        enemy2.forward(5)
 
+    enemy1.left(180)
+    enemy2.left(180)
 
 
 
