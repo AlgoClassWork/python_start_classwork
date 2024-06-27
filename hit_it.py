@@ -45,8 +45,26 @@ screen.onkey(player.move_down,'Down')
 screen.onkey(player.move_left,'Left')
 screen.onkey(player.move_right,'Right')
 
-while True:
-    player.collide(enemy2)
+game = True
+point = 0
+while game:
+    if player.collide(goal):
+        player.goto(0,-150)
+        point += 1
+    if point == 3:
+        enemy1.hideturtle()
+        enemy2.hideturtle()
+        goal.hideturtle()
+        goal.write('YOU WIN',font=('Arial',20,'bold'))
+        game = False
+    if player.collide(enemy1) or player.collide(enemy2):
+        enemy1.hideturtle()
+        enemy2.hideturtle()
+        goal.hideturtle()
+        enemy2.write('YOU LOSE',font=('Arial',20,'bold'))
+        game = False
+
+
 
 
 
