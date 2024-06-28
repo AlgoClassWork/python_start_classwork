@@ -37,7 +37,12 @@ while game:
 
     mouse_x, mouse_y = mouse.get_pos()
     raketka1.rect.centery = mouse_y
-    
+
+    if ball.rect.centery > raketka2.rect.centery:
+        raketka2.rect.y += 1
+    else:
+        raketka2.rect.y -= 1
+
     ball.rect.x += speed_x
     ball.rect.y += speed_y
 
@@ -47,4 +52,9 @@ while game:
     if ball.rect.y > 450 or ball.rect.y < 0:
         speed_y *= -1
 
+    if sprite.collide_rect(ball,raketka1) or sprite.collide_rect(ball,raketka2):
+        speed_x *= -1
+
+    
+    time.delay(1)
     display.update()
