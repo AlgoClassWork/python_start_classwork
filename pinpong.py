@@ -17,14 +17,30 @@ raketka2 = GameSprite('racket.png',600,250)
 
 window = display.set_mode((700,500)) # Создаем экран указаного 
 
+speed_x = 1
+speed_y = 1
+
 game = True
 while game:
 
     window.fill((50,250,250))
+
     ball.update()
     raketka1.update()
     raketka2.update()
-    
+
+    mouse_x,mouse_y = mouse.get_pos()
+    raketka1.hitbox.y = mouse_y
+
+    ball.hitbox.x += speed_x
+    ball.hitbox.y += speed_y
+
+    if ball.hitbox.y > 450 or ball.hitbox.y < 0:
+        speed_y *= -1
+
+    if ball.hitbox.x > 650 or ball.hitbox.x < 0:
+        speed_x *= -1
+
     for e in event.get():
         if e.type == QUIT:
             game = False
