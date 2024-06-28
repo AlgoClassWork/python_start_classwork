@@ -24,14 +24,16 @@ score_ai = 0
 
 font.init()
 
-player = font.Font(None,40).render('Счет: '+str(score_player),True,(255,255,255))
-ai = font.Font(None,40).render('Счет: '+str(score_ai),True,(255,255,255))
+
 
 speed_x = 1
 speed_y = 1
 # Игровой цикл
 game = True
 while game:
+
+    player = font.Font(None,40).render('Счет: '+str(score_player),True,(255,255,255))
+    ai = font.Font(None,40).render('Счет: '+str(score_ai),True,(255,255,255))
     
     window.fill( (0,255,255) )
     window.blit(player,(20,20))
@@ -55,8 +57,15 @@ while game:
     ball.rect.x += speed_x
     ball.rect.y += speed_y
 
-    if ball.rect.x > 650 or ball.rect.x < 0:
-        speed_x *= -1
+    if ball.rect.x > 650:
+        ball.rect.x = 350
+        ball.rect.y = 250
+        score_player += 1
+
+    if ball.rect.x < 0:
+        ball.rect.x = 350
+        ball.rect.y = 250
+        score_ai += 1
 
     if ball.rect.y > 450 or ball.rect.y < 0:
         speed_y *= -1
