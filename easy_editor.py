@@ -102,9 +102,10 @@ def show_files():
             files.addItem(file)
   
 def show_chosen_image():
-    filename = files.currentItem().text()
-    load_image(filename)
-    show_image(os.path.join(workdir, filename))
+    if files.currentRow() >= 0:
+        filename = files.currentItem().text()
+        load_image(filename)
+        show_image(os.path.join(workdir, filename))
 
 def load_image(filename):
     global current_image, current_filename
