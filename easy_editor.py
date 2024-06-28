@@ -98,7 +98,25 @@ def show_files():
     for file in filenames:
         if file.endswith('.jpeg') or file.endswith('.png'):
             files.addItem(file)
+  
+def show_chosen_image():
+    filename = files.currentItem().text()
+    load_image(filename)
+    show_image(os.path.join(workdir, filename))
+
+def load_image(filename):
+    global current_image, current_filename
+    current_filename = filename
+    fullname = os.path.join(workdir, filename)
+    current_image = Image.open(fullname)
+
+def show_image(path):
+    pixmapimage = QPixmap(path)
+    image.setPixmap(pixmapimage)
+
+
 # Подписки
+files.currentRowChanged.connect(show_chosen_image)
 folder.clicked.connect(show_files)
 # Применение стилей к главному окну
 window.setStyleSheet(style)
