@@ -118,9 +118,25 @@ def show_image(path):
     pixmapimage = pixmapimage.scaled(w,h, Qt.KeepAspectRatio)
     image.setPixmap(pixmapimage)
 
+def save_image():
+    global current_image
+    path = os.path.join(workdir,save_dir)
+    if not (os.path.exists(path) or os.path.isdir(path)):
+        os.mkdir(path)
+    fullname = os.path.join(path,current_filename)
+    current_image.save(fullname)
+
+def do_left():
+    global current_image
+    current_image = current_image.transpose(Image.ROTATE_90)
+    save_image()
+    image_path = os.path.join(workdir,save_dir,current_filename)
+    show_image(image_path)
+
 # Подписки
 files.currentRowChanged.connect(show_chosen_image)
 folder.clicked.connect(show_files)
+left.clicked.connect(do_left)
 # Применение стилей к главному окну
 window.setStyleSheet(style)
 
