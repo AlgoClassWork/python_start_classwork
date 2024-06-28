@@ -19,6 +19,9 @@ raketka2 = GameSprite(x=650,y=250,img='racket.png')
 # Создание экрана размером 700 на 500 px
 window = display.set_mode( (700,500) )
 
+
+speed_x = 1
+speed_y = 1
 # Игровой цикл
 game = True
 while game:
@@ -35,5 +38,13 @@ while game:
     mouse_x, mouse_y = mouse.get_pos()
     raketka1.rect.centery = mouse_y
     
+    ball.rect.x += speed_x
+    ball.rect.y += speed_y
+
+    if ball.rect.x > 650 or ball.rect.x < 0:
+        speed_x *= -1
+
+    if ball.rect.y > 450 or ball.rect.y < 0:
+        speed_y *= -1
 
     display.update()
