@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import (
     QVBoxLayout, QHBoxLayout,
     QPushButton, QListWidget, QLabel,
     QFileDialog)
+from PyQt5.QtGui import QPixmap
+from PIL import Image, ImageFilter
 
 app = QApplication([])
 
@@ -80,8 +82,16 @@ QLabel {
     margin-bottom: 10px; /* Отступ снизу */
 }
 """
+# Нужные переменные 
+
+workdir = ''
+current_image = None
+current_filename = None
+save_dir = 'Modified/'
+
 # Функционал
 def show_files():
+    global workdir
     workdir = QFileDialog.getExistingDirectory()
     filenames = os.listdir(workdir)
     files.clear()
@@ -99,5 +109,3 @@ window.show()
 
 # Запуск приложения
 app.exec()
-
-
