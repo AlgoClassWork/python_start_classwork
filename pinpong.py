@@ -4,12 +4,12 @@ class GameSprite(sprite.Sprite):
     def __init__(self,sprite_image,x,y):
         super().__init__()
         self.image = image.load(sprite_image)
-        self.hitbox = self.image.get_rect()
-        self.hitbox.x = x
-        self.hitbox.y = y
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
 
     def update(self):
-        window.blit(self.image,(self.hitbox.x,self.hitbox.y))
+        window.blit(self.image,(self.rect.x,self.rect.y))
 
 ball = GameSprite('tenis_ball.png',350,250)
 raketka1 = GameSprite('racket.png',50,250)
@@ -33,26 +33,25 @@ while game:
     raketka1.update()
     raketka2.update()
 
-    ball.hitbox.x += speed_x
-    ball.hitbox.y += speed_y
+    ball.rect.x += speed_x
+    ball.rect.y += speed_y
 
-    if ball.hitbox.y > 450 or ball.hitbox.y < 0:
+    if ball.rect.y > 450 or ball.rect.y < 0:
         speed_y *= -1
 
-    if ball.hitbox.x > 650 or ball.hitbox.x < 0:
+    if ball.rect.x > 650 or ball.rect.x < 0:
         speed_x *= -1
 
     #Управление ракеткой игрока
     mouse_x,mouse_y = mouse.get_pos()
-    raketka1.hitbox.y = mouse_y
+    raketka1.rect.y = mouse_y
     #Управление ракеткой оппонента
-    if ball.hitbox.y > raketka2.hitbox.y:
-        raketka2.hitbox.y += 1
+    if ball.rect.y > raketka2.rect.y:
+        raketka2.rect.y += 1
     else:
-        raketka2.hitbox.y -= 1
+        raketka2.rect.y -= 1
 
-
-
-
+    if sprite.collide_rect(raketka1,ball) or sprite.collide_rect(raketka2,ball):
+        speed_x *= -1
 
     display.update()
