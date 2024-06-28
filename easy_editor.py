@@ -4,7 +4,9 @@ from PyQt5.QtWidgets import (
     QVBoxLayout, QHBoxLayout,
     QPushButton, QListWidget, QLabel,
     QFileDialog)
+
 from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import Qt
 from PIL import Image, ImageFilter
 
 app = QApplication([])
@@ -112,8 +114,9 @@ def load_image(filename):
 
 def show_image(path):
     pixmapimage = QPixmap(path)
+    w, h = image.width(), image.height()
+    pixmapimage = pixmapimage.scaled(w,h, Qt.KeepAspectRatio)
     image.setPixmap(pixmapimage)
-
 
 # Подписки
 files.currentRowChanged.connect(show_chosen_image)
