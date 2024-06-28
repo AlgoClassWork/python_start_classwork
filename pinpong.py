@@ -25,12 +25,13 @@ while game:
 
     window.fill((50,250,250))
 
+    for e in event.get():
+        if e.type == QUIT:
+            game = False
+
     ball.update()
     raketka1.update()
     raketka2.update()
-
-    mouse_x,mouse_y = mouse.get_pos()
-    raketka1.hitbox.y = mouse_y
 
     ball.hitbox.x += speed_x
     ball.hitbox.y += speed_y
@@ -41,8 +42,17 @@ while game:
     if ball.hitbox.x > 650 or ball.hitbox.x < 0:
         speed_x *= -1
 
-    for e in event.get():
-        if e.type == QUIT:
-            game = False
+    #Управление ракеткой игрока
+    mouse_x,mouse_y = mouse.get_pos()
+    raketka1.hitbox.y = mouse_y
+    #Управление ракеткой оппонента
+    if ball.hitbox.y > raketka2.hitbox.y:
+        raketka2.hitbox.y += 1
+    else:
+        raketka2.hitbox.y -= 1
+
+
+
+
 
     display.update()
