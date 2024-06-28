@@ -19,6 +19,13 @@ raketka2 = GameSprite(x=650,y=250,img='racket.png')
 # Создание экрана размером 700 на 500 px
 window = display.set_mode( (700,500) )
 
+score_player = 0
+score_ai = 0
+
+font.init()
+
+player = font.Font(None,40).render('Счет: '+str(score_player),True,(255,255,255))
+ai = font.Font(None,40).render('Счет: '+str(score_ai),True,(255,255,255))
 
 speed_x = 1
 speed_y = 1
@@ -27,6 +34,8 @@ game = True
 while game:
     
     window.fill( (0,255,255) )
+    window.blit(player,(20,20))
+    window.blit(player,(580,20))
     ball.update()
     raketka1.update()
     raketka2.update()
