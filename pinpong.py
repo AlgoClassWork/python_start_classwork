@@ -32,4 +32,8 @@ while game:
         if e.type == QUIT:
             game = False
 
+    mouse_x, mouse_y = mouse.get_pos()
+    raketka1.rect.centery = mouse_y
+    
+
     display.update()
