@@ -134,10 +134,42 @@ def do_left():
     image_path = os.path.join(workdir,save_dir,current_filename)
     show_image(image_path)
 
+def do_right():
+    global current_image
+    current_image = current_image.transpose(Image.ROTATE_270)
+    save_image()
+    image_path = os.path.join(workdir,save_dir,current_filename)
+    show_image(image_path)
+
+def do_flip():
+    global current_image
+    current_image = current_image.transpose(Image.FLIP_LEFT_RIGHT)
+    save_image()
+    image_path = os.path.join(workdir,save_dir,current_filename)
+    show_image(image_path)
+
+def do_sharp():
+    global current_image
+    current_image = current_image.filter(ImageFilter.SHARPEN)
+    save_image()
+    image_path = os.path.join(workdir,save_dir,current_filename)
+    show_image(image_path)
+
+def do_gray():
+    global current_image
+    current_image = current_image.convert('L')
+    save_image()
+    image_path = os.path.join(workdir,save_dir,current_filename)
+    show_image(image_path)
+
 # Подписки
 files.currentRowChanged.connect(show_chosen_image)
 folder.clicked.connect(show_files)
 left.clicked.connect(do_left)
+right.clicked.connect(do_right)
+flip.clicked.connect(do_flip)
+sharp.clicked.connect(do_sharp)
+gray.clicked.connect(do_gray)
 # Применение стилей к главному окну
 window.setStyleSheet(style)
 
