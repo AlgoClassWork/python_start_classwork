@@ -33,12 +33,25 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         else:
             await update.message.reply_text('Таких жанров я пока не знаю')
         context.user_data.pop('awaiting_genre')
+
+    elif 'фильм' in text:
+         await update.message.reply_text('Введите жанр:')
+         context.user_data['awaiting_genre_film'] = True
+    elif context.user_data.get('awaiting_genre_film'):
+        genre = text
+        if genre == 'приключение':
+            await update.message.reply_text('Индиана джонс')
+        elif genre == 'экшен':
+            await update.message.reply_text('Форсаж 666')
+        else:
+            await update.message.reply_text('Таких жанров я пока не знаю')
+        context.user_data.pop('awaiting_genre_film')
     else:
         await update.message.reply_text('Я тебя не понимаю')
         
 
 def main():
-    application = Application.builder().token("Ваш токен").build()
+    application = Application.builder().token("7148594036:AAG-hcT4eLgSjaR1EFVeRUKyonhomaR-C5A").build()
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
