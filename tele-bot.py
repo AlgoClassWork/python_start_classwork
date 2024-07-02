@@ -33,10 +33,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         else:
             await update.message.reply_text('Таких жанров я пока не знаю')
         context.user_data.pop('awaiting_genre')
+    else:
+        await update.message.reply_text('Я тебя не понимаю')
         
 
 def main():
-    application = Application.builder().token("7148594036:AAG-hcT4eLgSjaR1EFVeRUKyonhomaR-C5A").build()
+    application = Application.builder().token("Ваш токен").build()
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
