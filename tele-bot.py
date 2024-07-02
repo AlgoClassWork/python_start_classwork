@@ -21,10 +21,22 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if 'шут' in text:
          await update.message.reply_text('Колобок повесился')
-
+    elif 'аним' in text:
+         await update.message.reply_text('Введите жанр:')
+         context.user_data['awaiting_genre'] = True
+    elif context.user_data.get('awaiting_genre'):
+        genre = text
+        if genre == 'приключение':
+            await update.message.reply_text('Ван пис')
+        elif genre == 'экшен':
+            await update.message.reply_text('Атака титаника')
+        else:
+            await update.message.reply_text('Таких жанров я пока не знаю')
+        context.user_data.pop('awaiting_genre')
+        
 
 def main():
-    application = Application.builder().token("Ваш токен").build()
+    application = Application.builder().token("7148594036:AAG-hcT4eLgSjaR1EFVeRUKyonhomaR-C5A").build()
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
