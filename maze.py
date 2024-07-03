@@ -1,4 +1,3 @@
-from typing import Any
 from pygame import *
 
 class GameSprite(sprite.Sprite):
@@ -39,6 +38,24 @@ class Enemy(GameSprite):
         else:
             self.rect.x += 5
 
+class Wall(sprite.Sprite):
+    def __init__(self,x,y,w,h):
+        super().__init__()
+        self.width = w
+        self.height = h 
+        self.wall = Surface((self.width,self.height))
+        self.wall.fill((0,255,255))
+        self.rect = self.wall.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+    def update(self):
+        window.blit(self.wall,(self.rect.x,self.rect.y))
+
+wall_1 = Wall(20,20,20,500)
+wall_2 = Wall(20,20,500,20)
+wall_3 = Wall(100,100,400,20)
+
 player = Player('pica.png',300,300)
 enemy = Enemy('adolf.png',350,200)
 goal = GameSprite('suhar.png',600,400)
@@ -58,6 +75,7 @@ game = True
 while game:
 
     window.blit(background,(0,0))
+    
 
     player.update()
     player.move()
@@ -66,6 +84,10 @@ while game:
     enemy.move()
 
     goal.update()
+
+    wall_1.update()
+    wall_2.update()
+    wall_3.update()
 
     for e in event.get():
         if e.type == QUIT:
