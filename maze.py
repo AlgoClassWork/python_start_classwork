@@ -12,7 +12,6 @@ class GameSprite(sprite.Sprite):
         window.blit(self.image,(self.rect.x,self.rect.y))
 
 class Player(GameSprite):
-
     def move(self):
         keys = key.get_pressed()
         if keys[K_w] and self.rect.y > 0:
@@ -25,9 +24,7 @@ class Player(GameSprite):
             self.rect.x += 5
 
 class Enemy(GameSprite):
-
     def move(self):
-
         if self.rect.x <= 400:
             self.side = 'право'
         if self.rect.x >= 640:
@@ -65,33 +62,48 @@ display.set_caption('ИГРА ЛАБИРИНТ')
 
 background =  transform.scale(image.load('background.jpg'),(700,500))
 
-#mixer.init()
-#mixer.music.load('music.mp3')
-#mixer.music.play()
+mixer.init()
+mixer.music.load('music.mp3')
+mixer.music.play()
+
+font.init()
+font_for_game = font.Font(None,100)
+win = font_for_game.render('YOU WIN',1,(0,255,0))
+lose = font_for_game.render('YOU LOSE',1,(255,0,0))
 
 clock = time.Clock()
 
+finish = False
 game = True
+
 while game:
-
-    window.blit(background,(0,0))
-    
-
-    player.update()
-    player.move()
-
-    enemy.update()
-    enemy.move()
-
-    goal.update()
-
-    wall_1.update()
-    wall_2.update()
-    wall_3.update()
 
     for e in event.get():
         if e.type == QUIT:
             game = False
+
+    if finish != True:
+        window.blit(background,(0,0))
+        
+        player.update()
+        player.move()
+
+        enemy.update()
+        enemy.move()
+
+        goal.update()
+
+        wall_1.update()
+        wall_2.update()
+        wall_3.update()
+
+        if sprite.collide_rect(player,goal):
+            window.blit(win,(150,250))
+            finish = True
+
+        if sprite.collide_rect(player,enemy):
+            window.blit(lose,(150,250))
+            finish = True
 
     clock.tick(60)
     display.update()
