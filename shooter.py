@@ -1,4 +1,5 @@
 from pygame import *
+from random import randint
 
 class GameSprite(sprite.Sprite):
     def __init__(self, sprite_img ,cord_x ,cord_y ,width, height):
@@ -19,6 +20,15 @@ class Player(GameSprite):
         if keys[K_d] and self.rect.x < 630:
             self.rect.x += 5
 
+
+class Enemy(GameSprite):
+    def move(self):
+        self.rect.y += 2
+        if self.rect.y > 500:
+            self.rect.y = 0
+            self.rect.x = randint(0,600)
+
+
 player = Player(sprite_img='rocket.png',cord_x=300,cord_y=400,width=70,height=100)
 
 window = display.set_mode((700,500))
@@ -35,6 +45,7 @@ clock = time.Clock()
 game = True
 
 while game:
+
 
     for e in event.get():
         if e.type == QUIT:
