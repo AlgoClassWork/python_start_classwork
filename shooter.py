@@ -21,6 +21,10 @@ class Player(GameSprite):
         if keys[K_d] and self.rect.x < 630:
             self.rect.x += self.speed
 
+    def fire(self):
+        bullet = Bullet(sprite_img='bullet.png',cord_x=self.rect.centerx,cord_y=self.rect.top,width=20,height=20,speed=20)
+        bullets.add(bullet)
+
 class Enemy(GameSprite):
 
     def update(self):
@@ -29,8 +33,13 @@ class Enemy(GameSprite):
             self.rect.y = 0
             self.rect.x = randint(0,600)
 
-player = Player(sprite_img='rocket.png',cord_x=300,cord_y=400,width=70,height=100,speed=15)
+class Bullet(GameSprite):
 
+    def update(self):
+        self.rect.y -= self.speed
+
+player = Player(sprite_img='rocket.png',cord_x=300,cord_y=400,width=70,height=100,speed=15)
+bullets = sprite.Group()
 enemys = sprite.Group()
 for _ in range(5):
     enemy = Enemy(sprite_img='ufo.png',cord_x=randint(0,600),cord_y=0,width=100,height=50,speed=randint(1,3)) 
@@ -51,10 +60,13 @@ game = True
 
 while game:
 
-
     for e in event.get():
         if e.type == QUIT:
             game = False
+
+        elif e.type == KEYDOWN:
+            if e.key == K_SPACE:
+                player.fire()
 
     window.blit(background,(0,0))
 
@@ -63,6 +75,10 @@ while game:
 
     enemys.draw(window)
     enemys.update()
+
+    bullets.draw(window)
+    bullets.update()
+
 
     clock.tick(30)
     display.update()
