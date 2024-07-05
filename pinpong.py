@@ -47,8 +47,8 @@ while game:
 
         ball.rect.x += speed_x
         ball.rect.y += speed_y
-        
-        if ball.rect.x > 630 or ball.rect.x < 0:     
+
+        if sprite.collide_rect(ball,player) or sprite.collide_rect(ball,enemy):
             speed_x *= -1 
         if ball.rect.y < 0 or ball.rect.y > 430:
             speed_y *= -1
