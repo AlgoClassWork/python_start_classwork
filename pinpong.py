@@ -13,6 +13,8 @@ class GameSprite(sprite.Sprite):
     def reset(self):
         window.blit(self.image,(self.rect.x,self.rect.y))
 
+player = GameSprite('platform.png',50,200,50,200,10)
+
 window = display.set_mode((700,500))
 display.set_caption('ПЕНГ-ПУНГ')
 
@@ -28,7 +30,8 @@ while game:
             game = False
 
     if finish != True:
-        pass
+
+        window.fill( (255,255,255) )
 
     clock.tick(60)
     display.update()
