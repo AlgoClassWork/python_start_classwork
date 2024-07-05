@@ -13,7 +13,9 @@ class GameSprite(sprite.Sprite):
     def reset(self):
         window.blit(self.image,(self.rect.x,self.rect.y))
 
-player = GameSprite('platform.png',50,200,50,200,10)
+player = GameSprite('platform.png',0,200,20,200,10)
+enemy = GameSprite('enemy.png',650,200,50,200,10)
+ball = GameSprite('ball.png',300,200,70,70,10)
 
 window = display.set_mode((700,500))
 display.set_caption('ПЕНГ-ПУНГ')
@@ -32,6 +34,11 @@ while game:
     if finish != True:
 
         window.fill( (255,255,255) )
+
+        player.reset()
+        enemy.reset()
+        ball.reset()
+
 
     clock.tick(60)
     display.update()
