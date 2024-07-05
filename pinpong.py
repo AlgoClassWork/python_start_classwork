@@ -17,8 +17,8 @@ player = GameSprite('platform.png',0,200,20,200,10)
 enemy = GameSprite('enemy.png',650,200,50,200,10)
 ball = GameSprite('ball.png',300,200,70,70,5)
 
-speed_x = 3
-speed_y = 3
+speed_x = 4
+speed_y = 4
 
 window = display.set_mode((700,500))
 display.set_caption('ПЕНГ-ПУНГ')
@@ -43,7 +43,15 @@ while game:
         ball.reset()
 
         mouse_x, mouse_y = mouse.get_pos() 
-        player.rect.centery = mouse_y
+        if player.rect.centery > mouse_y:
+            player.rect.y -= 2
+        else:
+            player.rect.y += 2
+
+        if enemy.rect.centery > ball.rect.centery:
+            enemy.rect.y -= 2
+        else:
+            enemy.rect.y += 2
 
         ball.rect.x += speed_x
         ball.rect.y += speed_y
