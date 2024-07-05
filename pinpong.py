@@ -73,10 +73,13 @@ while game:
         if ball.rect.y < 0 or ball.rect.y > 430:
             speed_y *= -1
 
-        if ball.rect.x < 0 or ball.rect.x > 630:
+        if ball.rect.x < 0:
+            score_enemy += 1
             ball.rect.x = 300
 
-        
+        if ball.rect.x > 630:
+            score_player += 1
+            ball.rect.x = 300
 
     clock.tick(60)
     display.update()
