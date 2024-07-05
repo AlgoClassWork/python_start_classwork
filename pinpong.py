@@ -20,6 +20,12 @@ ball = GameSprite('ball.png',300,200,70,70,5)
 speed_x = 4
 speed_y = 4
 
+score_player = 0
+score_enemy = 0
+
+font.init()
+font = font.Font(None,35)
+
 window = display.set_mode((700,500))
 display.set_caption('ПЕНГ-ПУНГ')
 
@@ -42,6 +48,12 @@ while game:
         enemy.reset()
         ball.reset()
 
+        player_label = font.render('Счет: ' + str(score_player),1,(0,0,0))
+        enemy_label = font.render('Счет: ' + str(score_enemy),1,(0,0,0))
+
+        window.blit(player_label,(10,10))
+        window.blit(enemy_label,(600,10))
+
         mouse_x, mouse_y = mouse.get_pos() 
         if player.rect.centery > mouse_y:
             player.rect.y -= 2
@@ -60,6 +72,11 @@ while game:
             speed_x *= -1 
         if ball.rect.y < 0 or ball.rect.y > 430:
             speed_y *= -1
+
+        if ball.rect.x < 0 or ball.rect.x > 630:
+            ball.rect.x = 300
+
+        
 
     clock.tick(60)
     display.update()
