@@ -1,44 +1,7 @@
-trainings = {
-    'Онбординг':{
-        'ответственный':'Ершов В.С.',
-        'темы': ['техника безопасности', 'работа в команде'],
-        'дата': '15.05'
-    },
-    'Повышение квалификации':{
-        'ответственный':'Мишин Н.В.',
-        'темы': ['лидерство', 'компьютерная грамотность'],
-        'дата': '20.11'
-    },
-}
-
-print('Тренинги ProTeam')
-print('1-названия тренингов, 2-инфо о тренинге')
-otvet = input('Номер действия (off-выйти):')
-while otvet != 'off':
-    if otvet == '1':
-        for training in trainings:
-            print('-',training)
-    if otvet == '2':
-        name = input('Название тренинга:')
-        if name in trainings:
-            print(trainings[name]['ответственный'])
-            print(trainings[name]['темы'])
-            print(trainings[name]['дата'])
-        else:
-            print('Такого тренинга не существует!')
-    otvet = input('Номер действия (off-выйти):')
-
-
-
-
-
-
-
-
 database = {
     'Илон Маск' : {
         'должность': 'уборщик',
-        'эффективность': 30,
+        'эффективность': 100,
         'портфолио': ['tesla','чистый унитаз']
     },
     'Джо Байден' : {
@@ -53,3 +16,21 @@ database = {
     },
 }
 
+otvet = input('Чтобы вы хотели узнать о наших сотрудниках?')
+if otvet == 'фамилии':
+    print('Фамилии наших сотрудников:')
+    for surname in database:
+        print('-',surname.split()[1])
+if otvet == 'самый крутой':
+    max_effectivnost = 0
+    samyi_krutoi = ''
+
+    for surname in database:
+        if database[surname]['эффективность'] > max_effectivnost:
+            max_effectivnost = database[surname]['эффективность']
+
+    for surname in database:
+        if database[surname]['эффективность'] == max_effectivnost:
+            samyi_krutoi = surname
+
+    print('Самая большая эффективность у', samyi_krutoi)
