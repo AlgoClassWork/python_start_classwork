@@ -34,3 +34,7 @@ if otvet == 'самый крутой':
             samyi_krutoi = surname
 
     print('Самая большая эффективность у', samyi_krutoi)
+    
+if otvet == 'должности':
+    for surname in database:
+        print(surname,' - ',database[surname]['должность'])
