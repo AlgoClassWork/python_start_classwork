@@ -4,6 +4,49 @@ from PyQt5.QtWidgets import (
     QVBoxLayout, QHBoxLayout
 )
 
+stylesheet = """
+QWidget {
+    background-color: white;  /* Светло-голубой фон */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  /* Шрифт */
+}
+
+QLabel {
+    font-size: 24px;  /* Размер шрифта для QLabel */
+    color: black;  /* Цвет текста */
+    margin: 20px;  /* Отступы вокруг QLabel */
+    text-align: center;  /* Выравнивание текста по центру */
+}
+
+QRadioButton {
+    font-size: 20px;  /* Размер шрифта для QRadioButton */
+    color: black;  /* Цвет текста */
+    padding: 10px;  /* Отступы вокруг текста */
+}
+
+QRadioButton::indicator {
+    width: 25px;  /* Ширина индикатора */
+    height: 25px;  /* Высота индикатора */
+}
+
+QRadioButton::indicator:checked {
+    background-color: #004d40;  /* Цвет индикатора при выборе */
+    border: 3px solid #004d40;  /* Граница индикатора при выборе */
+}
+
+QRadioButton::indicator:unchecked {
+    background-color: #ffffff;  /* Цвет индикатора при невыборе */
+    border: 3px solid #00796b;  /* Граница индикатора при невыборе */
+}
+
+QRadioButton::indicator:pressed {
+    background-color: #b2dfdb;  /* Цвет индикатора при нажатии */
+}
+
+QVBoxLayout, QHBoxLayout {
+    spacing: 15px;  /* Расстояние между элементами в макете */
+}
+"""
+
 # Интерфейс
 app = QApplication([])
 window = QWidget()
@@ -34,50 +77,11 @@ main_line.addLayout(h2_line)
 window.setLayout(main_line)
 
 # Применение стилей
-stylesheet = """
-QWidget {
-    background-color: #e0f7fa;  /* Светло-голубой фон */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  /* Шрифт */
-}
-
-QLabel {
-    font-size: 24px;  /* Размер шрифта для QLabel */
-    color: #00796b;  /* Цвет текста */
-    margin: 20px;  /* Отступы вокруг QLabel */
-    text-align: center;  /* Выравнивание текста по центру */
-}
-
-QRadioButton {
-    font-size: 20px;  /* Размер шрифта для QRadioButton */
-    color: #004d40;  /* Цвет текста */
-    padding: 10px;  /* Отступы вокруг текста */
-}
-
-QRadioButton::indicator {
-    width: 25px;  /* Ширина индикатора */
-    height: 25px;  /* Высота индикатора */
-}
-
-QRadioButton::indicator:checked {
-    background-color: #004d40;  /* Цвет индикатора при выборе */
-    border: 3px solid #004d40;  /* Граница индикатора при выборе */
-}
-
-QRadioButton::indicator:unchecked {
-    background-color: #ffffff;  /* Цвет индикатора при невыборе */
-    border: 3px solid #00796b;  /* Граница индикатора при невыборе */
-}
-
-QRadioButton::indicator:pressed {
-    background-color: #b2dfdb;  /* Цвет индикатора при нажатии */
-}
-
-QVBoxLayout, QHBoxLayout {
-    spacing: 15px;  /* Расстояние между элементами в макете */
-}
-"""
-
 window.setStyleSheet(stylesheet)
+
+# Функционал
+
+# Подписки на события
 
 # Запуск
 window.show()
