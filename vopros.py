@@ -1,7 +1,8 @@
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QLabel, QRadioButton,
-    QVBoxLayout, QHBoxLayout
+    QVBoxLayout, QHBoxLayout,
+    QMessageBox
 )
 
 stylesheet = """
@@ -50,6 +51,8 @@ QVBoxLayout, QHBoxLayout {
 # Интерфейс
 app = QApplication([])
 window = QWidget()
+window.setWindowTitle('Тест на интеллект')
+window.resize(500,200)
 
 text = QLabel('Какого цвета негр?')
 
@@ -77,11 +80,26 @@ main_line.addLayout(h2_line)
 window.setLayout(main_line)
 
 # Применение стилей
+
 window.setStyleSheet(stylesheet)
 
 # Функционал
+def win():
+    message = QMessageBox()
+    message.setText('Вижу ты знаток в чернокожих')
+    message.exec()
+
+def lose():
+    message = QMessageBox()
+    message.setText('Наверное ты дальтоник')
+    message.exec()
 
 # Подписки на события
+
+button1.clicked.connect(lose)
+button2.clicked.connect(lose)
+button3.clicked.connect(win)
+button4.clicked.connect(lose)
 
 # Запуск
 window.show()
