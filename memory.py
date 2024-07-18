@@ -5,8 +5,8 @@ from PyQt5.QtWidgets import (
 )
 
 style = '''
-    QLabel {font-size: 30px}
-    QRadioButton {font-size: 15px}
+    QLabel {font-size: 50px}
+    QRadioButton {font-size: 30px}
     QPushButton {font-size: 30px}
 '''
 
@@ -25,7 +25,17 @@ button3 = QRadioButton('Двуликий')
 button4 = QRadioButton('Восточный')
 
 button_ok = QPushButton('Ответить')
+#РАСПОЛОЖЕНИЕ
+main_layout = QVBoxLayout()
+
+main_layout.addWidget(question)
+main_layout.addWidget(button1)
+main_layout.addWidget(button2)
+main_layout.addWidget(button3)
+main_layout.addWidget(button4)
+main_layout.addWidget(button_ok)
 
 #ЗАПУСК
+window.setLayout(main_layout)
 window.show()
 app.exec()
