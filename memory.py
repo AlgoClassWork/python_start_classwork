@@ -142,8 +142,12 @@ def check():
 
     if buttons[0].isChecked():
         result.setText('Правильно')
+        window.right_ans += 1
     else:
         result.setText('Не правильно')
+
+    right_answer.setText('Вы правильно ответили на ' + str(window.right_ans) + ' из ' + str(window.current_question + 1) + ' вопросов')
+    
 
 def ok():
     if button_ok.text() == 'Ответить':
@@ -159,6 +163,7 @@ result_box.hide()
 
 # Установка и отображение основного окна
 window.current_question = 0
+window.right_ans = 0
 ask(questions[window.current_question])
 window.setLayout(main_layout)
 window.show()
