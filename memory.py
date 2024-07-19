@@ -1,8 +1,8 @@
+from random import shuffle
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QLabel, QRadioButton, QPushButton,
-    QGroupBox, QVBoxLayout
-)
+    QGroupBox, QVBoxLayout)
 
 class Question():
     def __init__(self,q,r,w1,w2,w3):
@@ -109,7 +109,18 @@ main_layout.addWidget(button_box)
 main_layout.addWidget(result_box)
 main_layout.addWidget(button_ok)
 
+
 # Функционал для кнопки "Ответить"
+buttons = [button1,button2,button3,button4]
+
+def ask(q: Question):
+    shuffle(buttons)
+    question.setText(q.question)
+    buttons[0].setText(q.right_ans)
+    buttons[1].setText(q.wrong1)
+    buttons[2].setText(q.wrong2)
+    buttons[3].setText(q.wrong3)
+
 def ok():
     if button_ok.text() == 'Ответить':
         button_box.hide()
