@@ -122,6 +122,11 @@ def ask(q: Question):
     buttons[3].setText(q.wrong3)
 
 def next():
+
+    button_box.show()
+    result_box.hide()
+    button_ok.setText('Ответить')
+
     window.current_question += 1
     if window.current_question >= len(questions):
         window.current_question = 0
@@ -129,15 +134,21 @@ def next():
     q = questions[window.current_question]
     ask(q)
 
+def check():
+
+    button_box.hide()
+    result_box.show()
+    button_ok.setText('Следующий вопрос')
+
+    if buttons[0].isChecked():
+        result.setText('Правильно')
+    else:
+        result.setText('Не правильно')
+
 def ok():
     if button_ok.text() == 'Ответить':
-        button_box.hide()
-        result_box.show()
-        button_ok.setText('Следующий вопрос')
+        check()
     else:
-        button_box.show()
-        result_box.hide()
-        button_ok.setText('Ответить')
         next()
 
 # Подключение сигнала нажатия кнопки
@@ -148,6 +159,7 @@ result_box.hide()
 
 # Установка и отображение основного окна
 window.current_question = 0
+ask(questions[window.current_question])
 window.setLayout(main_layout)
 window.show()
 
