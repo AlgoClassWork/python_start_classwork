@@ -121,6 +121,14 @@ def ask(q: Question):
     buttons[2].setText(q.wrong2)
     buttons[3].setText(q.wrong3)
 
+def next():
+    window.current_question += 1
+    if window.current_question >= len(questions):
+        window.current_question = 0
+
+    q = questions[window.current_question]
+    ask(q)
+
 def ok():
     if button_ok.text() == 'Ответить':
         button_box.hide()
@@ -130,6 +138,7 @@ def ok():
         button_box.show()
         result_box.hide()
         button_ok.setText('Ответить')
+        next()
 
 # Подключение сигнала нажатия кнопки
 button_ok.clicked.connect(ok)
@@ -138,6 +147,7 @@ button_ok.clicked.connect(ok)
 result_box.hide()
 
 # Установка и отображение основного окна
+window.current_question = 0
 window.setLayout(main_layout)
 window.show()
 
