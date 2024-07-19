@@ -122,6 +122,7 @@ def ask(q: Question):
     buttons[3].setText(q.wrong3)
 
 def next():
+    shuffle(questions)
 
     button_box.show()
     result_box.hide()
