@@ -1,41 +1,18 @@
 from turtle import *
-from random import randint
 
-def start_race(name,col,y):
-   name.penup()
-   name.goto(-200,y)
-   name.shape('turtle')
-   name.color('black',col)
+pensize(2)
+goto(-50,-50)
 
-biba = Turtle()
-boba = Turtle()
+begin_fill()
+for i in range(4):
+    forward(200)
+    left(90)
+end_fill()
 
-start_race(name=biba,col='red',y=40)
-start_race(name=boba,col='blue',y=-40)
+penup()
+goto(170,-50)
+pendown()
 
-finish = 200
+circle(3)
 
-stavka = input('Кто победит?').lower()
-
-while biba.xcor() < finish and boba.xcor() < finish:
-   biba.forward( randint(1,10) )
-   boba.forward( randint(1,10) )
-
-winner = max(biba.xcor(), boba.xcor())
-
-if biba.xcor() == winner:
-   biba.goto(-200,-20)
-   if stavka == 'биба':
-      biba.write('Вы выйграли пачку сухариков',font=('Arial',20,'bold'))
-   else:
-      biba.write('Вы проиграли :(',font=('Arial',20,'bold'))
-
-if boba.xcor() == winner:
-   boba.goto(-200,-20)
-   if stavka == 'боба':
-      boba.write('Вы выйграли пачку сухариков',font=('Arial',20,'bold'))
-   else:
-      boba.write('Вы проиграли :(',font=('Arial',20,'bold'))
-
-biba.hideturtle()
-boba.hideturtle()
+exitonclick()
