@@ -23,26 +23,29 @@ search = QPushButton('Поиск')
 
 # РАЗМЕЩЕНИЕ ОБЬЕКТОВ
 main_layout = QHBoxLayout()
+v_line = QVBoxLayout()
+h1_line = QHBoxLayout() 
+h2_line = QHBoxLayout() 
 
 main_layout.addWidget(text_field)
+main_layout.addLayout(v_line)
 
-v_line = QVBoxLayout()
+h1_line.addWidget(create_note) 
+h1_line.addWidget(delete_note) 
 
 v_line.addWidget(list_notes_text)
 v_line.addWidget(list_notes)
-v_line.addWidget(create_note)
-v_line.addWidget(delete_note)
+v_line.addLayout(h1_line) 
 v_line.addWidget(save_note)
+
+h2_line.addWidget(create_tag)
+h2_line.addWidget(delete_tag)
 
 v_line.addWidget(list_tags_text)
 v_line.addWidget(list_tags)
 v_line.addWidget(search_field)
-v_line.addWidget(create_tag)
-v_line.addWidget(delete_tag)
+v_line.addLayout(h2_line)
 v_line.addWidget(search)
-
-main_layout.addLayout(v_line)
-
 
 # ЗАПУСК
 window.setLayout(main_layout)
