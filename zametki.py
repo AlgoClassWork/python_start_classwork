@@ -1,7 +1,8 @@
 import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout,
-    QLabel, QListWidget, QPushButton, QLineEdit, QVBoxLayout)
+    QLabel, QListWidget, QPushButton, QLineEdit, QVBoxLayout,
+    QInputDialog)
 
 # ОБЬЕКТЫ ИНТЕРФЕЙСА
 app = QApplication([])
@@ -106,16 +107,21 @@ window.setStyleSheet('''
 
 # ФУНКЦИОНАЛ
 def show_note():
-    note_name = list_notes.selectedItems()[0].text()
+    note_name = list_notes.selectedItems()[0].text() 
     text_field.setText(notes[note_name]['текст'])
     list_tags.clear()
     list_tags.addItems(notes[note_name]['теги'])
+
+def note_create():
+    note_name, ok = QInputDialog().getText(window,'Добавить заметку','Название заметки:')
+    if note_name != "":
+        notes[note_name] = {"текст": "", "теги": []}
+        list_notes.addItem(note_name)
     
 
 # ПОДПИСКИ НА СОБЫТИЯ
 list_notes.itemClicked.connect(show_note)
-
-
+create_note.clicked.connect(note_create)
 # ЗАПУСК
 
 with open('notes.json','r',encoding='utf-8') as file:
