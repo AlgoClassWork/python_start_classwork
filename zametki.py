@@ -1,3 +1,15 @@
+{ 
+    "тест": {
+    "текст": "тестовый текст",
+    "теги": ["тестовый", "тег"]}
+    ,
+    "тест2": {
+        "текст": "тестовый текст",
+        "теги": ["тестовый", "тег"]}
+
+}
+
+
 import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout,
