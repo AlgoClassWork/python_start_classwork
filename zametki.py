@@ -1,7 +1,7 @@
+import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout,
     QLabel, QListWidget, QPushButton, QLineEdit, QVBoxLayout)
-
 
 # ОБЬЕКТЫ ИНТЕРФЕЙСА
 app = QApplication([])
@@ -82,10 +82,8 @@ window.setStyleSheet('''
         padding: 5px 10px;
         text-align: center;
         text-decoration: none;
-        display: inline-block;
         font-size: 14px;
         margin: 4px 2px;
-        cursor: pointer;
         border-radius: 4px;
     }
     
@@ -107,6 +105,12 @@ window.setStyleSheet('''
     } ''')
 
 # ЗАПУСК
+
+with open('notes.json','r',encoding='utf-8') as file:
+    notes = json.load(file)
+
+list_notes.addItems(notes)
+
 window.setLayout(main_layout)
 window.show()
 app.exec()
