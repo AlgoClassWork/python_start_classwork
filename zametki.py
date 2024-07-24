@@ -117,11 +117,20 @@ def note_create():
     if note_name != "":
         notes[note_name] = {"текст": "", "теги": []}
         list_notes.addItem(note_name)
+
+def note_save():
+    if list_notes.selectedItems():
+        note_name = list_notes.selectedItems()[0].text() 
+        notes[note_name]['текст'] = text_field.toPlainText()
+        with open('notes.json','w',encoding='utf-8') as file:
+            json.dump(notes, file, ensure_ascii=False)
+
     
 
 # ПОДПИСКИ НА СОБЫТИЯ
 list_notes.itemClicked.connect(show_note)
 create_note.clicked.connect(note_create)
+save_note.clicked.connect(note_save)
 # ЗАПУСК
 
 with open('notes.json','r',encoding='utf-8') as file:
