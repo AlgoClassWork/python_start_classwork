@@ -1,15 +1,3 @@
-{ 
-    "тест": {
-    "текст": "тестовый текст",
-    "теги": ["тестовый", "тег"]}
-    ,
-    "тест2": {
-        "текст": "тестовый текст",
-        "теги": ["тестовый", "тег"]}
-
-}
-
-
 import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout,
@@ -115,6 +103,18 @@ window.setStyleSheet('''
         font-size: 16px;
         font-weight: bold;
     } ''')
+
+# ФУНКЦИОНАЛ
+def show_note():
+    note_name = list_notes.selectedItems()[0].text()
+    text_field.setText(notes[note_name]['текст'])
+    list_tags.clear()
+    list_tags.addItems(notes[note_name]['теги'])
+    
+
+# ПОДПИСКИ НА СОБЫТИЯ
+list_notes.itemClicked.connect(show_note)
+
 
 # ЗАПУСК
 
