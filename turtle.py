@@ -34,3 +34,47 @@ if otvet == 'приемная':
 
 hideturtle()
 exitonclick()
+
+
+
+
+
+
+
+from turtle import *
+
+def svetofor(col):
+
+    color('red')
+    goto(0,70)
+    if col == 'красный':
+        begin_fill()
+    circle(30)
+    if col == 'красный':
+        end_fill()
+
+    color('yellow')
+    goto(0,0)
+    if col == 'желтый':
+        begin_fill()
+    circle(30)
+    if col == 'желтый':
+        end_fill()
+
+    color('green')
+    goto(0,-70)
+    if col == 'зеленый':
+        begin_fill()
+    circle(30)
+    if col == 'зеленый':
+        end_fill()
+
+otvet = input('Какой свет сейчас горит?')
+if otvet == 'красный':
+    svetofor(otvet)
+if otvet == 'желтый':
+    svetofor(otvet)
+if otvet == 'зеленый':
+    svetofor(otvet)
+
+exitonclick()
