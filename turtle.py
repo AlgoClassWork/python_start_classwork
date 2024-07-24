@@ -1,36 +1,36 @@
 from turtle import *
-
-pensize(2)
-goto(-50,-50)
-
-begin_fill()
-for i in range(4):
-    forward(200)
-    left(90)
-end_fill()
-
-penup()
-goto(170,-50)
-pendown()
-
-circle(3)
-
-exitonclick()
-
-
-from turtle import *
-
-def square(col,size):
-    color(col)
+ 
+def fence_link(col):
+    pensize(2)
+    color("black",col)
     begin_fill()
-    for i in range(4):
-        forward(size)
-        left(90)
+    left(90)
+    forward(100)
+    right(30)
+    forward(42)
+    right(120)
+    forward(42)
+    right(30)
+    forward(100)
+    right(90)
+    forward(42)
+    left(180)
     end_fill()
 
-square('black',200)
-square('white',150)
-square('lavender',100)
-square('black',50)
+    forward(42)
 
+
+goto(-100,-50)
+#допиши программу
+otvet = input('Введи корпус: главный\приемная')
+if otvet == 'главный':
+    for i in range(3):
+        fence_link('blue')
+
+if otvet == 'приемная':
+    for i in range(4):
+        fence_link('green')
+
+
+hideturtle()
 exitonclick()
