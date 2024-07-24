@@ -117,6 +117,8 @@ def note_create():
     if note_name != "":
         notes[note_name] = {"текст": "", "теги": []}
         list_notes.addItem(note_name)
+        with open('notes.json','w',encoding='utf-8') as file:
+            json.dump(notes, file, ensure_ascii=False)
 
 def note_save():
     if list_notes.selectedItems():
@@ -125,16 +127,29 @@ def note_save():
         with open('notes.json','w',encoding='utf-8') as file:
             json.dump(notes, file, ensure_ascii=False)
 
-    
+def note_delete():
+    if list_notes.selectedItems():
+        note_name = list_notes.selectedItems()[0].text() 
 
+        del notes[note_name] 
+        list_notes.clear()
+        list_tags.clear()
+        text_field.clear()
+
+        list_notes.addItems(notes)
+        with open('notes.json','w',encoding='utf-8') as file:
+            json.dump(notes, file, ensure_ascii=False)
+        
 # ПОДПИСКИ НА СОБЫТИЯ
 list_notes.itemClicked.connect(show_note)
 create_note.clicked.connect(note_create)
 save_note.clicked.connect(note_save)
+delete_note.clicked.connect(note_delete)
 # ЗАПУСК
 
 with open('notes.json','r',encoding='utf-8') as file:
     notes = json.load(file)
+
 
 list_notes.addItems(notes)
 
