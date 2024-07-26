@@ -7,13 +7,23 @@ naruto.shape('turtle')
 naruto.color('black','orange')
 naruto.speed(10)
 naruto.penup()
-# Определи функцию rand_move(), переносящую черепашку в случайную точку
+naruto.points = 0 #new
+
 def rand_move():
     naruto.goto(randint(-200,200),randint(-200,200))
-# Определи функцию-обработчик catch(x, y), которая обработает клик по черепашке 
-# (успешные клики копятся в свойстве t.points)
-# Создай подписку на событие «клик по объекту-черепашке»
-# Создай цикл, работающий пока кликов t.points меньше 3
-while True:
+
+def catch(x,y):
+    naruto.write('Ай',font=('Arial',15,'bold'))
+    naruto.points += 1
+    rand_move() #new
+
+naruto.onclick(catch)
+
+while naruto.points < 3: #new
     rand_move()
     sleep(1)
+
+naruto.clear() #new
+naruto.goto(-100,0) #new
+naruto.write('Ты победил',font=('Arial',30,'bold')) #new
+naruto.hideturtle() #new
