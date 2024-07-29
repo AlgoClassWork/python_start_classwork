@@ -100,8 +100,11 @@ def show_chosen_image():
     imya_faila = list_images.currentItem().text()
     tekushiy_fail = imya_faila
     polnyi_put = os.path.join(put_k_papke,imya_faila)
+    # показ изображения
     tekushiya_kartinka = Image.open(polnyi_put)
-    tekushiya_kartinka.show()
+    kartinka_na_ekran = QPixmap(polnyi_put).scaled(image_field.width(),image_field.height(),Qt.KeepAspectRatio,Qt.SmoothTransformation)
+    image_field.setPixmap(kartinka_na_ekran)
+    image_field.setFixedSize(image_field.width(),image_field.height())
 
 
 # ПОДПИСКИ
