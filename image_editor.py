@@ -1,6 +1,7 @@
+import os
 from PyQt5.QtWidgets import (
     QPushButton, QListWidget, QLabel,
-    QApplication, QWidget,
+    QApplication, QWidget, QFileDialog,
     QVBoxLayout, QHBoxLayout)
 
 styles = """
@@ -81,7 +82,20 @@ v2_line.addLayout(h_line)
 main_line.addLayout(v2_line, stretch=80)
 
 window.setLayout(main_line)
+# ФУНКЦИОНАЛ
+def show_images():
+    put_k_papke = QFileDialog.getExistingDirectory()
+    filenames = os.listdir(put_k_papke)
+    for file in filenames:
+        if file.endswith('.jpeg') or file.endswith('.png'):
+            list_images.addItem(file)
 
+def show_chosen_image():
+    pass
+
+# ПОДПИСКИ
+list_images.currentRowChanged.connect(show_chosen_image)
+btn_folder.clicked.connect(show_images)
 # ЗАПУСК
 window.show()
 app.exec()
