@@ -121,11 +121,67 @@ def do_gray():
     kartinka_na_ekran = QPixmap(put_k_mod_kartinke).scaled(image_field.width(),image_field.height(),Qt.KeepAspectRatio,Qt.SmoothTransformation)
     image_field.setPixmap(kartinka_na_ekran)
     image_field.setFixedSize(image_field.width(),image_field.height())
+
+def do_mirror():
+    global tekushiya_kartinka
+    tekushiya_kartinka = tekushiya_kartinka.transpose(Image.FLIP_LEFT_RIGHT)
+    put_sohraneniya = os.path.join(put_k_papke,'Mod/')
+    if not os.path.exists(put_sohraneniya):
+        os.mkdir(put_sohraneniya)
+    put_k_mod_kartinke = os.path.join(put_sohraneniya,imya_faila)
+    tekushiya_kartinka.save(put_k_mod_kartinke)
+
+    kartinka_na_ekran = QPixmap(put_k_mod_kartinke).scaled(image_field.width(),image_field.height(),Qt.KeepAspectRatio,Qt.SmoothTransformation)
+    image_field.setPixmap(kartinka_na_ekran)
+    image_field.setFixedSize(image_field.width(),image_field.height())
+
+def do_sharpen():
+    global tekushiya_kartinka
+    tekushiya_kartinka = tekushiya_kartinka.filter(ImageFilter.SHARPEN)
+    put_sohraneniya = os.path.join(put_k_papke,'Mod/')
+    if not os.path.exists(put_sohraneniya):
+        os.mkdir(put_sohraneniya)
+    put_k_mod_kartinke = os.path.join(put_sohraneniya,imya_faila)
+    tekushiya_kartinka.save(put_k_mod_kartinke)
+
+    kartinka_na_ekran = QPixmap(put_k_mod_kartinke).scaled(image_field.width(),image_field.height(),Qt.KeepAspectRatio,Qt.SmoothTransformation)
+    image_field.setPixmap(kartinka_na_ekran)
+    image_field.setFixedSize(image_field.width(),image_field.height())
+
+def do_left():
+    global tekushiya_kartinka
+    tekushiya_kartinka = tekushiya_kartinka.transpose(Image.ROTATE_270)
+    put_sohraneniya = os.path.join(put_k_papke,'Mod/')
+    if not os.path.exists(put_sohraneniya):
+        os.mkdir(put_sohraneniya)
+    put_k_mod_kartinke = os.path.join(put_sohraneniya,imya_faila)
+    tekushiya_kartinka.save(put_k_mod_kartinke)
+
+    kartinka_na_ekran = QPixmap(put_k_mod_kartinke).scaled(image_field.width(),image_field.height(),Qt.KeepAspectRatio,Qt.SmoothTransformation)
+    image_field.setPixmap(kartinka_na_ekran)
+    image_field.setFixedSize(image_field.width(),image_field.height())
+
+def do_right():
+    global tekushiya_kartinka
+    tekushiya_kartinka = tekushiya_kartinka.transpose(Image.ROTATE_90)
+    put_sohraneniya = os.path.join(put_k_papke,'Mod/')
+    if not os.path.exists(put_sohraneniya):
+        os.mkdir(put_sohraneniya)
+    put_k_mod_kartinke = os.path.join(put_sohraneniya,imya_faila)
+    tekushiya_kartinka.save(put_k_mod_kartinke)
+
+    kartinka_na_ekran = QPixmap(put_k_mod_kartinke).scaled(image_field.width(),image_field.height(),Qt.KeepAspectRatio,Qt.SmoothTransformation)
+    image_field.setPixmap(kartinka_na_ekran)
+    image_field.setFixedSize(image_field.width(),image_field.height())
     
 # ПОДПИСКИ
 list_images.currentRowChanged.connect(show_chosen_image)
 btn_folder.clicked.connect(show_images)
 btn_gray.clicked.connect(do_gray)
+btn_mirror.clicked.connect(do_mirror)
+btn_left.clicked.connect(do_left)
+btn_right.clicked.connect(do_right)
+btn_sharpen.clicked.connect(do_sharpen)
 # ЗАПУСК
 window.show()
 app.exec()
