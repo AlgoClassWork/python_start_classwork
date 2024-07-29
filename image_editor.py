@@ -87,6 +87,9 @@ main_line.addLayout(v2_line, stretch=80)
 window.setLayout(main_line)
 # ФУНКЦИОНАЛ
 put_k_papke = ''
+tekushiya_kartinka = '' 
+imya_faila = ''
+polnyi_put = ''
 
 def show_images():
     global put_k_papke
@@ -97,8 +100,8 @@ def show_images():
             list_images.addItem(file)
 
 def show_chosen_image():
+    global tekushiya_kartinka , polnyi_put, imya_faila
     imya_faila = list_images.currentItem().text()
-    tekushiy_fail = imya_faila
     polnyi_put = os.path.join(put_k_papke,imya_faila)
     # показ изображения
     tekushiya_kartinka = Image.open(polnyi_put)
@@ -106,10 +109,23 @@ def show_chosen_image():
     image_field.setPixmap(kartinka_na_ekran)
     image_field.setFixedSize(image_field.width(),image_field.height())
 
+def do_gray():
+    global tekushiya_kartinka
+    tekushiya_kartinka = tekushiya_kartinka.convert('L')
+    put_sohraneniya = os.path.join(put_k_papke,'Mod/')
+    if not os.path.exists(put_sohraneniya):
+        os.mkdir(put_sohraneniya)
+    put_k_mod_kartinke = os.path.join(put_sohraneniya,imya_faila)
+    tekushiya_kartinka.save(put_k_mod_kartinke)
 
+    kartinka_na_ekran = QPixmap(put_k_mod_kartinke).scaled(image_field.width(),image_field.height(),Qt.KeepAspectRatio,Qt.SmoothTransformation)
+    image_field.setPixmap(kartinka_na_ekran)
+    image_field.setFixedSize(image_field.width(),image_field.height())
+    
 # ПОДПИСКИ
 list_images.currentRowChanged.connect(show_chosen_image)
 btn_folder.clicked.connect(show_images)
+btn_gray.clicked.connect(do_gray)
 # ЗАПУСК
 window.show()
 app.exec()
