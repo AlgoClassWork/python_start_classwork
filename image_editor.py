@@ -1,4 +1,7 @@
 import os
+from PIL import Image, ImageFilter
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QPushButton, QListWidget, QLabel,
     QApplication, QWidget, QFileDialog,
@@ -83,7 +86,10 @@ main_line.addLayout(v2_line, stretch=80)
 
 window.setLayout(main_line)
 # ФУНКЦИОНАЛ
+put_k_papke = ''
+
 def show_images():
+    global put_k_papke
     put_k_papke = QFileDialog.getExistingDirectory()
     filenames = os.listdir(put_k_papke)
     for file in filenames:
@@ -91,7 +97,12 @@ def show_images():
             list_images.addItem(file)
 
 def show_chosen_image():
-    pass
+    imya_faila = list_images.currentItem().text()
+    tekushiy_fail = imya_faila
+    polnyi_put = os.path.join(put_k_papke,imya_faila)
+    tekushiya_kartinka = Image.open(polnyi_put)
+    tekushiya_kartinka.show()
+
 
 # ПОДПИСКИ
 list_images.currentRowChanged.connect(show_chosen_image)
