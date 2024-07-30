@@ -1,4 +1,5 @@
 from random import *
+from time import sleep
 
 class Person():
     def __init__(self,name,weapon,health,damage):
@@ -23,7 +24,10 @@ class Person():
 
         while self.health > 0 and vrag.health > 0:
             self.punch(vrag)
+            sleep(1)
             vrag.punch(self)
+            sleep(1)
+            print('\n')
 
         if self.health > 0:
             print(vrag.name,'пал в этом нелегком бою')
@@ -38,5 +42,6 @@ class Person():
 hero = Person(name='Джон',weapon='Меч',health=100,damage=20)
 enemy = Person(name='Адольф',weapon='Сирюкен',health=90,damage=18)
 dragon = Person(name='Смауг',weapon='Огонь',health=200,damage=40)
+
 
 
