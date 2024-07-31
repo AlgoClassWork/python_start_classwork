@@ -7,7 +7,6 @@ class Sprite(Turtle):
         self.goto(x,y)
         self.color('black',col)
         self.shape(forma)
-        self.left(90)
 
     def move_up(self):
         self.setheading(90)
@@ -47,6 +46,11 @@ screen.onkey(player.move_left,'a')
 screen.onkey(player.move_right,'d')
 
 while True:
+    #возможная вариация патрулирования которую нужно доработать
+    for i in range(50):
+        enemy1.forward(5)
+    enemy1.left(180)
+
     if player.is_collide(goal):
         goal.goto(-150,0)
         goal.write('ТЫ ПОБЕДИЛ',font=('Arial',40,'bold'))
@@ -55,6 +59,7 @@ while True:
         enemy1.goto(-150,0)
         enemy1.write('ТЫ ПРОИГРАЛ',font=('Arial',40,'bold'))
         break
+
 player.hideturtle()
 enemy1.hideturtle()
 enemy2.hideturtle()
