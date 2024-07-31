@@ -24,6 +24,13 @@ class Sprite(Turtle):
     def move_right(self):
         self.setheading(0)
         self.forward(5)
+
+    def is_collide(self,some_object):
+        dist = self.distance(some_object.xcor(),some_object.ycor())
+        if dist < 20:
+            return True
+        else:
+            return False
         
 #игровые обьекты
 player = Sprite(x=0,y=-150,col='yellow',forma='turtle')
@@ -38,3 +45,6 @@ screen.onkey(player.move_up,'w')
 screen.onkey(player.move_down,'s')
 screen.onkey(player.move_left,'a')
 screen.onkey(player.move_right,'d')
+
+while True:
+    if player.is_collide(goal):
