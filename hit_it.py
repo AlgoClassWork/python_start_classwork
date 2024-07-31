@@ -48,3 +48,14 @@ screen.onkey(player.move_right,'d')
 
 while True:
     if player.is_collide(goal):
+        goal.goto(-150,0)
+        goal.write('ТЫ ПОБЕДИЛ',font=('Arial',40,'bold'))
+        break
+    if player.is_collide(enemy1) or player.is_collide(enemy2):
+        enemy1.goto(-150,0)
+        enemy1.write('ТЫ ПРОИГРАЛ',font=('Arial',40,'bold'))
+        break
+player.hideturtle()
+enemy1.hideturtle()
+enemy2.hideturtle()
+goal.hideturtle()
