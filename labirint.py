@@ -10,6 +10,20 @@ class GameSprite(sprite.Sprite):
 
     def show(self):
         window.blit(self.image,(self.rect.x,self.rect.y))
+
+class Wall(sprite.Sprite):
+    def __init__(self,cord_x,cord_y,width,height):
+        self.image = Surface((width,height))
+        self.image.fill((0,0,0))
+        self.rect = self.image.get_rect()
+        self.rect.x = cord_x
+        self.rect.y = cord_y
+
+    def show(self):
+        window.blit(self.image,(self.rect.x,self.rect.y))
+
+#создание стен
+wall_1 = Wall(cord_x=50,cord_y=50,width=1000,height=20)
     
 #создание игровых обьектов
 player = GameSprite(img='hero.png',cord_x=0,cord_y=450,width=150,height=150)
@@ -21,9 +35,9 @@ display.set_caption('Лабиринт ужаса')
 #загрузка изображений
 back = transform.scale(image.load('back.jpg'),(1000,600))
 #музыка
-mixer.init()
-mixer.music.load('music.mp3')
-mixer.music.play()
+#mixer.init()
+#mixer.music.load('music.mp3')
+#mixer.music.play()
 #игровой цикл
 game = True
 while game:
@@ -32,6 +46,8 @@ while game:
     player.show()
     enemy.show()
     goal.show()
+
+    wall_1.show()
     #движение персонажей
     keys = key.get_pressed()
     if keys[K_w] and player.rect.y > 0:
