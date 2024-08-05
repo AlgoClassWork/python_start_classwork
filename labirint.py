@@ -11,6 +11,7 @@ class GameSprite(sprite.Sprite):
     def show(self):
         window.blit(self.image,(self.rect.x,self.rect.y))
 
+
 class Wall(sprite.Sprite):
     def __init__(self,cord_x,cord_y,width,height):
         self.image = Surface((width,height))
@@ -82,6 +83,10 @@ while game:
     #проверка столкновений
     if sprite.collide_rect(player,enemy):
         window.blit(lose_label,(100,250))
+        
+    if sprite.collide_rect(player,goal):
+        window.blit(win_label,(100,250))
+
     #обработка нажантия на крестик
     for some_event in event.get():
         if some_event.type == QUIT:
