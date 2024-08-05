@@ -23,7 +23,10 @@ class Wall(sprite.Sprite):
         window.blit(self.image,(self.rect.x,self.rect.y))
 
 #создание стен
-wall_1 = Wall(cord_x=50,cord_y=50,width=1000,height=20)
+wall_1 = Wall(cord_x=200,cord_y=200,width=20,height=500)
+wall_2 = Wall(cord_x=400,cord_y=200,width=600,height=20)
+wall_3 = Wall(cord_x=200,cord_y=400,width=400,height=20)
+
     
 #создание игровых обьектов
 player = GameSprite(img='hero.png',cord_x=0,cord_y=450,width=150,height=150)
@@ -48,6 +51,8 @@ while game:
     goal.show()
 
     wall_1.show()
+    wall_2.show()
+    wall_3.show()
     #движение персонажей
     keys = key.get_pressed()
     if keys[K_w] and player.rect.y > 0:
