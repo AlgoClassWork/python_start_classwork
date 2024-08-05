@@ -44,11 +44,13 @@ back = transform.scale(image.load('back.jpg'),(1000,600))
 #mixer.music.play()
 #надписи
 font.init()
-shrift = font.Font(None,150)
+shrift = font.Font('myfont.ttf',150)
 win_label = shrift.render('YOU WIN',True,(0,255,0))
 lose_label = shrift.render('YOU LOSE',True,(255,0,0))
 #игровой цикл
+timer = time.Clock()
 game = True
+finish = False
 while game:
     #отображение картинок
     window.blit(back,(0,0))
@@ -59,33 +61,43 @@ while game:
     wall_1.show()
     wall_2.show()
     wall_3.show()
-    #движение персонажей
-    keys = key.get_pressed()
-    if keys[K_w] and player.rect.y > 0:
-        player.rect.y -= 5
-    if keys[K_s] and player.rect.y < 450:
-        player.rect.y += 5
-    if keys[K_a] and player.rect.x > 0:
-        player.rect.x -= 5
-    if keys[K_d] and player.rect.x < 850:
-        player.rect.x += 5
 
-    if player.rect.x < enemy.rect.x:
-        enemy.rect.x -= 1
-    else:
-        enemy.rect.x += 1
+    if not finish:
 
-    if player.rect.y < enemy.rect.y:
-        enemy.rect.y -= 1
-    else:
-        enemy.rect.y += 1
+        #движение персонажей
+        keys = key.get_pressed()
+        if keys[K_w] and player.rect.y > 0:
+            player.rect.y -= 5
+        if keys[K_s] and player.rect.y < 450:
+            player.rect.y += 5
+        if keys[K_a] and player.rect.x > 0:
+            player.rect.x -= 5
+        if keys[K_d] and player.rect.x < 850:
+            player.rect.x += 5
+
+        if player.rect.x < enemy.rect.x:
+            enemy.rect.x -= 1
+        else:
+            enemy.rect.x += 1
+
+        if player.rect.y < enemy.rect.y:
+            enemy.rect.y -= 1
+        else:
+            enemy.rect.y += 1
 
     #проверка столкновений
+    if sprite.collide_rect(player,wall_1) or sprite.collide_rect(player,wall_2) or sprite.collide_rect(player,wall_3):
+        window.blit(lose_label,(100,250))
+        finish = True
+
     if sprite.collide_rect(player,enemy):
         window.blit(lose_label,(100,250))
+        finish = True
         
     if sprite.collide_rect(player,goal):
         window.blit(win_label,(100,250))
+        finish = True
+
 
     #обработка нажантия на крестик
     for some_event in event.get():
@@ -93,4 +105,5 @@ while game:
             game = False
 
     #обновление кадров
+    timer.tick(100)
     display.update()
