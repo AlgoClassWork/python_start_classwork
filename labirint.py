@@ -1,4 +1,5 @@
 from pygame import *
+from random import randint
 
 #класс для добавления персонажей
 class GameSprite(sprite.Sprite):
@@ -84,6 +85,19 @@ while game:
             enemy.rect.y -= 1
         else:
             enemy.rect.y += 1
+    else:
+        time.delay(1000)
+        player.rect.x = 0
+        player.rect.y = 450
+        enemy.rect.x = 900
+        enemy.rect.y = 0
+        
+        for wall in [wall_1,wall_2,wall_3]:
+            wall.rect.x = randint(0,1000)
+            wall.rect.y = randint(0,700)
+            wall.image = Surface((20,randint(100,1000)))
+
+        finish = False
 
     #проверка столкновений
     if sprite.collide_rect(player,wall_1) or sprite.collide_rect(player,wall_2) or sprite.collide_rect(player,wall_3):
