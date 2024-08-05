@@ -41,6 +41,11 @@ back = transform.scale(image.load('back.jpg'),(1000,600))
 #mixer.init()
 #mixer.music.load('music.mp3')
 #mixer.music.play()
+#надписи
+font.init()
+shrift = font.Font(None,150)
+win_label = shrift.render('YOU WIN',True,(0,255,0))
+lose_label = shrift.render('YOU LOSE',True,(255,0,0))
 #игровой цикл
 game = True
 while game:
@@ -73,6 +78,10 @@ while game:
         enemy.rect.y -= 1
     else:
         enemy.rect.y += 1
+
+    #проверка столкновений
+    if sprite.collide_rect(player,enemy):
+        window.blit(lose_label,(100,250))
     #обработка нажантия на крестик
     for some_event in event.get():
         if some_event.type == QUIT:
