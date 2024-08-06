@@ -4,6 +4,7 @@ from random import *
 #класс для добавления персонажей
 class GameSprite(sprite.Sprite):
     def __init__(self,img,cord_x,cord_y,width,height,speed):
+        super().__init__()
         self.image = transform.scale(image.load(img),(width,height))
         self.rect = self.image.get_rect()
         self.rect.x = cord_x
@@ -22,7 +23,7 @@ class Rocket(GameSprite):
             self.rect.x += self.speed
 
 class Enemy(GameSprite):
-    def move(self):
+    def update(self):
         self.rect.y += self.speed
         if self.rect.y > 600:
             self.rect.y = 0
@@ -31,6 +32,11 @@ class Enemy(GameSprite):
 #создание ракеты
 player = Rocket(img='sheep.png',cord_x=450,cord_y=500,width=100,height=100,speed=5)
 
+#создание группы врагов
+enemys = sprite.Group()
+for _ in range(10):
+    enemy = Enemy('enemy.png',randint(0,900),0,100,100,randint(1,3))
+    enemys.add(enemy)
 
 #создание экрана
 window = display.set_mode((1000,600))
@@ -46,6 +52,9 @@ while game:
     player.show()
     #движение персонажей
     player.move()
+    #группа врагов
+    enemys.draw(window)
+    enemys.update()
     
     #обработка нажантия на крестик
     for some_event in event.get():
