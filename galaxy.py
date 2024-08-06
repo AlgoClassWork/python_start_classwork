@@ -30,11 +30,11 @@ class Enemy(GameSprite):
             self.rect.x = randint(0,900)
 
 #создание ракеты
-player = Rocket(img='sheep.png',cord_x=450,cord_y=500,width=100,height=100,speed=5)
+player = Rocket(img='sheep.png',cord_x=450,cord_y=500,width=100,height=100,speed=10)
 
 #создание группы врагов
 enemys = sprite.Group()
-for _ in range(10):
+for _ in range(5):
     enemy = Enemy('enemy.png',randint(0,900),0,100,100,randint(1,3))
     enemys.add(enemy)
 
@@ -43,6 +43,8 @@ window = display.set_mode((1000,600))
 display.set_caption('ШУТЕР')
 #загрузка изображений
 back = transform.scale(image.load('back.jpg'),(1000,600))
+#создание таймера
+timer = time.Clock()
 
 game = True
 while game:
@@ -61,4 +63,5 @@ while game:
         if some_event.type == QUIT:
             game = False
 
+    timer.tick(60)
     display.update()
