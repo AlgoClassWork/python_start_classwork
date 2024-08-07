@@ -5,6 +5,11 @@ from random import randint
 
 
 # шрифты и надписи
+font.init()
+font_for_score = font.Font('game_font.ttf',20)
+font_end_game = font.Font('game_font.ttf',60)
+win_text = font_end_game.render('YOU WIN',1,(0,255,0))
+lose_text = font_end_game.render('YOU LOSE',1,(255,0,0))
 
 # нам нужны такие картинки:
 img_back = "back.jpg" # фон игры
