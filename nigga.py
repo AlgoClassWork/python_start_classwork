@@ -7,6 +7,11 @@ window = QWidget()
 
 text = QLabel('Узнай кто нигга!')
 button = QPushButton('Нажми на меня')
+#стилизация
+window.setStyleSheet('''
+QLabel {font-size:40px;padding:10px}
+QPushButton {background-color:black;color:white;font-size:30px;padding:10px}
+''')
 
 #размещение
 line = QVBoxLayout()
