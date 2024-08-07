@@ -60,16 +60,20 @@ class Bullet(GameSprite):
     # движение пули
     def update(self):
         self.rect.y -= self.speed
+        if self.rect.y < 0:
+            self.kill()
 
 # класс спрайта-врага   
 class Enemy(GameSprite):
     # движение врага
     def update(self):
+        global lost
         self.rect.y += self.speed
         # исчезает, если дойдет до края экрана
         if self.rect.y > win_height:
             self.rect.x = randint(80, win_width - 80)
             self.rect.y = 0
+            lost += 1
 
 # Создаем окошко
 win_width = 700
@@ -128,7 +132,14 @@ while run:
             monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 100, 100, randint(1, 5))
             monsters.add(monster)
             point += 1
-            
+
+        if point == 5:
+            window.blit(win_text,(100,200))
+            finish = True
+
+        if lost == 3 or sprite.spritecollide(ship,monsters,True):
+            window.blit(lose_text,(100,200))
+            finish = True
 
         display.update()
     # цикл срабатывает каждую 0.05 секунд
