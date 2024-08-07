@@ -39,9 +39,9 @@ class Player(GameSprite):
     # метод для управления спрайтом стрелками клавиатуры
     def update(self):
         keys = key.get_pressed()
-        if keys[K_LEFT] and self.rect.x > 5:
+        if keys[K_a] and self.rect.x > 5:
             self.rect.x -= self.speed
-        if keys[K_RIGHT] and self.rect.x < win_width - 80:
+        if keys[K_d] and self.rect.x < win_width - 80:
             self.rect.x += self.speed
   # метод "выстрел" (используем место игрока, чтобы создать там пулю)
 
@@ -80,6 +80,10 @@ while run:
     for e in event.get():
         if e.type == QUIT:
             run = False
+    # обработка нажатия кнопки пробел
+        elif e.type == KEYDOWN:
+            if e.key == K_SPACE:
+                ship.fire()
 
     if not finish:
         # обновляем фон
@@ -97,3 +101,4 @@ while run:
 
         display.update()
     # цикл срабатывает каждую 0.05 секунд
+    time.delay(50)
