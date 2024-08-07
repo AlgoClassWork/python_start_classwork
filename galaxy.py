@@ -2,7 +2,8 @@ from pygame import *
 from random import randint
 
 # фоновая музыка
-
+#mixer.init()
+#fire_sound = mixer.Sound('fire.ogg')
 
 # шрифты и надписи
 font.init()
@@ -104,7 +105,9 @@ while run:
     # обработка нажатия кнопки пробел
         elif e.type == KEYDOWN:
             if e.key == K_SPACE:
+                #fire_sound.play()
                 ship.fire()
+
 
     if not finish:
         # обновляем фон
