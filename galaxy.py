@@ -10,6 +10,7 @@ from random import randint
 img_back = "back.jpg" # фон игры
 img_hero = "player.png" # герой
 img_enemy = "enemy.png" # враг
+img_bullet = 'bullet.png' # пуля
 
 # важные переменные
 
@@ -44,7 +45,15 @@ class Player(GameSprite):
         if keys[K_d] and self.rect.x < win_width - 80:
             self.rect.x += self.speed
   # метод "выстрел" (используем место игрока, чтобы создать там пулю)
+    def fire(self):
+        bullet = Bullet(img_bullet,self.rect.centerx,self.rect.top,20,40,10)
+        bullets.add(bullet)
 
+# класс пули
+class Bullet(GameSprite):
+    # движение пули
+    def update(self):
+        self.rect.y -= self.speed
 
 # класс спрайта-врага   
 class Enemy(GameSprite):
@@ -64,11 +73,13 @@ window = display.set_mode((win_width, win_height))
 background = transform.scale(image.load(img_back), (win_width, win_height))
 
 # создаем спрайты
-ship = Player(img_hero, 5, win_height - 100, 80, 100, 10)
+ship = Player(img_hero, 5, win_height - 100, 100, 100, 10)
+
+bullets = sprite.Group()
 
 monsters = sprite.Group()
 for i in range(1, 6):
-    monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
+    monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 100, 100, randint(1, 5))
     monsters.add(monster)
 
 # переменная "игра закончилась": как только там True, в основном цикле перестают работать спрайты
@@ -94,10 +105,12 @@ while run:
         # производим движения спрайтов
         ship.update()
         monsters.update()
+        bullets.update()
 
         # обновляем их в новом местоположении при каждой итерации цикла
         ship.reset()
         monsters.draw(window)
+        bullets.draw(window)
 
         display.update()
     # цикл срабатывает каждую 0.05 секунд
