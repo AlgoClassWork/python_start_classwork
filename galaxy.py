@@ -12,8 +12,9 @@ img_hero = "player.png" # герой
 img_enemy = "enemy.png" # враг
 img_bullet = 'bullet.png' # пуля
 
-# важные переменные
-
+# переменные счетчики
+lost = 0
+point = 0
 
 # класс-родитель для других спрайтов
 class GameSprite(sprite.Sprite):
@@ -46,7 +47,7 @@ class Player(GameSprite):
             self.rect.x += self.speed
   # метод "выстрел" (используем место игрока, чтобы создать там пулю)
     def fire(self):
-        bullet = Bullet(img_bullet,self.rect.centerx,self.rect.top,20,40,10)
+        bullet = Bullet(img_bullet,self.rect.centerx,self.rect.top,50,50,10)
         bullets.add(bullet)
 
 # класс пули
@@ -111,6 +112,11 @@ while run:
         ship.reset()
         monsters.draw(window)
         bullets.draw(window)
+
+        if sprite.groupcollide(bullets,monsters,True,True):
+            monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 100, 100, randint(1, 5))
+            monsters.add(monster)
+            
 
         display.update()
     # цикл срабатывает каждую 0.05 секунд
