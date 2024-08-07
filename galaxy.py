@@ -1,5 +1,5 @@
 from pygame import *
-from random import randint
+from random import randint, choice
 
 # фоновая музыка
 #mixer.init()
@@ -16,8 +16,10 @@ lose_text = font_end_game.render('YOU LOSE',1,(255,0,0))
 img_back = "back.jpg" # фон игры
 img_hero = "player.png" # герой
 img_enemy = "enemy.png" # враг
+img_enemy2 = "enemy2.png" # враг
 img_bullet = 'bullet.png' # пуля
 
+enemys = [img_enemy,img_enemy2]
 # переменные счетчики
 lost = 0
 point = 0
@@ -52,9 +54,14 @@ class Player(GameSprite):
         if keys[K_d] and self.rect.x < win_width - 80:
             self.rect.x += self.speed
   # метод "выстрел" (используем место игрока, чтобы создать там пулю)
-    def fire(self):
-        bullet = Bullet(img_bullet,self.rect.centerx,self.rect.top,30,30,10)
+    def right_fire(self):
+        bullet = Bullet(img_bullet,self.rect.centerx+50,self.rect.top,30,30,10)
         bullets.add(bullet)
+
+    def left_fire(self):
+        bullet = Bullet(img_bullet,self.rect.centerx-50,self.rect.top,30,30,10)
+        bullets.add(bullet)
+
 
 # класс пули
 class Bullet(GameSprite):
@@ -104,9 +111,11 @@ while run:
             run = False
     # обработка нажатия кнопки пробел
         elif e.type == KEYDOWN:
-            if e.key == K_SPACE:
+            if e.key == K_q:
                 #fire_sound.play()
-                ship.fire()
+                ship.left_fire()
+            elif e.key == K_e:
+                ship.right_fire()
 
 
     if not finish:
@@ -132,11 +141,11 @@ while run:
 
         # Обработка столкновения пули с врагом
         if sprite.groupcollide(bullets,monsters,True,True):
-            monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 100, 100, randint(1, 5))
+            monster = Enemy(choice(enemys), randint(80, win_width - 80), -40, 100, 100, randint(1, 5))
             monsters.add(monster)
             point += 1
 
-        if point == 5:
+        if point == 20:
             window.blit(win_text,(100,200))
             finish = True
 
