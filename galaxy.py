@@ -6,8 +6,8 @@ from random import randint
 
 # шрифты и надписи
 font.init()
-font_for_score = font.Font('game_font.ttf',20)
-font_end_game = font.Font('game_font.ttf',60)
+font_for_score = font.Font('game_font.ttf',40)
+font_end_game = font.Font('game_font.ttf',100)
 win_text = font_end_game.render('YOU WIN',1,(0,255,0))
 lose_text = font_end_game.render('YOU LOSE',1,(255,0,0))
 
@@ -52,7 +52,7 @@ class Player(GameSprite):
             self.rect.x += self.speed
   # метод "выстрел" (используем место игрока, чтобы создать там пулю)
     def fire(self):
-        bullet = Bullet(img_bullet,self.rect.centerx,self.rect.top,50,50,10)
+        bullet = Bullet(img_bullet,self.rect.centerx,self.rect.top,30,30,10)
         bullets.add(bullet)
 
 # класс пули
@@ -107,6 +107,11 @@ while run:
         window.blit(background,(0,0))
 
         # пишем текст на экране
+        kill_point = font_for_score.render('Kills: '+str(point),1,(255,255,255))
+        window.blit(kill_point,(10,10))
+
+        lost_point = font_for_score.render('Lost: '+str(lost),1,(255,255,255))
+        window.blit(lost_point,(10,50))
 
         # производим движения спрайтов
         ship.update()
@@ -118,9 +123,11 @@ while run:
         monsters.draw(window)
         bullets.draw(window)
 
+        # Обработка столкновения пули с врагом
         if sprite.groupcollide(bullets,monsters,True,True):
             monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 100, 100, randint(1, 5))
             monsters.add(monster)
+            point += 1
             
 
         display.update()
