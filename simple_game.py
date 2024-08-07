@@ -8,8 +8,8 @@ back_image = transform.scale(back_image,(700,500))
 pica = image.load('pica.png') 
 pica = transform.scale(pica,(100,100))  
 
-pica_x = 0 #new
-pica_y = 0 #new
+pica_x = 500 #new
+pica_y = 500 #new
 
 enemy = image.load('enemy.png') 
 enemy = transform.scale(enemy,(100,100))  
@@ -17,9 +17,13 @@ enemy = transform.scale(enemy,(100,100))
 enemy_x = 0 #new
 enemy_y = 0 #new
 
+timer = 0
+
 game = True
 while game:
 
+    timer += 30
+    
     window.blit(back_image,(0,0)) 
     window.blit(pica,(pica_x,pica_y))  #update
     window.blit(enemy,(enemy_x,enemy_y))  #update
@@ -42,6 +46,12 @@ while game:
         enemy_y += 1
     if pica_y < enemy_y:
         enemy_y -= 1
+
+    if pica_x == enemy_x and pica_y == enemy_y:
+        print('вас поймали')
+
+    if timer > 10000:
+        print('вы победили')
     
     for some_event in event.get():
         if some_event.type == QUIT:
