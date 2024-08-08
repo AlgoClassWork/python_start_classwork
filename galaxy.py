@@ -1,158 +1,109 @@
 from pygame import *
-from random import randint, choice
 
-# фоновая музыка
-#mixer.init()
-#fire_sound = mixer.Sound('fire.ogg')
-
-# шрифты и надписи
-font.init()
-font_for_score = font.Font('game_font.ttf',40)
-font_end_game = font.Font('game_font.ttf',100)
-win_text = font_end_game.render('YOU WIN',1,(0,255,0))
-lose_text = font_end_game.render('YOU LOSE',1,(255,0,0))
-
-# нам нужны такие картинки:
-img_back = "back.jpg" # фон игры
-img_hero = "player.png" # герой
-img_enemy = "enemy.png" # враг
-img_enemy2 = "enemy2.png" # враг
-img_bullet = 'bullet.png' # пуля
-
-enemys = [img_enemy,img_enemy2]
-# переменные счетчики
-lost = 0
-point = 0
-
-# класс-родитель для других спрайтов
+# класс для создания персонажей
 class GameSprite(sprite.Sprite):
-  # конструктор класса
-    def __init__(self, player_image, player_x, player_y, size_x, size_y, player_speed):
-        # Вызываем конструктор класса (Sprite):
-        sprite.Sprite.__init__(self)
-
-        # каждый спрайт должен хранить свойство image - изображение
-        self.image = transform.scale(image.load(player_image), (size_x, size_y))
-        self.speed = player_speed
-
-        # каждый спрайт должен хранить свойство rect - прямоугольник, в который он вписан
+    def __init__(self, sprite_image, sprite_x, sprite_y, size_x, size_y):
+        #загружаем картинку
+        self.image = transform.scale(image.load(sprite_image), (size_x, size_y))
+        # хитбокс
         self.rect = self.image.get_rect()
-        self.rect.x = player_x
-        self.rect.y = player_y
+        self.rect.x = sprite_x
+        self.rect.y = sprite_y
  
-  # метод, отрисовывающий героя на окне
-    def reset(self):
+    def show(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
-# класс главного игрока
-class Player(GameSprite):
-    # метод для управления спрайтом стрелками клавиатуры
-    def update(self):
-        keys = key.get_pressed()
-        if keys[K_a] and self.rect.x > 5:
-            self.rect.x -= self.speed
-        if keys[K_d] and self.rect.x < win_width - 80:
-            self.rect.x += self.speed
-  # метод "выстрел" (используем место игрока, чтобы создать там пулю)
-    def right_fire(self):
-        bullet = Bullet(img_bullet,self.rect.centerx+50,self.rect.top,30,30,10)
-        bullets.add(bullet)
+# создание игровых персонажей
+ball = GameSprite('ball.png',500,300,100,100)
+player = GameSprite('player.png',0,300,100,150)
+enemy = GameSprite('enemy.png',900,300,100,150)
 
-    def left_fire(self):
-        bullet = Bullet(img_bullet,self.rect.centerx-50,self.rect.top,30,30,10)
-        bullets.add(bullet)
+# экран для игры
+display.set_caption("поке-понг")
+window = display.set_mode((1000,600))
+background = transform.scale(image.load('fon.jpg'), (1000, 600))
 
+# скорости мяча
+ball_x = 5
+ball_y = 5
 
-# класс пули
-class Bullet(GameSprite):
-    # движение пули
-    def update(self):
-        self.rect.y -= self.speed
-        if self.rect.y < 0:
-            self.kill()
+# счет игроков
+player_score = 0
+enemy_score = 0
 
-# класс спрайта-врага   
-class Enemy(GameSprite):
+# шрифты
+font.init()
+game_font = font.Font('game_font.ttf',40)
+the_end = game_font.render('THE END',1,(255,255,255))
+
+# музыка
+mixer.init()
+mixer.music.load('music.mp3')
+mixer.music.play()
+
+ball_sound = mixer.Sound('ball_sound.mp3')
+
+# игровой таймер
+fps = time.Clock()
+# игровой цикл
+game = True
+while game:
+
+    # обработка выхода
+    for eve in event.get():
+        if eve.type == QUIT:
+            game = False
+
+    # отображение фона
+    window.blit(background,(0,0))
+    # отображение счета
+    score_player = game_font.render('Player score: ' + str(player_score),1,(0,0,0))
+    score_enemy = game_font.render('AI score: ' + str(enemy_score),1,(0,0,0))
+    window.blit(score_player,(20,20))
+    window.blit(score_enemy,(700,20))
+
+    # отображение персонажей
+    ball.show()
+    player.show()
+    enemy.show()
+    # передвижение мяча
+    ball.rect.x += ball_x
+    ball.rect.y += ball_y
+
+    if ball.rect.y > 500 or ball.rect.y < 0:
+        ball_y *= -1
+
+    # движение игрока
+    x , mouse_y = mouse.get_pos()
+    player.rect.centery = mouse_y
     # движение врага
-    def update(self):
-        global lost
-        self.rect.y += self.speed
-        # исчезает, если дойдет до края экрана
-        if self.rect.y > win_height:
-            self.rect.x = randint(80, win_width - 80)
-            self.rect.y = 0
-            lost += 1
+    if enemy.rect.y < ball.rect.y:
+        enemy.rect.y += 3
+    else:
+        enemy.rect.y -= 3
 
-# Создаем окошко
-win_width = 700
-win_height = 500
-display.set_caption("Shooter")
-window = display.set_mode((win_width, win_height))
-background = transform.scale(image.load(img_back), (win_width, win_height))
+    # отбивание мяча
+    if sprite.collide_rect(ball,player) or sprite.collide_rect(ball,enemy):
+        ball_sound.play()
+        ball_x *= -1
+        if ball_x == 5:
+            ball.rect.x += 100
+        if ball_x == -5:
+            ball.rect.x -= 100
 
-# создаем спрайты
-ship = Player(img_hero, 5, win_height - 100, 100, 100, 10)
+    # условия подсчета очков
+    if ball.rect.x > 900:
+        player_score += 1
+        ball.rect.x = 500
 
-bullets = sprite.Group()
+    if ball.rect.x < 0:
+        enemy_score += 1
+        ball.rect.x = 500
 
-monsters = sprite.Group()
-for i in range(1, 6):
-    monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 100, 100, randint(1, 5))
-    monsters.add(monster)
+    # условия конца игры
+    #if player_score == 5 or enemy_score == 5:
+        #window.blit(the_end,(300,300))
 
-# переменная "игра закончилась": как только там True, в основном цикле перестают работать спрайты
-finish = False
-# Основной цикл игры:
-run = True # флаг сбрасывается кнопкой закрытия окна
-while run:
-    # событие нажатия на кнопку Закрыть
-    for e in event.get():
-        if e.type == QUIT:
-            run = False
-    # обработка нажатия кнопки пробел
-        elif e.type == KEYDOWN:
-            if e.key == K_q:
-                #fire_sound.play()
-                ship.left_fire()
-            elif e.key == K_e:
-                ship.right_fire()
-
-
-    if not finish:
-        # обновляем фон
-        window.blit(background,(0,0))
-
-        # пишем текст на экране
-        kill_point = font_for_score.render('Kills: '+str(point),1,(255,255,255))
-        window.blit(kill_point,(10,10))
-
-        lost_point = font_for_score.render('Lost: '+str(lost),1,(255,255,255))
-        window.blit(lost_point,(10,50))
-
-        # производим движения спрайтов
-        ship.update()
-        monsters.update()
-        bullets.update()
-
-        # обновляем их в новом местоположении при каждой итерации цикла
-        ship.reset()
-        monsters.draw(window)
-        bullets.draw(window)
-
-        # Обработка столкновения пули с врагом
-        if sprite.groupcollide(bullets,monsters,True,True):
-            monster = Enemy(choice(enemys), randint(80, win_width - 80), -40, 100, 100, randint(1, 5))
-            monsters.add(monster)
-            point += 1
-
-        if point == 20:
-            window.blit(win_text,(100,200))
-            finish = True
-
-        if lost == 3 or sprite.spritecollide(ship,monsters,True):
-            window.blit(lose_text,(100,200))
-            finish = True
-
-        display.update()
-    # цикл срабатывает каждую 0.05 секунд
-    time.delay(50)
+    # обновление кадров
+    fps.tick(60)
+    display.update()
