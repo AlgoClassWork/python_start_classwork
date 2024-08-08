@@ -27,6 +27,15 @@ background = transform.scale(image.load('fon.jpg'), (1000, 600))
 ball_x = 5
 ball_y = 5
 
+# счет игроков
+player_score = 0
+enemy_score = 0
+
+# шрифты
+font.init()
+game_font = font.Font('game_font.ttf',40)
+the_end = game_font.render('THE END',1,(255,255,255))
+
 # игровой таймер
 fps = time.Clock()
 # игровой цикл
@@ -47,8 +56,7 @@ while game:
     # передвижение мяча
     ball.rect.x += ball_x
     ball.rect.y += ball_y
-    if ball.rect.x > 900 or ball.rect.x < 0:
-        ball_x *= -1 
+
     if ball.rect.y > 500 or ball.rect.y < 0:
         ball_y *= -1
 
@@ -60,6 +68,10 @@ while game:
         enemy.rect.y += 3
     else:
         enemy.rect.y -= 3
+
+    # отбивание мяча
+    if sprite.collide_rect(ball,player) or sprite.collide_rect(ball,enemy):
+        ball_x *= -1
 
     # обновление кадров
     fps.tick(60)
