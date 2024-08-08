@@ -23,6 +23,22 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text('Здравствуйте мой господин')
     elif text == 'как дела':
         await update.message.reply_text('Не важно как твои?')
+    elif text == 'хорошо':
+        await update.message.reply_text('Рад это слышать господин')
+    elif text == 'шутка':
+        await update.message.reply_text('Колобок повесился')
+    elif 'фильм' in text:
+        await update.message.reply_text('Какой жанр?')
+        context.user_data['жанр'] = True
+    elif context.user_data.get('жанр'):
+        if 'боевик' in text:
+            await update.message.reply_text('https://www.kinopoisk.ru/film/1318972/')
+        elif 'комедия' in text:
+            await update.message.reply_text('https://www.kinopoisk.ru/film/476/')
+        context.user_data.pop('жанр')
+    else:
+        await update.message.reply_text('Извини я тебя не понимаю')
+       
 
 # соединение telegram бота с кодом
 app = Application.builder().token("ВАШ ТОКЕН").build()
