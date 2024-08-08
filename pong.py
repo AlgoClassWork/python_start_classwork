@@ -49,6 +49,12 @@ while game:
 
     # отображение фона
     window.blit(background,(0,0))
+    # отображение счета
+    score_player = game_font.render('Player score: ' + str(player_score),1,(0,0,0))
+    score_enemy = game_font.render('AI score: ' + str(enemy_score),1,(0,0,0))
+    window.blit(score_player,(20,20))
+    window.blit(score_enemy,(700,20))
+
     # отображение персонажей
     ball.show()
     player.show()
