@@ -18,3 +18,24 @@ if otvet == 1:
     change_money.change_dollar(summa)
 if otvet == 2:
     change_money.change_rub(summa)
+
+
+
+data = dict()
+while input('Желаете посетить урок программирования (да/нет)?').lower() == 'да':
+    topic = input('Введите тему урока')
+    if topic in data:
+        data[topic] += 1
+    else:
+        data[topic] = 1
+
+
+total_lessons = 0
+for lesson in list(data.values()):
+    total_lessons += lesson
+total_topics = len(data)
+
+
+print('Общее количество уроков:', total_lessons)
+print('Рассмотрено тем:', total_topics)
+
