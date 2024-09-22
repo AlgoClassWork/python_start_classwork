@@ -12,6 +12,10 @@ my_offer.add_price(management = 1000, content_plan = 850, style = 500, stories =
 
 otvet = input('Хотите сделать заказ? (1 - да, 0 - нет)')
 if otvet == '1':
-    pass
+    otvet = input('Хотите заказать управление аккаунтами (1) или публикации (2)?')
+    if otvet == '1':
+        pass
+    if otvet == '2':
+        pass
 if otvet == '0':
     print('Спасибо за сотрудничество! Хорошего дня!')
