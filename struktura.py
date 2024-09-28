@@ -40,7 +40,7 @@ for department in departments:
 
 
 trainings = {
-    'Онбординг':{
+    'Онбординг': {
         'ответственный': 'Ершов В.С.',
         'темы': ['техника безопасности', 'работа в команде'],
         'дата': '15.05'
@@ -51,3 +51,22 @@ trainings = {
         'дата': '20.11'
     }
 }
+
+print('Тренинги ProTeam')
+print('1-названия тренингов, 2-инфо о тренинге')
+otvet = input('Номер действия (off-выйти):')
+while otvet != 'off':
+    if otvet == '1':
+        for training in trainings:
+            print('-',training)
+    if otvet == '2':
+        training = input('Название тренинга:')
+        if training in trainings:
+            print(trainings[training]['ответственный'])
+            print(trainings[training]['темы'])
+            print(trainings[training]['дата'])
+        else:
+            print('Такого тренинга не существует!')
+
+    otvet = input('Номер действия (off-выйти):')
+        
