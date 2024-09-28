@@ -1,16 +1,15 @@
-# приложение с одним виджетом.
-
 from kivy.app import App
-# все виджеты находятся в отдельных модулях внутри kivy.uix:
-from kivy.uix.button import Button # кнопка
+from kivy.uix.button import Button
+from kivy.uix.label import Label
+from kivy.uix.boxlayout import BoxLayout
 
 class MyApp(App):
-   # если в объекте класса App есть метод build(),
-   # то run() выполнит этот метод 
-   # и выведет на экран то, что возвращает build
    def build(self):
+      layout = BoxLayout()
+      txt = Label(text='Это надпись')
       btn = Button(text='Это кнопка')
-      return btn # возвращается всегда виджет!
+      layout.add_widget(txt)
+      layout.add_widget(btn) 
+      return layout
 
-app = MyApp()
-app.run() # будет показан виджет класса Button
+MyApp().run()
