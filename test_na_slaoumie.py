@@ -1,3 +1,4 @@
+import json
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.boxlayout import BoxLayout
@@ -29,12 +30,34 @@ class StartScreen(Screen):
         layout.add_widget(start_button)
         self.add_widget(layout)
 
-
+class QuestionScreen(Screen):
+    def __init__(self, data, index, **kwargs):
+        super().__init__(**kwargs)
+        self.name = f'question_{index}'
+        self.data = data
+        self.index = index
+        layout = BoxLayout(orientation='vertical')
+        question = Label(text = data['question'])
+        layout.add_widget(question)
+        for option in data['options']:
+            answer = Button(text = option['text'])
+            layout.add_widget(answer)
+        self.add_widget(layout)
+        
 class TestApp(App):
     def build(self):
+        with open('questions.json','r', encoding='utf-8') as file:
+            self.questions = json.load(file)
+
         screen_manager = ScreenManager()
-        screen_manager.add_widget(StartScreen(name='start_screen'))
+        #screen_manager.add_widget(StartScreen(name='start_screen'))
+        for index, data in enumerate(self.questions):
+            screen = QuestionScreen(data=data,index = index)
+            screen_manager.add_widget(screen)
+
         return screen_manager
 
 app = TestApp()
 app.run()
+
+
