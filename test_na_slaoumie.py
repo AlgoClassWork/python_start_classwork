@@ -36,11 +36,15 @@ class QuestionScreen(Screen):
         self.name = f'question_{index}'
         self.data = data
         self.index = index
-        layout = BoxLayout(orientation='vertical')
-        question = Label(text = data['question'])
+        layout = BoxLayout(orientation='vertical', padding=20, spacing=20)
+        question = Label(text = data['question'], font_size='60px', color=(0,0,0,1))
         layout.add_widget(question)
         for option in data['options']:
-            answer = Button(text = option['text'])
+            answer = Button(text = option['text'],
+                            font_size='30px',
+                            size_hint=(0.8,0.2),
+                            pos_hint={'center_x': 0.5},
+                            background_color = (0,0,0,1))
             layout.add_widget(answer)
         self.add_widget(layout)
         
