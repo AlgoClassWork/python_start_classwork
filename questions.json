@@ -1,0 +1,222 @@
+[
+    {
+        "question": "Почему у курицы нет ключей?",
+        "type": "text",
+        "options": [
+            {
+                "text": "просто",
+                "correct": false
+            },
+            {
+                "text": "она их потеряла",
+                "correct": false
+            },
+            {
+                "text": "потому что она не водитель",
+                "correct": false
+            },
+            {
+                "text": "у курицы нет карманов",
+                "correct": true
+            }
+        ]
+    },
+    {
+        "question": "Что происходит, если из вертолета бросить кирпич?",
+        "type": "text",
+        "options": [
+            {
+                "text": "он упадет",
+                "correct": true
+            },
+            {
+                "text": "он полетит",
+                "correct": false
+            },
+            {
+                "text": "он станет легким",
+                "correct": false
+            },
+            {
+                "text": "он превратится в облако",
+                "correct": false
+            }
+        ]
+    },
+    {
+        "question": "Почему у кошки всегда есть три жизни?",
+        "type": "text",
+        "options": [
+            {
+                "text": "это миф",
+                "correct": true
+            },
+            {
+                "text": "она очень осторожная",
+                "correct": false
+            },
+            {
+                "text": "потому что так удобнее",
+                "correct": false
+            },
+            {
+                "text": "это маркетинговый ход",
+                "correct": false
+            }
+        ]
+    },
+    {
+        "question": "Зачем у лампочки мозги?",
+        "type": "text",
+        "options": [
+            {
+                "text": "для освещения",
+                "correct": false
+            },
+            {
+                "text": "у нее их нет",
+                "correct": true
+            },
+            {
+                "text": "чтобы быть умной",
+                "correct": false
+            },
+            {
+                "text": "чтобы не перегореть",
+                "correct": false
+            }
+        ]
+    },
+    {
+        "question": "Почему вода мокрая?",
+        "type": "text",
+        "options": [
+            {
+                "text": "потому что так получается",
+                "correct": true
+            },
+            {
+                "text": "она хочет быть такой",
+                "correct": false
+            },
+            {
+                "text": "чтобы не засохнуть",
+                "correct": false
+            },
+            {
+                "text": "это ее природа",
+                "correct": false
+            }
+        ]
+    },
+    {
+        "question": "Какой цвет у невидимого цвета?",
+        "type": "text",
+        "options": [
+            {
+                "text": "невидимый",
+                "correct": true
+            },
+            {
+                "text": "радужный",
+                "correct": false
+            },
+            {
+                "text": "черный",
+                "correct": false
+            },
+            {
+                "text": "белый",
+                "correct": false
+            }
+        ]
+    },
+    {
+        "question": "Почему в небе не растут деревья?",
+        "type": "text",
+        "options": [
+            {
+                "text": "потому что там нет земли",
+                "correct": true
+            },
+            {
+                "text": "они не умеют летать",
+                "correct": false
+            },
+            {
+                "text": "это не их место",
+                "correct": false
+            },
+            {
+                "text": "они не хотят",
+                "correct": false
+            }
+        ]
+    },
+    {
+        "question": "Что произойдет, если перевернуть книгу вверх ногами?",
+        "type": "text",
+        "options": [
+            {
+                "text": "она останется книгой",
+                "correct": true
+            },
+            {
+                "text": "слова упадут",
+                "correct": false
+            },
+            {
+                "text": "она станет журналом",
+                "correct": false
+            },
+            {
+                "text": "у нее появится новая обложка",
+                "correct": false
+            }
+        ]
+    },
+    {
+        "question": "Почему у слона нет карманов?",
+        "type": "text",
+        "options": [
+            {
+                "text": "потому что он большой",
+                "correct": false
+            },
+            {
+                "text": "у него нет вещей",
+                "correct": false
+            },
+            {
+                "text": "он не носит одежду",
+                "correct": true
+            },
+            {
+                "text": "карманы ему не нужны",
+                "correct": false
+            }
+        ]
+    },
+    {
+        "question": "Почему у пчелы нет паспорта?",
+        "type": "text",
+        "options": [
+            {
+                "text": "она не путешествует",
+                "correct": true
+            },
+            {
+                "text": "у нее нет гражданства",
+                "correct": false
+            },
+            {
+                "text": "она слишком маленькая",
+                "correct": false
+            },
+            {
+                "text": "она забыла его дома",
+                "correct": false
+            }
+        ]
+    }
+]
