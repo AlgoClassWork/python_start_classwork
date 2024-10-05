@@ -25,10 +25,15 @@ class StartScreen(Screen):
                               size_hint=(0.5,0.2),
                               pos_hint={'center_x': 0.5},
                               background_color = (0,0,0,1))
+        start_button.bind(on_press = self.start_test) 
         layout.add_widget(title_label)
         layout.add_widget(description_label)
         layout.add_widget(start_button)
         self.add_widget(layout)
+
+    def start_test(self, instanse):
+        app = App.get_running_app()
+        app.screen_manager.current = 'question_0'
 
 class QuestionScreen(Screen):
     def __init__(self, data, index, **kwargs):
@@ -53,13 +58,14 @@ class TestApp(App):
         with open('questions.json','r', encoding='utf-8') as file:
             self.questions = json.load(file)
 
-        screen_manager = ScreenManager()
-        #screen_manager.add_widget(StartScreen(name='start_screen'))
+        self.screen_manager = ScreenManager()
+        self.screen_manager.add_widget(StartScreen(name='start_screen'))
         for index, data in enumerate(self.questions):
             screen = QuestionScreen(data=data,index = index)
-            screen_manager.add_widget(screen)
+            self.screen_manager.add_widget(screen)
 
-        return screen_manager
+        self.screen_manager.current = 'start_screen'
+        return self.screen_manager
 
 app = TestApp()
 app.run()
