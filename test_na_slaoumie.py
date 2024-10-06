@@ -52,6 +52,18 @@ class QuestionScreen(Screen):
                             background_color = (0,0,0,1))
             layout.add_widget(answer)
         self.add_widget(layout)
+
+class ResultScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.name = 'result_screen'
+        layout = BoxLayout(orientation='vertical')
+        result = Label(text="")
+        layout.add_widget(result)
+        retry = Button(text='Попробовать снова')
+        layout.add_widget(retry)
+        self.add_widget(layout)
+
         
 class TestApp(App):
     def build(self):
@@ -63,8 +75,10 @@ class TestApp(App):
         for index, data in enumerate(self.questions):
             screen = QuestionScreen(data=data,index = index)
             self.screen_manager.add_widget(screen)
+            
+        self.screen_manager.add_widget(ResultScreen())
 
-        self.screen_manager.current = 'start_screen'
+        self.screen_manager.current = 'result_screen'
         return self.screen_manager
 
 app = TestApp()
