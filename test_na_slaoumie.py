@@ -20,7 +20,7 @@ class StartScreen(Screen):
         description_label = Label(text= 'Это шуточный тест.\n'
                                         'Он не претендует на медецинскую точность\n'
                                         'Пройдите его, чтобы узнать свой результат!',
-        font_size='30px', color=(0,0,0,1), halign = 'center')
+        font_size='40px', color=(0,0,0,1), halign = 'center')
         start_button = Button(text='Начать тест',
                               size_hint=(0.5,0.2),
                               pos_hint={'center_x': 0.5},
@@ -42,7 +42,7 @@ class QuestionScreen(Screen):
         self.data = data
         self.index = index
         layout = BoxLayout(orientation='vertical', padding=20, spacing=20)
-        question = Label(text = data['question'], font_size='60px', color=(0,0,0,1))
+        question = Label(text = data['question'], font_size='40px', color=(0,0,0,1))
         layout.add_widget(question)
         for option in data['options']:
             answer = Button(text = option['text'],
@@ -57,25 +57,40 @@ class ResultScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.name = 'result_screen'
-        layout = BoxLayout(orientation='vertical')
-        result = Label(text="")
-        layout.add_widget(result)
-        retry = Button(text='Попробовать снова')
-        layout.add_widget(retry)
+        layout = BoxLayout(orientation='vertical',padding = 20, spacing=20)
+        result_text = Label(text="Здесь будет результат вашего тестирования",
+                       font_size='40px', color=(0,0,0,1))
+        layout.add_widget(result_text)
+        retry_button = Button(text='Попробовать снова',
+                        font_size='30px',
+                        size_hint=(0.8,0.2),
+                        pos_hint={'center_x': 0.5},
+                        background_color = (0,0,0,1))
+        layout.add_widget(retry_button)
+        retry_button.bind(on_press= self.retry_test)
         self.add_widget(layout)
 
-        
+    def retry_test(self, instanse):
+        app = App.get_running_app()
+        app.answers = []
+        app.screen_manager.current = 'start_screen'
+
+
 class TestApp(App):
     def build(self):
         with open('questions.json','r', encoding='utf-8') as file:
             self.questions = json.load(file)
 
+        self.answers = []
+
         self.screen_manager = ScreenManager()
+
         self.screen_manager.add_widget(StartScreen(name='start_screen'))
+
         for index, data in enumerate(self.questions):
             screen = QuestionScreen(data=data,index = index)
             self.screen_manager.add_widget(screen)
-            
+
         self.screen_manager.add_widget(ResultScreen())
 
         self.screen_manager.current = 'result_screen'
