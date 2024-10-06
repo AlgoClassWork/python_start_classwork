@@ -42,16 +42,29 @@ class QuestionScreen(Screen):
         self.data = data
         self.index = index
         layout = BoxLayout(orientation='vertical', padding=20, spacing=20)
-        question = Label(text = data['question'], font_size='40px', color=(0,0,0,1))
-        layout.add_widget(question)
+        question_text = Label(text = data['question'], font_size='40px', color=(0,0,0,1))
+        layout.add_widget(question_text)
         for option in data['options']:
-            answer = Button(text = option['text'],
+            answer_button = Button(text = option['text'],
                             font_size='30px',
                             size_hint=(0.8,0.2),
                             pos_hint={'center_x': 0.5},
                             background_color = (0,0,0,1))
-            layout.add_widget(answer)
+            answer_button.bind(on_press = lambda instanse, option=option : self.next_question(option))
+            layout.add_widget(answer_button)
         self.add_widget(layout)
+
+    def next_question(self, option):
+        app = App.get_running_app()
+        app.answers.append(option['correct'])
+        if self.index < len(app.questions) - 1:
+            next_screen_name = f'question_{self.index  + 1}'
+            app.screen_manager.current = next_screen_name
+        else:
+            app.screen_manager.current = 'result_screen'
+
+
+
 
 class ResultScreen(Screen):
     def __init__(self, **kwargs):
