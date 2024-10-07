@@ -2,12 +2,14 @@ from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
+from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.core.window import Window
 
 Window.clearcolor = (0.9,0.9,1,1)
 
-class TestApp(App):
-    def build(self):
+class StartScreen(Screen):
+    def __init__(self):
+        super().__init__()
         layout = BoxLayout(orientation="vertical")
         test_name = Label(text="ТЕСТ НА СЛАБОУМИЕ", font_size="80px", color=(0.9,0,0,1))
         test_info = Label(text="Это шуточный тест. Он не претендует на медецинскую точность\n"
@@ -22,7 +24,13 @@ class TestApp(App):
         layout.add_widget(test_name)
         layout.add_widget(test_info)
         layout.add_widget(start_button)
-        return layout
+        self.add_widget(layout)
+
+class TestApp(App):
+    def build(self):
+        screen_manager = ScreenManager()
+        screen_manager.add_widget(StartScreen())
+        return screen_manager
 
 app = TestApp()
 app.run()
