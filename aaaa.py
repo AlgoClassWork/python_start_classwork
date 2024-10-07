@@ -8,8 +8,8 @@ from kivy.core.window import Window
 Window.clearcolor = (0.9,0.9,1,1)
 
 class StartScreen(Screen):
-    def __init__(self):
-        super().__init__()
+    def __init__(self,**data):
+        super().__init__(**data)
         layout = BoxLayout(orientation="vertical")
         test_name = Label(text="ТЕСТ НА СЛАБОУМИЕ", font_size="80px", color=(0.9,0,0,1))
         test_info = Label(text="Это шуточный тест. Он не претендует на медецинскую точность\n"
@@ -26,10 +26,20 @@ class StartScreen(Screen):
         layout.add_widget(start_button)
         self.add_widget(layout)
 
+class SecondScreen(Screen):
+    def __init__(self,**data):
+        super().__init__(**data)
+        layout = BoxLayout(orientation="vertical")
+        test_name = Label(text="ЭКРАН НОМЕР 2", font_size="80px", color=(0.9,0,0,1))
+        layout.add_widget(test_name)
+        self.add_widget(layout)
+
 class TestApp(App):
     def build(self):
         screen_manager = ScreenManager()
-        screen_manager.add_widget(StartScreen())
+        screen_manager.add_widget(StartScreen(name="start"))
+        screen_manager.add_widget(SecondScreen(name="test"))
+        screen_manager.current = "start"
         return screen_manager
 
 app = TestApp()
