@@ -21,10 +21,15 @@ class StartScreen(Screen):
                               background_color=(0.5,1,0.5,1),
                               size_hint=(0.5,0.2),
                               pos_hint={'center_x': 0.5})
+        start_button.bind(on_press=self.change_screen)
         layout.add_widget(test_name)
         layout.add_widget(test_info)
         layout.add_widget(start_button)
         self.add_widget(layout)
+
+    def change_screen(self, instanse):
+        app = App.get_running_app()
+        app.screen_manager.current = 'test'
 
 class SecondScreen(Screen):
     def __init__(self,**data):
@@ -36,11 +41,11 @@ class SecondScreen(Screen):
 
 class TestApp(App):
     def build(self):
-        screen_manager = ScreenManager()
-        screen_manager.add_widget(StartScreen(name="start"))
-        screen_manager.add_widget(SecondScreen(name="test"))
-        screen_manager.current = "start"
-        return screen_manager
+        self.screen_manager = ScreenManager()
+        self.screen_manager.add_widget(StartScreen(name="start"))
+        self.screen_manager.add_widget(SecondScreen(name="test"))
+        self.screen_manager.current = "start"
+        return self.screen_manager
 
 app = TestApp()
 app.run()
