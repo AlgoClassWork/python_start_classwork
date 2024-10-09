@@ -1,3 +1,4 @@
+import json
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
@@ -50,11 +51,18 @@ class QuestionScreen(Screen):
 
 class TestApp(App):
     def build(self):
+        with open('questions.json','r',encoding='utf-8') as file:
+            self.questions = json.load(file)
+
         self.screen_manager = ScreenManager()
+        
         self.screen_manager.add_widget(StartScreen(name="start"))
-        self.screen_manager.add_widget(QuestionScreen(name="test"))
+        for index, data in enumerate(self.questions):
+            screen = QuestionScreen(data=data,index=index)
+            self.screen_manager.add_widget(screen)
+        
         self.screen_manager.current = "start"
         return self.screen_manager
-
+    
 app = TestApp()
 app.run()
