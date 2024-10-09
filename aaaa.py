@@ -11,7 +11,7 @@ Window.clearcolor = (0.9,0.9,1,1)
 class StartScreen(Screen):
     def __init__(self,**data):
         super().__init__(**data)
-        layout = BoxLayout(orientation="vertical")
+        layout = BoxLayout(orientation="vertical",padding=20, spacing=20)
         test_name = Label(text="ТЕСТ НА СЛАБОУМИЕ", font_size="80px", color=(0.9,0,0,1))
         test_info = Label(text="Это шуточный тест. Он не претендует на медецинскую точность\n"
                           "Пройдите тест, чтобы узнать свой результат",
@@ -38,11 +38,17 @@ class QuestionScreen(Screen):
         self.name = f'question_{index}'
         self.data = data
         self.index = index
-        question_label = Label(text=data['question'])
-        line = BoxLayout(orientation='vertical')
+        question_label = Label(text=data['question'],
+                                font_size="40px",
+                                color=(1,0,0,1),
+                                halign="center")
+        line = BoxLayout(orientation='vertical',padding=20, spacing=20)
         line.add_widget(question_label)
         for option in data['options']:
-            button = Button(text=option['text'])
+            button = Button(text=option['text'],
+                            background_color=(0.5,0.5,1,1),
+                            size_hint=(0.8,0.2),
+                            pos_hint={'center_x': 0.5})
             line.add_widget(button)
         self.add_widget(line)
 
