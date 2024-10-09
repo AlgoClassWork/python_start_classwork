@@ -1,222 +1,102 @@
 [
     {
-        "question": "Почему у курицы нет ключей?",
+        "question": "Какой из этих предметов не может танцевать?",
         "type": "text",
         "options": [
-            {
-                "text": "просто",
-                "correct": false
-            },
-            {
-                "text": "она их потеряла",
-                "correct": false
-            },
-            {
-                "text": "потому что она не водитель",
-                "correct": false
-            },
-            {
-                "text": "у курицы нет карманов",
-                "correct": true
-            }
+            {"text": "Танцор", "correct": false},
+            {"text": "Кошка", "correct": false},
+            {"text": "Суп", "correct": true},
+            {"text": "Человек", "correct": false}
         ]
     },
     {
-        "question": "Что происходит, если из вертолета бросить кирпич?",
+        "question": "Что из этого не может летать?",
         "type": "text",
         "options": [
-            {
-                "text": "он упадет",
-                "correct": true
-            },
-            {
-                "text": "он полетит",
-                "correct": false
-            },
-            {
-                "text": "он станет легким",
-                "correct": false
-            },
-            {
-                "text": "он превратится в облако",
-                "correct": false
-            }
+            {"text": "Птица", "correct": false},
+            {"text": "Самолет", "correct": false},
+            {"text": "Кирпич", "correct": true},
+            {"text": "Насекомое", "correct": false}
         ]
     },
     {
-        "question": "Почему у кошки всегда есть три жизни?",
+        "question": "Что из этого не может говорить?",
         "type": "text",
         "options": [
-            {
-                "text": "это миф",
-                "correct": true
-            },
-            {
-                "text": "она очень осторожная",
-                "correct": false
-            },
-            {
-                "text": "потому что так удобнее",
-                "correct": false
-            },
-            {
-                "text": "это маркетинговый ход",
-                "correct": false
-            }
+            {"text": "Папуга", "correct": false},
+            {"text": "Человек", "correct": false},
+            {"text": "Камень", "correct": true},
+            {"text": "Собака", "correct": false}
         ]
     },
     {
-        "question": "Зачем у лампочки мозги?",
+        "question": "Какой из этих предметов не имеет ушей?",
         "type": "text",
         "options": [
-            {
-                "text": "для освещения",
-                "correct": false
-            },
-            {
-                "text": "у нее их нет",
-                "correct": true
-            },
-            {
-                "text": "чтобы быть умной",
-                "correct": false
-            },
-            {
-                "text": "чтобы не перегореть",
-                "correct": false
-            }
+            {"text": "Слон", "correct": false},
+            {"text": "Кот", "correct": false},
+            {"text": "Микрофон", "correct": true},
+            {"text": "Собака", "correct": false}
         ]
     },
     {
-        "question": "Почему вода мокрая?",
+        "question": "Что из этого не может быть съедено на завтрак?",
         "type": "text",
         "options": [
-            {
-                "text": "потому что так получается",
-                "correct": true
-            },
-            {
-                "text": "она хочет быть такой",
-                "correct": false
-            },
-            {
-                "text": "чтобы не засохнуть",
-                "correct": false
-            },
-            {
-                "text": "это ее природа",
-                "correct": false
-            }
+            {"text": "Яйцо", "correct": false},
+            {"text": "Хлеб", "correct": false},
+            {"text": "Лампочка", "correct": true},
+            {"text": "Каша", "correct": false}
         ]
     },
     {
-        "question": "Какой цвет у невидимого цвета?",
+        "question": "Какой из этих фруктов не может быть зеленым?",
         "type": "text",
         "options": [
-            {
-                "text": "невидимый",
-                "correct": true
-            },
-            {
-                "text": "радужный",
-                "correct": false
-            },
-            {
-                "text": "черный",
-                "correct": false
-            },
-            {
-                "text": "белый",
-                "correct": false
-            }
+            {"text": "Яблоко", "correct": false},
+            {"text": "Груша", "correct": false},
+            {"text": "Апельсин", "correct": true},
+            {"text": "Киви", "correct": false}
         ]
     },
     {
-        "question": "Почему в небе не растут деревья?",
+        "question": "Что из этого не умеет плавать?",
         "type": "text",
         "options": [
-            {
-                "text": "потому что там нет земли",
-                "correct": true
-            },
-            {
-                "text": "они не умеют летать",
-                "correct": false
-            },
-            {
-                "text": "это не их место",
-                "correct": false
-            },
-            {
-                "text": "они не хотят",
-                "correct": false
-            }
+            {"text": "Рыба", "correct": false},
+            {"text": "Утка", "correct": false},
+            {"text": "Дерево", "correct": true},
+            {"text": "Человек", "correct": false}
         ]
     },
     {
-        "question": "Что произойдет, если перевернуть книгу вверх ногами?",
+        "question": "Какой из этих предметов не носит одежду?",
         "type": "text",
         "options": [
-            {
-                "text": "она останется книгой",
-                "correct": true
-            },
-            {
-                "text": "слова упадут",
-                "correct": false
-            },
-            {
-                "text": "она станет журналом",
-                "correct": false
-            },
-            {
-                "text": "у нее появится новая обложка",
-                "correct": false
-            }
+            {"text": "Человек", "correct": false},
+            {"text": "Кукла", "correct": false},
+            {"text": "Собака", "correct": false},
+            {"text": "Кубик", "correct": true}
         ]
     },
     {
-        "question": "Почему у слона нет карманов?",
+        "question": "Что из этого не умеет смеяться?",
         "type": "text",
         "options": [
-            {
-                "text": "потому что он большой",
-                "correct": false
-            },
-            {
-                "text": "у него нет вещей",
-                "correct": false
-            },
-            {
-                "text": "он не носит одежду",
-                "correct": true
-            },
-            {
-                "text": "карманы ему не нужны",
-                "correct": false
-            }
+            {"text": "Человек", "correct": false},
+            {"text": "Шут", "correct": false},
+            {"text": "Доска", "correct": true},
+            {"text": "Клоун", "correct": false}
         ]
     },
     {
-        "question": "Почему у пчелы нет паспорта?",
+        "question": "Какой из этих предметов не может писать?",
         "type": "text",
         "options": [
-            {
-                "text": "она не путешествует",
-                "correct": true
-            },
-            {
-                "text": "у нее нет гражданства",
-                "correct": false
-            },
-            {
-                "text": "она слишком маленькая",
-                "correct": false
-            },
-            {
-                "text": "она забыла его дома",
-                "correct": false
-            }
+            {"text": "Ручка", "correct": false},
+            {"text": "Карандаш", "correct": false},
+            {"text": "Тетрадь", "correct": true},
+            {"text": "Мел", "correct": false}
         ]
     }
 ]
