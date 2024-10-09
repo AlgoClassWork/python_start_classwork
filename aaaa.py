@@ -30,22 +30,20 @@ class StartScreen(Screen):
 
     def change_screen(self, instanse):
         app = App.get_running_app()
-        app.screen_manager.current = 'test'
+        app.screen_manager.current = 'question_0'
 
 class QuestionScreen(Screen):
-    def __init__(self,**data):
-        super().__init__(**data)
-        question_label = Label(text="Почему у курицы нет ключей?")
-        button1 = Button(text='Она их забыла')
-        button2 = Button(text='У нее нет карманов')
-        button3 = Button(text='Украли')
-        button4 = Button(text='Слишком сложно')
+    def __init__(self,data,index,**kwargs):
+        super().__init__(**kwargs)
+        self.name = f'question_{index}'
+        self.data = data
+        self.index = index
+        question_label = Label(text=data['question'])
         line = BoxLayout(orientation='vertical')
         line.add_widget(question_label)
-        line.add_widget(button1)
-        line.add_widget(button2)
-        line.add_widget(button3)
-        line.add_widget(button4)
+        for option in data['options']:
+            button = Button(text=option['text'])
+            line.add_widget(button)
         self.add_widget(line)
 
 
@@ -55,7 +53,7 @@ class TestApp(App):
             self.questions = json.load(file)
 
         self.screen_manager = ScreenManager()
-        
+
         self.screen_manager.add_widget(StartScreen(name="start"))
         for index, data in enumerate(self.questions):
             screen = QuestionScreen(data=data,index=index)
