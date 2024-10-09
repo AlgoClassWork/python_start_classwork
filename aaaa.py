@@ -31,19 +31,28 @@ class StartScreen(Screen):
         app = App.get_running_app()
         app.screen_manager.current = 'test'
 
-class SecondScreen(Screen):
+class QuestionScreen(Screen):
     def __init__(self,**data):
         super().__init__(**data)
-        layout = BoxLayout(orientation="vertical")
-        test_name = Label(text="ЭКРАН НОМЕР 2", font_size="80px", color=(0.9,0,0,1))
-        layout.add_widget(test_name)
-        self.add_widget(layout)
+        question_label = Label(text="Почему у курицы нет ключей?")
+        button1 = Button(text='Она их забыла')
+        button2 = Button(text='У нее нет карманов')
+        button3 = Button(text='Украли')
+        button4 = Button(text='Слишком сложно')
+        line = BoxLayout(orientation='vertical')
+        line.add_widget(question_label)
+        line.add_widget(button1)
+        line.add_widget(button2)
+        line.add_widget(button3)
+        line.add_widget(button4)
+        self.add_widget(line)
+
 
 class TestApp(App):
     def build(self):
         self.screen_manager = ScreenManager()
         self.screen_manager.add_widget(StartScreen(name="start"))
-        self.screen_manager.add_widget(SecondScreen(name="test"))
+        self.screen_manager.add_widget(QuestionScreen(name="test"))
         self.screen_manager.current = "start"
         return self.screen_manager
 
