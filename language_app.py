@@ -53,7 +53,7 @@ question_label = QLabel('Как переводится слово яблоко?'
 answer_button = QPushButton('Ответить')
 
 # форма вопроса
-question_form = QGroupBox('Варианты ответов')
+question_form = QGroupBox('Варианты ответов:')
 rbtn1 = QRadioButton('dog')
 rbtn2 = QRadioButton('cat')
 rbtn3 = QRadioButton('apple')
@@ -69,14 +69,21 @@ h1_layout.addWidget(rbtn2)
 h2_layout.addWidget(rbtn3)
 h2_layout.addWidget(rbtn4)
 question_form.setLayout(v_layout)
-
+# форма результата
+result_form = QGroupBox('Результаты:')
+result_label = QLabel('правильно')
+answer_label = QLabel('apple')
+layout = QVBoxLayout()
+layout.addWidget(result_label)
+layout.addWidget(answer_label)
+result_form.setLayout(layout)
 # РАЗМЕЩЕНИЕ
 main_layout = QVBoxLayout()
 main_layout.addWidget(question_label)
 main_layout.addWidget(question_form)
+main_layout.addWidget(result_form)
 main_layout.addWidget(answer_button)
 window.setLayout(main_layout)
-
 # ЗАПУСК
 window.show()
 app.exec()
