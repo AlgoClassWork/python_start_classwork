@@ -95,12 +95,18 @@ def ask(question,right_answer,wrong1,wrong2,wrong3):
     rbtns[2].setText(wrong2)
     rbtns[3].setText(wrong3)
 
+def check_answer():
+    if rbtns[0].isChecked():
+        result_label.setText('Правильно!')
+    else:
+        result_label.setText('Не правильно :(')
 
 def change_form():
     if answer_button.text() == 'Ответить':
         question_form.hide()
         result_form.show()
         answer_button.setText('Следующий вопрос')
+        check_answer()
     else:
         question_form.show()
         result_form.hide()
