@@ -75,6 +75,14 @@ QLineEdit:focus {
 }
 """
 
+class Question():
+    def __init__(self,q,r,w1,w2,w3):
+        self.question = q
+        self.right = r
+        self.wrong1 = w1
+        self.wrong2 = w2
+        self.wrong3 = w3
+
 # Создание элементов интерфейса
 app = QApplication([])
 window = QWidget()
