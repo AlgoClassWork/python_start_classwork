@@ -1,3 +1,4 @@
+from random import shuffle
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QPushButton,
     QVBoxLayout, QHBoxLayout, QGroupBox, QRadioButton
@@ -113,12 +114,15 @@ main_layout.addWidget(results_form)
 main_layout.addWidget(answer_button)
 window.setLayout(main_layout)
 # Функционал приложения
+buttons = [rbtn1,rbtn2,rbtn3,rbtn4]
+
 def render_question(question,right,wrong1,wrong2,wrong3):
+    shuffle(buttons)
     question_label.setText(question)
-    rbtn1.setText(right)
-    rbtn2.setText(wrong1)
-    rbtn3.setText(wrong2)
-    rbtn4.setText(wrong3)
+    buttons[0].setText(right)
+    buttons[1].setText(wrong1)
+    buttons[2].setText(wrong2)
+    buttons[3].setText(wrong3)
 
 render_question('Зачем людям ноги?','ходить','думать','дышать','есть')
 
