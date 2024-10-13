@@ -113,6 +113,15 @@ main_layout.addWidget(results_form)
 main_layout.addWidget(answer_button)
 window.setLayout(main_layout)
 # Функционал приложения
+def render_question(question,right,wrong1,wrong2,wrong3):
+    question_label.setText(question)
+    rbtn1.setText(right)
+    rbtn2.setText(wrong1)
+    rbtn3.setText(wrong2)
+    rbtn4.setText(wrong3)
+
+render_question('Зачем людям ноги?','ходить','думать','дышать','есть')
+
 def change_form():
     if answer_button.text() == 'Ответить':
         answers_form.hide()
