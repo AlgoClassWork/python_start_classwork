@@ -112,6 +112,20 @@ main_layout.addWidget(answers_form)
 main_layout.addWidget(results_form)
 main_layout.addWidget(answer_button)
 window.setLayout(main_layout)
+# Функционал приложения
+def change_form():
+    if answer_button.text() == 'Ответить':
+        answers_form.hide()
+        results_form.show()
+        answer_button.setText('Следующий вопрос')
+    else:
+        answers_form.show()
+        results_form.hide()
+        answer_button.setText('Ответить')
+
+# Подписки на события
+answer_button.clicked.connect(change_form)
 # Запуск приложения
+results_form.hide()
 window.show()
 app.exec()
