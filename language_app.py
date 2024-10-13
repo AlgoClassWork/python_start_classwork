@@ -84,6 +84,19 @@ main_layout.addWidget(question_form)
 main_layout.addWidget(result_form)
 main_layout.addWidget(answer_button)
 window.setLayout(main_layout)
+# ФУНКЦИОНАЛ
+def change_form():
+    if answer_button.text() == 'Ответить':
+        question_form.hide()
+        result_form.show()
+        answer_button.setText('Следующий вопрос')
+    else:
+        question_form.show()
+        result_form.hide()
+        answer_button.setText('Ответить')
+# ПОДПИСКИ
+answer_button.clicked.connect(change_form)
 # ЗАПУСК
+result_form.hide()
 window.show()
 app.exec()
