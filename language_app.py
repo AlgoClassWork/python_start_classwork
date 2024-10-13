@@ -1,3 +1,4 @@
+from random import shuffle
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QLabel, QPushButton,
@@ -85,6 +86,16 @@ main_layout.addWidget(result_form)
 main_layout.addWidget(answer_button)
 window.setLayout(main_layout)
 # ФУНКЦИОНАЛ
+rbtns =  [rbtn1,rbtn2,rbtn3,rbtn4]
+def ask(question,right_answer,wrong1,wrong2,wrong3):
+    shuffle(rbtns)
+    question_label.setText(question)
+    rbtns[0].setText(right_answer)
+    rbtns[1].setText(wrong1)
+    rbtns[2].setText(wrong2)
+    rbtns[3].setText(wrong3)
+
+
 def change_form():
     if answer_button.text() == 'Ответить':
         question_form.hide()
@@ -97,6 +108,7 @@ def change_form():
 # ПОДПИСКИ
 answer_button.clicked.connect(change_form)
 # ЗАПУСК
+ask('Сколько будет 2 + 2','4','1','3','5')
 result_form.hide()
 window.show()
 app.exec()
