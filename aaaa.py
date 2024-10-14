@@ -49,9 +49,15 @@ class QuestionScreen(Screen):
                             background_color=(0.5,0.5,1,1),
                             size_hint=(0.8,0.2),
                             pos_hint={'center_x': 0.5})
+            button.bind(on_press = lambda instance, option=option: self.check_answer(option))
             line.add_widget(button)
         self.add_widget(line)
 
+    def check_answer(self,option):
+        app = App.get_running_app()
+        # строка для будущей логики
+        if self.index < len(app.questions) - 1:
+            app.screen_manager.current = f'question_{self.index + 1}'
 
 class TestApp(App):
     def build(self):
