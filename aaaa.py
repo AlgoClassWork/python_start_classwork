@@ -49,7 +49,7 @@ class QuestionScreen(Screen):
                             background_color=(0.5,0.5,1,1),
                             size_hint=(0.8,0.2),
                             pos_hint={'center_x': 0.5})
-            button.bind(on_press = lambda instance, option=option: self.check_answer(option))
+            button.bind(on_press = lambda instanse, option=option: self.check_answer(option))
             line.add_widget(button)
         self.add_widget(line)
 
@@ -58,6 +58,8 @@ class QuestionScreen(Screen):
         # строка для будущей логики
         if self.index < len(app.questions) - 1:
             app.screen_manager.current = f'question_{self.index + 1}'
+        else:
+            app.screen_manager.current = 'result'
 
 class ResultScreen(Screen):
     def __init__(self, **kwargs):
@@ -67,16 +69,23 @@ class ResultScreen(Screen):
                               background_color=(0.5,1,0.5,1),
                               size_hint=(0.8,0.2),
                               pos_hint={'center_x': 0.5})
+        self.retry_button.bind(on_press=self.retry_test)
         self.layout = BoxLayout(orientation='vertical', padding=20 , spacing=20)
         self.layout.add_widget(self.result_label)
         self.layout.add_widget(self.retry_button)
         self.add_widget(self.layout)
+
+    def retry_test(self, instanse):
+        app = App.get_running_app()
+        self.user_answers = []
+        app.screen_manager.current = 'start'
 
 class TestApp(App):
     def build(self):
         with open('questions.json','r',encoding='utf-8') as file:
             self.questions = json.load(file)
 
+        self.user_answers = []
         self.screen_manager = ScreenManager()
 
         self.screen_manager.add_widget(StartScreen(name="start"))
