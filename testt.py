@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import (
-    QApplication, QWidget, QLabel, QVBoxLayout, QRadioButton, QHBoxLayout
+    QApplication, QWidget, QLabel, QVBoxLayout, QRadioButton, QHBoxLayout,
+    QMessageBox
 )
 from PyQt5.QtCore import Qt
 
@@ -59,9 +60,23 @@ h1_layout.addWidget(rbutton1) #UPDATE
 h1_layout.addWidget(rbutton2) #UPDATE
 h2_layout.addWidget(rbutton3) #UPDATE
 h2_layout.addWidget(rbutton4) #UPDATE
-
 window.setLayout(main_layout)
+# ФУНКЦИОНАЛ
+def win():
+    box = QMessageBox()
+    box.setText('ВЫ ВЫИГРАЛИ ЛАМБОРГИНИ!')
+    box.exec()
 
+def lose():
+    box = QMessageBox()
+    box.setText('ВЫ ОТПРАВЛЯЕТЕСЬ НА ШАХТУ!')
+    box.exec()
+
+# ПОДПИСКИ
+rbutton1.clicked.connect(lose)
+rbutton2.clicked.connect(win)
+rbutton3.clicked.connect(lose)
+rbutton4.clicked.connect(lose)
 # ЗАПУСК
 window.resize(300, 200)
 window.show()
