@@ -59,6 +59,19 @@ class QuestionScreen(Screen):
         if self.index < len(app.questions) - 1:
             app.screen_manager.current = f'question_{self.index + 1}'
 
+class ResultScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.result_label = Label(text='Ты красавчик!', font_size='40px', color=(0,0,0,1))
+        self.retry_button = Button(text="Попробовать снова",
+                              background_color=(0.5,1,0.5,1),
+                              size_hint=(0.8,0.2),
+                              pos_hint={'center_x': 0.5})
+        self.layout = BoxLayout(orientation='vertical', padding=20 , spacing=20)
+        self.layout.add_widget(self.result_label)
+        self.layout.add_widget(self.retry_button)
+        self.add_widget(self.layout)
+
 class TestApp(App):
     def build(self):
         with open('questions.json','r',encoding='utf-8') as file:
@@ -67,9 +80,12 @@ class TestApp(App):
         self.screen_manager = ScreenManager()
 
         self.screen_manager.add_widget(StartScreen(name="start"))
+
         for index, data in enumerate(self.questions):
             screen = QuestionScreen(data=data,index=index)
             self.screen_manager.add_widget(screen)
+
+        self.screen_manager.add_widget(ResultScreen(name='result'))
         
         self.screen_manager.current = "start"
         return self.screen_manager
