@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import (
-    QApplication, QWidget, QLabel, QVBoxLayout, QRadioButton
+    QApplication, QWidget, QLabel, QVBoxLayout, QRadioButton, QHBoxLayout
 )
 from PyQt5.QtCore import Qt
 
@@ -49,12 +49,16 @@ rbutton4 = QRadioButton('голубого')
 
 # РАЗМЕЩЕНИЕ
 main_layout = QVBoxLayout()
-main_layout.setAlignment(Qt.AlignTop)
+h1_layout = QHBoxLayout() #NEW
+h2_layout = QHBoxLayout() #NEW
 main_layout.addWidget(question_label)
-main_layout.addWidget(rbutton1)
-main_layout.addWidget(rbutton2)
-main_layout.addWidget(rbutton3)
-main_layout.addWidget(rbutton4)
+main_layout.addLayout(h1_layout) #NEW
+main_layout.addLayout(h2_layout) #NEW
+main_layout.setAlignment(Qt.AlignTop)
+h1_layout.addWidget(rbutton1) #UPDATE
+h1_layout.addWidget(rbutton2) #UPDATE
+h2_layout.addWidget(rbutton3) #UPDATE
+h2_layout.addWidget(rbutton4) #UPDATE
 
 window.setLayout(main_layout)
 
