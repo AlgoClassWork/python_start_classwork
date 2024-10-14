@@ -55,7 +55,7 @@ class QuestionScreen(Screen):
 
     def check_answer(self,option):
         app = App.get_running_app()
-        # строка для будущей логики
+        app.user_answers.append(option['correct'])
         if self.index < len(app.questions) - 1:
             app.screen_manager.current = f'question_{self.index + 1}'
         else:
@@ -64,7 +64,7 @@ class QuestionScreen(Screen):
 class ResultScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.result_label = Label(text='Ты красавчик!', font_size='40px', color=(0,0,0,1))
+        self.result_label = Label(text='', font_size='40px', color=(0,0,0,1))
         self.retry_button = Button(text="Попробовать снова",
                               background_color=(0.5,1,0.5,1),
                               size_hint=(0.8,0.2),
@@ -75,6 +75,19 @@ class ResultScreen(Screen):
         self.layout.add_widget(self.retry_button)
         self.add_widget(self.layout)
 
+    def on_enter(self):
+        app = App.get_running_app()
+        correct_answers = sum(app.user_answers)
+        total_questions = len(app.questions)
+        result = correct_answers/total_questions
+        if result >= 0.90:
+            text = 'Вы гений! Наверное . . .'
+        elif result >= 0.5:
+            text = 'Все в пределах нормы'
+        else:
+            text = 'Наверное вы сын Ивана Золо'
+        self.result_label.text = f'Результат: {text}'
+        
     def retry_test(self, instanse):
         app = App.get_running_app()
         self.user_answers = []
