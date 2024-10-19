@@ -118,20 +118,27 @@ def ask(q : Question):
     rbtns[3].setText(q.wrong3)
 
 def check_answer():
+    a = 2
     question_form.hide()
     result_form.show()
     answer_button.setText('Следующий вопрос')
 
     if rbtns[0].isChecked():
         result_label.setText('Правильно!')
+        window.correct += 1
     else:
         result_label.setText('Не правильно :(')
+
+    correct_procent = int((window.correct / window.total) * 100)
+    answer_label.setText(str(correct_procent) + '% ' + 'Правильных ответов')
 
 def next_question():
     question_form.show()
     result_form.hide()
     answer_button.setText('Ответить')
     ask(questions_list[randint(0,len(questions_list) - 1)])
+
+    window.total += 1
  
 def change_form():
     if answer_button.text() == 'Ответить':
@@ -142,7 +149,8 @@ def change_form():
 # ПОДПИСКИ
 answer_button.clicked.connect(change_form)
 # ЗАПУСК
-window.current_question = 0
+window.total = 0
+window.correct = 0
 next_question()
 result_form.hide()
 window.show()
