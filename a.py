@@ -137,13 +137,13 @@ window.setLayout(main_layout)
 # Функционал приложения
 buttons = [rbtn1,rbtn2,rbtn3,rbtn4]
 
-def render_question(question,right,wrong1,wrong2,wrong3):
+def render_question(q : Question):
     shuffle(buttons)
-    question_label.setText(question)
-    buttons[0].setText(right)
-    buttons[1].setText(wrong1)
-    buttons[2].setText(wrong2)
-    buttons[3].setText(wrong3)
+    question_label.setText(q.question)
+    buttons[0].setText(q.right)
+    buttons[1].setText(q.wrong1)
+    buttons[2].setText(q.wrong2)
+    buttons[3].setText(q.wrong3)
 
 def check_answer():
     if buttons[0].isChecked():
@@ -165,7 +165,6 @@ def change_form():
 # Подписки на события
 answer_button.clicked.connect(change_form)
 # Запуск приложения
-render_question('Зачем людям ноги?','ходить','думать','дышать','есть')
 results_form.hide()
 window.show()
 app.exec()
