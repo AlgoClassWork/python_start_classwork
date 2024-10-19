@@ -146,26 +146,31 @@ def render_question(q : Question):
     buttons[3].setText(q.wrong3)
 
 def check_answer():
+    answers_form.hide()
+    results_form.show()
+    answer_button.setText('Следующий вопрос')
+
     if buttons[0].isChecked():
         result_label.setText('Правильно!')
     else:
         result_label.setText('Не правильно :(')
 
+def next_question():
+    answers_form.show()
+    results_form.hide()
+    answer_button.setText('Ответить')
+    render_question(list_questions[randint(0,len(list_questions) - 1)])
+
 def change_form():
     if answer_button.text() == 'Ответить':
-        answers_form.hide()
-        results_form.show()
-        answer_button.setText('Следующий вопрос')
         check_answer()
     else:
-        answers_form.show()
-        results_form.hide()
-        answer_button.setText('Ответить')
-        render_question(list_questions[randint(0,len(list_questions) - 1)])
+        next_question()
 
 # Подписки на события
 answer_button.clicked.connect(change_form)
 # Запуск приложения
+next_question()
 results_form.hide()
 window.show()
 app.exec()
