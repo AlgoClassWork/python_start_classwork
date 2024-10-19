@@ -5,7 +5,6 @@ from PyQt5.QtWidgets import (
     QVBoxLayout, QHBoxLayout,
     QGroupBox, QRadioButton
 )
-from PyQt5.QtCore import Qt
 
 # ИНТЕРФЕЙС
 app = QApplication([])
@@ -118,7 +117,6 @@ def ask(q : Question):
     rbtns[3].setText(q.wrong3)
 
 def check_answer():
-    a = 2
     question_form.hide()
     result_form.show()
     answer_button.setText('Следующий вопрос')
