@@ -1,4 +1,4 @@
-from random import shuffle
+from random import randint, shuffle
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QLabel, QPushButton,
@@ -131,7 +131,8 @@ def next_question():
     question_form.show()
     result_form.hide()
     answer_button.setText('Ответить')
-    
+    ask(questions_list[randint(0,len(questions_list) - 1)])
+ 
 def change_form():
     if answer_button.text() == 'Ответить':
         check_answer()
@@ -141,6 +142,8 @@ def change_form():
 # ПОДПИСКИ
 answer_button.clicked.connect(change_form)
 # ЗАПУСК
+window.current_question = 0
+next_question()
 result_form.hide()
 window.show()
 app.exec()
