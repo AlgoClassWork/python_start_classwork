@@ -152,14 +152,19 @@ def check_answer():
 
     if buttons[0].isChecked():
         result_label.setText('Правильно!')
+        window.correct += 1
     else:
         result_label.setText('Не правильно :(')
+
+    procent = int(window.correct / window.total * 100)
+    correct_label.setText(str(procent)+'% Правильных ответов')
 
 def next_question():
     answers_form.show()
     results_form.hide()
     answer_button.setText('Ответить')
     render_question(list_questions[randint(0,len(list_questions) - 1)])
+    window.total += 1
 
 def change_form():
     if answer_button.text() == 'Ответить':
@@ -170,6 +175,8 @@ def change_form():
 # Подписки на события
 answer_button.clicked.connect(change_form)
 # Запуск приложения
+window.total = 0
+window.correct = 0
 next_question()
 results_form.hide()
 window.show()
