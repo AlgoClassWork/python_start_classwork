@@ -109,34 +109,38 @@ main_layout.addWidget(answer_button)
 window.setLayout(main_layout)
 # ФУНКЦИОНАЛ
 rbtns =  [rbtn1,rbtn2,rbtn3,rbtn4]
-def ask(question,right_answer,wrong1,wrong2,wrong3):
+def ask(q : Question):
     shuffle(rbtns)
-    question_label.setText(question)
-    rbtns[0].setText(right_answer)
-    rbtns[1].setText(wrong1)
-    rbtns[2].setText(wrong2)
-    rbtns[3].setText(wrong3)
+    question_label.setText(q.question)
+    rbtns[0].setText(q.right_answer)
+    rbtns[1].setText(q.wrong1)
+    rbtns[2].setText(q.wrong2)
+    rbtns[3].setText(q.wrong3)
 
 def check_answer():
+    question_form.hide()
+    result_form.show()
+    answer_button.setText('Следующий вопрос')
+
     if rbtns[0].isChecked():
         result_label.setText('Правильно!')
     else:
         result_label.setText('Не правильно :(')
 
+def next_question():
+    question_form.show()
+    result_form.hide()
+    answer_button.setText('Ответить')
+    
 def change_form():
     if answer_button.text() == 'Ответить':
-        question_form.hide()
-        result_form.show()
-        answer_button.setText('Следующий вопрос')
         check_answer()
     else:
-        question_form.show()
-        result_form.hide()
-        answer_button.setText('Ответить')
+        next_question()
+
 # ПОДПИСКИ
 answer_button.clicked.connect(change_form)
 # ЗАПУСК
-ask('Сколько будет 2 + 2','4','1','3','5')
 result_form.hide()
 window.show()
 app.exec()
