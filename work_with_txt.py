@@ -11,6 +11,21 @@ while answer != 'нет':
     answer = input('Хотите добавить еще одну цитату?')
 
 
+file = open('students.txt','r',encoding='utf-8')
+students = file.readlines()
+total_iq = 0
+total_person = 0
+for student in students:
+    info = student.split()
+    surname = info[0]
+    name = info[1]
+    iq = int(info[2])
+    total_iq += iq
+    total_person += 1
+
+print('Средний IQ', total_iq/total_person)
+    
+
 Эйнштейн Альберт 160
 Ньютон Исаак 180
 Хокинг Стивен 160
