@@ -25,6 +25,8 @@ file = open('person.txt','r',encoding='utf-8')
 heroes = file.readlines()
 amount_hero = len(heroes)
 total_height = 0
+smartest = ''
+high_iq = 0
 for hero in heroes: 
     hero = hero.split()  
     name = hero[0]
@@ -32,5 +34,9 @@ for hero in heroes:
     iq = int(hero[2])
     height = int(hero[3])
     total_height += height
+    if iq > high_iq:
+        high_iq = iq
+        smartest = name + ' ' + surname
 
 print('Средний рост персонажа',total_height/amount_hero)
+print('Самый умный персонаж',smartest)
