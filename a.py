@@ -1,3 +1,4 @@
+from random import shuffle
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
         QApplication, QWidget, 
@@ -105,12 +106,15 @@ window.setWindowTitle('Memory Card')
 window.resize(700, 500)  
 window.setStyleSheet(style_sheet)  
 # Функционал
+buttons = [rbtn_1,rbtn_2,rbtn_3,rbtn_4]
+
 def ask(question,right_ans,wrong1,wrong2,wrong3):
+    shuffle(buttons)
     lb_Question.setText(question)
-    rbtn_1.setText(right_ans)
-    rbtn_2.setText(wrong1)
-    rbtn_3.setText(wrong2)
-    rbtn_4.setText(wrong3)
+    buttons[0].setText(right_ans)
+    buttons[1].setText(wrong1)
+    buttons[2].setText(wrong2)
+    buttons[3].setText(wrong3)
 
 ask(question='Сколько будет 2 + 2',
 right_ans='четыре',wrong1='пять',wrong2='два',wrong3='один')
