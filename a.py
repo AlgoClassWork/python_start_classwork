@@ -1,183 +1,109 @@
-from random import randint, shuffle
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
-    QApplication, QWidget, QLabel, QPushButton,
-    QVBoxLayout, QHBoxLayout, QGroupBox, QRadioButton
-)
+        QApplication, QWidget, 
+        QHBoxLayout, QVBoxLayout, 
+        QGroupBox, QRadioButton,  
+        QPushButton, QLabel)
 
+app = QApplication([])
+
+# Установка стилей
 style_sheet = """
-QWidget {
-    background-color: #e9ecef;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 16px;
-    color: #343a40;
-}
-
-QLabel {
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-QPushButton {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
-
-QPushButton:hover {
-    background-color: #0056b3;
-}
-
-QGroupBox {
-    background-color: #ffffff;
-    border: 2px solid #ced4da;
-    border-radius: 10px;
-    margin-top: 20px;
-    padding: 15px;
-}
-
-QRadioButton {
-    margin: 5px;
-    font-size: 14px;
-}
-
-QRadioButton::indicator {
-    width: 25px;
-    height: 25px;
-}
-
-QRadioButton::indicator:checked {
-    background-color: #007bff;
-    border: 2px solid #007bff;
-}
-
-QRadioButton::indicator:unchecked {
-    background-color: #ffffff;
-    border: 2px solid #ced4da;
-}
-
-QVBoxLayout, QHBoxLayout {
-    spacing: 12px;
-}
-
-QLineEdit {
-    border: 2px solid #ced4da;
-    border-radius: 8px;
-    padding: 10px;
-}
-
-QLineEdit:focus {
-    border: 2px solid #007bff;
-    background-color: #f8f9fa;
-}
+    QWidget {
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        color: #343a40;
+    }
+    QGroupBox {
+        font-weight: bold;
+        margin: 20px;
+        border: 2px solid #6c757d;
+        border-radius: 10px;
+        background-color: #ffffff;
+        padding: 15px;
+    }
+    QRadioButton {
+        margin: 10px;
+        font-size: 18px;
+    }
+    QPushButton {
+        background-color: #007bff;
+        color: white;
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+        font-size: 20px;
+    }
+    QPushButton:hover {
+        background-color: #0056b3;
+    }
+    QLabel {
+        font-size: 30px;
+    }
 """
 
-class Question():
-    def __init__(self,q,r,w1,w2,w3):
-        self.question = q
-        self.right = r
-        self.wrong1 = w1
-        self.wrong2 = w2
-        self.wrong3 = w3
+# Создаем панель вопроса
+btn_OK = QPushButton('Ответить')
+lb_Question = QLabel('Самый сложный вопрос в мире!')
+lb_Question.setWordWrap(True)
 
-list_questions = [
-    Question('Сколько дней в неделе?', '7', '5', '10', '14'),
-    Question('Какой цвет у банана?', 'Желтый', 'Синий', 'Красный', 'Фиолетовый'),
-    Question('Что тяжелее: килограмм ваты или килограмм железа?', 'Они одинаковые', 'Килограмм ваты', 'Килограмм железа', 'Ничто'),
-    Question('Какой звук издает корова?', 'Му', 'Мяу', 'Гав', 'Угу'),
-    Question('Сколько ушей у человека?', '2', '1', '3', '4'),
-    Question('Какой месяц идет после января?', 'Февраль', 'Март', 'Декабрь', 'Август'),
-    Question('Сколько колен у человека?', '2', '1', '3', '4'),
-    Question('Какой океан самый большой?', 'Тихий', 'Атлантический', 'Индийский', 'Северный Ледовитый'),
-    Question('Сколько букв в слове "кот"?', '3', '2', '4', '5'),
-    Question('Какой из этих предметов не летает?', 'Стул', 'Птица', 'Самолет', 'Муха')
-]
+RadioGroupBox = QGroupBox("Варианты ответов")
+rbtn_1 = QRadioButton('Вариант 1')
+rbtn_2 = QRadioButton('Вариант 2')
+rbtn_3 = QRadioButton('Вариант 3')
+rbtn_4 = QRadioButton('Вариант 4')
 
-# Создание элементов интерфейса
-app = QApplication([])
+layout_ans1 = QHBoxLayout()   
+layout_ans2 = QVBoxLayout()
+layout_ans3 = QVBoxLayout()
+layout_ans2.addWidget(rbtn_1)
+layout_ans2.addWidget(rbtn_2)
+layout_ans3.addWidget(rbtn_3)
+layout_ans3.addWidget(rbtn_4)
+
+layout_ans1.addLayout(layout_ans2)
+layout_ans1.addLayout(layout_ans3)
+
+RadioGroupBox.setLayout(layout_ans1)
+
+# Создаем панель результата
+AnsGroupBox = QGroupBox("Результат теста")
+lb_Result = QLabel('Прав ты или нет?')
+lb_Correct = QLabel('Ответ будет тут!')
+
+layout_res = QVBoxLayout()
+layout_res.addWidget(lb_Result, alignment=(Qt.AlignLeft | Qt.AlignTop))
+layout_res.addWidget(lb_Correct, alignment=Qt.AlignHCenter, stretch=2)
+AnsGroupBox.setLayout(layout_res)
+
+# Размещаем все виджеты в окне
+layout_line1 = QHBoxLayout()
+layout_line2 = QHBoxLayout()
+layout_line3 = QHBoxLayout()
+
+layout_line1.addWidget(lb_Question, alignment=(Qt.AlignHCenter | Qt.AlignVCenter), stretch=1)
+layout_line2.addWidget(RadioGroupBox)   
+layout_line2.addWidget(AnsGroupBox)  
+
+layout_line3.addStretch(1)
+layout_line3.addWidget(btn_OK, stretch=2)
+layout_line3.addStretch(1)
+
+layout_card = QVBoxLayout()
+
+layout_card.addLayout(layout_line1, stretch=2)
+layout_card.addLayout(layout_line2, stretch=8)
+layout_card.addStretch(1)
+layout_card.addLayout(layout_line3, stretch=1)
+layout_card.addStretch(1)
+layout_card.setSpacing(20)  
+
+# Создаем главное окно
 window = QWidget()
-window.setStyleSheet(style_sheet)
-question_label = QLabel('Сколько будет 2 + 2?')
-answer_button = QPushButton('Ответить')
+window.setLayout(layout_card)
+window.setWindowTitle('Memory Card')
+window.resize(700, 500)  
+window.setStyleSheet(style_sheet)  
 
-# Создание формы с вариантами ответов
-answers_form = QGroupBox('Варианты ответов:')
-rbtn1 = QRadioButton('пять')
-rbtn2 = QRadioButton('один')
-rbtn3 = QRadioButton('четыре')
-rbtn4 = QRadioButton('не знаю')
-v_line = QVBoxLayout()
-h1_line = QHBoxLayout()
-h2_line = QHBoxLayout()
-h1_line.addWidget(rbtn1)
-h1_line.addWidget(rbtn2)
-h2_line.addWidget(rbtn3)
-h2_line.addWidget(rbtn4)
-v_line.addLayout(h1_line)
-v_line.addLayout(h2_line)
-answers_form.setLayout(v_line)
-# Создание формы с результатами
-results_form = QGroupBox('Ваши результаты:')
-result_label = QLabel('Правильно')
-correct_label = QLabel('четыре')
-line = QVBoxLayout()
-line.addWidget(result_label)
-line.addWidget(correct_label)
-results_form.setLayout(line)
-# Размещение элементов интерфейса
-main_layout = QVBoxLayout()
-main_layout.addWidget(question_label)
-main_layout.addWidget(answers_form)
-main_layout.addWidget(results_form)
-main_layout.addWidget(answer_button)
-window.setLayout(main_layout)
-# Функционал приложения
-buttons = [rbtn1,rbtn2,rbtn3,rbtn4]
-
-def render_question(q : Question):
-    shuffle(buttons)
-    question_label.setText(q.question)
-    buttons[0].setText(q.right)
-    buttons[1].setText(q.wrong1)
-    buttons[2].setText(q.wrong2)
-    buttons[3].setText(q.wrong3)
-
-def check_answer():
-    answers_form.hide()
-    results_form.show()
-    answer_button.setText('Следующий вопрос')
-
-    if buttons[0].isChecked():
-        result_label.setText('Правильно!')
-        window.correct += 1
-    else:
-        result_label.setText('Не правильно :(')
-
-    procent = int(window.correct / window.total * 100)
-    correct_label.setText(str(procent)+'% Правильных ответов')
-
-def next_question():
-    answers_form.show()
-    results_form.hide()
-    answer_button.setText('Ответить')
-    render_question(list_questions[randint(0,len(list_questions) - 1)])
-    window.total += 1
-
-def change_form():
-    if answer_button.text() == 'Ответить':
-        check_answer()
-    else:
-        next_question()
-
-# Подписки на события
-answer_button.clicked.connect(change_form)
-# Запуск приложения
-window.total = 0
-window.correct = 0
-next_question()
-results_form.hide()
 window.show()
 app.exec()
