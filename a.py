@@ -81,7 +81,7 @@ layout_line1 = QHBoxLayout()
 layout_line2 = QHBoxLayout()
 layout_line3 = QHBoxLayout()
 
-layout_line1.addWidget(lb_Question, alignment=(Qt.AlignHCenter | Qt.AlignVCenter), stretch=1)
+layout_line1.addWidget(lb_Question)
 layout_line2.addWidget(RadioGroupBox)   
 layout_line2.addWidget(AnsGroupBox)  
 
@@ -104,6 +104,29 @@ window.setLayout(layout_card)
 window.setWindowTitle('Memory Card')
 window.resize(700, 500)  
 window.setStyleSheet(style_sheet)  
+# Функционал
+def ask(question,right_ans,wrong1,wrong2,wrong3):
+    lb_Question.setText(question)
+    rbtn_1.setText(right_ans)
+    rbtn_2.setText(wrong1)
+    rbtn_3.setText(wrong2)
+    rbtn_4.setText(wrong3)
 
+ask(question='Сколько будет 2 + 2',
+right_ans='четыре',wrong1='пять',wrong2='два',wrong3='один')
+
+def change_form():
+    if btn_OK.text() == 'Ответить':
+        RadioGroupBox.hide()
+        AnsGroupBox.show()
+        btn_OK.setText('Следующий вопрос')
+    else:
+        AnsGroupBox.hide()
+        RadioGroupBox.show()
+        btn_OK.setText('Ответить')
+# Подписки на событиия
+btn_OK.clicked.connect(change_form)
+# Запуск
+AnsGroupBox.hide()
 window.show()
 app.exec()
