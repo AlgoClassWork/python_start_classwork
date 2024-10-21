@@ -119,11 +119,20 @@ def ask(question,right_ans,wrong1,wrong2,wrong3):
 ask(question='Сколько будет 2 + 2',
 right_ans='четыре',wrong1='пять',wrong2='два',wrong3='один')
 
+def check_answer():
+    if buttons[0].isChecked():
+        lb_Result.setText('Правильно!')
+    else:
+        lb_Result.setText('Не правильно :(')
+
+    lb_Correct.setText('четыре')
+
 def change_form():
     if btn_OK.text() == 'Ответить':
         RadioGroupBox.hide()
         AnsGroupBox.show()
         btn_OK.setText('Следующий вопрос')
+        check_answer()
     else:
         AnsGroupBox.hide()
         RadioGroupBox.show()
