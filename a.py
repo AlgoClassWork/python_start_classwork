@@ -129,13 +129,13 @@ window.setStyleSheet(style_sheet)
 # Функционал
 buttons = [rbtn_1,rbtn_2,rbtn_3,rbtn_4]
 
-def ask(question,right_ans,wrong1,wrong2,wrong3):
+def ask(q : Question):
     shuffle(buttons)
-    lb_Question.setText(question)
-    buttons[0].setText(right_ans)
-    buttons[1].setText(wrong1)
-    buttons[2].setText(wrong2)
-    buttons[3].setText(wrong3)
+    lb_Question.setText(q.question)
+    buttons[0].setText(q.correct)
+    buttons[1].setText(q.wrong1)
+    buttons[2].setText(q.wrong2)
+    buttons[3].setText(q.wrong3)
 
 def check_answer():
     if buttons[0].isChecked():
@@ -146,8 +146,10 @@ def check_answer():
     lb_Correct.setText('четыре')
 
 def next_question():
-    questions_list[window.current_question]
-    window.current_question += 1
+    ask(questions_list[window.current_question])
+    if window.current_question < len(questions_list) - 1:
+        window.current_question += 1
+
 
 def change_form():
     if btn_OK.text() == 'Ответить':
