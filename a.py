@@ -139,17 +139,18 @@ def ask(q : Question):
 
 def check_answer():
     if buttons[0].isChecked():
+        window.correct += 1
         lb_Result.setText('Правильно!')
     else:
         lb_Result.setText('Не правильно :(')
 
-    lb_Correct.setText('четыре')
+    result = str(int(window.correct/window.total * 100))
+    lb_Correct.setText(result + '% Правильных ответов')
 
 def next_question():
-    ask(questions_list[window.current_question])
-    if window.current_question < len(questions_list) - 1:
-        window.current_question += 1
-
+    window.total += 1
+    shuffle(questions_list)
+    ask(questions_list[0])
 
 def change_form():
     if btn_OK.text() == 'Ответить':
@@ -166,7 +167,9 @@ def change_form():
 # Подписки на событиия
 btn_OK.clicked.connect(change_form)
 # Запуск
-window.current_question = 0
+window.total = 0
+window.correct = 0
+next_question()
 AnsGroupBox.hide()
 window.show()
 app.exec()
