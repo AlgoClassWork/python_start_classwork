@@ -124,6 +124,9 @@ def check_answer():
 
     lb_Correct.setText('четыре')
 
+def next_question():
+    questions_list[]
+
 def change_form():
     if btn_OK.text() == 'Ответить':
         RadioGroupBox.hide()
@@ -138,6 +141,8 @@ def change_form():
 # Подписки на событиия
 btn_OK.clicked.connect(change_form)
 # Запуск
+window.current_question = 0
+
 questions_list = [
     ask('Какой звук издает молчание?', 'тишина', 'громко', 'музыка', 'тихо'),
     ask('Сколько весит невидимый щенок?', 'ничего', '1 кг', '5 кг', 'чуть-чуть'),
@@ -150,6 +155,8 @@ questions_list = [
     ask('Что происходит, когда идет дождь из конфет?', 'вкусно', 'влажно', 'солнечно', 'невозможно'),
     ask('Какой вес у мысли?', 'неизмеримая', 'легкая', 'тяжелая', 'весит столько, сколько надо'),
 ]
+
+questions_list[0]
 
 AnsGroupBox.hide()
 window.show()
