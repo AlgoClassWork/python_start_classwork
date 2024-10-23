@@ -125,7 +125,8 @@ def check_answer():
     lb_Correct.setText('четыре')
 
 def next_question():
-    questions_list[]
+    questions_list[window.current_question]
+    window.current_question += 1
 
 def change_form():
     if btn_OK.text() == 'Ответить':
@@ -137,6 +138,7 @@ def change_form():
         AnsGroupBox.hide()
         RadioGroupBox.show()
         btn_OK.setText('Ответить')
+        next_question()
 
 # Подписки на событиия
 btn_OK.clicked.connect(change_form)
@@ -155,8 +157,6 @@ questions_list = [
     ask('Что происходит, когда идет дождь из конфет?', 'вкусно', 'влажно', 'солнечно', 'невозможно'),
     ask('Какой вес у мысли?', 'неизмеримая', 'легкая', 'тяжелая', 'весит столько, сколько надо'),
 ]
-
-questions_list[0]
 
 AnsGroupBox.hide()
 window.show()
