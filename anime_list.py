@@ -1,34 +1,92 @@
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout,
-    QListWidget, QPushButton, QVBoxLayout
+    QListWidget, QPushButton, QVBoxLayout, QLineEdit
 )
 
 # ИНТЕРФЕЙС
 app = QApplication([])
 window = QWidget()
 window.setWindowTitle('My Anime List')
+
+# Стили
+window.setStyleSheet("""
+    QWidget {
+        color: black;
+    }
+    QTextEdit {
+        background-color: white;
+        color: black;
+        border: 1px solid #555;
+        border-radius: 5px;
+        padding: 5px;
+    }
+    QListWidget {
+        background-color: white;
+        border: 1px solid #555;
+        border-radius: 5px;
+        padding: 5px;
+    }
+    QPushButton {
+        background-color: #0078d7;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 8px;
+    }
+    QPushButton:hover {
+        background-color: #005a9e;
+    }
+    QLineEdit {
+        background-color: white;
+        color: black;
+        border: 1px solid #555;
+        border-radius: 5px;
+        padding: 5px;
+    }
+""")
+
 text_field = QTextEdit()
+text_field.setPlaceholderText('Самое топовое оняме которое я смотрел')
 
 anime_list = QListWidget()
 create_anime = QPushButton('Добавить аниме')
 delete_anime = QPushButton('Удалить аниме')
 save_anime = QPushButton('Сохранить изменения')
+
+genre_list = QListWidget()
+search_field = QLineEdit()
+search_field.setPlaceholderText('Введите жанр: ')
+create_genre = QPushButton('Добавить жанр')
+delete_genre = QPushButton('Открепить жанр')
+search_btn = QPushButton('Найти аниме по жанру')
+
 # РАЗМЕЩЕНИЕ
-main_line = QHBoxLayout()
-main_line.addWidget(text_field)
+main_layout = QHBoxLayout()
+main_layout.addWidget(text_field)
 
-list_line = QVBoxLayout()
-main_line.addLayout(list_line)
+list_layout = QVBoxLayout()
+main_layout.addLayout(list_layout)
 
-list_line.addWidget(anime_list)
+list_layout.addWidget(anime_list)
 h1 = QHBoxLayout()
-list_line.addLayout(h1)
 h1.addWidget(create_anime)
 h1.addWidget(delete_anime)
-list_line.addWidget(save_anime)
+list_layout.addLayout(h1)
+list_layout.addWidget(save_anime)
 
-window.setLayout(main_line)
-# ЗАПУСК 
-text_field.setText('Самое топовое оняме которое я смотрел')
+list_layout.addWidget(genre_list)
+list_layout.addWidget(search_field)
+h2 = QHBoxLayout()
+h2.addWidget(create_genre)
+h2.addWidget(delete_genre)
+list_layout.addLayout(h2)
+list_layout.addWidget(search_btn)
+
+window.setLayout(main_layout)
+
+# ЗАПУСК
+anime_list.addItem('One Piece')
+genre_list.addItem('Сёнен')
+window.resize(700, 500)
 window.show()
 app.exec()
