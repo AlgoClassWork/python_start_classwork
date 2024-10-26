@@ -24,3 +24,25 @@ print( df.pivot_table(
 
 # Бонусная задача. Найди категории бесплатных (Type == 'Free') приложений, 
 # в которых приложения разработаны не для всех возрастных групп ('Content Rating')
+
+import pandas as pd
+df = pd.read_csv('GoogleApps.csv')
+
+def set_season(data):
+    month = data.split()[0]
+
+    seasons = {
+        'Зима': ['December','January','February'],
+        'Весна': ['March', 'April', 'May'],
+        'Лето': ['June', 'July', 'August'],
+        'Осень': ['September','October','November']
+    }
+
+    for season in seasons:
+        if month in seasons[season]:
+            return season
+        else:
+            return 'Сезон не установлен'
+
+df['Season'] = df['Last Update'].apply(set_season)
+print(df['Season'].value_counts())
