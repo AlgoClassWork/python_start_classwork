@@ -20,6 +20,15 @@ while otvet != 'пока':
         else:
             print('Такого жанра у нас нет')
 
+    elif otvet.find('фильм') != -1:
+        genre = input('Какой жанр вам интересен?')
+        if genre == 'комедия':
+            print('Мальчишнк в вегасе')
+        elif genre == 'детектив':
+            print('Шерлок холмс')
+        else:
+            print('Такого жанра у нас нет')
+
     elif otvet.find('игр') != -1:
         win_num = randint(0,100) 
         for popytka in range(10):
