@@ -1,19 +1,4 @@
-data.json
-
-{
-    "Атака титанов" : {
-        "описание": "Бла бла бла",
-        "жанры": ["Фантастика","Ужасы"]
-    },
-    "Гурен Лагн" : {
-        "описание": "Бу бу бу",
-        "жанры": ["Фантастика","Комедия"]
-    }
-}
-
-
-
-
+import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout,
     QListWidget, QPushButton, QVBoxLayout, QLineEdit
@@ -62,7 +47,7 @@ window.setStyleSheet("""
 """)
 
 text_field = QTextEdit()
-text_field.setPlaceholderText('Самое топовое оняме которое я смотрел')
+
 
 anime_list = QListWidget()
 create_anime = QPushButton('Добавить аниме')
@@ -101,8 +86,11 @@ list_layout.addWidget(search_btn)
 window.setLayout(main_layout)
 
 # ЗАПУСК
-anime_list.addItem('One Piece')
-genre_list.addItem('Сёнен')
+with open('data.json','r',encoding='utf-8') as file:
+    anime_info = json.load(file)
+
+anime_list.addItems(anime_info)
+
 window.resize(700, 500)
 window.show()
 app.exec()
