@@ -1,22 +1,8 @@
-data.json 
-
-{
-    "Титаник" : {
-        "описание": "Бла бла бла",
-        "жанры": ["драма"]
-    },
-    "Дед Пул" : {
-        "описание": "Олол оло л о оло",
-        "жанры": ["драма"]
-    }
-}
-
-
-
 import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout,
-    QListWidget, QPushButton, QVBoxLayout, QLineEdit
+    QListWidget, QPushButton, QVBoxLayout, QLineEdit,
+    QInputDialog
 )
 
 # ИНТЕРФЕЙС
@@ -78,8 +64,18 @@ def show_film():
     text_field.setText(films[name]['описание'])
     list_genres.clear()
     list_genres.addItems(films[name]['жанры'])
+
+def add_film():
+    name, widget = QInputDialog().getText(window,'Добавить','Название:')
+    if name != '':
+        films[name] = {'описание' : '', 'жанры' : []}
+        list_films.addItem(name)
+        with open('data.json','w',encoding='utf-8') as file:
+            json.dump(films,file,ensure_ascii=False)
+
 # СОБЫТИЯ
 list_films.itemClicked.connect(show_film)
+create_film.clicked.connect(add_film)
 # ЗАПУСК
 with open('data.json','r',encoding='utf-8') as file:
     films = json.load(file)
