@@ -1,3 +1,19 @@
+data.json
+
+{
+    "Атака титанов" : {
+        "описание": "Бла бла бла",
+        "жанры": ["Фантастика","Ужасы"]
+    },
+    "Гурен Лагн" : {
+        "описание": "Бу бу бу",
+        "жанры": ["Фантастика","Комедия"]
+    }
+}
+
+
+
+
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout,
     QListWidget, QPushButton, QVBoxLayout, QLineEdit
