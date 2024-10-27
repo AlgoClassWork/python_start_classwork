@@ -1,3 +1,18 @@
+data.json 
+
+{
+    "Титаник" : {
+        "описание": "Бла бла бла",
+        "жанры": ["драма"]
+    },
+    "Дед Пул" : {
+        "описание": "Олол оло л о оло",
+        "жанры": ["драма"]
+    }
+}
+
+
+
 import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout,
