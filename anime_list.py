@@ -96,7 +96,13 @@ list_layout.addLayout(h2)
 list_layout.addWidget(search_btn)
 
 window.setLayout(main_layout)
+# ФУНКЦИОНАЛ
+def anime_info():
+    name = anime_list.selectedItems()[0].text()
+    text_field.setText(anime_info[name]['описание'])
 
+# СОБЫТИЯ
+anime_list.itemClicked.connect(anime_info)
 # ЗАПУСК
 with open('data.json','r',encoding='utf-8') as file:
     anime_info = json.load(file)
