@@ -1,3 +1,4 @@
+import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout,
     QListWidget, QPushButton, QVBoxLayout, QLineEdit
@@ -56,8 +57,20 @@ h2_line.addWidget(delete_genre)
 list_line.addWidget(search_button)
 
 window.setLayout(main_line)
+# ФУНКЦИОНАЛ
+def show_film(): 
+    name = list_films.selectedItems()[0].text()
+    text_field.setText(films[name]['описание'])
+    list_genres.clear()
+    list_genres.addItems(films[name]['жанры'])
+# СОБЫТИЯ
+list_films.itemClicked.connect(show_film)
 # ЗАПУСК
-list_films.addItem('Великолепный век')
+with open('data.json','r',encoding='utf-8') as file:
+    films = json.load(file)
+
+list_films.addItems(films)
+
 window.resize(700, 500)
 window.show()
 app.exec()
