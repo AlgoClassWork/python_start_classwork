@@ -9,7 +9,6 @@
     }
 }
 
-
 import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout,
@@ -100,6 +99,8 @@ window.setLayout(main_layout)
 def anime_info():
     name = anime_list.selectedItems()[0].text()
     text_field.setText(anime_info[name]['описание'])
+    genre_list.clear()
+    genre_list.addItems(anime_info[name]['жанры'])
 
 # СОБЫТИЯ
 anime_list.itemClicked.connect(anime_info)
