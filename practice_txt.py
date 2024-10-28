@@ -31,3 +31,16 @@ print( file.read() )
 Кот-Генерал 160
 Мистер-Робот 180
 Дедпул 185
+
+
+
+heroes = open('hero.txt','r',encoding='utf-8')
+total_height = 0
+amount_hero = 0
+for hero in heroes:
+    name = hero.split()[0] 
+    height = int(hero.split()[1])
+    total_height += height
+    amount_hero += 1
+
+print('Средний рост 20 персонажей',total_height/amount_hero,'см')    
