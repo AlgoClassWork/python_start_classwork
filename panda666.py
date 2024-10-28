@@ -18,6 +18,12 @@ df['Size'] = df['Size'].apply(fix_size)
 print(  df[df['Category'] == 'TOOLS']['Size'].max()  ) # 4 задание
 # Бонусные задания
 # Замени тип данных на целочисленный (int) для количества установок ('Installs').
+def fix_install(install):
+    if install == '0':
+        return 0
+    return int(install[:-1].replace(',',''))
+
+df['Installs'] = df['Installs'].apply(fix_install)
 # В записи количества установок ('Installs') знак "+" необходимо игнорировать.
 # Т.е. если в датасете количество установок равно 1,000,000+, то необходимо изменить значение на 1000000
 
