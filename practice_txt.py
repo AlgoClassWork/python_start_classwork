@@ -37,10 +37,16 @@ print( file.read() )
 heroes = open('hero.txt','r',encoding='utf-8')
 total_height = 0
 amount_hero = 0
+max_height = 0 #new
+highest_person = '' #new
 for hero in heroes:
     name = hero.split()[0] 
-    height = int(hero.split()[1])
+    height = int(hero.split()[1]) 
     total_height += height
     amount_hero += 1
+    if height > max_height: #new
+        max_height = height 
+        highest_person = name #new
 
-print('Средний рост 20 персонажей',total_height/amount_hero,'см')    
+print('Средний рост 20 персонажей',total_height/amount_hero,'см') 
+print('Самый высокий персонаж', highest_person)   #new  
