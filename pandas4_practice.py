@@ -1,48 +1,33 @@
 import pandas as pd
-df = pd.read_csv('GoogleApps.csv')
+df = pd.read_csv('GooglePlayStore_wild.csv')
 
-# 1 Выведи на экран минимальный, средний и максимальный рейтинг ('Rating') платных и бесплатных приложений ('Type') с точностью до десятых.
-print( df.groupby(by='Type')['Rating'].agg(['min','mean','max'])    )
-# 2 Выведи на экран минимальную, медианную (median) и максимальную цену ('Price') платных приложений (Type == 'Paid') для 
-# разных целевых аудиторий ('Content Rating')
-paid = df[ df['Type']=='Paid' ]
-print(paid.groupby(by='Content Rating')['Price'].agg(['min','median','max'])   )
-# 3 Сгруппируй данные по категории ('Category') и целевой аудитории ('Content Rating') любым удобным для тебя способом
-#print(df.groupby(by=['Content Rating','Category'])['Reviews'].max())
-print( df.pivot_table(
-    index='Category',
-    columns='Content Rating',
-    values='Reviews',
-    aggfunc='max'
-)  )
 
-# 4 Сгруппируй платные (Type == 'Paid') приложения по категории ('Category') и целевой аудитории ('Content Rating')
-# Посчитай среднее количество отзывов ('Reviews') в каждой группе
-# Обрати внимание, что в некоторых ячейках полученной таблицы отражается не число, а значение "NaN" - Not a Number
-# Эта запись означает, что в данной группе нет ни одного приложения.
-# Выбери названия категорий, в которых есть платные приложения для всех возрастных групп и расположи их в алфавитном порядке.
+# Очистка данных из первого задания
+df['Rating'].fillna(-1, inplace = True)
 
-# Бонусная задача. Найди категории бесплатных (Type == 'Free') приложений, 
-# в которых приложения разработаны не для всех возрастных групп ('Content Rating')
 
-import pandas as pd
-df = pd.read_csv('GoogleApps.csv')
+def set_size(size):
+  if size[-1] == 'M':
+     return float(size[:-1])
+  elif size[-1] == 'k':
+     return float(size[:-1]) / 1024
+  return -1
+df['Size'] = df['Size'].apply(set_size)
 
-def set_season(data):
-    month = data.split()[0]
 
-    seasons = {
-        'Зима': ['December','January','February'],
-        'Весна': ['March', 'April', 'May'],
-        'Лето': ['June', 'July', 'August'],
-        'Осень': ['September','October','November']
-    }
+def set_installs(installs):
+  if installs == '0':
+      return 0
+  return int(installs[:-1].replace(',', ''))
+df['Installs'] = df['Installs'].apply(set_installs)
 
-    for season in seasons:
-        if month in seasons[season]:
-            return season
-        else:
-            return 'Сезон не установлен'
 
-df['Season'] = df['Last Update'].apply(set_season)
-print(df['Season'].value_counts())
+df['Type'].fillna('Free', inplace = True)
+
+
+# Замени тип данных на дробное число (float) для цен приложений ('Price')
+def make_price(price):
+ if price[0] == '$':
+     return float(price[1:])
+ return 0
+df['Price'] = df['Price'].apply(make_price)
