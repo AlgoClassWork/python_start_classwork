@@ -92,10 +92,9 @@ def anime_info():
     genre_list.addItems(anime_info[name]['жанры'])
 
 def add_anime():
-   print(anime_info)
    name, ok = QInputDialog().getText(window,'Добавить','Название:')
    anime_info[name] = {'описание':'','жанры':[]}
-   print(anime_info)
+   anime_list.addItem(name)
    with open('data.json', 'w', encoding='utf-8') as file:
        json.dump(anime_info, file, ensure_ascii=False)
 
