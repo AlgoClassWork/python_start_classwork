@@ -99,9 +99,21 @@ def add_anime():
       with open('data.json', 'w', encoding='utf-8') as file:
          json.dump(anime_info, file, ensure_ascii=False)
 
+def del_anime():
+   if anime_list.selectedItems():
+      name = anime_list.selectedItems()[0].text()
+      del anime_info[name]
+      anime_list.clear()
+      genre_list.clear()
+      text_field.clear()
+      anime_list.addItems(anime_info)
+      with open('data.json', 'w', encoding='utf-8') as file:
+         json.dump(anime_info, file, ensure_ascii=False)
+
 # СОБЫТИЯ
 anime_list.itemClicked.connect(anime_info)
 create_anime.clicked.connect(add_anime)
+delete_anime.clicked.connect(del_anime)
 # ЗАПУСК
 with open('data.json','r',encoding='utf-8') as file:
     anime_info = json.load(file)
