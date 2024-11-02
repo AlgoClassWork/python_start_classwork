@@ -1,18 +1,7 @@
-{
-    "Атака титанов" : {
-        "описание": "Бла бла бла",
-        "жанры": ["Фантастика","Ужасы"]
-    },
-    "Гурен Лагн" : {
-        "описание": "Бу бу бу",
-        "жанры": ["Фантастика","Комедия"]
-    }
-}
-
 import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout,
-    QListWidget, QPushButton, QVBoxLayout, QLineEdit
+    QListWidget, QPushButton, QVBoxLayout, QLineEdit, QInputDialog
 )
 
 # ИНТЕРФЕЙС
@@ -102,8 +91,17 @@ def anime_info():
     genre_list.clear()
     genre_list.addItems(anime_info[name]['жанры'])
 
+def add_anime():
+   print(anime_info)
+   name, ok = QInputDialog().getText(window,'Добавить','Название:')
+   anime_info[name] = {'описание':'','жанры':[]}
+   print(anime_info)
+   with open('data.json', 'w', encoding='utf-8') as file:
+       json.dump(anime_info, file, ensure_ascii=False)
+
 # СОБЫТИЯ
 anime_list.itemClicked.connect(anime_info)
+create_anime.clicked.connect(add_anime)
 # ЗАПУСК
 with open('data.json','r',encoding='utf-8') as file:
     anime_info = json.load(file)
