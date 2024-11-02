@@ -111,7 +111,28 @@ def del_genre():
         list_genres.addItems(films[name]['жанры'])
         with open('data.json','w',encoding='utf-8') as file:
                     json.dump(films,file,ensure_ascii=False)
-        
+
+def search():
+    genre = search_field.text()
+    if search_button.text() == 'Найти фильм по жанру':
+        filtred_films = {}
+        for film in films:
+            if genre in films[film]['жанры']:
+                filtred_films[film] = films[film]
+        list_films.clear()
+        list_genres.clear()
+        text_field.clear()
+        search_field.clear()
+        list_films.addItems(filtred_films)
+        search_button.setText('Сброс')
+    else:
+        list_films.clear()
+        list_genres.clear()
+        text_field.clear()
+        search_field.clear()
+        list_films.addItems(films)
+        search_button.setText('Найти фильм по жанру')
+
 # СОБЫТИЯ
 list_films.itemClicked.connect(show_film)
 create_film.clicked.connect(add_film)
@@ -119,6 +140,7 @@ delete_film.clicked.connect(del_film)
 save_film.clicked.connect(save_changes) 
 create_genre.clicked.connect(add_genre)
 delete_genre.clicked.connect(del_genre)
+search_button.clicked.connect(search)
 # ЗАПУСК
 with open('data.json','r',encoding='utf-8') as file:
     films = json.load(file)
