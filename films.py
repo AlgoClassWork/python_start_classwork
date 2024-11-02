@@ -74,19 +74,28 @@ def add_film():
             json.dump(films,file,ensure_ascii=False)
 
 def del_film():
-    name = list_films.selectedItems()[0].text()
-    del films[name]
-    list_films.clear()
-    text_field.clear()
-    list_genres.clear()
-    list_films.addItems(films)
-    with open('data.json','w',encoding='utf-8') as file:
-            json.dump(films,file,ensure_ascii=False)
+    if list_films.selectedItems():
+        name = list_films.selectedItems()[0].text()
+        del films[name]
+        list_films.clear()
+        text_field.clear()
+        list_genres.clear()
+        list_films.addItems(films)
+        with open('data.json','w',encoding='utf-8') as file:
+                json.dump(films,file,ensure_ascii=False)
+
+def save_changes():
+    if list_films.selectedItems():
+        name = list_films.selectedItems()[0].text()
+        films[name]['описание'] = text_field.toPlainText()
+        with open('data.json','w',encoding='utf-8') as file:
+                json.dump(films,file,ensure_ascii=False)
 
 # СОБЫТИЯ
 list_films.itemClicked.connect(show_film)
 create_film.clicked.connect(add_film)
 delete_film.clicked.connect(del_film)
+save_film.clicked.connect(save_changes) 
 # ЗАПУСК
 with open('data.json','r',encoding='utf-8') as file:
     films = json.load(file)
