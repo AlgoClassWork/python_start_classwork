@@ -1,4 +1,6 @@
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 # Загрузка
 def load_data(path):
     return pd.read_csv(path)
@@ -9,3 +11,19 @@ def clean_data(data):
     data['Runtime Category'] = pd.cut(data['Runtime (Minutes)'],
     bins=[0,90,120,150,180], labels=['Short','Medium','Long','Epic'])
     return data
+
+def plot_box(data, x, y, title, xlabel, ylabel):
+    plt.figure()
+    sns.boxplot(x=x, y=y, data=data, palette='pastel')
+    plt.title(title, fontsize=20, fontweight='bold')
+    plt.xlabel(xlabel=xlabel, fontsize=15)
+    plt.ylabel(ylabel=ylabel, fontsize=15)
+    # . . .
+    plt.show()
+
+# Получение готовых данных
+data = load_data('IMDB-Movie-Data.csv')
+data = clean_data(data)
+# 1. Долгие фильмы имеют более высокий рейтинг
+plot_box(data, 'Runtime Category', 'Rating',
+'Рейтинг по категориям продолжительности','Категория','Рейтинг')
