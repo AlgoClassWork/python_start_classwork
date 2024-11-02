@@ -18,7 +18,14 @@ def plot_box(data, x, y, title, xlabel, ylabel):
     plt.title(title, fontsize=20, fontweight='bold')
     plt.xlabel(xlabel=xlabel, fontsize=15)
     plt.ylabel(ylabel=ylabel, fontsize=15)
-    # . . .
+    plt.show()
+
+def plot_scatter(data, x, y, title, xlabel, ylabel):
+    plt.figure()
+    sns.scatterplot(x=x, y=y, data=data, palette='pastel')
+    plt.title(title, fontsize=20, fontweight='bold')
+    plt.xlabel(xlabel=xlabel, fontsize=15)
+    plt.ylabel(ylabel=ylabel, fontsize=15)
     plt.show()
 
 # Получение готовых данных
@@ -27,3 +34,6 @@ data = clean_data(data)
 # 1. Долгие фильмы имеют более высокий рейтинг
 plot_box(data, 'Runtime Category', 'Rating',
 'Рейтинг по категориям продолжительности','Категория','Рейтинг')
+# 2. Рейтинг влияет на количество отзывов
+plot_scatter(data, 'Rating', 'Votes',
+'Связь между рейтингом и количеством отзывов','Рейтинг','Количество отзывов')
