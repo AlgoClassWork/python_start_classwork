@@ -93,10 +93,11 @@ def anime_info():
 
 def add_anime():
    name, ok = QInputDialog().getText(window,'Добавить','Название:')
-   anime_info[name] = {'описание':'','жанры':[]}
-   anime_list.addItem(name)
-   with open('data.json', 'w', encoding='utf-8') as file:
-       json.dump(anime_info, file, ensure_ascii=False)
+   if name != '':
+      anime_info[name] = {'описание':'','жанры':[]}
+      anime_list.addItem(name)
+      with open('data.json', 'w', encoding='utf-8') as file:
+         json.dump(anime_info, file, ensure_ascii=False)
 
 # СОБЫТИЯ
 anime_list.itemClicked.connect(anime_info)
