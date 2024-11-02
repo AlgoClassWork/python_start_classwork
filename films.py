@@ -91,11 +91,23 @@ def save_changes():
         with open('data.json','w',encoding='utf-8') as file:
                 json.dump(films,file,ensure_ascii=False)
 
+def add_genre():
+    if list_films.selectedItems():
+        name = list_films.selectedItems()[0].text() 
+        genre = search_field.text() 
+        if genre not in films[name]['жанры'] and genre != '':
+            films[name]['жанры'].append(genre)
+            list_genres.addItem(genre)
+            search_field.clear()
+            with open('data.json','w',encoding='utf-8') as file:
+                    json.dump(films,file,ensure_ascii=False)
+        
 # СОБЫТИЯ
 list_films.itemClicked.connect(show_film)
 create_film.clicked.connect(add_film)
 delete_film.clicked.connect(del_film)
 save_film.clicked.connect(save_changes) 
+create_genre.clicked.connect(add_genre) 
 # ЗАПУСК
 with open('data.json','r',encoding='utf-8') as file:
     films = json.load(file)
