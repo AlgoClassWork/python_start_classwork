@@ -110,10 +110,18 @@ def del_anime():
       with open('data.json', 'w', encoding='utf-8') as file:
          json.dump(anime_info, file, ensure_ascii=False)
 
+def save_changes():
+   if anime_list.selectedItems():
+      name = anime_list.selectedItems()[0].text()
+      anime_info[name]['описание'] = text_field.toPlainText()
+      with open('data.json', 'w', encoding='utf-8') as file:
+            json.dump(anime_info, file, ensure_ascii=False)
+
 # СОБЫТИЯ
 anime_list.itemClicked.connect(anime_info)
 create_anime.clicked.connect(add_anime)
 delete_anime.clicked.connect(del_anime)
+save_anime.clicked.connect(save_changes)
 # ЗАПУСК
 with open('data.json','r',encoding='utf-8') as file:
     anime_info = json.load(file)
