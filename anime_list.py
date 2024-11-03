@@ -1,4 +1,4 @@
-import json #{"Атака титанов": {"описание": "Класс супер туда сюда", "жанры": ["Фантастика", "Ужасы", "Приключение", "Приключение", "Комедия"]}, "Тетрадь смерти": {"описание": "мпвапвапвап", "жанры": ["Боевик", "Приключение"]}}
+import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout,
     QListWidget, QPushButton, QVBoxLayout, QLineEdit, QInputDialog
@@ -128,12 +128,24 @@ def add_genre():
         with open('data.json', 'w', encoding='utf-8') as file:
                 json.dump(anime_info, file, ensure_ascii=False)
 
+def del_genre():
+    if genre_list.selectedItems():
+        name = anime_list.selectedItems()[0].text()
+        genre = genre_list.selectedItems()[0].text() 
+        anime_info[name]['жанры'].remove(genre)
+        genre_list.clear()
+        genre_list.addItems(anime_info[name]['жанры'])
+        with open('data.json', 'w', encoding='utf-8') as file:
+                json.dump(anime_info, file, ensure_ascii=False)
+
+
 # СОБЫТИЯ
 anime_list.itemClicked.connect(anime_info)
 create_anime.clicked.connect(add_anime)
 delete_anime.clicked.connect(del_anime)
 save_anime.clicked.connect(save_changes)
 create_genre.clicked.connect(add_genre)
+delete_genre.clicked.connect(del_genre)
 # ЗАПУСК
 with open('data.json','r',encoding='utf-8') as file:
     anime_info = json.load(file)
