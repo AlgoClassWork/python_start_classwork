@@ -18,6 +18,7 @@ def plot_box(data, x, y, title, xlabel, ylabel):
     plt.title(title, fontsize=20, fontweight='bold')
     plt.xlabel(xlabel=xlabel, fontsize=15)
     plt.ylabel(ylabel=ylabel, fontsize=15)
+    plt.tight_layout()
     plt.show()
 
 def plot_scatter(data, x, y, title, xlabel, ylabel):
@@ -26,6 +27,16 @@ def plot_scatter(data, x, y, title, xlabel, ylabel):
     plt.title(title, fontsize=20, fontweight='bold')
     plt.xlabel(xlabel=xlabel, fontsize=15)
     plt.ylabel(ylabel=ylabel, fontsize=15)
+    plt.tight_layout()
+    plt.show()
+
+def plot_bar(data, x, y, title, xlabel, ylabel):
+    plt.figure()
+    sns.barplot(x=x, y=y, data=data, palette='pastel')
+    plt.title(title, fontsize=20, fontweight='bold')
+    plt.xlabel(xlabel=xlabel, fontsize=15)
+    plt.ylabel(ylabel=ylabel, fontsize=15)
+    plt.tight_layout()
     plt.show()
 
 # Получение готовых данных
@@ -37,3 +48,13 @@ plot_box(data, 'Runtime Category', 'Rating',
 # 2. Рейтинг влияет на количество отзывов
 plot_scatter(data, 'Rating', 'Votes',
 'Связь между рейтингом и количеством отзывов','Рейтинг','Количество отзывов')
+# 3. Жанр влияет на доход
+top_genres = data['Genre'].value_counts().nlargest(5).index
+filtred_data = data[data['Genre'].isin(top_genres)]
+plot_box(filtred_data,'Genre', 'Revenue (Millions)',
+'Доход по популярным жанрам','Доход в млн $','Жанр')
+# 4. Актеры снимающиеся с известными режиссерами имеют высокий рейтинг
+top_actor = data.explode('Actors').groupby('Actors')['Revenue (Millions)'].mean().reset_index()
+top_actor = top_actor[ top_actor['Revenue (Millions)'] > 50 ].nlargest(10, 'Revenue (Millions)')
+plot_bar(top_actor,'Revenue (Millions)','Actors',
+'Топ 10 актеров по сборам', 'Сборы в млн $', 'Актер')
