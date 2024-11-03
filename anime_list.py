@@ -1,4 +1,4 @@
-import json
+import json #{"Атака титанов": {"описание": "Класс супер туда сюда", "жанры": ["Фантастика", "Ужасы", "Приключение", "Приключение", "Комедия"]}, "Тетрадь смерти": {"описание": "мпвапвапвап", "жанры": ["Боевик", "Приключение"]}}
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout,
     QListWidget, QPushButton, QVBoxLayout, QLineEdit, QInputDialog
