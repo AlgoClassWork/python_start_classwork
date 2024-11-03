@@ -39,6 +39,15 @@ def plot_bar(data, x, y, title, xlabel, ylabel):
     plt.tight_layout()
     plt.show()
 
+def plot_line(data, x, y, title, xlabel, ylabel):
+    plt.figure()
+    sns.lineplot(x=x, y=y, data=data, palette='pastel')
+    plt.title(title, fontsize=20, fontweight='bold')
+    plt.xlabel(xlabel=xlabel, fontsize=15)
+    plt.ylabel(ylabel=ylabel, fontsize=15)
+    plt.tight_layout()
+    plt.show()
+
 # Получение готовых данных
 data = load_data('IMDB-Movie-Data.csv')
 data = clean_data(data)
@@ -58,3 +67,7 @@ top_actor = data.explode('Actors').groupby('Actors')['Revenue (Millions)'].mean(
 top_actor = top_actor[ top_actor['Revenue (Millions)'] > 50 ].nlargest(10, 'Revenue (Millions)')
 plot_bar(top_actor,'Revenue (Millions)','Actors',
 'Топ 10 актеров по сборам', 'Сборы в млн $', 'Актер')
+# 5. Год выпуска фильма влияет на его рейтинг
+year_rating = data.groupby('Year')['Rating'].mean().reset_index()
+plot_line(year_rating,'Year','Rating',
+'Средний рейтинг по годам','Год','Рейтинг')
