@@ -138,6 +138,19 @@ def del_genre():
         with open('data.json', 'w', encoding='utf-8') as file:
                 json.dump(anime_info, file, ensure_ascii=False)
 
+def search():
+    genre = search_field.text() 
+    if search_btn.text() == 'Найти аниме по жанру' and genre != '':
+        anime_list.clear()
+        search_field.clear()
+        search_btn.setText('Сброс')
+        for anime in anime_info:
+            if genre in anime_info[anime]['жанры']:
+                anime_list.addItem(anime)
+    elif search_btn.text() == 'Сброс':
+        anime_list.clear()
+        anime_list.addItems(anime_info)
+        search_btn.setText('Найти аниме по жанру')
 
 # СОБЫТИЯ
 anime_list.itemClicked.connect(anime_info)
@@ -146,6 +159,7 @@ delete_anime.clicked.connect(del_anime)
 save_anime.clicked.connect(save_changes)
 create_genre.clicked.connect(add_genre)
 delete_genre.clicked.connect(del_genre)
+search_btn.clicked.connect(search)
 # ЗАПУСК
 with open('data.json','r',encoding='utf-8') as file:
     anime_info = json.load(file)
