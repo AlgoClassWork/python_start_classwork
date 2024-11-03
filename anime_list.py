@@ -117,11 +117,23 @@ def save_changes():
       with open('data.json', 'w', encoding='utf-8') as file:
             json.dump(anime_info, file, ensure_ascii=False)
 
+def add_genre():
+   if anime_list.selectedItems():
+      name = anime_list.selectedItems()[0].text() 
+      genre = search_field.text() 
+      if genre != '' and genre not in anime_info[name]['жанры']:
+        anime_info[name]['жанры'].append(genre)
+        genre_list.addItem(genre)
+        search_field.clear()
+        with open('data.json', 'w', encoding='utf-8') as file:
+                json.dump(anime_info, file, ensure_ascii=False)
+
 # СОБЫТИЯ
 anime_list.itemClicked.connect(anime_info)
 create_anime.clicked.connect(add_anime)
 delete_anime.clicked.connect(del_anime)
 save_anime.clicked.connect(save_changes)
+create_genre.clicked.connect(add_genre)
 # ЗАПУСК
 with open('data.json','r',encoding='utf-8') as file:
     anime_info = json.load(file)
