@@ -1,3 +1,14 @@
+json {
+    "Клан Сопрано": {
+        "описание": "Классный сериал",
+        "жанры": ["криминал","драма"]
+    },
+    "Во все тяжкие": {
+        "описание": "Культовый сериал",
+        "жанры": ["комедия","драма"]
+    }
+}
+
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout, QListWidget,
     QPushButton, QVBoxLayout, QLineEdit
