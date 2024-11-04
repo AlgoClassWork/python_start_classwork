@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 data = pd.read_csv('GoogleApps.csv')
 
 # Гистограмма
-#size_info = data['Size']
-#size_info.plot(kind='hist')
+size_info = data['Size']
+size_info.plot(kind='hist')
 # Ящик с усами 
 #paid = data[data['Type'] == 'Free']['Rating']
 #paid.plot(kind='box')
