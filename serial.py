@@ -1,14 +1,4 @@
-json {
-    "Клан Сопрано": {
-        "описание": "Классный сериал",
-        "жанры": ["криминал","драма"]
-    },
-    "Во все тяжкие": {
-        "описание": "Культовый сериал",
-        "жанры": ["комедия","драма"]
-    }
-}
-
+import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout, QListWidget,
     QPushButton, QVBoxLayout, QLineEdit
@@ -94,9 +84,10 @@ window.setStyleSheet("""
 """)
 
 # ЗАПУСК
-review_field.setText('Нам очень понравился этот сериал')
-serial_list.addItem('Дом Дракона')
-genre_list.addItem('Фэнтези')
+file = open('database.json','r', encoding='utf-8')
+serials = json.load(file)
+serial_list.addItems(serials)
+
 window.resize(700, 500)
 window.show()
 app.exec()
