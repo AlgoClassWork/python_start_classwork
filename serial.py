@@ -1,7 +1,7 @@
 import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout, QListWidget,
-    QPushButton, QVBoxLayout, QLineEdit
+    QPushButton, QVBoxLayout, QLineEdit, QInputDialog
 )
 
 # ИНТЕРФЕЙС
@@ -82,7 +82,21 @@ window.setStyleSheet("""
         padding: 5px;
     }
 """)
+# ФУНКЦИОНАЛ
+def show_info():
+    name = serial_list.selectedItems()[0].text()
+    review_field.setText(serials[name]['описание'])
+    genre_list.clear()
+    genre_list.addItems(serials[name]['жанры'])
 
+def add_serial():
+    name, ok = QInputDialog().getText(window,'Добавить сериал','Название сериала:')
+    serials[name] = {"описание":"","жанры":[]}
+    serial_list.addItem(name)
+    
+# ПОДПИСКИ
+serial_list.itemClicked.connect(show_info)
+create_serial.clicked.connect(add_serial)
 # ЗАПУСК
 file = open('database.json','r', encoding='utf-8')
 serials = json.load(file)
