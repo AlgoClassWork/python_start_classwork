@@ -12,8 +12,18 @@ data = pd.read_csv('GoogleApps.csv')
 # Диаграма Рассеяния
 #data.plot(x = 'Installs', y = 'Size', kind='scatter')
 # Круговая диаграма
-#category = data['Category'].value_counts().nlargest(10)
+#category = data['Category'].value_counts()
 #content = data['Content Rating'].value_counts()
 #category.plot(kind='pie')
+# Столбчатая диаграмма
+#category.plot(kind='barh')
+table = data.pivot_table(
+    index='Content Rating',
+    columns='Type',
+    values='Rating',
+    aggfunc='mean'
+)
+table.plot(kind='barh', subplots= True)
+
 
 plt.show()
