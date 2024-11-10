@@ -95,7 +95,17 @@ window.setStyleSheet("""
     }
 """)
 # ФУНКЦИОНАЛ
+workdir = ''
+
+class ImageEditor():
+    def __init__(self):
+        self.image = None
+        self.directory = None
+        self.filename = None
+        self.save_directory = 'mod/'
+
 def show_images():
+    global workdir
     list_files.clear()
     workdir = QFileDialog().getExistingDirectory()
     files = os.listdir(workdir)
