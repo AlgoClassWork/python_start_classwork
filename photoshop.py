@@ -1,10 +1,11 @@
 import os
+from PIL import Image
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QVBoxLayout, QHBoxLayout,
     QPushButton, QListWidget, QLabel,
-    QFileDialog
-)
+    QFileDialog)
 
 # ИНТЕРФЕЙС
 app = QApplication([])
@@ -104,6 +105,16 @@ class ImageEditor():
         self.filename = None
         self.save_directory = 'mod/'
 
+    def load_image(self, filename):
+        self.filename = filename
+        fullname = os.path.join(workdir,filename)
+        self.image = Image.open(fullname)
+
+    def show_image(self, path):
+        pixmap_image = QPixmap(path)
+        label_image.setPixmap(pixmap_image)
+
+
 def show_images():
     global workdir
     list_files.clear()
@@ -112,10 +123,18 @@ def show_images():
     for file in files:
         if file.endswith('.jpg') or file.endswith('.png'):
             list_files.addItem(file)
+
+def show_chosen_image():
+    if list_files.currentRow() >= 0 :
+        filename = list_files.currentItem().text()
+        work_image.load_image(filename)
+        work_image.show_image( os.path.join(workdir, filename) )
 # ПОДПИСКИ
+list_files.currentRowChanged.connect(show_chosen_image)
 btn_folder.clicked.connect(show_images)
 
 # ЗАПУСК
+work_image = ImageEditor()
 window.setLayout(main_line)
 window.show()
 app.exec()
