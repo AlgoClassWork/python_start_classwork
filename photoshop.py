@@ -116,6 +116,19 @@ class ImageEditor():
         pixmap_image = pixmap_image.scaled(w,h)
         label_image.setPixmap(pixmap_image)
 
+    def save_image(self):
+        path = os.path.join(workdir, self.save_directory)
+        if not os.path.exists(path):
+            os.mkdir(path)
+        fullname = os.path.join(path, self.filename)
+        self.image.save(fullname)
+
+    def do_bw(self):
+        self.image = self.image.convert('L')
+        self.save_image()
+        path = os.path.join(workdir,self.save_directory,self.filename)
+        self.show_image(path)
+
 def show_images():
     global workdir
     list_files.clear()
@@ -130,12 +143,14 @@ def show_chosen_image():
         filename = list_files.currentItem().text()
         work_image.load_image(filename)
         work_image.show_image( os.path.join(workdir, filename) )
+
 # ПОДПИСКИ
+work_image = ImageEditor()
 list_files.currentRowChanged.connect(show_chosen_image)
 btn_folder.clicked.connect(show_images)
+btn_bw.clicked.connect(work_image.do_bw)
 
 # ЗАПУСК
-work_image = ImageEditor()
 window.setLayout(main_line)
 window.show()
 app.exec()
