@@ -1,9 +1,8 @@
+import os
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QPushButton, QListWidget, QLabel,
-    QHBoxLayout, QVBoxLayout
-)
-from PyQt5.QtCore import Qt
+    QHBoxLayout, QVBoxLayout, QFileDialog)
 
 # шаг 1: создаем приложение
 app = QApplication([])
@@ -95,15 +94,21 @@ window.setStyleSheet("""
         margin-right: 20px;
     }
 """)
+# Функционал
+directory = ''
+def show_images():
+    images_list.clear()
+    global directory
+    directory = QFileDialog.getExistingDirectory()
+    files = os.listdir(directory)
+    for file in files:
+        if file.endswith('.jpg') or file.endswith('.png'):
+            images_list.addItem(file)
 
-# шаг 7: размещаем главную линию в окно
+# Подписки
+folder_btn.clicked.connect(show_images)
+# Запуск
 window.setLayout(main_line)
-
-# шаг 8: настраиваем размеры окна
 window.resize(1000, 600)
-
-# шаг 9: отображаем окно
 window.show()
-
-# шаг 10: запуск приложения
 app.exec()
