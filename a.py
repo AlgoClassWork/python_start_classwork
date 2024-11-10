@@ -77,9 +77,6 @@ window.setStyleSheet("""
         font-size: 18px;
         color: #333;
         background-color: #e2e2e2;
-        padding: 20px;
-        border-radius: 5px;
-        text-align: center;
     }
     QListWidget {
         font-size: 14px;
