@@ -1,4 +1,6 @@
 import os
+from PIL import Image
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QPushButton, QListWidget, QLabel,
@@ -95,6 +97,21 @@ window.setStyleSheet("""
     }
 """)
 # Функционал
+class ImageEditor():
+    def __init__(self):
+        self.image = None
+        self.workdir = None 
+        self.filename = None 
+
+    def load_image(self, filename):
+        self.filename = filename 
+        fullname = os.path.join(directory, filename)
+        self.image = Image.open(fullname)
+
+    def show_image(self, path):
+        image = QPixmap(path)
+        image_label.setPixmap(image)
+
 directory = ''
 def show_images():
     images_list.clear()
@@ -107,6 +124,7 @@ def show_images():
 
 # Подписки
 folder_btn.clicked.connect(show_images)
+#images_list.currentRowChanged.connect(show_chosen_image)
 # Запуск
 window.setLayout(main_line)
 window.resize(1000, 600)
