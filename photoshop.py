@@ -112,8 +112,9 @@ class ImageEditor():
 
     def show_image(self, path):
         pixmap_image = QPixmap(path)
+        w, h = label_image.width(), label_image.height()
+        pixmap_image = pixmap_image.scaled(w,h)
         label_image.setPixmap(pixmap_image)
-
 
 def show_images():
     global workdir
