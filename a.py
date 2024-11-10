@@ -110,7 +110,10 @@ class ImageEditor():
 
     def show_image(self, path):
         image = QPixmap(path)
+        image = image.scaled(image_label.width(),image_label.height())
         image_label.setPixmap(image)
+
+work_image = ImageEditor()   
 
 directory = ''
 def show_images():
@@ -122,9 +125,15 @@ def show_images():
         if file.endswith('.jpg') or file.endswith('.png'):
             images_list.addItem(file)
 
+def show_chosen_image():
+    if images_list.currentRow() >= 0:
+        filename = images_list.currentItem().text()
+        work_image.load_image(filename)
+        work_image.show_image(os.path.join(directory,filename))
+
 # Подписки
 folder_btn.clicked.connect(show_images)
-#images_list.currentRowChanged.connect(show_chosen_image)
+images_list.currentRowChanged.connect(show_chosen_image)
 # Запуск
 window.setLayout(main_line)
 window.resize(1000, 600)
