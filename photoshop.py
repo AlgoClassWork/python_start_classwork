@@ -129,6 +129,12 @@ class ImageEditor():
         path = os.path.join(workdir,self.save_directory,self.filename)
         self.show_image(path)
 
+    def do_mirror(self):
+        self.image = self.image.transpose(Image.FLIP_LEFT_RIGHT)
+        self.save_image()
+        path = os.path.join(workdir,self.save_directory,self.filename)
+        self.show_image(path)
+
 def show_images():
     global workdir
     list_files.clear()
@@ -149,6 +155,7 @@ work_image = ImageEditor()
 list_files.currentRowChanged.connect(show_chosen_image)
 btn_folder.clicked.connect(show_images)
 btn_bw.clicked.connect(work_image.do_bw)
+btn_mirror.clicked.connect(work_image.do_mirror)
 
 # ЗАПУСК
 window.setLayout(main_line)
