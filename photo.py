@@ -1,10 +1,11 @@
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
-    QHBoxLayout,QVBoxLayout,
+    QHBoxLayout, QVBoxLayout,
     QPushButton, QListWidget, QLabel)
 
 # СОЗДАЕМ ЭЛЕМЕНТЫ ИНТЕРФЕЙСА
 app = QApplication([])
+
 window = QWidget()
 
 btn_folder = QPushButton('Папка')
@@ -42,9 +43,61 @@ buttons_line.addWidget(btn_bw)
 buttons_line.addWidget(btn_save)
 buttons_line.addWidget(btn_reset)
 
+# СТИЛИЗАЦИЯ ИНТЕРФЕЙСА
+window.setStyleSheet("""
+    QWidget {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #2f2f2f;
+        color: #f0f0f0;
+    }
+    QLabel {
+        font-size: 18px;
+        font-weight: bold;
+        color: #ffffff;
+        margin-bottom: 20px;
+    }
+    QPushButton {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 5px;
+        margin: 5px;
+        min-width: 120px;
+    }
+    QPushButton:hover {
+        background-color: #45a049;
+    }
+    QPushButton:pressed {
+        background-color: #3e8e41;
+    }
+    QListWidget {
+        background-color: #444;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 20px;
+        color: #f0f0f0;
+    }
+    QListWidget::item {
+        padding: 10px;
+        border-bottom: 1px solid #555;
+    }
+    QListWidget::item:selected {
+        background-color: #5a5a5a;
+    }
+    QHBoxLayout, QVBoxLayout {
+        margin: 0;
+        padding: 0;
+    }
+    QVBoxLayout {
+        align-items: center;
+    }
+""")
+
 # ЗАПУСК ПРИЛОЖЕНИЯ
 window.setWindowTitle('Фотожоб')
 window.setLayout(main_line)
-window.resize(800,500)
+window.resize(1400, 800)
 window.show()
 app.exec()
