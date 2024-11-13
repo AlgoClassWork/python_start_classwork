@@ -1,7 +1,11 @@
+import os
+from PIL import Image
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QHBoxLayout, QVBoxLayout,
-    QPushButton, QListWidget, QLabel)
+    QPushButton, QListWidget, QLabel,
+    QFileDialog)
 
 # СОЗДАЕМ ЭЛЕМЕНТЫ ИНТЕРФЕЙСА
 app = QApplication([])
@@ -50,12 +54,6 @@ window.setStyleSheet("""
         background-color: #2f2f2f;
         color: #f0f0f0;
     }
-    QLabel {
-        font-size: 18px;
-        font-weight: bold;
-        color: #ffffff;
-        margin-bottom: 20px;
-    }
     QPushButton {
         background-color: #4CAF50;
         color: white;
@@ -94,6 +92,28 @@ window.setStyleSheet("""
         align-items: center;
     }
 """)
+
+# ФУНКЦИОНАЛ
+def show_images():
+    global directory
+    directory = QFileDialog().getExistingDirectory()
+    filenames = os.listdir(directory)
+    list_images.clear()
+    for file in filenames:
+        if file.endswith('.jpg') or file.endswith('.png'):
+            list_images.addItem(file)
+
+def show_chosen_image():
+    if list_images.currentRow() >= 0:
+        filename = list_images.currentItem().text()
+        fullname = os.path.join(directory, filename)
+        image = Image.open(fullname)
+        pixmap_image = QPixmap(fullname).scaled(label_image.width(),label_image.height())
+        label_image.setPixmap(pixmap_image)
+    
+# ПОДПИСКИ
+btn_folder.clicked.connect(show_images)
+list_images.currentRowChanged.connect(show_chosen_image)
 
 # ЗАПУСК ПРИЛОЖЕНИЯ
 window.setWindowTitle('Фотожоб')
