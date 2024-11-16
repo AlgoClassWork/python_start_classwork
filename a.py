@@ -120,6 +120,24 @@ class ImageProcessor():
        self.saveImage()
        image_path = os.path.join(workdir,self.save_dir,self.filename)
        self.showImage(image_path)
+
+   def do_flip(self):
+       self.image = self.image.transpose(Image.FLIP_LEFT_RIGHT)
+       self.saveImage()
+       image_path = os.path.join(workdir,self.save_dir,self.filename)
+       self.showImage(image_path)
+
+   def do_sharp(self):
+       self.image = self.image.filter(SHARPEN)
+       self.saveImage()
+       image_path = os.path.join(workdir,self.save_dir,self.filename)
+       self.showImage(image_path)
+
+   def do_bw(self):
+       self.image = self.image.convert('L')
+       self.saveImage()
+       image_path = os.path.join(workdir,self.save_dir,self.filename)
+       self.showImage(image_path)
        
    def showImage(self, path):
        lb_image.hide()
@@ -142,6 +160,8 @@ lw_files.currentRowChanged.connect(showChosenImage)
 
 btn_left.clicked.connect(workimage.do_left)
 btn_right.clicked.connect(workimage.do_right)
-
+btn_flip.clicked.connect(workimage.do_flip)
+btn_sharp.clicked.connect(workimage.do_sharp)
+btn_bw.clicked.connect(workimage.do_bw)
 
 app.exec()
