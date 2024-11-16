@@ -9,8 +9,7 @@ from PyQt5.QtCore import Qt # нужна константа Qt.KeepAspectRatio �
 from PyQt5.QtGui import QPixmap # оптимизированная для показа на экране картинка
 
 
-from PIL import Image
-from PIL.ImageQt import ImageQt # для перевода графики из Pillow в Qt 
+from PIL import Image 
 from PIL import ImageFilter
 from PIL.ImageFilter import (
    BLUR, CONTOUR, DETAIL, EDGE_ENHANCE, EDGE_ENHANCE_MORE,
