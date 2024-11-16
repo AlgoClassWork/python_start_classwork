@@ -102,6 +102,25 @@ class ImageProcessor():
        fullname = os.path.join(workdir, filename)
        self.image = Image.open(fullname)
 
+   def saveImage(self):
+       path = os.path.join(workdir, self.save_dir)
+       if not (os.path.exists(path) or os.path.isdir(path) ):
+            os.mkdir(path)
+       fullname = os.path.join(path, self.filename)
+       self.image.save(fullname)
+        
+   def do_left(self):
+       self.image = self.image.transpose(Image.ROTATE_90)
+       self.saveImage()
+       image_path = os.path.join(workdir,self.save_dir,self.filename)
+       self.showImage(image_path)
+
+   def do_right(self):
+       self.image = self.image.transpose(Image.ROTATE_270)
+       self.saveImage()
+       image_path = os.path.join(workdir,self.save_dir,self.filename)
+       self.showImage(image_path)
+       
    def showImage(self, path):
        lb_image.hide()
        pixmapimage = QPixmap(path)
@@ -121,6 +140,8 @@ def showChosenImage():
 workimage = ImageProcessor() #текущая рабочая картинка для работы
 lw_files.currentRowChanged.connect(showChosenImage)
 
+btn_left.clicked.connect(workimage.do_left)
+btn_right.clicked.connect(workimage.do_right)
 
 
 app.exec()
