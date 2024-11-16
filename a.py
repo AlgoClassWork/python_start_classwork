@@ -1,29 +1,127 @@
-import pandas 
-import matplotlib.pyplot as plt
-import seaborn as sns
+import os
+from PyQt5.QtWidgets import (
+   QApplication, QWidget,
+   QFileDialog,
+   QLabel, QPushButton, QListWidget,
+   QHBoxLayout, QVBoxLayout
+)
+from PyQt5.QtCore import Qt # нужна константа Qt.KeepAspectRatio для изменения размеров с сохранением пропорций
+from PyQt5.QtGui import QPixmap # оптимизированная для показа на экране картинка
 
-data = pandas.read_csv('student.csv')
 
-data['final score'] = data['math score'] + data['reading score'] + data['writing score']
+from PIL import Image
+from PIL.ImageQt import ImageQt # для перевода графики из Pillow в Qt 
+from PIL import ImageFilter
+from PIL.ImageFilter import (
+   BLUR, CONTOUR, DETAIL, EDGE_ENHANCE, EDGE_ENHANCE_MORE,
+   EMBOSS, FIND_EDGES, SMOOTH, SMOOTH_MORE, SHARPEN,
+   GaussianBlur, UnsharpMask
+)
 
-# Гипотеза 1. хождение на курсы увеличивает итоговый балл
-#hypo1 =  data.groupby('test preparation course')['final score'].median()
-#hypo1.plot(kind='bar')
-# Гипотеза 2. влияет ли еда успешную сдачу экзамена
-#hypo2 = data.groupby('lunch')['final score'].mean()
-#sns.boxplot(x='gender',y='final score',hue='lunch',data=data, palette='Set1')
-# Распределение итоговых баллов
-sns.histplot(data['final score'],kde=True, color='orange',bins=20)
-plt.title('Распределение баллов', fontsize=20)
-plt.xlabel('Итоговый балл')
-plt.ylabel('Частота')
-plt.tight_layout()
 
-hypo = data.groupby('race/ethnicity')['final score'].mean()
-sns.barplot(x=hypo.index, y=hypo.values, palette="Set2")
-plt.tight_layout()
+app = QApplication([])
+win = QWidget()       
+win.resize(700, 500) 
+win.setWindowTitle('Easy Editor')
+lb_image = QLabel("Картинка")
+btn_dir = QPushButton("Папка")
+lw_files = QListWidget()
 
-corr = data[['math score','reading score', 'writing score', 'final score']].corr()
-sns.heatmap(corr)
 
-plt.show()
+btn_left = QPushButton("Лево")
+btn_right = QPushButton("Право")
+btn_flip = QPushButton("Зеркало")
+btn_sharp = QPushButton("Резкость")
+btn_bw = QPushButton("Ч/Б")
+
+
+row = QHBoxLayout()          # Основная строка
+col1 = QVBoxLayout()         # делится на два столбца
+col2 = QVBoxLayout()
+col1.addWidget(btn_dir)      # в первом - кнопка выбора директории
+col1.addWidget(lw_files)     # и список файлов
+col2.addWidget(lb_image, 95) # вo втором - картинка
+row_tools = QHBoxLayout()    # и строка кнопок
+row_tools.addWidget(btn_left)
+row_tools.addWidget(btn_right)
+row_tools.addWidget(btn_flip)
+row_tools.addWidget(btn_sharp)
+row_tools.addWidget(btn_bw)
+col2.addLayout(row_tools)
+
+
+row.addLayout(col1, 20)
+row.addLayout(col2, 80)
+win.setLayout(row)
+
+
+win.show()
+
+
+workdir = ''
+
+
+def filter(files, extensions):
+   result = []
+   for filename in files:
+       for ext in extensions:
+           if filename.endswith(ext):
+               result.append(filename)
+   return result
+
+
+def chooseWorkdir():
+   global workdir
+   workdir = QFileDialog.getExistingDirectory()
+
+
+def showFilenamesList():
+   extensions = ['.jpg','.jpeg', '.png', '.gif', '.bmp']
+   chooseWorkdir()
+   filenames = filter(os.listdir(workdir), extensions)
+
+
+   lw_files.clear()
+   for filename in filenames:
+       lw_files.addItem(filename)
+
+
+btn_dir.clicked.connect(showFilenamesList)
+
+
+class ImageProcessor():
+   def __init__(self):
+       self.image = None
+       self.dir = None
+       self.filename = None
+       self.save_dir = "Modified/"
+
+
+   def loadImage(self, filename):
+       ''' при загрузке запоминаем путь и имя файла '''
+       self.filename = filename
+       fullname = os.path.join(workdir, filename)
+       self.image = Image.open(fullname)
+
+   def showImage(self, path):
+       lb_image.hide()
+       pixmapimage = QPixmap(path)
+       w, h = lb_image.width(), lb_image.height()
+       pixmapimage = pixmapimage.scaled(w, h, Qt.KeepAspectRatio)
+       lb_image.setPixmap(pixmapimage)
+       lb_image.show()
+
+
+def showChosenImage():
+   if lw_files.currentRow() >= 0:
+       filename = lw_files.currentItem().text()
+       workimage.loadImage(filename)
+       workimage.showImage(os.path.join(workdir, workimage.filename))
+
+
+workimage = ImageProcessor() #текущая рабочая картинка для работы
+lw_files.currentRowChanged.connect(showChosenImage)
+
+
+
+app.exec()
