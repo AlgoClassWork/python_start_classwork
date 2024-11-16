@@ -25,3 +25,35 @@ def fill_age(row):
 
 
 df['Age'] = df.apply(fill_age, axis = 1)
+
+def fill_gender(gender):
+    if gender == 'male':
+        return 1
+    return 0
+
+df['Sex'] = df['Sex'].apply(fill_gender)
+
+# Создание модели
+#pip install scikit-learn
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+X = df.drop('Survived', axis=1)
+y = df['Survived']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y , test_size=0.25)
+
+sc = StandardScaler()
+
+X_train = sc.fit_transform(X_train)
+X_test = sc.transform(X_test)
+
+classifier = KNeighborsClassifier(n_neighbors=5)
+
+classifier.fit(X_train, y_train)
+
+y_pred = classifier.predict(X_test)
+
+print('Процент правильных предсказаний', accuracy_score(y_test,y_pred) * 100)
