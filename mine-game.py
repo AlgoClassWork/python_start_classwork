@@ -1,5 +1,6 @@
 #game.py
 
+# напиши здесь код основного окна игры
 from direct.showbase.ShowBase import ShowBase
 from map import Map
 
@@ -13,6 +14,8 @@ game = Game()
 game.run()
 
 #map.py
+
+# напиши здесь код создания и управления картой
 class Map():
     def __init__(self):
         self.land = render.attachNewNode('Land')
@@ -21,7 +24,7 @@ class Map():
     def addBlock(self,position):
         self.block = loader.loadModel('block')
         self.block.setTexture(loader.loadTexture('block.png'))
-        self.block.setPos(0,10,0)
-        self.block.setColor(position)
-        self.block.reparenTo(self.land)
+        self.block.setPos(position)
+        self.block.setColor((0.2 , 0.2 , 0.2 , 1))
+        self.block.reparentTo(self.land)
 
