@@ -104,7 +104,7 @@ def show_images():
             list_images.addItem(file)
 
 def show_chosen_image():
-    global image
+    global image, fullname
     if list_images.currentRow() >= 0:
         filename = list_images.currentItem().text()
         fullname = os.path.join(directory, filename) 
@@ -144,7 +144,20 @@ def do_bw():
     global image
     image = image.convert('L')
     update_image()
-    
+
+def reset():
+    global image
+    image = Image.open(fullname)
+    pixmap_image = QPixmap(fullname).scaled(label_image.width(),label_image.height())
+    label_image.setPixmap(pixmap_image)
+
+def save_image():
+    global image
+    directory = QFileDialog().getExistingDirectory()
+    filename = list_images.currentItem().text()
+    image.save(os.path.join(directory,filename))
+
+
 # ПОДПИСКИ
 btn_folder.clicked.connect(show_images)
 list_images.currentRowChanged.connect(show_chosen_image)
@@ -153,6 +166,8 @@ btn_right.clicked.connect(do_right)
 btn_mirror.clicked.connect(do_mirror)
 btn_sharp.clicked.connect(do_sharp)
 btn_bw.clicked.connect(do_bw)
+btn_reset.clicked.connect(reset)
+btn_save.clicked.connect(save_image)
 
 # ЗАПУСК ПРИЛОЖЕНИЯ
 window.setWindowTitle('Фотожоб')
