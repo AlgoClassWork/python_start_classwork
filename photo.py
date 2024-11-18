@@ -1,5 +1,5 @@
 import os
-from PIL import Image
+from PIL import Image, ImageEnhance, ImageOps
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
@@ -124,11 +124,35 @@ def do_left():
     global image
     image = image.rotate(90)
     update_image()
+
+def do_right():
+    global image
+    image = image.rotate(-90)
+    update_image()
+
+def do_mirror():
+    global image
+    image = ImageOps.mirror(image)
+    update_image()
+
+def do_sharp():
+    global image
+    image = ImageEnhance.Sharpness(image).enhance(2)
+    update_image()
+
+def do_bw():
+    global image
+    image = image.convert('L')
+    update_image()
     
 # ПОДПИСКИ
 btn_folder.clicked.connect(show_images)
 list_images.currentRowChanged.connect(show_chosen_image)
 btn_left.clicked.connect(do_left)
+btn_right.clicked.connect(do_right)
+btn_mirror.clicked.connect(do_mirror)
+btn_sharp.clicked.connect(do_sharp)
+btn_bw.clicked.connect(do_bw)
 
 # ЗАПУСК ПРИЛОЖЕНИЯ
 window.setWindowTitle('Фотожоб')
