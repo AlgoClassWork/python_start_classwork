@@ -22,3 +22,59 @@
 Затем скинь мне код целиком не разделяя на гипотезы 
 
 (дополнительно можно запросить визуализацию или поменять гипотезы)
+
+
+
+# Импортируем необходимые библиотеки
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Загружаем данные (предполагается, что данные находятся в CSV-файле)
+data = pd.read_csv('IMDB.csv')
+
+# 1. Гипотеза 1: Фильмы с более высоким доходом имеют более высокий рейтинг на Metacritic.
+# Строим график зависимости дохода от рейтинга на Metacritic
+sns.scatterplot(x='Revenue (Millions)', y='Rating', data=data)
+plt.show()
+
+# 2. Гипотеза 2: Фильмы с более продолжительным временем показывают более высокий рейтинг пользователей.
+# Строим график зависимости продолжительности фильма от рейтинга пользователей
+sns.scatterplot(x='Runtime (Minutes)', y='Rating', data=data)
+plt.show()
+
+# 3. Гипотеза 3: Режиссёр, снявший несколько популярных фильмов (по доходу или рейтингу), имеет более высокие оценки на Metacritic.
+# Группируем данные по режиссёрам и вычисляем средний рейтинг Metascore
+directors_metascore = data.groupby('Director')['Rating'].mean().sort_values(ascending=False)
+
+# Строим график для топ-10 режиссёров с наивысшим средним рейтингом Metascore
+top_10_directors = directors_metascore.head(10)
+top_10_directors.plot(kind='barh')
+plt.show()
+
+# 4. Гипотеза 4: Фильмы с определёнными жанрами (например, экшен, фантастика) имеют более высокий рейтинг на Metacritic.
+# Разбиваем жанры на отдельные столбцы и считаем средний рейтинг Metascore для каждого жанра
+data['Genres'] = data['Genre'].str.split(',')
+
+# Для каждого жанра рассчитываем средний рейтинг Metascore
+genres_metascore = data.explode('Genres').groupby('Genres')['Rating'].mean().sort_values(ascending=False)
+
+# Строим график для 10 самых популярных жанров с наивысшим средним рейтингом Metascore
+top_10_genres = genres_metascore.head(10)
+top_10_genres.plot(kind='barh')
+plt.show()
+
+
+# 5. Гипотеза 5: Присутствие известных актёров в фильме повышает его рейтинг на Metacritic.
+# Разделяем строку с актёрами на отдельные элементы
+data['Actors'] = data['Actors'].str.split(',')
+
+# Выбираем топ-10 актёров, которые снялись в самых высокооценённых фильмах
+actors_metascore = data.explode('Actors').groupby('Actors')['Rating'].mean().sort_values(ascending=False)
+
+# Строим график для 10 самых популярных актёров с наивысшим средним рейтингом Metascore
+top_10_actors = actors_metascore.head(10)
+top_10_actors.plot(kind='barh')
+plt.show()
+
+https://www.canva.com/design/DAGXA71q_80/wiUzfNWqch7H4lQMDu4oQw/edit?utm_content=DAGXA71q_80&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
