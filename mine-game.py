@@ -1,30 +1,46 @@
-#game.py
+Файл game.py
 
-# напиши здесь код основного окна игры
+
 from direct.showbase.ShowBase import ShowBase
-from map import Map
+from mapmanager import Mapmanager
+
 
 class Game(ShowBase):
-    def __init__(self):
-        ShowBase.__init__(self)
-        self.land = Map()
-        base.camLens.setFov(90)
+   def __init__(self):
+       ShowBase.__init__(self)
+       self.land = Mapmanager()
+       base.camLens.setFov(90)
+
 
 game = Game()
 game.run()
 
-#map.py
 
-# напиши здесь код создания и управления картой
-class Map():
-    def __init__(self):
-        self.land = render.attachNewNode('Land')
-        self.addBlock( (0,10,0) )
+Файл mapmanager.py
 
-    def addBlock(self,position):
-        self.block = loader.loadModel('block')
-        self.block.setTexture(loader.loadTexture('block.png'))
-        self.block.setPos(position)
-        self.block.setColor((0.2 , 0.2 , 0.2 , 1))
-        self.block.reparentTo(self.land)
 
+class Mapmanager():
+   """ Управление картой """
+   def __init__(self):
+       self.model = 'block' # модель кубика лежит в файле block.egg
+       # # используются следующие текстуры:
+       self.texture = 'block.png'        
+       self.color = (0.2, 0.2, 0.35, 1) #rgba
+
+
+       # создаём основной узел карты:
+       self.startNew()
+        # создаём строительные блоки   
+       self.addBlock((0,10, 0))
+
+
+   def startNew(self):
+       """создаёт основу для новой карты"""
+       self.land = render.attachNewNode("Land") # узел, к которому привязаны все блоки карты
+  
+   def addBlock(self, position):
+       self.block = loader.loadModel(self.model)
+       self.block.setTexture(loader.loadTexture(self.texture))
+       self.block.setPos(position)
+       self.block.setColor(self.color)
+       self.block.reparentTo(self.land)
