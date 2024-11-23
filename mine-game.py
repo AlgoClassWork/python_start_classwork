@@ -18,7 +18,6 @@ game.run()
 
 Файл mapmanager.py
 
-
 class Mapmanager():
     """ Управление картой """
     def __init__(self):
@@ -32,7 +31,6 @@ class Mapmanager():
 
         # создаём основной узел карты:
         self.startNew() 
-        self.addBlock((0,10, 0))
 
     def startNew(self):
         """создаёт основу для новой карты""" 
@@ -45,8 +43,14 @@ class Mapmanager():
         self.block.setColor(self.color)
         self.block.reparentTo(self.land)
 
+    # обнуление карты
+    def clear(self):
+        self.land.removeNode()
+        self.startNew()
+
     def loadLand(self, filename):
         # загружаем данные из текстового файла
+        self.clear()
         land = open(filename)
         # алгоритм загрузки карты из числовой модели
         y = 0
