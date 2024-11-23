@@ -29,12 +29,22 @@ while game:
     keys_pressed = key.get_pressed()
     # Обработка нажатия W A S D
     if keys_pressed[K_w] and pica_y > 0:
-        pica_y -= 1
+        pica_y -= 3
     if keys_pressed[K_s] and pica_y < 400:
-        pica_y += 1
+        pica_y += 3
     if keys_pressed[K_a] and pica_x > 0:
-        pica_x -= 1
+        pica_x -= 3
     if keys_pressed[K_d] and pica_x < 600:
-        pica_x += 1
+        pica_x += 3
+
+    # Преследование гитлера
+    if gita_x < pica_x:
+        gita_x += 1
+    if gita_x > pica_x:
+        gita_x -= 1
+    if gita_y < pica_y:
+        gita_y += 1
+    if gita_y > pica_y:
+        gita_y -= 1
     # Обновление кадров на нашем экране
     display.update()
