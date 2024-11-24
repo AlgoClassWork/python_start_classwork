@@ -3,6 +3,7 @@
 
 from direct.showbase.ShowBase import ShowBase
 
+from hero import Hero
 from mapmanager import Mapmanager
 
     
@@ -10,11 +11,11 @@ class Game(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
         self.land = Mapmanager()
+        self.hero = Hero( (1,1,1), self.land )
         self.land.loadLand('land.txt')
 
 game = Game()
 game.run()
-
 
 Файл mapmanager.py
 
@@ -64,4 +65,37 @@ class Mapmanager():
             y += 1
 
 
+Файл hero.py
+
+class Hero():
+    def __init__(self, pos, land):
+        self.land = land
+        self.hero = loader.loadModel('smiley')
+        self.hero.setColor(1, 0.5, 0)
+        self.hero.setScale(0.3)
+        self.hero.setPos(pos)
+        self.hero.reparentTo(render)
+        self.cameraBind()
+        self.accept_events()
+
+    def cameraBind(self):
+        base.disableMouse()
+        base.camera.reparentTo(self.hero)
+        self.cameraOn = True
+
+    def cameraUp(self):
+        pos = self.hero.getPos()
+        base.mouseInterfaceNode.setPos(pos[0], pos[1], pos[2])
+        base.camera.reparentTo(render)
+        base.enableMouse()
+        self.cameraOn = False
+
+    def changeView(self):
+        if self.cameraOn:
+            self.cameraUp()
+        else:
+            self.cameraBind()
+
+    def accept_events(self):
+        base.accept('z', self.changeView)
 
