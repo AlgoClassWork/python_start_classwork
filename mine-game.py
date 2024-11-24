@@ -96,6 +96,14 @@ class Hero():
         else:
             self.cameraBind()
 
+    def turn_left(self):
+        current_angle =  self.hero.getH()
+        self.hero.setH((current_angle + 5) % 360)
+        print(current_angle)
+
     def accept_events(self):
         base.accept('z', self.changeView)
+
+        base.accept('q', self.turn_left)
+        base.accept('q' + '-repeat', self.turn_left)
 
