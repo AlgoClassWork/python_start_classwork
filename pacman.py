@@ -1,5 +1,18 @@
 from pygame import *
 
+class GameSprite(sprite.Sprite):
+    def __init__(self,img,x,y):
+        self.image = transform.scale(image.load(img), (70,70))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+    def draw(self):
+        window.blit(self.image, (self.rect.x,self.rect.y))
+
+player = GameSprite('hero.png',100,100)
+enemy = GameSprite('cyborg.png',300,100)
+
 win_width = 700
 win_height = 500
 
@@ -21,6 +34,8 @@ while game:
             game = False
 
     window.blit(background, (0,0) )
+    player.draw()
+    enemy.draw()
 
     display.update()
     clock.tick(60)
