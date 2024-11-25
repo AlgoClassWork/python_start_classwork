@@ -1,61 +1,18 @@
 from pygame import *
 
-window = display.set_mode((700,500))
+window = display.set_mode( (700,500) )
+display.set_caption('Догонялки')
 
-back_image = image.load('back.png') 
-back_image = transform.scale(back_image,(700,500)) 
-
-pica = image.load('pica.png') 
-pica = transform.scale(pica,(100,100))  
-
-pica_x = 500 #new
-pica_y = 500 #new
-
-enemy = image.load('enemy.png') 
-enemy = transform.scale(enemy,(100,100))  
-
-enemy_x = 0 #new
-enemy_y = 0 #new
-
-timer = 0
+background = image.load('фон.jpg')
+background = transform.scale(background, (700,500) )
 
 game = True
 while game:
 
-    timer += 30
-    
-    window.blit(back_image,(0,0)) 
-    window.blit(pica,(pica_x,pica_y))  #update
-    window.blit(enemy,(enemy_x,enemy_y))  #update
-
-    keys = key.get_pressed() # new
-    if keys[K_w]:
-        pica_y -= 5
-    if keys[K_s]:
-        pica_y += 5
-    if keys[K_a]:
-        pica_x -= 5
-    if keys[K_d]:
-        pica_x += 5
-
-    if pica_x > enemy_x:
-        enemy_x += 1
-    if pica_x < enemy_x:
-        enemy_x -= 1
-    if pica_y > enemy_y:
-        enemy_y += 1
-    if pica_y < enemy_y:
-        enemy_y -= 1
-
-    if pica_x == enemy_x and pica_y == enemy_y:
-        print('вас поймали')
-
-    if timer > 10000:
-        print('вы победили')
-    
     for some_event in event.get():
         if some_event.type == QUIT:
             game = False
 
-    time.delay(30)
-    display.update() 
+    window.blit(background, (0,0) )
+
+    display.update()
