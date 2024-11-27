@@ -35,6 +35,16 @@ while game:
         pica_x -= 3
     if keys[K_d] and pica_x < 600:
         pica_x += 3
+
+    if pica_x > gita_x:
+        gita_x += 1
+    if pica_x < gita_x:
+        gita_x -= 1
+    if pica_y > gita_y:
+        gita_y += 1
+    if pica_y < gita_y:
+        gita_y -= 1
+
     
     clock.tick(60)
     display.update()
