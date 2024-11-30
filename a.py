@@ -1,44 +1,58 @@
 from pygame import *
+'''Необходимые классы'''
 
 
+#класс-родитель для спрайтов
 class GameSprite(sprite.Sprite):
-    def __init__(self, img, x, y):
-        self.image =  transform.scale(image.load(img), (70,70))
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+   #конструктор класса
+   def __init__(self, player_image, player_x, player_y, player_speed):
+       # каждый спрайт должен хранить свойство image - изображение
+       self.image = transform.scale(image.load(player_image), (65, 65))
+       self.speed = player_speed
+       # каждый спрайт должен хранить свойство rect - прямоугольник, в который он вписан
+       self.rect = self.image.get_rect()
+       self.rect.x = player_x
+       self.rect.y = player_y
 
-    def draw(self):
-        window.blit(self.image, (self.rect.x,self.rect.y))
 
-hero = GameSprite('hero.png',200,200)
-enemy = GameSprite('cyborg.png',400,200)
+   def reset(self):
+       window.blit(self.image, (self.rect.x, self.rect.y))
 
-# Игровая сцена
-window = display.set_mode((700,500))
-display.set_caption('Лабиринт ужаса')
-back = transform.scale(image.load('background.jpg'),(700,500))
 
-# Музыка
+#Игровая сцена:
+win_width = 700
+win_height = 500
+window = display.set_mode((win_width, win_height))
+display.set_caption("Maze")
+background = transform.scale(image.load("background.jpg"), (win_width, win_height))
+
+
+#Персонажи игры:
+player = GameSprite('hero.png', 5, win_height - 80, 4)
+monster = GameSprite('cyborg.png', win_width - 80, 280, 2)
+final = GameSprite('treasure.png', win_width - 120, win_height - 80, 0)
+
+
+game = True
+clock = time.Clock()
+FPS = 60
+
+
+#музыка
 #mixer.init()
 #mixer.music.load('jungles.ogg')
 #mixer.music.play()
 
-# Игровой таймер
-clock = time.Clock()
 
-# Игровой цикл
-game = True
 while game:
-    for e in event.get():
-        if e.type == QUIT:
-            game = False
+   for e in event.get():
+       if e.type == QUIT:
+           game = False
+  
+   window.blit(background,(0, 0))
+   player.reset()
+   monster.reset()
 
-    window.blit(back, (0,0))
 
-    hero.draw()
-    enemy.draw()
-
-    display.update()
-    clock.tick(60)
-    
+   display.update()
+   clock.tick(FPS)
