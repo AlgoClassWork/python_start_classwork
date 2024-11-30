@@ -14,10 +14,20 @@ class GameSprite(sprite.Sprite):
        self.rect.x = player_x
        self.rect.y = player_y
 
-
    def reset(self):
        window.blit(self.image, (self.rect.x, self.rect.y))
 
+class Player(GameSprite):
+    def move(self):
+        keys = key.get_pressed()
+        if keys[K_w] and self.rect.y > 0:
+            self.rect.y -= self.speed
+        if keys[K_s] and self.rect.y < 435:
+            self.rect.y += self.speed
+        if keys[K_a] and self.rect.x > 0:
+            self.rect.x -= self.speed
+        if keys[K_d] and self.rect.x < 635:
+            self.rect.x += self.speed
 
 #Игровая сцена:
 win_width = 700
@@ -28,7 +38,7 @@ background = transform.scale(image.load("background.jpg"), (win_width, win_heigh
 
 
 #Персонажи игры:
-player = GameSprite('hero.png', 5, win_height - 80, 4)
+player = Player('hero.png', 5, win_height - 80, 4)
 monster = GameSprite('cyborg.png', win_width - 80, 280, 2)
 final = GameSprite('treasure.png', win_width - 120, win_height - 80, 0)
 
@@ -53,6 +63,7 @@ while game:
    player.reset()
    monster.reset()
 
+   player.move()
 
    display.update()
    clock.tick(FPS)
