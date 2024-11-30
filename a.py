@@ -6,7 +6,6 @@ from pygame import *
 class GameSprite(sprite.Sprite):
    #конструктор класса
    def __init__(self, player_image, player_x, player_y, player_speed):
-       super().__init__()
        # каждый спрайт должен хранить свойство image - изображение
        self.image = transform.scale(image.load(player_image), (65, 65))
        self.speed = player_speed
@@ -29,9 +28,9 @@ background = transform.scale(image.load("background.jpg"), (win_width, win_heigh
 
 
 #Персонажи игры:
-#player = GameSprite('hero.png', 5, win_height - 80, 4)
-#monster = GameSprite('cyborg.png', win_width - 80, 280, 2)
-#final = GameSprite('treasure.png', win_width - 120, win_height - 80, 0)
+player = GameSprite('hero.png', 5, win_height - 80, 4)
+monster = GameSprite('cyborg.png', win_width - 80, 280, 2)
+final = GameSprite('treasure.png', win_width - 120, win_height - 80, 0)
 
 
 game = True
@@ -40,9 +39,9 @@ FPS = 60
 
 
 #музыка
-mixer.init()
-mixer.music.load('jungles.ogg')
-mixer.music.play()
+#mixer.init()
+#mixer.music.load('jungles.ogg')
+#mixer.music.play()
 
 
 while game:
