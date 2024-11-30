@@ -29,9 +29,9 @@ background = transform.scale(image.load("background.jpg"), (win_width, win_heigh
 
 
 #Персонажи игры:
-player = GameSprite('hero.png', 5, win_height - 80, 4)
-monster = GameSprite('cyborg.png', win_width - 80, 280, 2)
-final = GameSprite('treasure.png', win_width - 120, win_height - 80, 0)
+#player = GameSprite('hero.png', 5, win_height - 80, 4)
+#monster = GameSprite('cyborg.png', win_width - 80, 280, 2)
+#final = GameSprite('treasure.png', win_width - 120, win_height - 80, 0)
 
 
 game = True
