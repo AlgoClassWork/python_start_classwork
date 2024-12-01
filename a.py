@@ -60,6 +60,18 @@ class Wall(sprite.Sprite):
     def reset(self):
        window.blit(self.image, (self.rect.x, self.rect.y))
 
+    direction = "left"
+    def update(self, start, end):
+       if self.rect.x <= start:
+           self.direction = "right"
+       if self.rect.x >= end:
+           self.direction = "left"
+
+       if self.direction == "left":
+           self.rect.x -= 2
+       else:
+           self.rect.x += 2
+
 #Игровая сцена:
 win_width = 700
 win_height = 500
@@ -108,6 +120,7 @@ while game:
        window.blit(background,(0, 0))
        player.update()
        monster.update()
+       wall_2.update(100,400)
       
        player.reset()
        monster.reset()
