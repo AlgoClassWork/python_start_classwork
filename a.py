@@ -74,6 +74,10 @@ player = Player('hero.png', 5, win_height - 80, 4)
 monster = Enemy('cyborg.png', win_width - 80, 280, 2)
 final = GameSprite('treasure.png', win_width - 120, win_height - 80, 0)
 
+wall_1 = Wall(10,10,650,10)
+wall_2 = Wall(200,100,10,400)
+wall_3 = Wall(200,400,400,10)
+
 
 game = True
 finish = False
@@ -100,6 +104,10 @@ while game:
        player.reset()
        monster.reset()
        final.reset()
+
+       wall_1.reset()
+       wall_2.reset()
+       wall_3.reset()
 
 
    display.update()
