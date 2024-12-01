@@ -49,18 +49,6 @@ class Enemy(GameSprite):
        else:
            self.rect.x += self.speed
 
-class Wall(sprite.Sprite):
-    def __init__(self, wall_x, wall_y, wall_width, wall_height):
-        self.image = Surface((wall_width, wall_height))
-        self.image.fill((0,255,100))
-        self.rect = self.image.get_rect()
-        self.rect.x = wall_x
-        self.rect.y = wall_y
-
-    def reset(self):
-        window.blit(self.image,(self.rect.x, self.rect.y))
-
-
 #Игровая сцена:
 win_width = 700
 win_height = 500
@@ -74,10 +62,6 @@ player = Player('hero.png', 5, win_height - 80, 4)
 monster = Enemy('cyborg.png', win_width - 80, 280, 2)
 final = GameSprite('treasure.png', win_width - 120, win_height - 80, 0)
 
-wall_1 = Wall(10,10,650,10)
-wall_2 = Wall(200,100,10,400)
-wall_3 = Wall(200,400,400,10)
-
 
 game = True
 finish = False
@@ -89,12 +73,6 @@ FPS = 60
 #mixer.init()
 #mixer.music.load('jungles.ogg')
 #mixer.music.play()
-
-#надписи
-font.init()
-my_font = font.Font('Shrift.ttf',100)
-text_win = my_font.render('ПОБЕДА',True,(0,255,0))
-text_lose = my_font.render('ПРОИГРЫШ',True,(255,0,0))
 
 while game:
    for e in event.get():
@@ -109,19 +87,6 @@ while game:
        player.reset()
        monster.reset()
        final.reset()
-
-       wall_1.reset()
-       wall_2.reset()
-       wall_3.reset()
-
-       if sprite.collide_rect(player, final):
-           window.blit(text_win,(200,200))
-           finish = True
-
-       if sprite.collide_rect(player, monster) or sprite.collide_rect(player, wall_1) or sprite.collide_rect(player, wall_2) or sprite.collide_rect(player, wall_3):
-           window.blit(text_lose,(100,200))
-           finish = True
-           
 
    display.update()
    clock.tick(FPS)
