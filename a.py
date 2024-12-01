@@ -92,6 +92,12 @@ FPS = 60
 #mixer.music.load('jungles.ogg')
 #mixer.music.play()
 
+#надписи
+font.init()
+my_font = font.Font(None,80)
+win_text = my_font.render('YOU WIN!',True,(0,255,0))
+
+
 while game:
    for e in event.get():
        if e.type == QUIT:
@@ -110,6 +116,11 @@ while game:
        wall_2.reset()
        wall_3.reset()
        wall_4.reset()
+
+
+       if sprite.collide_rect(player, final):
+           window.blit(win_text,(100,200))
+           finish = True
 
 
    display.update()
