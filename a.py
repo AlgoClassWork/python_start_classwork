@@ -49,6 +49,17 @@ class Enemy(GameSprite):
        else:
            self.rect.x += self.speed
 
+class Wall(sprite.Sprite):
+    def __init__(self, wall_x, wall_y, wall_width, wall_height):
+        self.image = Surface((wall_width, wall_height))
+        self.image.fill((0,255,100))
+        self.rect = self.image.get_rect()
+        self.rect.x = wall_x
+        self.rect.y = wall_y
+
+    def reset(self):
+        window.blit(self.image,(self.rect.x, self.rect.y))
+
 
 #Игровая сцена:
 win_width = 700
