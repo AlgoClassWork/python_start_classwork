@@ -78,7 +78,7 @@ wall_2 = Wall(200,100,10,400)
 wall_3 = Wall(300,100,400,10)
 wall_4 = Wall(300,400,400,10)
 
-
+walls = [wall_1, wall_2, wall_3, wall_4]
 
 
 game = True
@@ -94,8 +94,9 @@ FPS = 60
 
 #надписи
 font.init()
-my_font = font.Font(None,80)
+my_font = font.Font(None,150)
 win_text = my_font.render('YOU WIN!',True,(0,255,0))
+lose_text = my_font.render('YOU LOSE!',True,(255,0,0))
 
 
 while game:
@@ -121,6 +122,17 @@ while game:
        if sprite.collide_rect(player, final):
            window.blit(win_text,(100,200))
            finish = True
+
+       if sprite.collide_rect(player, monster):
+           window.blit(lose_text,(100,200))
+           finish = True
+
+       for wall in walls:
+           if sprite.collide_rect(player, wall):
+               player.rect.x = 20
+               player.rect.y = 420
+
+     
 
 
    display.update()
