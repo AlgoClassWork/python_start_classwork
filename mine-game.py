@@ -1,25 +1,20 @@
 Файл game.py
 from direct.showbase.ShowBase import ShowBase
 from mapmanager import Mapmanager
-from hero import Hero
 
 
 class Game(ShowBase):
    def __init__(self):
        ShowBase.__init__(self)
        self.land = Mapmanager()
-       x,y = self.land.loadLand("land.txt")
-       self.hero = Hero((x//2,y//2,2),self.land)
+       self.land.loadLand("land.txt")
        base.camLens.setFov(90)
 
 
 game = Game()
 game.run()
-
-
 Файл mapmanager.py
-
-
+import pickle
 class Mapmanager():
    """ Управление картой """
    def __init__(self):
@@ -127,12 +122,47 @@ class Mapmanager():
                block.removeNode()
 
 
+   def saveMap(self):
+       """сохраняет все блоки, включая постройки, в бинарный файл"""
 
 
+       """возвращает коллекцию NodePath для всех существующих в карте мира блоков"""
+       blocks = self.land.getChildren()
+       # открываем бинарный файл на запись
+       with open('my_map.dat', 'wb') as fout:
 
 
+           # сохраняем в начало файла количество блоков
+           pickle.dump(len(blocks), fout)
 
 
+           # обходим все блоки
+           for block in blocks:
+               # сохраняем позицию
+               x, y, z = block.getPos()
+               pos = (int(x), int(y), int(z))
+               pickle.dump(pos, fout)
+
+
+   def loadMap(self):
+       # удаляем все блоки
+       self.clear()
+
+
+       # открываем бинарный файл на чтение
+       with open('my_map.dat', 'rb') as fin:
+          
+           # считываем количество блоков
+           length = pickle.load(fin)
+
+
+           for i in range(length):
+               # считываем позицию
+               pos = pickle.load(fin)
+
+
+               # создаём новый блок
+               self.addBlock(pos)
 Файл hero.py
 
 
@@ -154,6 +184,10 @@ key_turn_right = 'm'    # поворот камеры налево (а мира 
 
 key_build = 'b'     # построить блок перед собой
 key_destroy = 'v'   # разрушить блок перед собой
+
+
+key_savemap = 'k'
+key_loadmap = 'l'
 
 
 class Hero():
@@ -184,6 +218,8 @@ class Hero():
        base.camera.reparentTo(render)
        base.enableMouse()
        self.cameraOn = False
+
+
 
 
    def changeView(self):
@@ -289,6 +325,8 @@ class Hero():
            self.mode = False
        else:
            self.mode = True
+
+
   
    def try_move(self, angle):
        '''перемещается, если может'''
@@ -330,6 +368,8 @@ class Hero():
            self.land.delBlockFrom(pos)
 
 
+
+
    def accept_events(self):
        base.accept(key_turn_left, self.turn_left)
        base.accept(key_turn_left + '-repeat', self.turn_left)
@@ -361,3 +401,7 @@ class Hero():
 
        base.accept(key_build, self.build)
        base.accept(key_destroy, self.destroy)
+
+
+       base.accept(key_savemap, self.land.saveMap)
+       base.accept(key_loadmap, self.land.loadMap)
