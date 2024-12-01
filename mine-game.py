@@ -17,7 +17,6 @@ game = Game()
 game.run()
 
 
-Файл mapmanager.py
 class Mapmanager():
    """ Управление картой """
    def __init__(self):
@@ -54,6 +53,11 @@ class Mapmanager():
        self.block.setPos(position)
        self.color = self.getColor(int(position[2]))
        self.block.setColor(self.color)
+
+
+       self.block.setTag("at", str(position))
+
+
        self.block.reparentTo(self.land)
 
 
@@ -77,6 +81,25 @@ class Mapmanager():
                    x += 1
                y += 1
        return x,y
+  
+   def findBlocks(self, pos):
+       return self.land.findAllMatches("=at=" + str(pos))
+
+
+   def isEmpty(self, pos):
+       blocks = self.findBlocks(pos)
+       if blocks:
+           return False
+       else:
+           return True
+
+
+   def findHighestEmpty(self, pos):
+       x, y, z = pos
+       z = 1
+       while not self.isEmpty((x, y, z)):
+           z += 1
+       return (x, y, z)
 
 
 Файл hero.py
@@ -98,6 +121,10 @@ key_turn_left = 'n'     # поворот камеры направо (а мир�
 key_turn_right = 'm'    # поворот камеры налево (а мира - направо)
 
 
+key_build = 'b'     # построить блок перед собой
+key_destroy = 'v'   # разрушить блок перед собой
+
+
 class Hero():
    def __init__(self, pos, land):
        self.land = land
@@ -105,6 +132,7 @@ class Hero():
        self.hero = loader.loadModel('smiley')
        self.hero.setColor(1, 0.5, 0)
        self.hero.setScale(0.3)
+       self.hero.setH(180)
        self.hero.setPos(pos)
        self.hero.reparentTo(render)
        self.cameraBind()
@@ -113,7 +141,7 @@ class Hero():
 
    def cameraBind(self):
        base.disableMouse()
-       base.camera.setH(180)
+       # base.camera.setH(180)
        base.camera.reparentTo(self.hero)
        base.camera.setPos(0, 0, 1.5)
        self.cameraOn = True
@@ -125,8 +153,6 @@ class Hero():
        base.camera.reparentTo(render)
        base.enableMouse()
        self.cameraOn = False
-
-
 
 
    def changeView(self):
@@ -169,6 +195,8 @@ class Hero():
    def move_to(self, angle):
        if self.mode:
            self.just_move(angle)
+       else:
+           self.try_move(angle)
   
    def check_dir(self,angle):
        ''' возвращает округленные изменения координат X, Y,
@@ -225,6 +253,37 @@ class Hero():
        self.move_to(angle)
 
 
+   def changeMode(self):
+       if self.mode:
+           self.mode = False
+       else:
+           self.mode = True
+  
+   def try_move(self, angle):
+       '''перемещается, если может'''
+       pos = self.look_at(angle)
+       if self.land.isEmpty(pos):
+           # перед нами свободно. Возможно, надо упасть вниз:
+           pos = self.land.findHighestEmpty(pos)
+           self.hero.setPos(pos)
+       else:
+           # перед нами занято. Если получится, заберёмся на этот блок:
+           pos = pos[0], pos[1], pos[2] + 1
+           if self.land.isEmpty(pos):
+               self.hero.setPos(pos)
+               # не получится забраться - стоим на месте
+   def up(self):
+       if self.mode:
+           self.hero.setZ(self.hero.getZ() + 1)
+
+
+   def down(self):
+       if self.mode and self.hero.getZ() > 1:
+           self.hero.setZ(self.hero.getZ() - 1)
+  
+
+
+
    def accept_events(self):
        base.accept(key_turn_left, self.turn_left)
        base.accept(key_turn_left + '-repeat', self.turn_left)
@@ -243,3 +302,13 @@ class Hero():
 
 
        base.accept(key_switch_camera, self.changeView)
+
+
+       base.accept(key_switch_mode, self.changeMode)
+
+
+       base.accept(key_up, self.up)
+       base.accept(key_up + '-repeat', self.up)
+       base.accept(key_down, self.down)
+       base.accept(key_down + '-repeat', self.down)
+
