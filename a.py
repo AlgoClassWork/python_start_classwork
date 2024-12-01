@@ -90,6 +90,11 @@ FPS = 60
 #mixer.music.load('jungles.ogg')
 #mixer.music.play()
 
+#надписи
+font.init()
+my_font = font.Font('Shrift.ttf',100)
+text_win = my_font.render('ПОБЕДА',True,(0,255,0))
+text_lose = my_font.render('ПРОИГРЫШ',True,(255,0,0))
 
 while game:
    for e in event.get():
@@ -109,6 +114,14 @@ while game:
        wall_2.reset()
        wall_3.reset()
 
+       if sprite.collide_rect(player, final):
+           window.blit(text_win,(200,200))
+           finish = True
+
+       if sprite.collide_rect(player, monster) or sprite.collide_rect(player, wall_1) or sprite.collide_rect(player, wall_2) or sprite.collide_rect(player, wall_3):
+           window.blit(text_lose,(100,200))
+           finish = True
+           
 
    display.update()
    clock.tick(FPS)
