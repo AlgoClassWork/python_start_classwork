@@ -71,9 +71,9 @@ FPS = 60
 
 
 #музыка
-mixer.init()
-mixer.music.load('jungles.ogg')
-mixer.music.play()
+#mixer.init()
+#mixer.music.load('jungles.ogg')
+#mixer.music.play()
 
 
 while game:
