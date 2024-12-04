@@ -1,25 +1,26 @@
 from pygame import *
 
-class GameSprite():
+class GameSprite(sprite.Sprite):
     def __init__(self, img, x, y):
         self.image = transform.scale(image.load(img),(70,70))
-        self.x = x
-        self.y = y
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
 
     def show(self):
-        window.blit(self.image,(self.x,self.y))
+        window.blit(self.image,(self.rect.x,self.rect.y))
 
 class Player(GameSprite):
     def move(self):
         keys = key.get_pressed()
         if keys[K_w]:
-            self.y -= 5
+            self.rect.y -= 5
         if keys[K_s]:
-            self.y += 5
+            self.rect.y += 5
         if keys[K_a]:
-            self.x -= 5
+            self.rect.x -= 5
         if keys[K_d]:
-            self.x += 5
+            self.rect.x += 5
     
 hero = Player(img='hero.png', x=200, y=200)
 enemy = GameSprite(img='cyborg.png', x=400, y=200)
@@ -46,6 +47,9 @@ while game:
     enemy.show()
 
     hero.move()
+
+    if sprite.collide_rect(hero, enemy):
+        print('Столкновение')
 
     display.update()
     clock.tick(60)
