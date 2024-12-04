@@ -9,7 +9,19 @@ class GameSprite():
     def show(self):
         window.blit(self.image,(self.x,self.y))
 
-hero = GameSprite(img='hero.png', x=200, y=200)
+class Player(GameSprite):
+    def move(self):
+        keys = key.get_pressed()
+        if keys[K_w]:
+            self.y -= 5
+        if keys[K_s]:
+            self.y += 5
+        if keys[K_a]:
+            self.x -= 5
+        if keys[K_d]:
+            self.x += 5
+    
+hero = Player(img='hero.png', x=200, y=200)
 enemy = GameSprite(img='cyborg.png', x=400, y=200)
 
 window = display.set_mode( (700,500) )
@@ -32,6 +44,8 @@ while game:
     window.blit(background, (0, 0))
     hero.show()
     enemy.show()
+
+    hero.move()
 
     display.update()
     clock.tick(60)
