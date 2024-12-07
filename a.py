@@ -10,7 +10,15 @@ class GameSprite():
     def show(self):
         window.blit(self.image, (self.x,self.y)) 
 
-player = GameSprite(img='rocket.png',w=70,h=100,x=300,y=400)
+class Player(GameSprite):
+    def move(self):
+        keys = key.get_pressed()
+        if keys[K_a] and self.x > 0:
+            self.x -= 5
+        if keys[K_d] and self.x < 630:
+            self.x += 5
+
+player = Player(img='rocket.png',w=70,h=100,x=300,y=400)
 enemy = GameSprite(img='ufo.png',w=100,h=70,x=300,y=200)
 
 
@@ -31,5 +39,7 @@ while game:
     window.blit(back, (0,0))
     player.show()
     enemy.show()
+    # Передвижение обьектов
+    player.move()
    
     display.update()
