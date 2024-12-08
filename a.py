@@ -1,5 +1,5 @@
 from pygame import *
-
+from random import randint
 
 #фоновая музыка
 #mixer.init()
@@ -48,6 +48,12 @@ class Player(GameSprite):
    def fire(self):
        pass
 
+class Enemy(GameSprite):
+    def update(self):
+        self.rect.y += self.speed
+        if self.rect.y > win_height:
+            self.rect.y = 0
+            self.rect.x = randint(0,600)
 
 #Создаем окошко
 win_width = 700
@@ -59,6 +65,7 @@ background = transform.scale(image.load(img_back), (win_width, win_height))
 
 #создаем спрайты
 ship = Player(img_hero, 5, win_height - 100, 80, 100, 10)
+enemy = Enemy('ufo.png', randint(0,600), 0, 100, 60, 5)
 
 
 #переменная "игра закончилась": как только там True, в основном цикле перестают работать спрайты
@@ -79,10 +86,12 @@ while run:
 
        #производим движения спрайтов
        ship.update()
+       enemy.update()
 
 
        #обновляем их в новом местоположении при каждой итерации цикла
        ship.reset()
+       enemy.reset()
 
 
        display.update()
