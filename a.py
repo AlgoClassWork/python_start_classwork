@@ -1,3 +1,4 @@
+from random import randint
 from pygame import *
 
 
@@ -47,6 +48,14 @@ class Player(GameSprite):
  #метод "выстрел" (используем место игрока, чтобы создать там пулю)
    def fire(self):
        pass
+   
+class Enemy(GameSprite):
+    def update(self):
+        self.rect.y += self.speed
+        if self.rect.y > 500:
+            self.rect.y = 0
+            self.rect.x = randint(0,600)
+
 
 
 #Создаем окошко
@@ -60,6 +69,10 @@ background = transform.scale(image.load(img_back), (win_width, win_height))
 #создаем спрайты
 ship = Player(img_hero, 5, win_height - 100, 80, 100, 10)
 
+enemys = sprite.Group()
+for _ in range(10):
+    enemy = Enemy('ufo.png',randint(0,600),0,100,60,5)
+    enemys.add(enemy)
 
 #переменная "игра закончилась": как только там True, в основном цикле перестают работать спрайты
 finish = False
@@ -79,11 +92,16 @@ while run:
 
        #производим движения спрайтов
        ship.update()
+      
 
 
        #обновляем их в новом местоположении при каждой итерации цикла
        ship.reset()
+      
 
+
+
+  
 
        display.update()
    #цикл срабатывает каждые 0.05 секунд
