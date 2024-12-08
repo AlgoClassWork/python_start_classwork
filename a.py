@@ -1,11 +1,18 @@
 from pygame import *
 from random import randint
 
+#игровые переменные
+lost = 0
+
 #фоновая музыка
 #mixer.init()
 #mixer.music.load('space.ogg')
 #mixer.music.play()
 #fire_sound = mixer.Sound('fire.ogg')
+
+#шрифты
+font.init()
+my_font = font.Font(None,40)
 
 
 #нам нужны такие картинки:
@@ -51,9 +58,11 @@ class Player(GameSprite):
 class Enemy(GameSprite):
     def update(self):
         self.rect.y += self.speed
+        global lost
         if self.rect.y > win_height:
             self.rect.y = 0
             self.rect.x = randint(0,600)
+            lost += 1
 
 #Создаем окошко
 win_width = 700
@@ -65,8 +74,11 @@ background = transform.scale(image.load(img_back), (win_width, win_height))
 
 #создаем спрайты
 ship = Player(img_hero, 5, win_height - 100, 80, 100, 10)
-enemy = Enemy('ufo.png', randint(0,600), 0, 100, 60, 5)
 
+enemys = sprite.Group()
+for _ in range(5):
+    enemy = Enemy('ufo.png', randint(0,600), 0, 100, 60, randint(1,5)) 
+    enemys.add(enemy)
 
 #переменная "игра закончилась": как только там True, в основном цикле перестают работать спрайты
 finish = False
@@ -82,17 +94,19 @@ while run:
    if not finish:
        #обновляем фон
        window.blit(background,(0,0))
+       lost_enemy = my_font.render('Пропущено: ' + str(lost),True,(255,255,255))
+       window.blit(lost_enemy,(5,5))
 
 
        #производим движения спрайтов
        ship.update()
-       enemy.update()
+       enemys.update()
 
 
        #обновляем их в новом местоположении при каждой итерации цикла
        ship.reset()
-       enemy.reset()
-
+       enemys.draw(window)
+       
 
        display.update()
    #цикл срабатывает каждые 0.05 секунд
