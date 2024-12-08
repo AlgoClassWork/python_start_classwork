@@ -3,6 +3,7 @@ from random import randint
 
 #игровые переменные
 lost = 0
+score = 0
 
 #фоновая музыка
 #mixer.init()
@@ -96,6 +97,8 @@ while run:
        window.blit(background,(0,0))
        lost_enemy = my_font.render('Пропущено: ' + str(lost),True,(255,255,255))
        window.blit(lost_enemy,(5,5))
+       point = my_font.render('Очки: ' + str(score),True,(255,255,255))
+       window.blit(point,(5,40))
 
 
        #производим движения спрайтов
@@ -106,6 +109,9 @@ while run:
        #обновляем их в новом местоположении при каждой итерации цикла
        ship.reset()
        enemys.draw(window)
+
+       if lost > 5:
+           finish = True
        
 
        display.update()
