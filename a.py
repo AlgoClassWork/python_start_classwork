@@ -46,7 +46,9 @@ class Wall(sprite.Sprite):
     def show(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
-wall = Wall(width=10,height=400,x=150,y=100)
+wall = Wall(width=10, height=350, x=150, y=150 )
+wall2 = Wall(width=450, height=10, x=150, y=150 )
+wall3 = Wall(width=450, height=10, x=300, y=300 )
 
 
 hero = Player(img='hero.png', x=0, y=400)
@@ -76,6 +78,8 @@ while game:
     enemy2.show()
 
     wall.show()
+    wall2.show()
+    wall3.show()
     
 
     hero.move()
