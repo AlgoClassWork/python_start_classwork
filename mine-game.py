@@ -58,9 +58,36 @@ class Hero():
         current_angle = self.hero.getH()
         self.hero.setH(current_angle - 10)
 
+    def forward(self):
+        current_angle = self.hero.getH()
+        x_from = self.hero.getX() 
+        y_from = self.hero.getY() 
+        if current_angle > 0 and current_angle < 20:
+            change_x, change_y = 0, -1
+        elif current_angle < 70:
+            change_x, change_y = 1, -1
+        elif current_angle < 110:
+            change_x, change_y = 1, 0
+        elif current_angle < 160:
+            change_x, change_y = 1, 1
+        elif current_angle < 200:
+            change_x, change_y = 0, 1
+        elif current_angle < 250:
+            change_x, change_y = -1, 1
+        elif current_angle < 290:
+            change_x, change_y = -1, 0
+        elif current_angle < 340:
+            change_x, change_y = -1, -1
+        else:
+            change_x, change_y = 0, -1
+
     def accept_events(self):
         base.accept('q', self.turn_left)
         base.accept('q' + '-repeat', self.turn_left)
 
         base.accept('e', self.turn_right)
         base.accept('e' + '-repeat', self.turn_right)
+
+        base.accept('w', self.forward)
+        base.accept('w' + '-repeat', self.forward)
+
