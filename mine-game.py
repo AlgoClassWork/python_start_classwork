@@ -1,17 +1,19 @@
 #game.py
 from direct.showbase.ShowBase import ShowBase
 from mapmanager import Mapmanager
+from hero import Hero
+
 
 class Game(ShowBase):
     def __init__(self):
         ShowBase.__init__(self)
         self.land = Mapmanager()
         self.land.loadLand('land.txt')
+        self.hero = Hero( (0,0,1) )
         base.camLens.setFov(90)
 
 game = Game()
 game.run()
-
 
 #mapmanager.py
 class Mapmanager():
@@ -38,3 +40,11 @@ class Mapmanager():
                     one_block = self.addBlock((x, y, z))
                 x += 1
             y += 1
+#hero.py
+class Hero():
+    def __init__(self, position):
+        self.hero = loader.loadModel('smiley')
+        self.hero.setPos(position)
+        self.hero.setScale(0.3)
+        self.hero.setColor( 1, 1, 0)
+        self.hero.reparentTo(render)
