@@ -35,7 +35,21 @@ class Enemy(GameSprite):
         else:
             self.rect.x += 5
 
-hero = Player(img='hero.png', x=200, y=200)
+class Wall(sprite.Sprite):
+    def __init__(self, width, height, x, y):
+        self.image = Surface((width,height))
+        self.image.fill((60,220,70))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+    def show(self):
+        window.blit(self.image, (self.rect.x, self.rect.y))
+
+wall = Wall(width=10,height=400,x=150,y=100)
+
+
+hero = Player(img='hero.png', x=0, y=400)
 enemy = Enemy(img='cyborg.png', x=400, y=200)
 enemy2 = Enemy(img='cyborg.png', x=600, y=400)
 
@@ -60,6 +74,9 @@ while game:
     hero.show()
     enemy.show()
     enemy2.show()
+
+    wall.show()
+    
 
     hero.move()
     enemy.move(0,300)
