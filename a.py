@@ -1,110 +1,72 @@
-from random import randint
 from pygame import *
 
-
-#фоновая музыка
-#mixer.init()
-#mixer.music.load('space.ogg')
-#mixer.music.play()
-#fire_sound = mixer.Sound('fire.ogg')
-
-score = 0
-lost = 0
-
-font.init()
-my_font = font.Font(None,40)
-
-
-#нам нужны такие картинки:
-img_back = "galaxy.jpg" #фон игры
-img_hero = "rocket.png" #герой
-
-#класс-родитель для других спрайтов
 class GameSprite(sprite.Sprite):
- #конструктор класса
-   def __init__(self, player_image, player_x, player_y, size_x, size_y, player_speed):
-       #Вызываем конструктор класса (Sprite):
-       sprite.Sprite.__init__(self)
+    def __init__(self, img, x, y):
+        self.image = transform.scale(image.load(img),(70,70))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
 
+    def show(self):
+        window.blit(self.image,(self.rect.x,self.rect.y))
 
-       #каждый спрайт должен хранить свойство image - изображение
-       self.image = transform.scale(image.load(player_image), (size_x, size_y))
-       self.speed = player_speed
-
-
-       #каждый спрайт должен хранить свойство rect - прямоугольник, в который он вписан
-       self.rect = self.image.get_rect()
-       self.rect.x = player_x
-       self.rect.y = player_y
- #метод, отрисовывающий героя на окне
-   def reset(self):
-       window.blit(self.image, (self.rect.x, self.rect.y))
-
-
-#класс главного игрока
 class Player(GameSprite):
-   #метод для управления спрайтом стрелками клавиатуры
-   def update(self):
-       keys = key.get_pressed()
-       if keys[K_LEFT] and self.rect.x > 5:
-           self.rect.x -= self.speed
-       if keys[K_RIGHT] and self.rect.x < win_width - 80:
-           self.rect.x += self.speed
- #метод "выстрел" (используем место игрока, чтобы создать там пулю)
-   def fire(self):
-       pass
-   
+    def move(self):
+        keys = key.get_pressed()
+        if keys[K_w] and self.rect.y > 0 :
+            self.rect.y -= 5
+        if keys[K_s] and self.rect.y < 430:
+            self.rect.y += 5
+        if keys[K_a] and self.rect.x > 0:
+            self.rect.x -= 5
+        if keys[K_d] and self.rect.x < 630:
+            self.rect.x += 5
+
 class Enemy(GameSprite):
-    def update(self):
-        global lost
-        self.rect.y += self.speed
-        if self.rect.y > 500:
-            self.rect.y = 0
-            self.rect.x = randint(0,600)
-            lost += 1
+    direction = 'left'
+    def move(self, point_a, point_b):
+        if self.rect.x > point_b:
+            self.direction = 'left'
+        if self.rect.x < point_a:
+            self.direction = 'right'
 
-#Создаем окошко
-win_width = 700
-win_height = 500
-display.set_caption("Shooter")
-window = display.set_mode((win_width, win_height))
-background = transform.scale(image.load(img_back), (win_width, win_height))
+        if self.direction == 'left':
+            self.rect.x -= 5
+        else:
+            self.rect.x += 5
 
+hero = Player(img='hero.png', x=200, y=200)
+enemy = Enemy(img='cyborg.png', x=400, y=200)
+enemy2 = Enemy(img='cyborg.png', x=600, y=400)
 
-#создаем спрайты
-ship = Player(img_hero, 5, win_height - 100, 80, 100, 20)
+window = display.set_mode( (700,500) )
+display.set_caption('Лабиринт')
 
-enemys = sprite.Group()
-for _ in range(5):
-    enemy = Enemy('ufo.png',randint(0,600),0,100,60,randint(1,5))
-    enemys.add(enemy)
+background = transform.scale(image.load('background.jpg'), (700,500))
 
-#переменная "игра закончилась": как только там True, в основном цикле перестают работать спрайты
-finish = False
-#Основной цикл игры:
-run = True #флаг сбрасывается кнопкой закрытия окна
-while run:
-   #событие нажатия на кнопку Закрыть
-   for e in event.get():
-       if e.type == QUIT:
-           run = False
+#музыка
+#mixer.init()
+#mixer.music.load('jungles.ogg')
+#mixer.music.play()
 
+clock = time.Clock()
+game = True
+while game:
+    for some_event in event.get():
+        if some_event.type == QUIT:
+            game = False
 
-   if not finish:
-       #обновляем фон
-       window.blit(background,(0,0))
-       lost_enemys = my_font.render('Пропущено: ' + str(lost), True, (255,255,255))
-       window.blit(lost_enemys,(0,0))
+    window.blit(background, (0, 0))
+    hero.show()
+    enemy.show()
+    enemy2.show()
 
+    hero.move()
+    enemy.move(0,300)
+    enemy2.move(300,600)
 
-       #производим движения спрайтов
-       ship.update()
-       enemys.update()
-      
-       #обновляем их в новом местоположении при каждой итерации цикла
-       ship.reset()
-       enemys.draw(window)
+    if sprite.collide_rect(hero, enemy):
+        print('Столкновение')
 
-       display.update()
-   #цикл срабатывает каждые 0.05 секунд
-   time.delay(50)
+    display.update()
+    clock.tick(60)
