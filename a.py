@@ -66,6 +66,12 @@ background = transform.scale(image.load('background.jpg'), (700,500))
 #mixer.music.load('jungles.ogg')
 #mixer.music.play()
 
+#надписи
+font.init()
+my_font = font.Font(None,120)
+win_text = my_font.render('ПОБЕДА', True, (0,255,0))
+lose_text = my_font.render('ПРОИГРЫШ', True, (255,0,0))
+
 clock = time.Clock()
 finish = False
 game = True
@@ -103,6 +109,11 @@ while game:
                 hero.rect.y = 400
         
         if sprite.collide_rect(hero, enemy) or sprite.collide_rect(hero, enemy2):
+            window.blit(lose_text,(100,200))
+            finish = True
+
+        if sprite.collide_rect(hero, gold):
+            window.blit(win_text,(100,200))
             finish = True
 
         display.update()
