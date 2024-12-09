@@ -54,6 +54,7 @@ wall3 = Wall(width=450, height=10, x=300, y=300 )
 hero = Player(img='hero.png', x=0, y=400)
 enemy = Enemy(img='cyborg.png', x=400, y=200)
 enemy2 = Enemy(img='cyborg.png', x=600, y=400)
+gold = GameSprite(img='treasure.png', x=400, y=400)
 
 window = display.set_mode( (700,500) )
 display.set_caption('Лабиринт')
@@ -66,28 +67,44 @@ background = transform.scale(image.load('background.jpg'), (700,500))
 #mixer.music.play()
 
 clock = time.Clock()
+finish = False
 game = True
 while game:
     for some_event in event.get():
         if some_event.type == QUIT:
             game = False
 
-    window.blit(background, (0, 0))
-    hero.show()
-    enemy.show()
-    enemy2.show()
+    keys = key.get_pressed()
+    if keys[K_r]:
+        finish = False
+        hero.rect.x = 0
+        hero.rect.y = 400
 
-    wall.show()
-    wall2.show()
-    wall3.show()
-    
+    if not finish:
+        window.blit(background, (0, 0))
 
-    hero.move()
-    enemy.move(0,300)
-    enemy2.move(300,600)
+        hero.show()
+        enemy.show()
+        enemy2.show()
+        gold.show()
 
-    if sprite.collide_rect(hero, enemy):
-        print('Столкновение')
+        wall.show()
+        wall2.show()
+        wall3.show()
+        
+        hero.move()
+        enemy.move(0,300)
+        enemy2.move(300,600)
 
-    display.update()
+        walls = [wall, wall2, wall3]
+        for some_wall in walls:
+            if sprite.collide_rect(hero, some_wall):
+                hero.rect.x = 0
+                hero.rect.y = 400
+        
+        if sprite.collide_rect(hero, enemy) or sprite.collide_rect(hero, enemy2):
+            finish = True
+
+        display.update()
+
     clock.tick(60)
