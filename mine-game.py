@@ -48,3 +48,19 @@ class Hero():
         self.hero.setScale(0.3)
         self.hero.setColor( 1, 1, 0)
         self.hero.reparentTo(render)
+        self.accept_events()
+
+    def turn_left(self):
+        current_angle = self.hero.getH()
+        self.hero.setH(current_angle + 10)
+
+    def turn_right(self):
+        current_angle = self.hero.getH()
+        self.hero.setH(current_angle - 10)
+
+    def accept_events(self):
+        base.accept('q', self.turn_left)
+        base.accept('q' + '-repeat', self.turn_left)
+
+        base.accept('e', self.turn_right)
+        base.accept('e' + '-repeat', self.turn_right)
