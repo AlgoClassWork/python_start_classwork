@@ -12,16 +12,18 @@ class GameSprite(sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-hero = GameSprite(img='rocket.png', w=70, h=100, x=300, y=400)
+    def show(self):
+        window.blit(self.image, (self.rect.x, self.rect.y))
 
-hero_img = transform.scale(image.load('rocket.png'), (70,100))
-hero_x = 300
-hero_y = 400
+class Player(GameSprite):
+    def move(self):
+        keys = key.get_pressed()
+        if keys[K_LEFT]:
+            self.rect.x -= 5
+        if keys[K_RIGHT]:
+            self.rect.x += 5
 
-
-enemy_img = transform.scale(image.load('ufo.png'), (100,70))
-enemy_x = 300
-enemy_y = 400
+hero = Player(img='rocket.png', w=70, h=100, x=300, y=400)
 
 game = True
 while game:
@@ -30,15 +32,8 @@ while game:
             game = False
 
     window.blit(back, (0,0))
-    window.blit(hero_img, (hero_x, hero_y))
-    window.blit(enemy_img, (enemy_x, enemy_y))
-
-    keys = key.get_pressed()
-    if keys[K_LEFT]:
-        hero_x -= 5
-    if keys[K_RIGHT]:
-        hero_x += 5
-
+    hero.show()
+    hero.move()
 
     time.delay(10)
     display.update()
