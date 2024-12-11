@@ -97,6 +97,9 @@ key_down = 'q'     # шаг вниз
 key_turn_left = 'n'     # поворот камеры направо (а мира - налево)
 key_turn_right = 'm'    # поворот камеры налево (а мира - направо)
 
+key_build = 'b'
+key_destroy = 'v'
+
 
 class Hero():
    def __init__(self, pos, land):
@@ -125,9 +128,6 @@ class Hero():
        base.camera.reparentTo(render)
        base.enableMouse()
        self.cameraOn = False
-
-
-
 
    def changeView(self):
        if self.cameraOn:
@@ -224,6 +224,11 @@ class Hero():
        angle = (self.hero.getH() + 270) % 360
        self.move_to(angle)
 
+   def build(self):
+       angle = self.hero.getH() % 360
+       new_pos = self.look_at(angle)
+       self.land.addBlock(new_pos)
+
 
    def accept_events(self):
        base.accept(key_turn_left, self.turn_left)
@@ -240,6 +245,8 @@ class Hero():
        base.accept(key_left + '-repeat', self.left)
        base.accept(key_right, self.right)
        base.accept(key_right + '-repeat', self.right)
+
+       base.accept(key_build, self.build)
 
 
        base.accept(key_switch_camera, self.changeView)
