@@ -18,6 +18,7 @@ game.run()
 
 
 Файл mapmanager.py
+
 class Mapmanager():
    """ Управление картой """
    def __init__(self):
@@ -54,8 +55,16 @@ class Mapmanager():
        self.block.setPos(position)
        self.color = self.getColor(int(position[2]))
        self.block.setColor(self.color)
+       self.block.setTag("at", str(position) ) 
        self.block.reparentTo(self.land)
 
+   def findBlocks(self, pos):  
+       return self.land.findAllMatches('=at=' + str(pos))  
+   
+   def delBlock(self, position):  
+       blocks = self.findBlocks(position)   
+       for block in blocks:  
+           block.removeNode()  
 
    def clear(self):
        """обнуляет карту"""
@@ -78,7 +87,6 @@ class Mapmanager():
                y += 1
        return x,y
 
-
 Файл hero.py
 
 
@@ -99,6 +107,9 @@ key_turn_right = 'm'    # поворот камеры налево (а мира 
 
 key_build = 'b'
 key_destroy = 'v'
+
+key_up = 'e'
+key_down = 'q'
 
 
 class Hero():
@@ -219,7 +230,6 @@ class Hero():
        angle = (self.hero.getH() + 90) % 360
        self.move_to(angle)
 
-
    def right(self):
        angle = (self.hero.getH() + 270) % 360
        self.move_to(angle)
@@ -229,6 +239,18 @@ class Hero():
        new_pos = self.look_at(angle)
        self.land.addBlock(new_pos)
 
+   def destroy(self):
+       angle = self.hero.getH() % 360
+       new_pos = self.look_at(angle)
+       self.land.delBlock(new_pos)
+
+   def up(self):
+       current_pos = self.hero.getZ() 
+       self.hero.setZ(current_pos + 1)
+
+   def down(self):
+       current_pos = self.hero.getZ()
+       self.hero.setZ(current_pos - 1) 
 
    def accept_events(self):
        base.accept(key_turn_left, self.turn_left)
@@ -246,7 +268,14 @@ class Hero():
        base.accept(key_right, self.right)
        base.accept(key_right + '-repeat', self.right)
 
-       base.accept(key_build, self.build)
+       base.accept(key_up, self.up)
+       base.accept(key_up + '-repeat', self.up)
 
+       base.accept(key_down, self.down)
+       base.accept(key_down + '-repeat', self.down)
+
+
+       base.accept(key_build, self.build)
+       base.accept(key_destroy, self.destroy)
 
        base.accept(key_switch_camera, self.changeView)
