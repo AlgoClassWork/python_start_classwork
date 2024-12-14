@@ -1,93 +1,80 @@
-from random import *
-from time import sleep
+from random import randint
+import time
 
-class Person():
-    def __init__(self,name,weapon,health,damage):
-        self.name = name
-        self.weapon = weapon
-        self.health = health
-        self.damage = damage
-    
-    def punch(self,vrag):
-        print(self.name,'наносит удар с помощью',self.weapon+'а',vrag.name+'у')
-        udar = randint(1,3)
-        if udar == 1:
-            vrag.health -= self.damage * 2
-            print('Крит урон у противника. Осталось',vrag.health,'хп')
-        elif udar == 2:
-            vrag.health -= self.damage
-            print('Атака прошла успешно. Осталось',vrag.health,'хп')
+# Класс персонажа
+class Person:
+    def __init__(self, name, weap, hp, dmg):
+        self.name = name        # Имя персонажа
+        self.weapon = weap      # Оружие персонажа
+        self.health = hp        # Здоровье
+        self.damage = dmg       # Урон, который персонаж наносит
+        self.alive = True       # Жив ли персонаж
+
+    def hello(self):
+        """Приветствие персонажа."""
+        print(f"{self.name} говорит привет.")
+
+    def punch(self, enemy):
+        """Удар по врагу с случайным эффектом."""
+        num = randint(1, 3)  # Рандом для разнообразных ударов
+        if num == 1:
+            enemy.health -= self.damage
+            print(f"{self.name} наносит удар по {enemy.name}!")
+        elif num == 2:
+            enemy.health -= self.damage * 2
+            print(f"{self.name} наносит критический удар по {enemy.name}!")
+        elif num == 3:
+            enemy.health -= self.damage // 2
+            print(f"{self.name} немного промахивается, нанося слабый удар по {enemy.name}...")
+        
+        # Проверка состояния врага после удара
+        print(f"{enemy.name} осталось {enemy.health} здоровья.")
+        if enemy.health <= 0:
+            enemy.alive = False
+            print(f"{enemy.name} погиб!")
+
+    def fight(self, enemy):
+        """Бой между персонажами."""
+        print(f"\nНачинается бой между {self.name} и {enemy.name}!")
+        time.sleep(1)  # Пауза для атмосферы
+        
+        while self.alive and enemy.alive:
+            if self.alive:
+                self.punch(enemy)
+                time.sleep(1)  # Задержка после удара
+
+            if enemy.alive:
+                enemy.punch(self)
+                time.sleep(1)  # Задержка после удара врага
+
+        if self.alive:
+            print(f"\n{self.name} победил в этом нелегком бою!")
         else:
-            print('Промах')
+            print(f"\n{enemy.name} одолел {self.name} в бою.")
 
-    def fight(self,vrag):
-        while self.health > 0 and vrag.health > 0:
-            self.punch(vrag)
-            sleep(1)
-            if vrag.health <= 0:
-                break
-            vrag.punch(self)
-            sleep(1)
-            print('\n')
+# Создаем героев
+hero = Person(name='Шрек', weap='меч', hp=100, dmg=25)
+enemy = Person(name='Осел', weap='копыта', hp=150, dmg=15)
+dragon = Person(name='Смауг', weap='фаербол', hp=300, dmg=50)
 
-        if self.health > 0:
-            print(vrag.name,'пал в этом нелегком бою.')
-            print('Вы получили усиление. Теперь ваши статы равны:')
-            self.health *= 8
-            self.damage *= 2
-            print('Урон:', self.damage, 'Здоровье:', self.health)
-        else:
-            print('Game over')
-            return False
-        return True
+# Начало игры с коротким введением
+print("Добро пожаловать в игру 'Рыцарь и Дракон'!")
+time.sleep(2)
 
-def introduction():
-    print("Вы - рыцарь Джон, отважный искатель приключений, отправившийся на поиски легендарного сокровища.")
-    print("Ваш путь лежит через мрачный и таинственный лес, где скрыты неведомые опасности.")
-    print("Вы оказались перед заброшенным немецким бункером, в котором ощущается зловещее присутствие.")
-    print("Вы можете войти внутрь и столкнуться с возможной угрозой или обойти это место стороной.")
-    print()
+# Вступительная часть
+print("\nВ вашем мире ходят легенды о героях и чудовищах. Один из таких героев — Шрек.")
+time.sleep(2)
+print("Он известен своей силой и храбростью, но сегодня ему предстоит столкнуться с серьезным врагом...")
+time.sleep(2)
 
-def encounter_bunker():
-    print("Вы решаете войти в бункер, надеясь найти что-то полезное или встретить врага.")
-    print("Внутри вас встречает ужасный враг - Адольф, владелец таинственного оружия.")
-    print("Вы должны решить, будете ли вы сражаться с ним или попытаетесь избежать боя.")
-    choice = input("Выберите: (сражаться / избежать): ").strip().lower()
-    if choice == "сражаться":
-        print("Вы решаете сразиться с Адольфом.")
-        return True
-    elif choice == "избежать":
-        print("Вы решаете обойти бункер стороной и продолжить свой путь.")
-        return False
-    else:
-        print("Неверный выбор. Попробуйте снова.")
-        return encounter_bunker()
+# Бой с врагом
+hero.fight(enemy)
 
-def dragon_lair():
-    print("Ваше путешествие приводит вас в логово дракона, где охраняется сокровище.")
-    print("Перед вами появляется огромный дракон Смауг, который готовится к бою.")
-    print("Вы должны сразиться с ним, чтобы получить сокровище или погибнуть в этом бою.")
-    return input("Сразиться с драконом? (да / нет): ").strip().lower() == "да"
+# Бой с драконом (если герой победил)
+if hero.alive:
+    print("\nПосле победы над Оселом, Шрек решает бросить вызов самому страшному чудовищу - дракону Смаугу!")
+    time.sleep(2)
+    hero.fight(dragon)
 
-def game_loop():
-    hero = Person(name='Джон', weapon='Меч', health=100, damage=20)
-    enemy = Person(name='Адольф', weapon='Сирюкен', health=90, damage=18)
-    dragon = Person(name='Смауг', weapon='Огонь', health=200, damage=40)
-
-    introduction()
-    if encounter_bunker():
-        hero.fight(enemy)
-        if hero.health <= 0:
-            return
-    else:
-        print("Вы обходите бункер и продолжаете путь к логову дракона.")
-    
-    if dragon_lair():
-        if hero.fight(dragon):
-            print("Поздравляю! Вы победили дракона и получили сокровище!")
-        else:
-            print("Вы не смогли одолеть дракона. Ваше приключение окончено.")
-    else:
-        print("Вы решили не сражаться с драконом и покинули его логово. Ваше приключение окончено.")
-
-game_loop()
+else:
+    print("\nШрек потерпел поражение, но его история не заканчивается здесь...")
