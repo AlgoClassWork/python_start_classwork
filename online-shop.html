@@ -17,7 +17,7 @@
         <h1>Наши товары</h1>
 
         <div class="card">
-            <img width="300px" src="https://m.media-amazon.com/images/M/MV5BMzc3Nzk0NTMyMF5BMl5BanBnXkFtZTcwMjk0MTEwNg@@._V1_.jpg">
+            <img src="https://m.media-amazon.com/images/M/MV5BMzc3Nzk0NTMyMF5BMl5BanBnXkFtZTcwMjk0MTEwNg@@._V1_.jpg">
             <p>Виталя и Томас Pro Max</p>
             <a href="">Купить</a>
         </div>
@@ -48,7 +48,7 @@ a {
     margin-left: 30px;
 }
 
-a:hover {
+header a:hover {
     color: rgb(231, 9, 164);
 }
 
@@ -63,10 +63,30 @@ h1 {
 }
 
 .card {
-    width: 300px;
+    width: 250px;
     text-align: center;
-    background-color: darkgray;  
     border: 1px solid gray;
     padding: 10px;
 }
 
+.card:hover {
+    background-color: ghostwhite;
+}
+
+.card img {
+    width: 250px;
+    height: 250px;
+}
+
+.card p {
+    font-size: 20px;
+}
+
+.card a {
+    display: block;
+    background-color: rgb(231, 9, 164);
+    padding: 5px;
+    width: 190px;
+    border-radius: 5px;
+    color: black;
+}
