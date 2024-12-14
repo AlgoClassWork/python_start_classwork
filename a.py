@@ -12,7 +12,10 @@ from random import randint
 #шрифты и надписи
 font.init()
 font2 = font.Font(None, 36)
+end_font = font.Font(None, 150)
 
+win_text = end_font.render('YOU WIN!', True, (0,255,0))
+lose_text = end_font.render('YOU LOSE!', True, (255,0,0))
 
 #нам нужны такие картинки:
 img_back = "galaxy.jpg" # фон игры
@@ -136,7 +139,19 @@ while run:
        monsters.draw(window)
        bullets.draw(window)
 
+       if sprite.groupcollide(monsters, bullets, True, True):
+          score += 1
+          monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
+          monsters.add(monster)
 
+       if sprite.spritecollide(ship, monsters, True):
+           window.blit(lose_text,(100,250))
+           finish = True
+       
+       if score > 30:
+           window.blit(win_text,(100,250))
+           finish = True
+           
        display.update()
    #цикл срабатывает каждую 0.05 секунд
    time.delay(50)
