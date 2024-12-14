@@ -104,6 +104,10 @@ while run:
         elif e.type == KEYDOWN:
             if e.key == K_SPACE:
                 ship.fire()
+            if e.key == K_r:
+                score = 0
+                lost = 0
+                finish = False
 
     if not finish:
         # обновляем фон
@@ -136,6 +140,9 @@ while run:
             window.blit(win_text,(100,200))
             finish = True
 
+        if sprite.spritecollide(ship, monsters, True) or lost > 5:
+            window.blit(lose_text,(100,200))
+            finish = True
 
 
         display.update()
