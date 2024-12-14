@@ -142,6 +142,8 @@ while run:
 
         if sprite.spritecollide(ship, monsters, True) or lost > 5:
             window.blit(lose_text,(100,200))
+            monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
+            monsters.add(monster)
             finish = True
 
 
