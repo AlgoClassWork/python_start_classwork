@@ -22,6 +22,7 @@ img_enemy = "ufo.png" # враг
 
 score = 0 # сбито кораблей
 lost = 0 # пропущено кораблей
+timer = 0 # таймер
 
 # класс-родитель для других спрайтов
 class GameSprite(sprite.Sprite):
@@ -81,6 +82,7 @@ win_height = 500
 display.set_caption("Shooter")
 window = display.set_mode((win_width, win_height))
 background = transform.scale(image.load(img_back), (win_width, win_height))
+boss =  transform.scale(image.load('boss.png'), (300, 150))
 
 # создаем спрайты
 ship = Player(img_hero, 5, win_height - 100, 80, 100, 10)
@@ -97,6 +99,9 @@ finish = False
 # Основной цикл игры:
 run = True # флаг сбрасывается кнопкой закрытия окна
 while run:
+
+    timer += 0.05
+    
     # событие нажатия на кнопку Закрыть
     for e in event.get():
         if e.type == QUIT:
@@ -112,6 +117,9 @@ while run:
     if not finish:
         # обновляем фон
         window.blit(background,(0,0))
+
+        if timer > 5:
+            window.blit(boss,(200,0))
 
         # пишем текст на экране
         text = font2.render("Счет: " + str(score), 1, (255, 255, 255))
