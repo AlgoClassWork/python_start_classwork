@@ -76,16 +76,34 @@ class Enemy(GameSprite):
             self.rect.y = 0
             lost = lost + 1
 
+class Boss(sprite.Sprite):
+    def __init__(self, img, x, y):
+        self.image = transform.scale(image.load(img), (200, 100))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.health = 10
+
+    def reset(self):
+        if timer > 10:
+            window.blit(self.image, (self.rect.x, self.rect.y))
+    
+    def update(self, player):
+        if self.rect.x < player.rect.x:
+            self.rect.x += 3
+        else:
+            self.rect.x -= 3
+
 # Создаем окошко
 win_width = 700
 win_height = 500
 display.set_caption("Shooter")
 window = display.set_mode((win_width, win_height))
 background = transform.scale(image.load(img_back), (win_width, win_height))
-boss =  transform.scale(image.load('boss.png'), (300, 150))
 
 # создаем спрайты
 ship = Player(img_hero, 5, win_height - 100, 80, 100, 10)
+boss = Boss('boss.png', 300,50)
 
 bullets = sprite.Group()
 
@@ -118,9 +136,6 @@ while run:
         # обновляем фон
         window.blit(background,(0,0))
 
-        if timer > 5:
-            window.blit(boss,(200,0))
-
         # пишем текст на экране
         text = font2.render("Счет: " + str(score), 1, (255, 255, 255))
         window.blit(text, (10, 20))
@@ -132,11 +147,13 @@ while run:
         ship.update()
         monsters.update()
         bullets.update()
+        boss.update(ship)
 
         # обновляем их в новом местоположении при каждой итерации цикла
         ship.reset()
         monsters.draw(window)
         bullets.draw(window)
+        boss.reset()
 
 
         if sprite.groupcollide(bullets, monsters, True, True):
@@ -144,7 +161,7 @@ while run:
             monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
             monsters.add(monster)
 
-        if score > 10:
+        if score > 50:
             window.blit(win_text,(100,200))
             finish = True
 
