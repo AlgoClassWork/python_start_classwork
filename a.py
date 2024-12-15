@@ -84,9 +84,15 @@ class Boss(sprite.Sprite):
         self.rect.y = 50
 
     def reset(self):
-        if timer > 10:
+        if timer > 5:
             window.blit(self.image, (self.rect.x, self.rect.y))
 
+    def update(self, player):
+        if self.rect.centerx > player.rect.centerx:
+            self.rect.x -= 3
+        else:
+            self.rect.x += 3
+            
 # Создаем окошко
 win_width = 700
 win_height = 500
@@ -141,6 +147,7 @@ while run:
         ship.update()
         monsters.update()
         bullets.update()
+        boss.update(ship)
 
         # обновляем их в новом местоположении при каждой итерации цикла
         ship.reset()
@@ -154,7 +161,7 @@ while run:
             monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
             monsters.add(monster)
 
-        if score > 10:
+        if score > 100:
             window.blit(win_text,(100,200))
             finish = True
 
