@@ -92,7 +92,14 @@ class Boss(sprite.Sprite):
             self.rect.x -= 3
         else:
             self.rect.x += 3
-            
+
+    def fire(self):
+        global timer
+        if int(timer) % 5 == 0 and timer > 5:
+            timer += 1
+            bomb = Bullet('bomb.png', self.rect.centerx, self.rect.y, 70, 70, -5)
+            bombs.add(bomb)
+ 
 # Создаем окошко
 win_width = 700
 win_height = 500
@@ -104,6 +111,7 @@ background = transform.scale(image.load(img_back), (win_width, win_height))
 ship = Player(img_hero, 5, win_height - 100, 80, 100, 10)
 
 bullets = sprite.Group()
+bombs = sprite.Group()
 
 monsters = sprite.Group()
 for i in range(1, 6):
@@ -147,14 +155,17 @@ while run:
         ship.update()
         monsters.update()
         bullets.update()
+        bombs.update()
         boss.update(ship)
-
+        
         # обновляем их в новом местоположении при каждой итерации цикла
         ship.reset()
         monsters.draw(window)
         bullets.draw(window)
+        bombs.draw(window)
         boss.reset()
 
+        boss.fire()
 
         if sprite.groupcollide(bullets, monsters, True, True):
             score += 1
