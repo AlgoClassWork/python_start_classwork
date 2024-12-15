@@ -22,5 +22,5 @@ while otvet.find('пок') == -1:
             print('Извини такого жанра пока нет')
 
 
-    otvet = input('Что вы от меня хотите?').lower()
+    otvet = input('Что нибудь еще?').lower()
 
