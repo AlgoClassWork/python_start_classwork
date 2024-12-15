@@ -92,7 +92,6 @@ for i in range(1, 6):
     monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
     monsters.add(monster)
 
-timer = 0
 # переменная "игра закончилась": как только там True, в основном цикле перестают работать спрайты
 finish = False
 # Основной цикл игры:
@@ -109,9 +108,6 @@ while run:
                 score = 0
                 lost = 0
                 finish = False
-
-    timer += 0.05
-    print(timer)
 
     if not finish:
         # обновляем фон
