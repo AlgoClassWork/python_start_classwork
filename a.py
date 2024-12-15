@@ -96,7 +96,7 @@ class Boss(sprite.Sprite):
 
     def fire(self):
         global timer
-        if int(timer) % 5 == 0:
+        if int(timer) % 5 == 0 and timer > 10:
             timer += 1
             bomb = Bullet('bullet.png', self.rect.centerx, self.rect.y, 50, 50, -5 )
             bombs.add(bomb)
@@ -182,7 +182,16 @@ while run:
             monsters.add(monster)
             finish = True
 
+        if sprite.spritecollide(ship, bombs, True):
+            window.blit(lose_text,(100,200))
+            finish = True
 
+        if sprite.spritecollide(boss, bullets, True) and timer > 15:
+            boss.health -= 1
+            if boss.health < 0:
+                window.blit(win_text,(100,200))
+                finish = True
+            
         display.update()
     # цикл срабатывает каждую 0.05 секунд
     time.delay(50)
