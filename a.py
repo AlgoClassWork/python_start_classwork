@@ -82,6 +82,7 @@ class Boss(sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 250
         self.rect.y = 50
+        self.health = 30
 
     def reset(self):
         if timer > 5:
@@ -133,6 +134,8 @@ while run:
             if e.key == K_SPACE:
                 ship.fire()
             if e.key == K_r:
+                boss.health = 30
+                timer = 0
                 score = 0
                 lost = 0
                 finish = False
@@ -181,6 +184,17 @@ while run:
             monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
             monsters.add(monster)
             finish = True
+
+        if sprite.spritecollide(ship, bombs, True):
+            window.blit(lose_text,(100,200))
+            finish = True
+
+        if timer > 5:
+            if sprite.spritecollide(boss, bullets, True):
+                boss.health -= 1
+                if boss.health < 1:
+                    window.blit(win_text,(100,200))
+                    finish = True
 
         display.update()
     # цикл срабатывает каждую 0.05 секунд
