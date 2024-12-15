@@ -22,6 +22,7 @@ img_enemy = "ufo.png" # враг
 
 score = 0 # сбито кораблей
 lost = 0 # пропущено кораблей
+timer = 0 # таймер
 
 # класс-родитель для других спрайтов
 class GameSprite(sprite.Sprite):
@@ -75,6 +76,17 @@ class Enemy(GameSprite):
             self.rect.y = 0
             lost = lost + 1
 
+class Boss(sprite.Sprite):
+    def __init__(self):
+        self.image = transform.scale(image.load('boss.png'), (200,100))
+        self.rect = self.image.get_rect()
+        self.rect.x = 250
+        self.rect.y = 50
+
+    def reset(self):
+        if timer > 10:
+            window.blit(self.image, (self.rect.x, self.rect.y))
+
 # Создаем окошко
 win_width = 700
 win_height = 500
@@ -91,6 +103,8 @@ monsters = sprite.Group()
 for i in range(1, 6):
     monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
     monsters.add(monster)
+
+boss = Boss()
 
 # переменная "игра закончилась": как только там True, в основном цикле перестают работать спрайты
 finish = False
@@ -110,6 +124,9 @@ while run:
                 finish = False
 
     if not finish:
+
+        timer += 0.05
+
         # обновляем фон
         window.blit(background,(0,0))
 
@@ -129,6 +146,7 @@ while run:
         ship.reset()
         monsters.draw(window)
         bullets.draw(window)
+        boss.reset()
 
 
         if sprite.groupcollide(bullets, monsters, True, True):
@@ -145,7 +163,6 @@ while run:
             monster = Enemy(img_enemy, randint(80, win_width - 80), -40, 80, 50, randint(1, 5))
             monsters.add(monster)
             finish = True
-
 
         display.update()
     # цикл срабатывает каждую 0.05 секунд
