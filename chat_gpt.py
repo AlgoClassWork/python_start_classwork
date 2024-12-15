@@ -20,6 +20,16 @@ while otvet.find('пок') == -1:
             print('Dan dan')
         else:
             print('Извини такого жанра пока нет')
+    elif otvet.find('игр') > -1:
+        print('Это игра угадай число у тебя 3 попытки не угадаешь прощайся с семьей')
+        win_num = '7'
+        for i in range(3):
+            num = input('Введите число')
+            if num == win_num:
+                print('Вы выйграли пачку сухариков')
+                break
+            else:
+                print('Неверно')
 
 
     otvet = input('Что нибудь еще?').lower()
