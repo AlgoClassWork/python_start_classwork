@@ -1,3 +1,4 @@
+from random import randint
 from pygame import *
 
 # класс-родитель для других спрайтов
@@ -24,6 +25,14 @@ class Player(GameSprite):
         if keys[K_RIGHT] and self.rect.x < win_width - 80:
             self.rect.x += self.speed
 
+# класс для врагов
+class Enemy(GameSprite):
+    def update(self):
+        self.rect.y += self.speed
+        if self.rect.y > 500:
+            self.rect.y = 0
+            self.rect.x = randint(0,600)
+
 # Создаем окошко
 win_width = 700
 win_height = 500
@@ -33,7 +42,7 @@ background = transform.scale(image.load('galaxy.jpg'), (win_width, win_height))
 
 # создаем спрайты
 ship = Player('rocket.png', 5, win_height - 100, 80, 100, 10)
-
+enemy = Enemy('ufo.png',randint(0,600),0,100,50,5)
 # Основной цикл игры:
 run = True 
 while run:
@@ -44,8 +53,10 @@ while run:
     window.blit(background,(0,0))
 
     ship.update()
+    enemy.update()
 
     ship.show()
+    enemy.show()
 
     display.update()
 
