@@ -48,3 +48,5 @@ while run:
     ship.show()
 
     display.update()
+
+    time.delay(30)
