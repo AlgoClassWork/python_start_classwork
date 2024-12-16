@@ -87,14 +87,21 @@ class Mapmanager():
   
    def findBlocks(self, pos):
        return self.land.findAllMatches("=at=" + str(pos))
+   
 
+   def isEmpty(self, pos):
+       blocks = self.findBlocks(pos)
+       if blocks:
+           return False
+       else:
+           return True
 
-  # def isEmpty(self, pos):
-
-
-
-   #def findHighestEmpty(self, pos):
-
+   def findHighestEmpty(self, pos): 
+       x, y, z = pos
+       z = 1
+       while not self.isEmpty((x,y,z)):
+           z += 1
+       return (x, y, z)
 
 
    #def buildBlock(self, pos):
@@ -117,6 +124,7 @@ class Mapmanager():
 
 
    #def loadMap(self):
+
 
 
 
