@@ -20,6 +20,9 @@ game.run()
 
 Файл mapmanager.py
 
+import pickle
+
+
 class Mapmanager():
    """ Управление картой """
    def __init__(self):
@@ -123,11 +126,25 @@ class Mapmanager():
        for block in self.findBlocks(pos):
            block.removeNode()
 
-   #def saveMap(self):
+   def saveMap(self):
+       blocks = self.land.getChildren()
+       file = open('map.dat','wb')
+       pickle.dump(len(blocks), file)
+
+       for block in blocks:
+           x, y, z = block.getPos()
+           pos = (int(x), int(y), int(z))
+           pickle.dump(pos, file)
+
+   def loadMap(self):
+       self.clear()
+       file = open('map.dat','rb')
+       count = pickle.load(file)
+       for i in range(count):
+           pos = pickle.load(file)
+           self.addBlock(pos)
 
 
-
-   #def loadMap(self):
 
 
 
@@ -363,5 +380,5 @@ class Hero():
        base.accept(key_destroy, self.destroy)
 
 
-       #base.accept(key_savemap, self.land.saveMap)
-       #base.accept(key_loadmap, self.land.loadMap)
+       base.accept(key_savemap, self.land.saveMap)
+       base.accept(key_loadmap, self.land.loadMap)
