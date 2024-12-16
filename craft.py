@@ -130,7 +130,6 @@ class Mapmanager():
 
 Файл hero.py
 
-
 key_switch_camera = 'c' # камера привязана к герою или нет
 key_switch_mode = 'z' # можно проходить сквозь препятствия или нет
 
@@ -227,8 +226,8 @@ class Hero():
    def move_to(self, angle):
        if self.mode:
            self.just_move(angle)
-       #else:
-           #self.try_move(angle)
+       else:
+           self.try_move(angle)
   
    def check_dir(self,angle):
        ''' возвращает округленные изменения координат X, Y,
@@ -292,8 +291,15 @@ class Hero():
            self.mode = True
 
 
-  
-   #def try_move(self, angle):
+   def try_move(self, angle):
+       pos = self.look_at(angle)
+       if self.land.isEmpty(pos):
+           pos = self.land.findHighestEmpty(pos)
+           self.hero.setPos(pos)
+       else:
+           pos = pos[0], pos[1], pos[2] + 1
+           if self.land.isEmpty(pos):
+              self.hero.setPos(pos)
 
    def up(self):
        if self.mode:
