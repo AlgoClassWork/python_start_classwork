@@ -104,9 +104,11 @@ class Mapmanager():
        return (x, y, z)
 
 
-   #def buildBlock(self, pos):
-
-
+   def buildBlock(self, pos):
+       x, y, z = pos
+       new = self.findHighestEmpty(pos)
+       if new[2] <= z + 1:
+           self.addBlock(new)
 
    def delBlock(self, position):
        """удаляет блоки в указанной позиции """
@@ -115,16 +117,17 @@ class Mapmanager():
            block.removeNode()
 
 
-   #def delBlockFrom(self, position):
-
-
+   def delBlockFrom(self, position):
+       x, y, z = self.findHighestEmpty(position)
+       pos = x, y, z - 1
+       for block in self.findBlocks(pos):
+           block.removeNode()
 
    #def saveMap(self):
 
 
 
    #def loadMap(self):
-
 
 
 
@@ -315,8 +318,8 @@ class Hero():
        pos = self.look_at(angle)
        if self.mode:
            self.land.addBlock(pos)
-       #else:
-           #self.land.buildBlock(pos)
+       else:
+           self.land.buildBlock(pos)
 
 
    def destroy(self):
@@ -324,11 +327,8 @@ class Hero():
        pos = self.look_at(angle)
        if self.mode:
            self.land.delBlock(pos)
-       #else:
-           #self.land.delBlockFrom(pos)
-
-
-
+       else:
+           self.land.delBlockFrom(pos)
 
    def accept_events(self):
        base.accept(key_turn_left, self.turn_left)
