@@ -2,6 +2,7 @@ from random import randint
 from pygame import *
 
 lost = 0
+score = 0
 
 font.init()
 count_font = font.Font(None,30)
@@ -68,6 +69,9 @@ while run:
 
     lost_text = count_font.render(f'Пропущено: {lost}',1, (255,255,255))
     window.blit(lost_text, (10,10))
+
+    score_text = count_font.render(f'Убито: {score}',1, (255,255,255))
+    window.blit(score_text, (10,40))
 
     ship.update()
     enemys.update()
