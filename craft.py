@@ -1,4 +1,5 @@
 Файл game.py
+
 from direct.showbase.ShowBase import ShowBase
 from mapmanager import Mapmanager
 from hero import Hero
@@ -55,16 +56,13 @@ class Mapmanager():
        self.block.setPos(position)
        self.color = self.getColor(int(position[2]))
        self.block.setColor(self.color)
-       self.block.setTag("at", str(position) ) 
+
+
+       self.block.setTag("at", str(position))
+
+
        self.block.reparentTo(self.land)
 
-   def findBlocks(self, pos):  
-       return self.land.findAllMatches('=at=' + str(pos))  
-   
-   def delBlock(self, position):  
-       blocks = self.findBlocks(position)   
-       for block in blocks:  
-           block.removeNode()  
 
    def clear(self):
        """обнуляет карту"""
@@ -86,6 +84,41 @@ class Mapmanager():
                    x += 1
                y += 1
        return x,y
+  
+   def findBlocks(self, pos):
+       return self.land.findAllMatches("=at=" + str(pos))
+
+
+  # def isEmpty(self, pos):
+
+
+
+   #def findHighestEmpty(self, pos):
+
+
+
+   #def buildBlock(self, pos):
+
+
+
+   def delBlock(self, position):
+       """удаляет блоки в указанной позиции """
+       blocks = self.findBlocks(position)
+       for block in blocks:
+           block.removeNode()
+
+
+   #def delBlockFrom(self, position):
+
+
+
+   #def saveMap(self):
+
+
+
+   #def loadMap(self):
+
+
 
 Файл hero.py
 
@@ -105,11 +138,13 @@ key_down = 'q'     # шаг вниз
 key_turn_left = 'n'     # поворот камеры направо (а мира - налево)
 key_turn_right = 'm'    # поворот камеры налево (а мира - направо)
 
-key_build = 'b'
-key_destroy = 'v'
 
-key_up = 'e'
-key_down = 'q'
+key_build = 'b'     # построить блок перед собой
+key_destroy = 'v'   # разрушить блок перед собой
+
+
+key_savemap = 'k'
+key_loadmap = 'l'
 
 
 class Hero():
@@ -119,6 +154,7 @@ class Hero():
        self.hero = loader.loadModel('smiley')
        self.hero.setColor(1, 0.5, 0)
        self.hero.setScale(0.3)
+       self.hero.setH(180)
        self.hero.setPos(pos)
        self.hero.reparentTo(render)
        self.cameraBind()
@@ -127,7 +163,7 @@ class Hero():
 
    def cameraBind(self):
        base.disableMouse()
-       base.camera.setH(180)
+       # base.camera.setH(180)
        base.camera.reparentTo(self.hero)
        base.camera.setPos(0, 0, 1.5)
        self.cameraOn = True
@@ -139,6 +175,9 @@ class Hero():
        base.camera.reparentTo(render)
        base.enableMouse()
        self.cameraOn = False
+
+
+
 
    def changeView(self):
        if self.cameraOn:
@@ -180,6 +219,8 @@ class Hero():
    def move_to(self, angle):
        if self.mode:
            self.just_move(angle)
+       #else:
+           #self.try_move(angle)
   
    def check_dir(self,angle):
        ''' возвращает округленные изменения координат X, Y,
@@ -198,23 +239,23 @@ class Hero():
            от 290 до 335            -> X - 1, Y - 1
            от 340                   ->        Y - 1  '''
        if angle >= 0 and angle <= 20:
-           return (0, -1)
-       elif angle <= 65:
-           return (1, -1)
-       elif angle <= 110:
-           return (1, 0)
-       elif angle <= 155:
-           return (1, 1)
-       elif angle <= 200:
            return (0, 1)
-       elif angle <= 245:
+       elif angle <= 65:
            return (-1, 1)
-       elif angle <= 290:
+       elif angle <= 110:
            return (-1, 0)
-       elif angle <= 335:
+       elif angle <= 155:
            return (-1, -1)
-       else:
+       elif angle <= 200:
            return (0, -1)
+       elif angle <= 245:
+           return (1, -1)
+       elif angle <= 290:
+           return (1, 0)
+       elif angle <= 335:
+           return (1, 1)
+       else:
+           return (0, 1)
 
 
    def forward(self):
@@ -230,27 +271,50 @@ class Hero():
        angle = (self.hero.getH() + 90) % 360
        self.move_to(angle)
 
+
    def right(self):
        angle = (self.hero.getH() + 270) % 360
        self.move_to(angle)
 
+
+   def changeMode(self):
+       if self.mode:
+           self.mode = False
+       else:
+           self.mode = True
+
+
+  
+   #def try_move(self, angle):
+
+   def up(self):
+       if self.mode:
+           self.hero.setZ(self.hero.getZ() + 1)
+
+
+   def down(self):
+       if self.mode and self.hero.getZ() > 1:
+           self.hero.setZ(self.hero.getZ() - 1)
+  
    def build(self):
        angle = self.hero.getH() % 360
-       new_pos = self.look_at(angle)
-       self.land.addBlock(new_pos)
+       pos = self.look_at(angle)
+       if self.mode:
+           self.land.addBlock(pos)
+       #else:
+           #self.land.buildBlock(pos)
+
 
    def destroy(self):
        angle = self.hero.getH() % 360
-       new_pos = self.look_at(angle)
-       self.land.delBlock(new_pos)
+       pos = self.look_at(angle)
+       if self.mode:
+           self.land.delBlock(pos)
+       #else:
+           #self.land.delBlockFrom(pos)
 
-   def up(self):
-       current_pos = self.hero.getZ() 
-       self.hero.setZ(current_pos + 1)
 
-   def down(self):
-       current_pos = self.hero.getZ()
-       self.hero.setZ(current_pos - 1) 
+
 
    def accept_events(self):
        base.accept(key_turn_left, self.turn_left)
@@ -268,9 +332,15 @@ class Hero():
        base.accept(key_right, self.right)
        base.accept(key_right + '-repeat', self.right)
 
+
+       base.accept(key_switch_camera, self.changeView)
+
+
+       base.accept(key_switch_mode, self.changeMode)
+
+
        base.accept(key_up, self.up)
        base.accept(key_up + '-repeat', self.up)
-
        base.accept(key_down, self.down)
        base.accept(key_down + '-repeat', self.down)
 
@@ -278,4 +348,6 @@ class Hero():
        base.accept(key_build, self.build)
        base.accept(key_destroy, self.destroy)
 
-       base.accept(key_switch_camera, self.changeView)
+
+       #base.accept(key_savemap, self.land.saveMap)
+       #base.accept(key_loadmap, self.land.loadMap)
