@@ -1,6 +1,12 @@
 from random import randint
 from pygame import *
 
+lost = 0
+
+font.init()
+count_font = font.Font(None,30)
+
+
 # класс-родитель для других спрайтов
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, size_x, size_y, player_speed):
@@ -28,8 +34,10 @@ class Player(GameSprite):
 # класс для врагов
 class Enemy(GameSprite):
     def update(self):
+        global lost
         self.rect.y += self.speed
         if self.rect.y > 500:
+            lost += 1
             self.rect.y = 0
             self.rect.x = randint(0,600)
 
@@ -42,7 +50,13 @@ background = transform.scale(image.load('galaxy.jpg'), (win_width, win_height))
 
 # создаем спрайты
 ship = Player('rocket.png', 5, win_height - 100, 80, 100, 10)
-enemy = Enemy('ufo.png',randint(0,600),0,100,50,5)
+
+enemys = sprite.Group()
+
+for i in range(5):
+    enemy = Enemy('ufo.png',randint(0,600),0,100,50,randint(1,5))
+    enemys.add(enemy)
+
 # Основной цикл игры:
 run = True 
 while run:
@@ -50,13 +64,16 @@ while run:
         if e.type == QUIT:
             run = False
 
-    window.blit(background,(0,0))
+    window.blit(background, (0,0))
+
+    lost_text = count_font.render(f'Пропущено: {lost}',1, (255,255,255))
+    window.blit(lost_text, (10,10))
 
     ship.update()
-    enemy.update()
+    enemys.update()
 
     ship.show()
-    enemy.show()
+    enemys.draw(window)
 
     display.update()
 
