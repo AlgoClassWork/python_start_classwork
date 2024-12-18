@@ -32,6 +32,15 @@ class Player(GameSprite):
         if keys[K_RIGHT] and self.rect.x < win_width - 80:
             self.rect.x += self.speed
 
+    def fire(self):
+        bullet = Bullet('bullet.png',self.rect.centerx, 400,20,40,20 )
+        bullets.add(bullet)
+
+class Bullet(GameSprite):
+    def update(self):
+        self.rect.y -= self.speed
+
+
 # класс для врагов
 class Enemy(GameSprite):
     def update(self):
@@ -52,6 +61,8 @@ background = transform.scale(image.load('galaxy.jpg'), (win_width, win_height))
 # создаем спрайты
 ship = Player('rocket.png', 5, win_height - 100, 80, 100, 10)
 
+bullets = sprite.Group()
+
 enemys = sprite.Group()
 
 for i in range(5):
@@ -64,6 +75,9 @@ while run:
     for e in event.get():
         if e.type == QUIT:
             run = False
+        elif e.type == KEYDOWN:
+            if e.key == K_SPACE:
+                ship.fire()
 
     window.blit(background, (0,0))
 
@@ -78,6 +92,9 @@ while run:
 
     ship.show()
     enemys.draw(window)
+
+    bullets.update()
+    bullets.draw(window)
 
     display.update()
 
