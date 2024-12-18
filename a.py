@@ -81,6 +81,10 @@ while run:
         elif e.type == KEYDOWN:
             if e.key == K_SPACE:
                 ship.fire()
+            elif e.key == K_r:
+                lost = 0
+                score = 0
+                finish = False
 
     if not finish:
         window.blit(background, (0,0))
