@@ -6,6 +6,7 @@ score = 0
 
 font.init()
 count_font = font.Font(None,30)
+final_font = font.Font(None,150)
 
 
 # класс-родитель для других спрайтов
@@ -71,6 +72,8 @@ for i in range(5):
 
 # Основной цикл игры:
 run = True 
+finish = False
+
 while run:
     for e in event.get():
         if e.type == QUIT:
@@ -79,23 +82,44 @@ while run:
             if e.key == K_SPACE:
                 ship.fire()
 
-    window.blit(background, (0,0))
+    if not finish:
+        window.blit(background, (0,0))
 
-    lost_text = count_font.render(f'Пропущено: {lost}',1, (255,255,255))
-    window.blit(lost_text, (10,10))
+        lost_text = count_font.render(f'Пропущено: {lost}',1, (255,255,255))
+        window.blit(lost_text, (10,10))
 
-    score_text = count_font.render(f'Убито: {score}',1, (255,255,255))
-    window.blit(score_text, (10,40))
+        score_text = count_font.render(f'Убито: {score}',1, (255,255,255))
+        window.blit(score_text, (10,40))
 
-    ship.update()
-    enemys.update()
+        ship.update()
+        enemys.update()
 
-    ship.show()
-    enemys.draw(window)
+        ship.show()
+        enemys.draw(window)
 
-    bullets.update()
-    bullets.draw(window)
+        bullets.update()
+        bullets.draw(window)
 
-    display.update()
+        if sprite.groupcollide(bullets, enemys, True, True ):
+            enemy = Enemy('ufo.png',randint(0,600),0,100,50,randint(1,5))
+            enemys.add(enemy)
+            score += 1
+            
+        if sprite.spritecollide(ship, enemys, True) or lost > 5:
+            lose_text = final_font.render('LOSE',1, (255,255,255))
+            window.blit(lose_text, (200,200))
 
-    time.delay(30)
+            enemy = Enemy('ufo.png',randint(0,600),0,100,50,randint(1,5))
+            enemys.add(enemy)
+
+            finish = True
+
+        if score > 10:
+            win_text = final_font.render('WIN',1, (255,255,255))
+            window.blit(win_text, (250,200))
+            finish = True
+
+
+        display.update()
+
+        time.delay(30)
