@@ -19,11 +19,28 @@ def add_flower(name, description, price, quantity , image_path):
     cursor = connection.cursor()
     cursor.execute('''
     INSERT INTO flowers (name, description, price, quantity, image_path)
-    VALUES (?, ?, ?, ?, ?)''',(name, description, price, quantity, image_path))
+    VALUES (?, ?, ?, ?, ?)''', (name, description, price, quantity, image_path))
     connection.commit()
     connection.close()
 
+def update_flower(name, description, price, quantity , image_path, id):
+    connection = sqlite3.connect('flowers.db')
+    cursor = connection.cursor()
+    cursor.execute('''
+    UPDATE flowers SET name=?, description=?, price=?, quantity=?, image_path=?
+    WHERE id=?''', (name, description, price, quantity, image_path, id))
+    connection.commit()
+    connection.close()
+
+def delete_flower(id):
+    connection = sqlite3.connect('flowers.db')
+    cursor = connection.cursor()
+    cursor.execute('DELETE FROM flowers WHERE id=?', (id))
+    connection.commit()
+    connection.close()
 
 create_database()
 add_flower('Роза', 'Колючая', '500', '15', ' ')
 add_flower('Орхидея', 'Черная', '1500', '8', ' ')
+update_flower('Роза', 'Колючая', '800', '3', ' ', '1' )
+delete_flower('1')
