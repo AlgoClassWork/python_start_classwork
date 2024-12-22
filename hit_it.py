@@ -20,11 +20,11 @@ class GameSprite(Turtle):
 
     def persecution(self, player):
         self.setheading(self.towards(player.xcor(), player.ycor()))
-        self.forward(2)
+        self.forward(4)
 
 player = GameSprite(x=0, y=-150, col='yellow', shp='turtle')
-enemy1 = GameSprite(x=-150, y=-50, col='red', shp='turtle')
-enemy2 = GameSprite(x=150, y=50, col='red', shp='turtle')
+enemy1 = GameSprite(x=-150, y=-50, col='red', shp='circle')
+enemy2 = GameSprite(x=150, y=50, col='red', shp='circle')
 goal = GameSprite(x=0, y=150, col='green', shp='triangle')
 
 screen = player.getscreen()
