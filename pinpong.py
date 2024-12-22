@@ -1,4 +1,10 @@
 from pygame import *
+# Игровые переменные
+pl_point = 0
+ai_point = 0
+# Работа с шрифтом
+font.init()
+my_font = font.Font(None, 40)
 # Основной игровой класс
 class GameSprite(sprite.Sprite):
     def __init__(self, img, w, h, x, y):
@@ -61,6 +67,9 @@ while game:
             game = False
     # Отрисовка игровых обьектов
     window.fill((255,255,255))
+    
+    window.blit(my_font.render(f'Очки: {pl_point}', 1, (0,0,0)), (10,10))
+    window.blit(my_font.render(f'Очки: {ai_point}', 1, (0,0,0)), (580,10))
 
     player.show()
     ai.show()
