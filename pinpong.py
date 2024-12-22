@@ -38,17 +38,28 @@ class Ball(GameSprite):
             self.speed_y *= -1
 
     def respawn(self):
-        if self.rect.x > 650 or self.rect.x < 0:
-            self.rect.x = 325
-            self.rect.y = 225
-            time.delay(1000)
+        self.rect.x = 325
+        self.rect.y = 225
+        time.delay(1000)
+
+    def player_goal(self):
+        global pl_point
+        if self.rect.x > 650:
+            pl_point += 1
+            self.respawn()
+    
+    def ai_goal(self):
+        global ai_point
+        if self.rect.x < 0:
+            ai_point += 1
+            self.respawn()
 
 class Ai(GameSprite):
     def move(self):
         if self.rect.centery < ball.rect.centery:
-            self.rect.y += 4
+            self.rect.y += 3
         else:
-            self.rect.y -= 4
+            self.rect.y -= 3
         
 # Создаем игровые обьекты
 player = Player('racket.png', 20, 100, 10, 200)
@@ -82,7 +93,9 @@ while game:
 
     ball.collide_platform()
     ball.collide_wall()
-    ball.respawn()
+
+    ball.player_goal()
+    ball.ai_goal()
 
     clock.tick(100)
     display.update()
