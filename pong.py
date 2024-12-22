@@ -35,6 +35,12 @@ class Ball(GameSprite):
         if sprite.collide_rect(self, player) or sprite.collide_rect(self, ai):
             self.speed_x *= -1
 
+    def outside(self):
+        if self.rect.x > 650 or self.rect.x < 0:
+           self.rect.x = 325
+           self.rect.y = 225
+           time.delay(1000)
+
 # Создаем игровые обьекты
 player = Player('racket.png', 20, 100, 10, 200)
 ai = Ai('racket.png', 20, 100, 670, 200)
@@ -63,6 +69,7 @@ while game:
     ball.move()
 
     ball.collide(player, ai)
+    ball.outside()
 
     display.update()
     clock.tick(120)
