@@ -30,10 +30,17 @@ class Ball(GameSprite):
     def collide_wall(self):
         if self.rect.y > 450 or self.rect.y < 0:
             self.speed_y *= -1
+
+class Ai(GameSprite):
+    def move(self):
+        if self.rect.centery < ball.rect.centery:
+            self.rect.y += 4
+        else:
+            self.rect.y -= 4
         
 # Создаем игровые обьекты
 player = Player('racket.png', 20, 100, 10, 200)
-ai = GameSprite('racket.png', 20, 400, 670, 100)
+ai = Ai('racket.png', 20, 100, 670, 200)
 ball = Ball('ball.png', 50, 50, 325, 225)
 # Настройки экрана
 window = display.set_mode((700,500))
@@ -56,6 +63,7 @@ while game:
     # Движение игровых обьектов
     player.move()
     ball.move()
+    ai.move()
 
     ball.collide_platform()
     ball.collide_wall()
