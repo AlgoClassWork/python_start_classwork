@@ -14,4 +14,16 @@ def create_database():
     connection.commit()
     connection.close()
 
+def add_flower(name, description, price, quantity , image_path):
+    connection = sqlite3.connect('flowers.db')
+    cursor = connection.cursor()
+    cursor.execute('''
+    INSERT INTO flowers (name, description, price, quantity, image_path)
+    VALUES (?, ?, ?, ?, ?)''',(name, description, price, quantity, image_path))
+    connection.commit()
+    connection.close()
+
+
 create_database()
+add_flower('Роза', 'Колючая', '500', '15', ' ')
+add_flower('Орхидея', 'Черная', '1500', '8', ' ')
