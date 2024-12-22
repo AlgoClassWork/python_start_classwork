@@ -55,6 +55,4 @@ def get_flower(id):
     connection.close()
     return flower
 
-
-data = get_flower('1')
-print(data)
+create_database()
