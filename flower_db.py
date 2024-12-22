@@ -39,8 +39,22 @@ def delete_flower(id):
     connection.commit()
     connection.close()
 
-create_database()
-add_flower('Роза', 'Колючая', '500', '15', ' ')
-add_flower('Орхидея', 'Черная', '1500', '8', ' ')
-update_flower('Роза', 'Колючая', '800', '3', ' ', '1' )
-delete_flower('1')
+def get_all_flowers():
+    connection = sqlite3.connect('flowers.db')
+    cursor = connection.cursor()
+    cursor.execute('SELECT * FROM flowers')
+    flowers = cursor.fetchall()
+    connection.close()
+    return flowers
+
+def get_flower(id):
+    connection = sqlite3.connect('flowers.db')
+    cursor = connection.cursor()
+    cursor.execute('SELECT * FROM flowers WHERE id=?', (id))
+    flower = cursor.fetchall()
+    connection.close()
+    return flower
+
+
+data = get_flower('1')
+print(data)
