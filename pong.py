@@ -16,28 +16,34 @@ class Player(GameSprite):
         self.rect.centery = y
 
 class Ai(GameSprite):
-    def move(self):
-        pass
+    def move(self, ball):
+        if self.rect.centery > ball.rect.centery:
+            self.rect.y -= 3
+        else:
+            self.rect.y += 3
 
 class Ball(GameSprite):
-    speed_x = 1
-    speed_y = 1
+    speed_x = 4
+    speed_y = 4
     def move(self):
         self.rect.x += self.speed_x
         self.rect.y += self.speed_y
-        if self.rect.x > 650 or self.rect.x < 0:
-            self.speed_x *= -1
         if self.rect.y > 450 or self.rect.y < 0:
             self.speed_y *= -1
 
+    def collide(self, player, ai):
+        if sprite.collide_rect(self, player) or sprite.collide_rect(self, ai):
+            self.speed_x *= -1
+
 # Создаем игровые обьекты
 player = Player('racket.png', 20, 100, 10, 200)
-ai = GameSprite('racket.png', 20, 100, 670, 200)
+ai = Ai('racket.png', 20, 100, 670, 200)
 ball = Ball('ball.png', 50, 50, 325, 225)
 # Настройки экрана
 window = display.set_mode((700,500))
 display.set_caption('пинг-понг')
 # Игровой цикл
+clock = time.Clock()
 game = True
 while game:
     # Обработка нажатия на крестик
@@ -53,7 +59,10 @@ while game:
 
     # Движение обьектов
     player.move()
-
+    ai.move(ball)
     ball.move()
 
+    ball.collide(player, ai)
+
     display.update()
+    clock.tick(120)
