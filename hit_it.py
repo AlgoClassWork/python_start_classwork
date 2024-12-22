@@ -30,6 +30,16 @@ class GameSprite(Turtle):
         if self.distance(self.x_end, self.y_end) < 15:
             self.set_move(self.x_end, self.y_end, self.x_start, self.y_start)
 
+    def persecution(self, player):
+        if self.xcor() < player.xcor():
+            self.goto(self.xcor() + 5, self.ycor())
+        if self.xcor() > player.xcor():
+            self.goto(self.xcor() - 5, self.ycor())
+        if self.ycor() < player.ycor():
+            self.goto(self.xcor(), self.ycor() + 5)
+        if self.ycor() > player.ycor():
+            self.goto(self.xcor(), self.ycor() - 5)
+
 player = GameSprite(x=0, y=-150, col='yellow', shp='turtle')
 enemy1 = GameSprite(x=-150, y=-50, col='red', shp='circle')
 enemy2 = GameSprite(x=150, y=50, col='red', shp='circle')
