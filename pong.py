@@ -36,10 +36,18 @@ class Ball(GameSprite):
             self.speed_x *= -1
 
     def outside(self):
-        if self.rect.x > 650 or self.rect.x < 0:
-           self.rect.x = 325
-           self.rect.y = 225
-           time.delay(1000)
+        global player_score, ai_score
+        if self.rect.x > 650:
+            player_score += 1
+            self.rect.x = 325
+            self.rect.y = 225
+            time.delay(1000)
+        if self.rect.x < 0:
+            ai_score += 1
+            self.rect.x = 325
+            self.rect.y = 225
+            time.delay(1000)
+
 
 # Создаем игровые обьекты
 player = Player('racket.png', 20, 100, 10, 200)
@@ -48,6 +56,12 @@ ball = Ball('ball.png', 50, 50, 325, 225)
 # Настройки экрана
 window = display.set_mode((700,500))
 display.set_caption('пинг-понг')
+# Надписи
+font.init()
+score_font = font.Font(None, 40)
+# Игровые переменные
+player_score = 0
+ai_score = 0
 # Игровой цикл
 clock = time.Clock()
 game = True
@@ -58,6 +72,8 @@ while game:
             game = False
     # Отрисовка игровых обьектов
     window.fill((255,255,255))
+    window.blit(score_font.render(f'Очки: {player_score}',1,(0,0,0)), (10,10))
+    window.blit(score_font.render(f'Очки: {ai_score}',1,(0,0,0)), (580,10))
 
     player.show()
     ai.show()
@@ -72,4 +88,4 @@ while game:
     ball.outside()
 
     display.update()
-    clock.tick(120)
+    clock.tick(100)
