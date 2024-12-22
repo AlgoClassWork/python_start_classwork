@@ -18,9 +18,15 @@ class GameSprite(Turtle):
     def move_right(self):
         self.right(10)
 
-    def persecution(self, player):
-        self.setheading(self.towards(player.xcor(), player.ycor()))
+    def persecution(self, sprite):
+        self.setheading(self.towards(sprite.xcor(), sprite.ycor()))
         self.forward(4)
+
+    def is_collide(self, sprite):
+        dist = self.distance(sprite.xcor(), sprite.ycor())
+        if dist < 20:
+            return True
+        return False
 
 player = GameSprite(x=0, y=-150, col='yellow', shp='turtle')
 enemy1 = GameSprite(x=-150, y=-50, col='red', shp='circle')
@@ -37,3 +43,7 @@ screen.onkey(player.move_right, 'd')
 while True:
     enemy1.persecution(player)
     enemy2.persecution(player)
+    if player.is_collide(goal):
+        goal.goto(-150,0)
+        goal.write('ПОБЕДА',font=('Arial',60,'bold'))
+        break
