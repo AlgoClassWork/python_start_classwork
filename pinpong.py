@@ -9,14 +9,21 @@ class GameSprite(sprite.Sprite):
 
     def show(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
+
+class Player(GameSprite):
+    def move(self):
+        mouse_x, mouse_y = mouse.get_pos()
+        self.rect.centery = mouse_y
+
 # Создаем игровые обьекты
-player = GameSprite('racket.png', 20, 100, 10, 200)
+player = Player('racket.png', 20, 100, 10, 200)
 ai = GameSprite('racket.png', 20, 100, 670, 200)
 ball = GameSprite('ball.png', 50, 50, 325, 225)
 # Настройки экрана
 window = display.set_mode((700,500))
 display.set_caption('пинг-понг')
 # Игровой цикл
+clock = time.Clock()
 game = True
 while game:
     # Обработка нажатия на крестик
@@ -30,4 +37,8 @@ while game:
     ai.show()
     ball.show()
 
+    # Движение игровых обьектов
+    player.move()
+
+    clock.tick(120)
     display.update()
