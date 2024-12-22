@@ -1,66 +1,50 @@
 from turtle import *
 
-class Sprite(Turtle):
-    def __init__(self,x,y,col,forma):
-        super().__init__()
+class GameSprite(Turtle):
+    def __init__(self, x, y, col, shp):
+        Turtle.__init__(self)
         self.penup()
-        self.goto(x,y)
-        self.color('black',col)
-        self.shape(forma)
+        self.goto(x, y)
+        self.color('black', col )
+        self.shape(shp)
+        self.left(90)
 
     def move_up(self):
-        self.setheading(90)
-        self.forward(5)
-        
-    def move_down(self):
-        self.setheading(270)
-        self.forward(5)
-        
-    def move_left(self):
-        self.setheading(180)
-        self.forward(5)
-        
-    def move_right(self):
-        self.setheading(0)
         self.forward(5)
 
-    def is_collide(self,some_object):
-        dist = self.distance(some_object.xcor(),some_object.ycor())
-        if dist < 20:
-            return True
-        else:
-            return False
-        
-#игровые обьекты
-player = Sprite(x=0,y=-150,col='yellow',forma='turtle')
-enemy1 = Sprite(x=-150,y=-100,col='red',forma='square')
-enemy2 = Sprite(x=150,y=100,col='red',forma='square')
-goal = Sprite(x=0,y=150,col='green',forma='triangle')
-#обьект экрана
+    def move_left(self):
+        self.left(90)
+
+    def move_right(self):
+        self.right(90)
+
+    def set_move(self, x_start, y_start, x_end, y_end):
+        self.x_start = x_start
+        self.y_start = y_start
+        self.x_end = x_end
+        self.y_end = y_end
+        self.setheading(self.towards(x_end, y_end))
+
+    def make_step(self):
+        self.forward(15)
+        if self.distance(self.x_end, self.y_end) < 15:
+            self.set_move(self.x_end, self.y_end, self.x_start, self.y_start)
+
+player = GameSprite(x=0, y=-150, col='yellow', shp='turtle')
+enemy1 = GameSprite(x=-150, y=-50, col='red', shp='circle')
+enemy2 = GameSprite(x=150, y=50, col='red', shp='circle')
+goal = GameSprite(x=0, y=150, col='green', shp='triangle')
+
 screen = player.getscreen()
 screen.listen()
-#подписки на события
-screen.onkey(player.move_up,'w')
-screen.onkey(player.move_down,'s')
-screen.onkey(player.move_left,'a')
-screen.onkey(player.move_right,'d')
+
+screen.onkey(player.move_up, 'w')
+screen.onkey(player.move_left, 'a')
+screen.onkey(player.move_right, 'd')
+
+enemy1.set_move(-150, -50, 150, -50)
+enemy2.set_move(150, 50, -150, 50)
 
 while True:
-    #возможная вариация патрулирования которую нужно доработать
-    for i in range(50):
-        enemy1.forward(5)
-    enemy1.left(180)
-
-    if player.is_collide(goal):
-        goal.goto(-150,0)
-        goal.write('ТЫ ПОБЕДИЛ',font=('Arial',40,'bold'))
-        break
-    if player.is_collide(enemy1) or player.is_collide(enemy2):
-        enemy1.goto(-150,0)
-        enemy1.write('ТЫ ПРОИГРАЛ',font=('Arial',40,'bold'))
-        break
-
-player.hideturtle()
-enemy1.hideturtle()
-enemy2.hideturtle()
-goal.hideturtle()
+    enemy1.make_step()
+    enemy2.make_step()
