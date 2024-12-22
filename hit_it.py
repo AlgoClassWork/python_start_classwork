@@ -13,36 +13,18 @@ class GameSprite(Turtle):
         self.forward(5)
 
     def move_left(self):
-        self.left(90)
+        self.left(10)
 
     def move_right(self):
-        self.right(90)
-
-    def set_move(self, x_start, y_start, x_end, y_end):
-        self.x_start = x_start
-        self.y_start = y_start
-        self.x_end = x_end
-        self.y_end = y_end
-        self.setheading(self.towards(x_end, y_end))
-
-    def make_step(self):
-        self.forward(15)
-        if self.distance(self.x_end, self.y_end) < 15:
-            self.set_move(self.x_end, self.y_end, self.x_start, self.y_start)
+        self.right(10)
 
     def persecution(self, player):
-        if self.xcor() < player.xcor():
-            self.goto(self.xcor() + 5, self.ycor())
-        if self.xcor() > player.xcor():
-            self.goto(self.xcor() - 5, self.ycor())
-        if self.ycor() < player.ycor():
-            self.goto(self.xcor(), self.ycor() + 5)
-        if self.ycor() > player.ycor():
-            self.goto(self.xcor(), self.ycor() - 5)
+        self.setheading(self.towards(player.xcor(), player.ycor()))
+        self.forward(2)
 
 player = GameSprite(x=0, y=-150, col='yellow', shp='turtle')
-enemy1 = GameSprite(x=-150, y=-50, col='red', shp='circle')
-enemy2 = GameSprite(x=150, y=50, col='red', shp='circle')
+enemy1 = GameSprite(x=-150, y=-50, col='red', shp='turtle')
+enemy2 = GameSprite(x=150, y=50, col='red', shp='turtle')
 goal = GameSprite(x=0, y=150, col='green', shp='triangle')
 
 screen = player.getscreen()
@@ -52,9 +34,6 @@ screen.onkey(player.move_up, 'w')
 screen.onkey(player.move_left, 'a')
 screen.onkey(player.move_right, 'd')
 
-enemy1.set_move(-150, -50, 150, -50)
-enemy2.set_move(150, 50, -150, 50)
-
 while True:
-    enemy1.make_step()
-    enemy2.make_step()
+    enemy1.persecution(player)
+    enemy2.persecution(player)
