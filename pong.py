@@ -72,6 +72,7 @@ while game:
             game = False
     # Отрисовка игровых обьектов
     window.fill((255,255,255))
+    
     window.blit(score_font.render(f'Очки: {player_score}',1,(0,0,0)), (10,10))
     window.blit(score_font.render(f'Очки: {ai_score}',1,(0,0,0)), (580,10))
 
