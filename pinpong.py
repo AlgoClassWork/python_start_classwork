@@ -31,6 +31,12 @@ class Ball(GameSprite):
         if self.rect.y > 450 or self.rect.y < 0:
             self.speed_y *= -1
 
+    def respawn(self):
+        if self.rect.x > 650 or self.rect.x < 0:
+            self.rect.x = 325
+            self.rect.y = 225
+            time.delay(1000)
+
 class Ai(GameSprite):
     def move(self):
         if self.rect.centery < ball.rect.centery:
@@ -67,6 +73,7 @@ while game:
 
     ball.collide_platform()
     ball.collide_wall()
+    ball.respawn()
 
     clock.tick(100)
     display.update()
