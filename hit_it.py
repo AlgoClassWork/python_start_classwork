@@ -47,3 +47,15 @@ while True:
         goal.goto(-150,0)
         goal.write('ПОБЕДА',font=('Arial',60,'bold'))
         break
+    if player.is_collide(enemy1) or player.is_collide(enemy2):
+        enemy1.goto(-150,0)
+        enemy1.write('ПРОИГРЫШ',font=('Arial',45,'bold'))
+        break
+
+player.hideturtle()
+goal.hideturtle()
+enemy1.hideturtle()
+enemy2.hideturtle()
+    
+
+    
