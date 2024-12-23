@@ -54,10 +54,17 @@ class Enemy(GameSprite):
 
 class Boss(GameSprite):
     def update(self):
-        if self.rect.x > ship.rect.x:
+        if self.rect.centerx > ship.rect.centerx:
             self.rect.x -= self.speed
         else:
             self.rect.x += self.speed
+
+    def attack(self):
+        global timer
+        if int(timer) % 3 == 0:
+            timer += 1
+            meteor = Bullet('asteroid.png',self.rect.centerx, 100, 50, 50, -5)
+            enemys.add(meteor)
 
 # Создаем окошко
 win_width = 700
@@ -112,12 +119,17 @@ while run:
         boss.update()
 
         ship.show()
+
         if timer > 5:
+            boss.attack()
             boss.show()
+
         enemys.draw(window)
 
         bullets.update()
         bullets.draw(window)
+
+        
 
         if sprite.groupcollide(bullets, enemys, True, True ):
             enemy = Enemy('ufo.png',randint(0,600),0,100,50,randint(1,5))
