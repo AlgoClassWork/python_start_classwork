@@ -35,7 +35,9 @@ class Player(GameSprite):
             self.rect.x += self.speed
 
     def fire(self):
-        bullet = Bullet('bullet.png',self.rect.centerx, 400,20,40,20 )
+        bullet = Bullet('bullet.png',self.rect.centerx + 10, 400,20,40,20 )
+        bullets.add(bullet)
+        bullet = Bullet('bullet.png',self.rect.centerx - 30, 400,20,40,20 )
         bullets.add(bullet)
 
 class Bullet(GameSprite):
@@ -136,7 +138,6 @@ while run:
         window.blit(hp, (boss.rect.centerx, 0 ))
 
         
-
         if sprite.groupcollide(bullets, enemys, True, True ):
             enemy = Enemy('ufo.png',randint(0,600),0,100,50,randint(1,5))
             enemys.add(enemy)
