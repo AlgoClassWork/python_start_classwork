@@ -132,6 +132,9 @@ while run:
         bullets.update()
         bullets.draw(window)
 
+        hp = count_font.render(f'hp:{boss_health}',1, (255,255,255))
+        window.blit(hp, (boss.rect.centerx, 0 ))
+
         
 
         if sprite.groupcollide(bullets, enemys, True, True ):
