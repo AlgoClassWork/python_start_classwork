@@ -3,6 +3,7 @@ from pygame import *
 
 lost = 0
 score = 0
+boss_health = 10
 
 font.init()
 count_font = font.Font(None,30)
@@ -99,6 +100,8 @@ while run:
             if e.key == K_SPACE:
                 ship.fire()
             elif e.key == K_r:
+                timer = 0
+                boss_health = 0
                 lost = 0
                 score = 0
                 finish = False
@@ -136,7 +139,7 @@ while run:
             enemys.add(enemy)
             score += 1
             
-        if sprite.spritecollide(ship, enemys, True) or lost > 5:
+        if sprite.spritecollide(ship, enemys, True):
             lose_text = final_font.render('LOSE',1, (255,255,255))
             window.blit(lose_text, (200,200))
 
@@ -144,12 +147,14 @@ while run:
             enemys.add(enemy)
 
             finish = True
+        
+        if sprite.spritecollide(boss, bullets, True) and timer > 5:
+            boss_health -= 1
 
-        if score > 30:
+        if score > 30 or boss_health < 0:
             win_text = final_font.render('WIN',1, (255,255,255))
             window.blit(win_text, (250,200))
             finish = True
-
 
         display.update()
 
