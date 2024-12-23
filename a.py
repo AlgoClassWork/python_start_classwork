@@ -53,7 +53,11 @@ class Enemy(GameSprite):
             self.rect.x = randint(0,600)
 
 class Boss(GameSprite):
-    pass
+    def update(self):
+        if self.rect.x > ship.rect.x:
+            self.rect.x -= self.speed
+        else:
+            self.rect.x += self.speed
 
 # Создаем окошко
 win_width = 700
@@ -73,7 +77,8 @@ for i in range(5):
     enemy = Enemy('ufo.png',randint(0,600),0,100,50,randint(1,5))
     enemys.add(enemy)
 
-boss = Boss('boss.png', 250, 50, 200, 100, 5)
+boss = Boss('boss.png', 250, 50, 200, 100, 3)
+
 # Основной цикл игры:
 run = True 
 finish = False
@@ -104,9 +109,10 @@ while run:
 
         ship.update()
         enemys.update()
+        boss.update()
 
         ship.show()
-        if timer > 10:
+        if timer > 5:
             boss.show()
         enemys.draw(window)
 
