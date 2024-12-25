@@ -1,5 +1,11 @@
 from pygame import *
 
+font.init()
+my_font = font.Font(None, 40)
+
+player_score = 0
+ai_score = 0
+
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, size_x, size_y):
         self.image = transform.scale(image.load(player_image), (size_x, size_y))
@@ -16,7 +22,7 @@ player = GameSprite('platform.png',10,200,10,100)
 ai = GameSprite('platform.png',680,200,10,100)
 ball = GameSprite('ball.png',325,225,50,50)
 
-ball_x, ball_y = 5, 5 
+ball_x, ball_y = 6, 6 
 
 clock = time.Clock()
 run = True
@@ -47,9 +53,18 @@ while run:
     if sprite.collide_rect(ball, player) or sprite.collide_rect(ball, ai):
         ball_x *= -1
 
-    if ball.rect.x > 650 or ball.rect.x < 0:
+    if ball.rect.x > 650:
         ball.rect.x = 325
         ball.rect.y = 225
+        player_score += 1
+
+    if ball.rect.x < 0:
+        ball.rect.x = 325
+        ball.rect.y = 225
+        ai_score += 1
+
+    window.blit(my_font.render(f'Очки: {player_score}',1,(0,0,0)), (10,10))
+    window.blit(my_font.render(f'Очки: {ai_score}',1,(0,0,0)), (580,10))
 
     display.update()
     clock.tick(60)
