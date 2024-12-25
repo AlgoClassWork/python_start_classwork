@@ -18,6 +18,28 @@
     <img width="100%" src="https://ostore.kg/upload/iblock/362/362e388e01a92cfd008e22ca53390a10.png">
     <h1>Наши товары</h1>
     
+    <div class="products">
+        <div class="tovar">
+            <img width="300px" height="300px" src="https://avatars.mds.yandex.net/i?id=2b63fc29b052739a837cab48cc647e15_l-5237855-images-thumbs&n=13">
+            <a href=""> Программист Олежа </a>
+            <p> 300$ </p>
+        </div>
+
+        <div class="tovar">
+            <img width="300px" height="300px" src="https://thumbs.dreamstime.com/b/young-man-11449745.jpg">
+            <a href=""> Священик Богдан </a>
+            <p> 0$ </p>
+        </div>
+
+        <div class="tovar">
+            <img width="300px" height="300px" src="https://pic.rutubelist.ru/user/f5/d3/f5d31d60de583f8ec45287a0f32cd322.jpg">
+            <a href=""> Строитель Чен </a>
+            <p> 10$ </p>
+        </div>
+    </div>
+
+
+
 </body>
 </html>
 
@@ -44,4 +66,27 @@ body {
 h1 {
     text-align: center;
     font-size: 50px;
+}
+
+.tovar {
+    border: 1px solid gray;
+    background-color: lightgray;
+    width: 300px;
+    padding: 20px;
+}
+
+.tovar a {
+    display: block;
+    text-decoration: none;
+    color: black;
+    font-size: 30px;
+}
+
+.tovar p {
+    font-size: 30px;
+}
+
+.products {
+    display: flex;
+    justify-content: space-around;
 }
