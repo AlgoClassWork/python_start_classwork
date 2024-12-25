@@ -43,8 +43,13 @@ while run:
 
     if ball.rect.y > 450 or ball.rect.y < 0:
         ball_y *= -1
-    if ball.rect.x > 650 or ball.rect.x < 0:
+        
+    if sprite.collide_rect(ball, player) or sprite.collide_rect(ball, ai):
         ball_x *= -1
+
+    if ball.rect.x > 650 or ball.rect.x < 0:
+        ball.rect.x = 325
+        ball.rect.y = 225
 
     display.update()
     clock.tick(60)
