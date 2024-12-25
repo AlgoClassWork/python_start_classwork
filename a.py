@@ -16,6 +16,9 @@ player = GameSprite('platform.png',10,200,10,100)
 ai = GameSprite('platform.png',680,200,10,100)
 ball = GameSprite('ball.png',325,225,50,50)
 
+ball_x, ball_y = 5, 5 
+
+clock = time.Clock()
 run = True
 while run:
     for e in event.get():
@@ -23,9 +26,25 @@ while run:
             run = False
 
     window.fill((255,255,255))
-
+    # отображение персонажей
     player.show()
     ai.show()
     ball.show()
+    # передвижение игрока
+    player.rect.centery = mouse.get_pos()[1]
+    # передвижение врага
+    if ai.rect.centery > ball.rect.centery:
+        ai.rect.y -= 4
+    else:
+        ai.rect.y += 4
+    # передвижение мяча
+    ball.rect.x += ball_x
+    ball.rect.y += ball_y
+
+    if ball.rect.y > 450 or ball.rect.y < 0:
+        ball_y *= -1
+    if ball.rect.x > 650 or ball.rect.x < 0:
+        ball_x *= -1
 
     display.update()
+    clock.tick(60)
