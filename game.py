@@ -35,9 +35,13 @@ while game:
     ball_x += speed_x
     ball_y += speed_y
 
-    if ball_x > 650 or ball_x < 0:
+    if ball_x > 650:
         speed_x *= -1
     if ball_y > 350 or ball_y < 0:
         speed_y *= -1
+
+    dist = abs(pica_x - ball_x) + abs(pica_y - ball_y)
+    if keys[K_SPACE] and dist < 150:
+        speed_x *= -1
 
     display.update()
