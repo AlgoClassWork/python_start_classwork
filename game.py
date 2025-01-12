@@ -8,7 +8,11 @@ background = transform.scale(background, (700,500))
 
 pica = image.load('pica.png') 
 pica = transform.scale(pica, (80,120)) 
-pica_x, pica_y = 200, 200 
+pica_x, pica_y = 0, 100 
+
+ball = image.load('ball.png') 
+ball = transform.scale(ball, (50,50)) 
+ball_x, ball_y = 300, 150 
 # Игровой цикл
 game = True
 while game:
@@ -19,15 +23,12 @@ while game:
     # Отображение картинок
     window.blit( background, (0,0) )
     window.blit( pica, (pica_x, pica_y) ) 
+    window.blit( ball, (ball_x, ball_y) )
     # Движение персонажей
     keys = key.get_pressed()
     if keys[K_w] and pica_y > 0:
         pica_y -= 1
     if keys[K_s] and pica_y < 250:
         pica_y += 1
-    if keys[K_a] and pica_x > 0:
-        pica_x -= 1
-    if keys[K_d] and pica_x < 600:
-        pica_x += 1
 
     display.update()
