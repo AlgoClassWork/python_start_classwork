@@ -21,7 +21,17 @@ class FirstScreen(Screen):
         button_layout.add_widget(button2)
         layout.add_widget(button_layout)
 
+        button.on_press = self.wrong
+        button2.on_press = self.right
+
         self.add_widget(layout)
+
+    def wrong(self):
+        self.manager.current = 'wrong'
+
+    def right(self):
+        self.manager.current = 'right'
+            
 
 class RightScreen(Screen):
     def __init__(self, name='right'):
