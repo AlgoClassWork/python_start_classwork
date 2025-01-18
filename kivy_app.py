@@ -7,6 +7,7 @@ from kivy.core.window import Window
 #pip install kivy
 
 #Window.clearcolor = (0.95, 0.95, 1, 1)
+
 class FirstScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -53,20 +54,42 @@ class QuestionScreen(Screen):
         app.sm.current = 'right'
 
 class RightScreen(Screen):
-     def __init__(self, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
         layout = BoxLayout(orientation='vertical')
         right = Label(text='Поздравляем теперь вы черный', font_size='40px')
+        button = Button(text='Начать заново', size_hint=(0.5, 0.2),
+                                      pos_hint={'center_x':0.5},
+                                      background_color=(0,1,0,1))
         layout.add_widget(right)
+        layout.add_widget(button)
+
+        button.bind(on_press=self.start_test)
+
         self.add_widget(layout)
 
+    def start_test(self, instance):
+        app = App.get_running_app()
+        app.sm.current = 'first'
+
 class WrongScreen(Screen):
-     def __init__(self, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
         layout = BoxLayout(orientation='vertical')
         wrong = Label(text='Сам ты белый!', font_size='80px')
+        button = Button(text='Начать заново', size_hint=(0.5, 0.2),
+                                      pos_hint={'center_x':0.5},
+                                      background_color=(0,1,0,1))
         layout.add_widget(wrong)
+        layout.add_widget(button)
+
+        button.bind(on_press=self.start_test)
+
         self.add_widget(layout)
+
+    def start_test(self, instance):
+        app = App.get_running_app()
+        app.sm.current = 'first'
 
 
 class MyApp(App):
