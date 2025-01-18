@@ -23,11 +23,25 @@ class FirstScreen(Screen):
 
         self.add_widget(layout)
 
+class RightScreen(Screen):
+    def __init__(self, name='right'):
+        super().__init__(name=name)
+        label = Label(text='Правильно бро!', font_size='60px')
+        self.add_widget(label)
+
+class WrongScreen(Screen):
+    def __init__(self, name='wrong'):
+        super().__init__(name=name)
+        label = Label(text='Сам ты белый!', font_size='60px')
+        self.add_widget(label)
+
 
 class MyApp(App):
     def build(self):
         screen_manager = ScreenManager()
         screen_manager.add_widget(FirstScreen())
+        screen_manager.add_widget(WrongScreen())
+        screen_manager.add_widget(RightScreen())
         return screen_manager
 
 app = MyApp()
