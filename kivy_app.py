@@ -27,7 +27,7 @@ class FirstScreen(Screen):
         app.sm.current = 'question'
 
 class QuestionScreen(Screen):
-     def __init__(self, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
         layout = BoxLayout(orientation='vertical')
         question = Label(text='Какого цвета негр?', font_size='60px')
@@ -38,6 +38,34 @@ class QuestionScreen(Screen):
         button_layout.add_widget(answer2)
         layout.add_widget(question)
         layout.add_widget(button_layout)
+
+        answer1.bind(on_press=self.lose)
+        answer2.bind(on_press=self.win)
+
+        self.add_widget(layout)
+
+    def lose(self, instance):
+        app = App.get_running_app()
+        app.sm.current = 'wrong'
+
+    def win(self, instance):
+        app = App.get_running_app()
+        app.sm.current = 'right'
+
+class RightScreen(Screen):
+     def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        layout = BoxLayout(orientation='vertical')
+        right = Label(text='Поздравляем теперь вы черный', font_size='40px')
+        layout.add_widget(right)
+        self.add_widget(layout)
+
+class WrongScreen(Screen):
+     def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        layout = BoxLayout(orientation='vertical')
+        wrong = Label(text='Сам ты белый!', font_size='80px')
+        layout.add_widget(wrong)
         self.add_widget(layout)
 
 
@@ -46,6 +74,8 @@ class MyApp(App):
         self.sm = ScreenManager()
         self.sm.add_widget(FirstScreen(name='first'))
         self.sm.add_widget(QuestionScreen(name='question'))
+        self.sm.add_widget(RightScreen(name='right'))
+        self.sm.add_widget(WrongScreen(name='wrong'))
         self.sm.current = 'first'
         return self.sm
     
