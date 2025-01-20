@@ -4,6 +4,7 @@ from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen, ScreenManager
 
+
 class QuestionScreen(Screen):
     def __init__(self, name='question'):
         super().__init__(name=name)
@@ -16,7 +17,17 @@ class QuestionScreen(Screen):
         layout_button.add_widget(button2)
         layout.add_widget(label)
         layout.add_widget(layout_button)
+
+        button.on_press = self.wrong
+        button2.on_press = self.correct
+
         self.add_widget(layout)
+
+    def wrong(self):
+        self.manager.current = 'wrong'
+
+    def correct(self):
+        self.manager.current = 'correct'
 
 class WrongScreen(Screen):
     def __init__(self, name='wrong'):
