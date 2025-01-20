@@ -47,6 +47,14 @@ def update_organ(name, category, description, price, image, id):
     connection.commit()
     connection.close()
 
+def get_all_organs():
+    connection = sqlite3.connect('organs.db')
+    cursor = connection.cursor()
+    cursor.execute('SELECT * FROM organs ')
+    data = cursor.fetchall()
+    connection.close()
+    return data
+
 create_database()
 add_organ('Рука','Конечность','Сильная','100','')
 update_organ('Рука','Конечность','Обыкновенная','150','', '1')
