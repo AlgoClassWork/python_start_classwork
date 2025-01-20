@@ -2,9 +2,11 @@ from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.screenmanager import Screen, ScreenManager
 
-class TestApp(App):
-    def build(self):
+class QuestionScreen(Screen):
+    def __init__(self, name):
+        super().__init__()
         label = Label(text='Какого цвета чернокожие?', font_size='50px')
         button = Button(text='Белый', size_hint=(1,0.5))
         button2 = Button(text='Черный', size_hint=(1,0.5))
@@ -14,7 +16,13 @@ class TestApp(App):
         layout_button.add_widget(button2)
         layout.add_widget(label)
         layout.add_widget(layout_button)
-        return layout
+        self.add_widget(layout)
+
+class TestApp(App):
+    def build(self):
+        screen_manager = ScreenManager()
+        screen_manager.add_widget(QuestionScreen(name='question'))
+        return screen_manager
 
 app = TestApp()
 app.run()
