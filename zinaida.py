@@ -20,7 +20,20 @@ while answer.find('выкл') == -1:
         elif genre == 'комедия':
             print('Коносуба')
         else:
-            print('Извини такого жанра пока нет')    
+            print('Извини такого жанра пока нет') 
+
+    elif answer.find('игр') != -1:
+        print('Добро пожаловать в игру угадай число у тебя 7 попыток')
+        win_num = randint(1,100) 
+        for i in range(7):
+            num = int(input('Введите число')) 
+            if num > win_num:
+                print('Ваше число больше победного')
+            elif num < win_num:
+                print('Ваше число меньше победного')
+            else:
+                print('Вы выйграли пачку сухариков!')
+                break
     else:
         print('Извини я тебя не понимаю')
 
