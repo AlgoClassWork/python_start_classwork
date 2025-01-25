@@ -1,3 +1,4 @@
+from random import randint
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout
 
 # Создание приложения и экрана
@@ -55,7 +56,20 @@ window.setStyleSheet("""
     }
 """)
 
+def result():
+    num = int(text_input.text())
+    text_input.clear()
+    if num > win_num:
+        game_label.setText('Загаданное число меньше')
+    elif num < win_num:
+        game_label.setText('Загаданное число больше')
+    else:
+        game_label.setText('Вы выйграли пачку сухариков')
+
+# Подписки на события
+button.clicked.connect(result)
 # Запуск приложения
+win_num = randint(1,100)
 window.resize(400,200)
 window.show()
 app.exec()
