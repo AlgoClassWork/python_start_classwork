@@ -12,7 +12,6 @@ def create_db():
     connection.commit()
     connection.close()
 
-
 def add_name(name, surname):
     connection = sqlite3.connect('database.db')
     cursor = connection.cursor()
@@ -20,7 +19,10 @@ def add_name(name, surname):
     connection.commit()
     connection.close()
 
-create_db()
-add_name('Петя', 'Петров')
-add_name('Вася', 'Пупкин')
-add_name('Мага', 'Чимаев')
+def get_name():
+    connection = sqlite3.connect('database.db')
+    cursor = connection.cursor()
+    cursor.execute(' SELECT * FROM names ')
+    data = cursor.fetchall()
+    connection.close()
+    return data
