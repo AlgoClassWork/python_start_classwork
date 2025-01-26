@@ -39,6 +39,18 @@ right(90)
 forward(100)
 end_fill()
 # отрисовка крыши дома
+color('red')
+penup()
+goto(-250, 0)
+pendown()
+begin_fill()
+left(90)
+forward(200)
+left(150)
+forward(130)
+left(65)
+forward(110)
+end_fill()
 
 
 exitonclick()
