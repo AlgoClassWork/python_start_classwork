@@ -26,3 +26,20 @@ def get_ads():
     ads = cursor.fetchall()
     connection.close()
     return ads
+
+
+
+
+#pip install flask
+from flask import Flask, render_template
+import data
+
+app = Flask(__name__)
+data.create_db()
+
+@app.route('/')
+def index():
+    ads = data.get_ads()
+    return render_template('index.html', ads=ads)
+
+app.run()
