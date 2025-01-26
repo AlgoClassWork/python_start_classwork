@@ -43,3 +43,18 @@ def index():
     return render_template('index.html', ads=ads)
 
 app.run()
+
+
+
+
+
+<form action="/create" method="post">
+    <input type="text" name="name"><br>
+    <textarea name="description"></textarea><br>
+    <button type="submit">Отправить</button>
+</form>
+
+{% for ad in ads %}
+    <h2>{{ ad[1] }}</h2>
+    <p>{{ ad[2] }}</p>
+{% endfor %}
