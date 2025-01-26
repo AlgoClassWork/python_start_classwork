@@ -24,5 +24,21 @@ forward(350)
 left(90)
 forward(600)
 end_fill()
+# отрисовка основания дома
+color('gray')
+penup()
+goto(-50,-100)
+pendown()
+begin_fill()
+forward(200)
+right(90)
+forward(100)
+right(90)
+forward(200)
+right(90)
+forward(100)
+end_fill()
+# отрисовка крыши дома
+
 
 exitonclick()
