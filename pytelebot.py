@@ -24,6 +24,17 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text('Не важно как твои?')
     elif text == 'хорошо':
         await update.message.reply_text('Рад слышать')
+    elif text == 'шутка':
+        await update.message.reply_text('Колобок повесился')
+    elif 'фильм' in text:
+        await update.message.reply_text('Какой жанр?')
+        context.user_data['жанр'] = True
+    elif context.user_data.get('жанр'):
+        if 'боевик' in text:
+            await update.message.reply_text('https://www.kinopoisk.ru/film/440616/')
+        if 'комедия' in text:
+            await update.message.reply_text('https://www.kinopoisk.ru/film/5309059/')
+        context.user_data.pop('жанр')
 
 
 # соединение бота с кодом
