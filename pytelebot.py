@@ -16,6 +16,16 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
         'Могу порекомендовать фильм'
     )
 
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = update.message.text.lower() # получаем текст сообщения
+    if text == 'привет':
+        await update.message.reply_text('Здравствуй дядя!')
+    elif text == 'как дела':
+        await update.message.reply_text('Не важно как твои?')
+    elif text == 'хорошо':
+        await update.message.reply_text('Рад слышать')
+
+
 # соединение бота с кодом
 app = Application.builder().token('7973499836:AAHO_7zjhi4LNDXDxLcbW9_ukDVzbQxQJ9s').build()
 # подписки на команды
