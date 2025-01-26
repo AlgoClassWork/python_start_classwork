@@ -76,6 +76,14 @@ forward(20)
 left(90)
 forward(150)
 end_fill()
+# листва для дерева
+color('green')
+penup()
+goto(210,50)
+pendown()
+for i in range(0,180,4):
+    forward(i)
+    left(90)
 
 
 exitonclick()
