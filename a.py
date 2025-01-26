@@ -61,5 +61,21 @@ for i in range(18):
     forward(100)
     left(100)
 end_fill()
+# ствол дерева
+color('brown')
+penup()
+goto(200,-100)
+pendown()
+setheading(0)
+begin_fill()
+forward(20)
+left(90)
+forward(150)
+left(90)
+forward(20)
+left(90)
+forward(150)
+end_fill()
+
 
 exitonclick()
