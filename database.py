@@ -48,11 +48,20 @@ app.run()
 
 
 
-<h1>Список учеников:</h1>
 
+
+<h1>Список учеников:</h1>
 
 <ul>
     {% for name in names  %}
         <li>{{name[1]}} {{name[2]}}</li>
     {% endfor %}
 </ul>
+
+<h1>Добавить ученика</h1>
+
+<form action="/create" method="post">
+    <input type="text" name="name" placeholder="Имя:">
+    <input type="text" name="surname" placeholder="Фамилия:">
+    <button type="submit">Добавить</button>
+</form>
