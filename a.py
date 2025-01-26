@@ -51,6 +51,15 @@ forward(130)
 left(65)
 forward(110)
 end_fill()
-
+# отрисовка солнышка
+color('yellow')
+penup()
+goto(300,300)
+pendown()
+begin_fill()
+for i in range(18):
+    forward(100)
+    left(100)
+end_fill()
 
 exitonclick()
