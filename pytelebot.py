@@ -1,3 +1,4 @@
+# pip install python-telegram-bot
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
@@ -42,7 +43,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_photo(photo=image_url)
 
 # соединение бота с кодом
-app = Application.builder().token('7973499836:AAHO_7zjhi4LNDXDxLcbW9_ukDVzbQxQJ9s').build()
+app = Application.builder().token('Ваш токен').build()
 
 # подписки на команды
 app.add_handler(CommandHandler('start', start))
