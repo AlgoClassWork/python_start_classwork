@@ -31,16 +31,28 @@ def get_name():
 
 
 
-
-
-
 #pip install flask
 from flask import Flask, render_template
+from data import get_name, create_db
 
 app = Flask(__name__)
+create_db()
+
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    names = get_name()
+    return render_template('index.html',names=names)
 
 app.run()
+
+
+
+<h1>Список учеников:</h1>
+
+
+<ul>
+    {% for name in names  %}
+        <li>{{name[1]}} {{name[2]}}</li>
+    {% endfor %}
+</ul>
