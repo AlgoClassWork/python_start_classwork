@@ -31,7 +31,7 @@ def get_ads():
 
 
 #pip install flask
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 import data
 
 app = Flask(__name__)
@@ -42,9 +42,15 @@ def index():
     ads = data.get_ads()
     return render_template('index.html', ads=ads)
 
+@app.route('/create', methods=['POST'])
+def create():
+    name = request.form.get('name')
+    description = request.form.get('description')
+    data.create_ad(name, description)
+    return redirect(url_for('index'))
+
+
 app.run()
-
-
 
 
 
