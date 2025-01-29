@@ -18,4 +18,13 @@ def add(name, description):
     connection.commit()
     connection.close()
 
+def get_ads():
+    connection = sqlite3.connect('database.db')
+    cursor = connection.cursor()
+    cursor.execute('SELECT * FROM ads')
+    data = cursor.fetchall()
+    connection.close()
+    return data
+
+
 
