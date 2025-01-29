@@ -1,3 +1,4 @@
+#database.py
 import sqlite3
 
 def create_db():
@@ -26,5 +27,22 @@ def get_ads():
     connection.close()
     return data
 
+
+
+
+
+
+#main.py
+from flask import Flask, render_template, request, redirect, url_for
+from database import get_ads
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    ads = get_ads()
+    return render_template('index.html', ads = ads )
+
+app.run()
 
 
