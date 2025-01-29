@@ -11,4 +11,11 @@ def create_db():
     connection.commit()
     connection.close()
 
-create_db()
+def add(name, description):
+    connection = sqlite3.connect('database.db')
+    cursor = connection.cursor()
+    cursor.execute('INSERT INTO ads (name, description) VALUES (?, ?)', (name, description))
+    connection.commit()
+    connection.close()
+
+
