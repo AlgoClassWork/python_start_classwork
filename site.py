@@ -46,3 +46,10 @@ def index():
 app.run()
 
 
+
+#index.html
+{% for ad in ads %}
+    <h1> {{ad[0]}} </h1>
+    <p> {{ad[1]}} </p>
+{% endfor %}
+
