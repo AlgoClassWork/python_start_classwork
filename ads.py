@@ -32,8 +32,8 @@ create_db()
 
 
 #main.py
-from flask import Flask, render_template
-from data import get_ads
+from flask import Flask, render_template, request, redirect, url_for
+from data import get_ads, create_ad
 
 app = Flask(__name__)
 
@@ -42,8 +42,14 @@ def index():
     ads = get_ads()
     return render_template('index.html', ads=ads)
 
-app.run()
+@app.route('/create', methods=['POST'])
+def create():
+    title = request.form.get('title')
+    content = request.form.get('description')
+    create_ad(title, content)
+    return redirect(url_for('index'))
 
+app.run()
 #index.html
 <h1> Доска обьявлений! </h1>
 
