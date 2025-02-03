@@ -43,3 +43,18 @@ def index():
     return render_template('index.html', ads=ads)
 
 app.run()
+
+#index.html
+<h1> Доска обьявлений! </h1>
+
+<form action="/create" method="post">
+    <input type="text" placeholder="Заголовок" name="title"> <br>
+    <input type="text" placeholder="Описание" name="description"> <br>
+    <button type="submit">Создать</button>
+</form>
+
+{% for ad in ads %}
+    <h2> {{ ad[0] }} </h2>
+    <p>Описание: {{ ad[1] }} </p>
+{% endfor %}
+
