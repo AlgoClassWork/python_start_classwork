@@ -34,7 +34,7 @@ def get_ads():
 
 #main.py
 from flask import Flask, render_template, request, redirect, url_for
-from database import get_ads
+from database import get_ads, add
 
 app = Flask(__name__)
 
@@ -43,8 +43,15 @@ def index():
     ads = get_ads()
     return render_template('index.html', ads = ads )
 
-app.run()
+@app.route('/create', methods=['POST'])
+def create():
+    name = request.form.get('name')
+    description = request.form.get('description')
+    add(name, description)
+    return redirect(url_for('index'))
 
+
+app.run()
 
 
 #index.html
