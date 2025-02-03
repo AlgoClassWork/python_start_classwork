@@ -48,6 +48,12 @@ app.run()
 
 
 #index.html
+<form action="/create" method="post">
+    <input type="text" placeholder="Заголовок" name="name" required> <br>
+    <textarea placeholder="Описание" name="description"></textarea> <br>
+    <button type="submit">Создать</button>
+</form>
+
 {% for ad in ads %}
     <h1> {{ad[0]}} </h1>
     <p> {{ad[1]}} </p>
