@@ -1,4 +1,3 @@
-#data.py
 import sqlite3
 
 def create_db():
@@ -18,6 +17,14 @@ def create_ad(name, description):
     INSERT INTO ads (name, description) VALUES (?, ?)''', (name, description))
     connection.commit()
     connection.close()
+
+def get_ads():
+    connection = sqlite3.connect('ads.db')
+    cursor = connection.cursor()
+    cursor.execute ('SELECT * FROM ads')
+    ads = cursor.fetchall()
+    connection.close()
+    return ads
 
 create_db()
 #create_ad('Пропала собака', 'Вес 100кг Алабай не кусается')
