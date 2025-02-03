@@ -29,3 +29,17 @@ def get_ads():
 create_db()
 #create_ad('Пропала собака', 'Вес 100кг Алабай не кусается')
 #create_ad('Нашел собаку', 'Верну за вознаграждение')
+
+
+#main.py
+from flask import Flask, render_template
+from data import get_ads
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    ads = get_ads()
+    return render_template('index.html', ads=ads)
+
+app.run()
