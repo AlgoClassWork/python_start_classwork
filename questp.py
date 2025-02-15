@@ -55,15 +55,30 @@ class Character:
             print(f"\n{self.name} одерживает победу в этой жестокой битве!\n")
         else:
             print(f"\n{self.name} пал в бою... Но его имя будет жить в легендах.\n")
-        
 
+    def level_up(self):
+        self.health *= 10
+        self.damage *= 2
+        
 # Creating characters
 hero = Character(name='Мачо-Абу', weapon='Рука', damage=20, health=100)
 villain = Character(name='Адольф', weapon='Сирюкен', damage=20, health=100)
 
-# Introduce characters
-hero.about()
-villain.about()
+print('Добро пожаловать в игру Рыцарь и дракон')
+print('Ваша задача добраться до логова дракона сразить его забрать сокровище и спаси принцессу')
+print('Вы начали свой путь из родного города Бишкек')
+print('По пути к логову дракона вы наткнулись на старый немецкий бункер')
+answer = input('Хотите его лучше осмотреть или продолжить путь?')
+if answer == 'да':
+    print('В далеке вы увидели большое усатое чудовище')
+    print('Готовтесь к бою')
+    player.fight(villain)
+    if player.is_alive():
+        print('Мы восстановили здоровье и стали еще сильнее')
+        player.level_up()
+    else:
+        print('Конец путешествие вы померли')
 
-# Start the fight
-hero.fight(villain)
+
+
+
