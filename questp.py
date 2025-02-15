@@ -22,11 +22,20 @@ class Person:
             vrag.health -= self.damage * 2
         if udar == 3:
             print('Промах')
+    
+    def fight(self, vrag):
+        while self.health > 0 and vrag.health > 0:
+            hod = randint(1,2)
+            if hod == 1:
+                self.punch(vrag)
+            if hod == 2:
+                vrag.punch(self)
+        if self.health > 0:
+            print(self.name,'победил в тяжелой битве')
+        else:
+            print(self.name,'пал в этом бою')
 
-player = Person(name='Мачо-Абу', weapon='Рука', damage=5, health=100)
-enemy = Person(name='Адольф', weapon='Сирюкен', damage=15, health=50)
-print('Здоровье врага', enemy.health)
-player.punch(enemy)
-print('Здоровье врага', enemy.health)
+player = Person(name='Мачо-Абу', weapon='Рука', damage=20, health=100)
+enemy = Person(name='Адольф', weapon='Сирюкен', damage=20, health=100)
 
 
