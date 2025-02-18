@@ -47,6 +47,17 @@ for i in range(2):
 end_fill()
 
 # Крыша домика
+penup()
+goto(-250, -50)
+pendown()
+color('red')
+begin_fill()
+forward(200)
+left(120)
+forward(50)
+left(60)
+forward(150)
+end_fill()
 
-
+hideturtle()
 exitonclick()
