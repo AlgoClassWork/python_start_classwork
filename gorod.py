@@ -12,6 +12,7 @@ for i in range(2):
     forward(200)
     right(90)
 end_fill()
+
 # небо
 goto(-300, 300)
 color('lightblue')
@@ -23,6 +24,14 @@ for i in range(2):
     right(90)
 end_fill()
 
+# Солнышко
+goto(200, 300)
+color('yellow')
+begin_fill()
+for i in range(18):
+    forward(100)
+    right(100)
+end_fill()
 
 
 exitonclick()
