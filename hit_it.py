@@ -30,11 +30,12 @@ class Enemy(Sprite):
         self.start_y = start_y 
         self.end_x = end_x 
         self.end_y = end_y 
+        self.goto(start_x, start_y)
         self.setheading(self.towards(end_x, end_y))
 
     def make_step(self):
-        self.forward(5)
-        if self.distance(self.end_x, self.end_y) < 5:
+        self.forward(50)
+        if self.distance(self.end_x, self.end_y) < 50:
             self.set_move(self.end_x, self.end_y, self.start_x, self.start_y )
             
 
@@ -52,8 +53,9 @@ screen.onkey(player.move_down,'Down')
 screen.onkey(player.move_left,'Left')
 
 
-enemy1.set_move(0,0,  100,100)
-enemy2.set_move(-100,-100, 0, 0)
+enemy1.set_move(-100, 50, 100, 50)
+enemy2.set_move(100,-50, -100, -50)
+
 while True:
     enemy1.make_step()
     enemy2.make_step()
