@@ -38,5 +38,11 @@ screen.onkey(player.move_right,'Right')
 screen.onkey(player.move_down,'Down')
 screen.onkey(player.move_left,'Left')
 
-
-
+while True:
+    if player.check_collide(goal):
+        enemy1.hideturtle()
+        enemy2.hideturtle()
+        break
+    if player.check_collide(enemy1) or player.check_collide(enemy2):
+        goal.hideturtle()
+        break
