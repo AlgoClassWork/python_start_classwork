@@ -23,12 +23,25 @@ class Player(Sprite):
             return True
         else:
             return False
+
+class Enemy(Sprite):
+    def set_move(self, start_x, start_y, end_x, end_y):
+        self.start_x = start_x 
+        self.start_y = start_y 
+        self.end_x = end_x 
+        self.end_y = end_y 
+        self.setheading(self.towards(end_x, end_y))
+
+    def make_step(self):
+        self.forward(5)
+        if self.distance(self.end_x, self.end_y) < 5:
+            self.set_move(self.end_x, self.end_y, self.start_x, self.start_y )
             
 
 # СОЗДАНИЕ И НАСТРОЙКА ОБЬЕКТОВ
 player = Player(x=0, y=-100, figure='circle', col='yellow')
-enemy1 = Sprite(x=-100, y=50, figure='square', col='red')
-enemy2 = Sprite(x=100, y=-50, figure='square', col='red')
+enemy1 = Enemy(x=-100, y=50, figure='square', col='red')
+enemy2 = Enemy(x=100, y=-50, figure='square', col='red')
 goal = Sprite(x=0, y=100, figure='triangle', col='green')
 screen = player.getscreen()
 screen.listen()
@@ -38,7 +51,12 @@ screen.onkey(player.move_right,'Right')
 screen.onkey(player.move_down,'Down')
 screen.onkey(player.move_left,'Left')
 
+
+enemy1.set_move(0,0,  100,100)
+enemy2.set_move(-100,-100, 0, 0)
 while True:
+    enemy1.make_step()
+    enemy2.make_step()
     if player.check_collide(goal):
         enemy1.hideturtle()
         enemy2.hideturtle()
