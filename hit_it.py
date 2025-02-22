@@ -1,61 +1,42 @@
 from turtle import *
 
-class GameSprite(Turtle):
-    def __init__(self, x, y, col, shp):
-        Turtle.__init__(self)
+class Sprite(Turtle):
+    def __init__(self, x, y, figure, col):
+        super().__init__()
         self.penup()
         self.goto(x, y)
-        self.color('black', col )
-        self.shape(shp)
-        self.left(90)
+        self.shape(figure)
+        self.color('black', col)
 
+class Player(Sprite):
     def move_up(self):
-        self.forward(5)
-
-    def move_left(self):
-        self.left(10)
-
+        self.goto(self.xcor(), self.ycor() + 5)
     def move_right(self):
-        self.right(10)
-
-    def persecution(self, sprite):
-        self.setheading(self.towards(sprite.xcor(), sprite.ycor()))
-        self.forward(4)
-
-    def is_collide(self, sprite):
+        self.goto(self.xcor() + 5, self.ycor())
+    def move_down(self):
+        self.goto(self.xcor(), self.ycor() -5)
+    def move_left(self):
+        self.goto(self.xcor() - 5, self.ycor())
+    def check_collide(self, sprite):
         dist = self.distance(sprite.xcor(), sprite.ycor())
         if dist < 20:
             return True
-        return False
+        else:
+            return False
+            
 
-player = GameSprite(x=0, y=-150, col='yellow', shp='turtle')
-enemy1 = GameSprite(x=-150, y=-50, col='red', shp='circle')
-enemy2 = GameSprite(x=150, y=50, col='red', shp='circle')
-goal = GameSprite(x=0, y=150, col='green', shp='triangle')
-
+# СОЗДАНИЕ И НАСТРОЙКА ОБЬЕКТОВ
+player = Player(x=0, y=-100, figure='circle', col='yellow')
+enemy1 = Sprite(x=-100, y=50, figure='square', col='red')
+enemy2 = Sprite(x=100, y=-50, figure='square', col='red')
+goal = Sprite(x=0, y=100, figure='triangle', col='green')
 screen = player.getscreen()
 screen.listen()
+# ПОДПИСКИ НА СОБЫТИЯ КЛАВИАТУРЫ
+screen.onkey(player.move_up,'Up')
+screen.onkey(player.move_right,'Right')
+screen.onkey(player.move_down,'Down')
+screen.onkey(player.move_left,'Left')
 
-screen.onkey(player.move_up, 'w')
-screen.onkey(player.move_left, 'a')
-screen.onkey(player.move_right, 'd')
 
-while True:
-    enemy1.persecution(player)
-    enemy2.persecution(player)
-    if player.is_collide(goal):
-        goal.goto(-150,0)
-        goal.write('ПОБЕДА',font=('Arial',60,'bold'))
-        break
-    if player.is_collide(enemy1) or player.is_collide(enemy2):
-        enemy1.goto(-150,0)
-        enemy1.write('ПРОИГРЫШ',font=('Arial',45,'bold'))
-        break
 
-player.hideturtle()
-goal.hideturtle()
-enemy1.hideturtle()
-enemy2.hideturtle()
-    
-
-    
