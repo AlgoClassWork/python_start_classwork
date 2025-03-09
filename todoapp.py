@@ -2,6 +2,17 @@ from kivy.app import App
 from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
+from kivy.uix.checkbox import CheckBox
+from kivy.uix.label import Label
+
+class Task(BoxLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        checkbox = CheckBox(activate=False)
+        self.label = Label(text=self.task['описание'])
+        self.add_widget(checkbox)
+        self.add_widget(self.label)
 
 class ToDoApp(App):
     def build(self):
