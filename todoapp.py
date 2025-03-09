@@ -28,7 +28,7 @@ class ToDoApp(App):
         return self.input_layout
     
     def add_task(self):
-        task_text = self.text_input.text.strip()
+        task_text = self.text_input.text.strip() 
         if task_text:
             task = {'описание': task_text, 'статус': False}
             task_widgget = Task(task=task)
