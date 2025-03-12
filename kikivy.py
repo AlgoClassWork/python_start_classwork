@@ -46,19 +46,24 @@ class SecondScreen(Screen):
         main_layout = BoxLayout(orientation='vertical')
         h1 = BoxLayout(size_hint=(0.7, None), height='50px', pos_hint={'center_x':0.5})
         h2 = BoxLayout(size_hint=(0.7, None), height='100px', pos_hint={'center_x':0.5})
-        text = Label(text='Выбор')
+        self.label = Label(text='Выбор')
         text_input = Label(text='Введите пароль')
-        password_input = TextInput()
+        self.password_input = TextInput()
         button = Button(text='OK')
         button_back = MyButton(self, direction='right', goal='main', text='назад')
         h1.add_widget(text_input)
-        h1.add_widget(password_input)
+        h1.add_widget(self.password_input)
         h2.add_widget(button)
         h2.add_widget(button_back)
-        main_layout.add_widget(text)
+        main_layout.add_widget(self.label)
         main_layout.add_widget(h1)
         main_layout.add_widget(h2)
         self.add_widget(main_layout)
+
+        button.on_press = self.change_text
+
+    def change_text(self):
+        self.label.text = self.password_input.text + ' Не сработал'
 
 class MyApp(App):
     def build(self):
