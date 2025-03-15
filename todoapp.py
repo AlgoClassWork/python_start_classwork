@@ -89,6 +89,9 @@ class TodoApp(App):
             self.tasks.append(task)
             task_widget = TaskWidget(task=task, tasks_list=self.tasks)
             self.tasks_layout.add_widget(task_widget)
+            self.text_input.text = ''
+            task_widget.opacity = 0
+            Animation(opacity=1, duration=0.5).start(task_widget)
  
 app = TodoApp()
 app.run()
