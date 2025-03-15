@@ -37,9 +37,8 @@ class TodoApp(App):
         input_layout.add_widget(add_button)
 
     def add_task(self, instance):
-        """Добавление новой задачи"""
         task_text = self.text_input.text.strip()
-        if task_text:  # Проверка, что текст не пустой
+        if task_text:
             task = {'description': task_text, 'completed': False}
             self.tasks.append(task)
             task_widget = TaskWidget(task=task, tasks_list=self.tasks)
