@@ -32,7 +32,7 @@ class TaskWidget(BoxLayout):
         self.spacing = 10
 
         checkbox = CheckBox(active=self.task['completed'], color=get_color_from_hex('#FFFFFF'))
-        #checkbox.bind(active=self.on_checkbox_active)
+        checkbox.bind(active=self.on_checkbox_active)
         self.label = Label(text=self.task['description'], markup=True, font_size=18, color=get_color_from_hex('#FFFFFF'))
         delete_button = ImageButton(source='delete_icon.png', size_hint=(None, None), size=(30,30))
 
@@ -40,7 +40,17 @@ class TaskWidget(BoxLayout):
         self.add_widget(self.label)
         self.add_widget(delete_button)
 
-    def on_checkbox_activate(self):
+    def on_checkbox_active(self, instance, value):
+        self.task['completed'] = value
+        self.update_label()
+
+    def update_label(self):
+        if self.task['completed']:
+            self.label.text = f"[s]{self.task['description']}[/s]"
+        else:
+            self.label.text = f"{self.task['description']}"
+
+    def delete_task(self):
         pass
 
 class TodoApp(App):
