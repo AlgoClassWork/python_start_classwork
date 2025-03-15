@@ -35,6 +35,18 @@ class TaskWidget(BoxLayout):
         self.add_widget(self.label)
         self.add_widget(delete_button)
 
+        checkbox.bind(active=self.checkbox_activate)
+
+    def checkbox_activate(self, instance, value):
+        self.task['completed'] = value
+        self.update_label()
+
+    def update_label(self):
+        if self.task['completed']:
+            self.label.text = f'[s] {self.task['description']} [/s]'
+        else:
+            self.label.text = f' {self.task['description']} '
+
 
 class TodoApp(App):
     def build(self):
