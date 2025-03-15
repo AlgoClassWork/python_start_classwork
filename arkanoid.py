@@ -13,16 +13,25 @@ class GameSprite(sprite.Sprite):
     def show(self):
         window.blit( self.image, (self.rect.x, self.rect.y) )
 
+class Platform(GameSprite):
+    def move(self):
+        mouse_x, mouse_y = mouse.get_pos()
+        self.rect.centerx = mouse_x
+
 # Создание обьектов
-platform = GameSprite(img='platform.png',x=300,y=450)
+platform = Platform(img='platform.png',x=300,y=450)
 ball = GameSprite(img='ball.png', x=300, y=300)
 
 enemys = sprite.Group()
-x = 0
-for i in range(10):
-    enemy = GameSprite(img='enemy.png',x=x,y=0) 
-    x += 70
-    enemys.add(enemy)
+count = 10
+for i in range(3): 
+    y = 10 + (70 * i) 
+    x = 10 + (30 * i) 
+    for i in range(count):
+        enemy = GameSprite('enemy.png', x, y)
+        enemys.add(enemy)
+        x += 70
+    count -= 1
 
 # создание экрана
 window = display.set_mode( (700,500) )
@@ -41,6 +50,8 @@ while game:
     platform.show()
     ball.show()
     enemys.draw(window)
+    #движение платформы
+    platform.move()
     # обновление кадров
     display.update()
     # настройка частоты кадров
