@@ -7,9 +7,17 @@ from kivy.uix.label import Label
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
+from kivy.uix.behaviors import ButtonBehavior
+from kivy.uix.image import Image 
 
 from kivy.properties import ObjectProperty
 from kivy.utils import get_color_from_hex
+from kivy.core.window import Window
+
+Window.clearcolor = (0.5,0.5,1,1)
+
+class ImageButton(ButtonBehavior, Image):
+    pass
 
 class TaskWidget(BoxLayout):
     task = ObjectProperty(None)
@@ -24,9 +32,16 @@ class TaskWidget(BoxLayout):
         self.spacing = 10
 
         checkbox = CheckBox(active=self.task['completed'], color=get_color_from_hex('#FFFFFF'))
-        checkbox.bind(active=self.on_checkbox_active)
-
+        #checkbox.bind(active=self.on_checkbox_active)
         self.label = Label(text=self.task['description'], markup=True, font_size=18, color=get_color_from_hex('#FFFFFF'))
+        delete_button = ImageButton(source='delete_icon.png', size_hint=(None, None), size=(30,30))
+
+        self.add_widget(checkbox)
+        self.add_widget(self.label)
+        self.add_widget(delete_button)
+
+    def on_checkbox_activate(self):
+        pass
 
 class TodoApp(App):
     def build(self):
