@@ -5,6 +5,9 @@ from kivy.uix.button import Button
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.label import Label
 from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.scrollview import ScrollView
+
 from kivy.properties import ObjectProperty
 from kivy.utils import get_color_from_hex
 
@@ -38,7 +41,14 @@ class TodoApp(App):
         input_layout.add_widget(self.text_input)
         input_layout.add_widget(add_button)
 
+        self.tasks_layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
+        self.tasks_layout.bind(minimum_height=self.tasks_layout.setter('height'))
+        scroll_view = ScrollView(size_hint=(0.9, 0.8), pos_hint={'center_x':0.5, 'center_y':0.5})
+        scroll_view.add_widget(self.tasks_layout)
+
         root.add_widget(input_layout)
+        root.add_widget(scroll_view)
+
         return root
 
     def add_task(self, instance):
@@ -47,6 +57,7 @@ class TodoApp(App):
             task = {'description': task_text, 'completed': False}
             self.tasks.append(task)
             task_widget = TaskWidget(task=task, tasks_list=self.tasks)
+            self.tasks_layout.add_widget(task_widget)
             
 
 app = TodoApp()
