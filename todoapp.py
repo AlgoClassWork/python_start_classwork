@@ -4,8 +4,14 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.label import Label
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.scrollview import ScrollView
+from kivy.uix.floatlayout import FloatLayout
 
 from kivy.properties import ObjectProperty
+from kivy.core.window import Window
+
+Window.clearcolor = (0.3, 0.3, 0.9, 1)
 
 class TaskWidget(BoxLayout):
     task = ObjectProperty(None)
@@ -25,7 +31,7 @@ class TodoApp(App):
     def build(self):
         self.tasks = []  
 
-        root = BoxLayout()
+        root = FloatLayout()
 
         self.input_layout = BoxLayout(orientation='horizontal', size_hint=(0.9, None), height=50, pos_hint={'center_x': 0.5, 'top': 0.95})
         self.text_input = TextInput(multiline=False, font_size=18)
@@ -34,7 +40,13 @@ class TodoApp(App):
         self.input_layout.add_widget(self.text_input)
         self.input_layout.add_widget(add_button)
 
+        self.tasks_layout = GridLayout(cols=1, spacing=10, size_hint_y = None)
+        self.tasks_layout.bind(minimum_height=self.tasks_layout.setter('height'))
+        scroll_view = ScrollView(size_hint=(0.9, 0.8), pos_hint={'center_x':0.5, 'center_y':0.5})
+        scroll_view.add_widget(self.tasks_layout)
+
         root.add_widget(self.input_layout)
+        root.add_widget(scroll_view)
 
         return root
 
@@ -44,8 +56,7 @@ class TodoApp(App):
             task = {'description': task_text, 'completed': False}
             self.tasks.append(task)
             task_widget = TaskWidget(task=task, tasks_list=self.tasks)
-            self.input_layout.add_widget(task_widget)
-
-            
+            self.tasks_layout.add_widget(task_widget)
+ 
 app = TodoApp()
 app.run()
