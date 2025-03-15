@@ -19,8 +19,10 @@ class Platform(GameSprite):
         self.rect.centerx = mouse_x
 
 # Создание обьектов
-platform = Platform(img='platform.png',x=300,y=450)
+platform = Platform(img='platform.png', x=300, y=450)
 ball = GameSprite(img='ball.png', x=300, y=300)
+speed_x, speed_y = 3, 3
+
 
 enemys = sprite.Group()
 count = 10
@@ -52,6 +54,14 @@ while game:
     enemys.draw(window)
     #движение платформы
     platform.move()
+    #движение мяча
+    ball.rect.x += speed_x
+    ball.rect.y += speed_y
+    if ball.rect.x < 0 or ball.rect.x > 650:
+        speed_x *= -1
+    if ball.rect.y < 0 or ball.rect.y > 450:
+        speed_y *= -1
+        
     # обновление кадров
     display.update()
     # настройка частоты кадров
