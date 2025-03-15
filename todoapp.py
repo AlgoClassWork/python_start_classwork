@@ -4,7 +4,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.label import Label
+from kivy.uix.floatlayout import FloatLayout
 from kivy.properties import ObjectProperty
+from kivy.utils import get_color_from_hex
 
 class TaskWidget(BoxLayout):
     task = ObjectProperty(None)
@@ -36,6 +38,9 @@ class TodoApp(App):
         input_layout.add_widget(self.text_input)
         input_layout.add_widget(add_button)
 
+        root.add_widget(input_layout)
+        return root
+
     def add_task(self, instance):
         task_text = self.text_input.text.strip()
         if task_text:
@@ -44,5 +49,5 @@ class TodoApp(App):
             task_widget = TaskWidget(task=task, tasks_list=self.tasks)
             
 
-app = ToDoApp()
+app = TodoApp()
 app.run()
