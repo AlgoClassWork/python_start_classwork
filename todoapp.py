@@ -24,10 +24,12 @@ class TaskWidget(BoxLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.size_hint_y = None
+        self.height = 60
 
         checkbox = CheckBox(active=self.task['completed'])
         self.label = Label(text=self.task['description'], markup=True, font_size=18)
-        delete_button = ImageButton(source='delete_icon.png', size_hint=(None, None), size=(40, 40))
+        delete_button = ImageButton(source='delete_icon.png', size_hint=(None, None), size=(30, 30))
 
         self.add_widget(checkbox)
         self.add_widget(self.label)
@@ -49,7 +51,7 @@ class TodoApp(App):
 
         self.tasks_layout = GridLayout(cols=1, spacing=10, size_hint_y = None)
         self.tasks_layout.bind(minimum_height=self.tasks_layout.setter('height'))
-        scroll_view = ScrollView(size_hint=(0.9, 0.8), pos_hint={'center_x':0.5, 'center_y':0.5})
+        scroll_view = ScrollView(size_hint=(1, 1), pos_hint={'center_x':0.4, 'center_y':0.4})
         scroll_view.add_widget(self.tasks_layout)
 
         root.add_widget(self.input_layout)
