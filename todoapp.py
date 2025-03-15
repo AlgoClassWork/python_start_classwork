@@ -12,6 +12,7 @@ from kivy.uix.behaviors import ButtonBehavior
 
 from kivy.properties import ObjectProperty
 from kivy.core.window import Window
+from kivy.animation import Animation
 
 Window.clearcolor = (0.3, 0.3, 0.9, 1)
 
@@ -36,6 +37,16 @@ class TaskWidget(BoxLayout):
         self.add_widget(delete_button)
 
         checkbox.bind(active=self.checkbox_activate)
+        delete_button.bind(on_press=self.delete_task)
+
+    def delete_task(self, instance):
+        if self.task in self.tasks_list:
+            self.tasks_list.remove(self.task)
+
+        instance.disabled = True
+        anim = Animation(opacity=0, duration=0.5)
+        anim.bind(on_complete=lambda *args: self.parent.remove_widget(self) )
+        anim.start(self)
 
     def checkbox_activate(self, instance, value):
         self.task['completed'] = value
