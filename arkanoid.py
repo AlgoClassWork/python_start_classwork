@@ -59,9 +59,11 @@ while game:
     ball.rect.y += speed_y
     if ball.rect.x < 0 or ball.rect.x > 650:
         speed_x *= -1
-    if ball.rect.y < 0 or ball.rect.y > 450:
+    if ball.rect.y < 0:
         speed_y *= -1
-        
+    #проверка столкновений
+    if sprite.collide_rect(platform, ball) or sprite.spritecollide(ball, enemys, True):
+        speed_y *= -1
     # обновление кадров
     display.update()
     # настройка частоты кадров
