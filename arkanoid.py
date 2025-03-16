@@ -24,10 +24,10 @@ ball = GameSprite(img='ball.png', x=300, y=300)
 speed_x, speed_y = 3, 3
 
 def create_enemys():
-    count = 8
+    count = 7
     for i in range(3): 
         y = 10 + (70 * i) 
-        x = 10 + (30 * i) 
+        x = 20 + (50 * i) 
         for i in range(count):
             enemy = GameSprite('enemy.png', x, y)
             enemys.add(enemy)
