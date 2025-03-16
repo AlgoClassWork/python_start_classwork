@@ -46,9 +46,9 @@ my_font = font.Font(None, 150) #None
 lose = my_font.render('YOU LOSE', 1, (255,0,0))
 # игровой цикл
 clock = time.Clock()
+finish = False
 game = True
 while game:
-    
     # обработка крестика
     for some_event in event.get():
         if some_event.type == QUIT:
@@ -56,17 +56,16 @@ while game:
         elif some_event.type == KEYDOWN:
             if some_event.key == K_r:
                 ball.rect.y = 200
+                finish = False
                 create_enemys()
 
-    if ball.rect.y < 500:
+    if not finish:
         # заливка фона
         window.fill( (200,200,250) )
         # отображение персонажей
         platform.show()
         ball.show()
         enemys.draw(window)
-
-        window.blit(lose, (100,200))
         #движение платформы
         platform.move()
         #движение мяча
@@ -79,6 +78,10 @@ while game:
         #проверка столкновений
         if sprite.collide_rect(platform, ball) or sprite.spritecollide(ball, enemys, True):
             speed_y *= -1
+        # проигрыш
+        if ball.rect.y > 500:
+            window.blit(lose, (100,200))
+            finish = True
         # обновление кадров
         display.update()
         # настройка частоты кадров
