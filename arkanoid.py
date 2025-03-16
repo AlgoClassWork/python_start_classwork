@@ -42,8 +42,10 @@ display.set_caption('Арканойд')
 
 # оформление
 font.init()
-my_font = font.Font(None, 150) #None
+my_font = font.Font(None, 150) 
+my_font2 = font.Font(None, 50) 
 lose = my_font.render('YOU LOSE', 1, (255,0,0))
+reset_game = my_font2.render('PRESS R TO RESET GAME', 1, (255,0,0))
 # игровой цикл
 clock = time.Clock()
 finish = False
@@ -81,6 +83,7 @@ while game:
         # проигрыш
         if ball.rect.y > 500:
             window.blit(lose, (100,200))
+            window.blit(reset_game, (150,300))
             finish = True
         # обновление кадров
         display.update()
