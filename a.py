@@ -50,12 +50,26 @@ class FirstScreen(Screen):
 
         self.add_widget(main_layout)
 
+class ThirdScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        main_layout = BoxLayout(orientation='vertical')
+
+        text = Label(text='Твой экран')
+        back_button = MyButton(self, 'down', 'main', text='Назад', size_hint=(1, 0.1))
+        
+        main_layout.add_widget(text)
+        main_layout.add_widget(back_button)
+
+        self.add_widget(main_layout)
+
 
 class MyApp(App):
     def build(self):
         screen_manager = ScreenManager()
         screen_manager.add_widget( MainScreen(name='main') )
         screen_manager.add_widget( FirstScreen(name='first') )
+        screen_manager.add_widget( ThirdScreen(name='third') )
         return screen_manager
 
 app = MyApp()
