@@ -30,9 +30,21 @@ class MainScreen(Screen):
 
         self.add_widget(layout)
 
+class FirstScreen(Screen):
+    def __init__(self, **data):
+        super().__init__(**data)
+        button = Button(text='Выбор', size_hint=(1, 0.5),)
+        back_button = MyButton(self, goal='main', text='Назад',
+                        size_hint=(1, 0.5),pos_hint={'center_y':0.75}) 
+        layout = BoxLayout(size_hint=(0.5, 0.5),
+                           pos_hint={'center_x':0.5,'center_y':0.5})
+        layout.add_widget(button)
+        layout.add_widget(back_button)
+        self.add_widget(layout)
+
 class MyApp(App):
     def build(self):
-        return MainScreen()
+        return FirstScreen()
     
 app = MyApp()
 app.run()
