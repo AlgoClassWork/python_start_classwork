@@ -1,89 +1,42 @@
-from turtle import *
-speed(100)
-# отрисовка земли
-color('lightgreen')
-goto(-300,-250)
-begin_fill()
-forward(600)
-left(90)
-forward(150)
-left(90)
-forward(600)
-left(90)
-forward(150)
-end_fill()
-# отрисовка неба
-color('lightblue')
-goto(-300,250)
-begin_fill()
-forward(350)
-left(90)
-forward(600)
-left(90)
-forward(350)
-left(90)
-forward(600)
-end_fill()
-# отрисовка основания дома
-color('gray')
-penup()
-goto(-50,-100)
-pendown()
-begin_fill()
-forward(200)
-right(90)
-forward(100)
-right(90)
-forward(200)
-right(90)
-forward(100)
-end_fill()
-# отрисовка крыши дома
-color('red')
-penup()
-goto(-250, 0)
-pendown()
-begin_fill()
-left(90)
-forward(200)
-left(150)
-forward(130)
-left(65)
-forward(110)
-end_fill()
-# отрисовка солнышка
-color('yellow')
-penup()
-goto(300,300)
-pendown()
-begin_fill()
-for i in range(18):
-    forward(100)
-    left(100)
-end_fill()
-# ствол дерева
-color('brown')
-penup()
-goto(200,-100)
-pendown()
-setheading(0)
-begin_fill()
-forward(20)
-left(90)
-forward(150)
-left(90)
-forward(20)
-left(90)
-forward(150)
-end_fill()
-# листва для дерева
-color('green')
-penup()
-goto(210,50)
-pendown()
-for i in range(0,180,4):
-    forward(i)
-    left(90)
+from kivy.app import App
+from kivy.uix.label import Label
+from kivy.uix.button import Button
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.screenmanager import Screen, ScreenManager
+
+class MyButton(Button):
+    def __init__(self, screen, direction, goal, **kwargs):
+        super().__init__(**kwargs)
+        self.screen = screen
+        self.direction = direction
+        self.goal = goal
+
+    def on_press(self):
+        self.screen.manager.transition.direction = self.direction
+        self.screen.manager.current = self.goal
 
 
-exitonclick()
+class MainScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        main_layout = BoxLayout()
+        button_layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+
+        text = Label(text='Выбери экран')
+
+        button_layout.add_widget( MyButton(self, 'down', 'first', text='1') )
+        button_layout.add_widget( MyButton(self, 'left', 'second', text='2') )
+        button_layout.add_widget( MyButton(self, 'up', 'third', text='3') )
+        button_layout.add_widget( MyButton(self, 'right', 'fourth', text='4') )
+
+        main_layout.add_widget(text)
+        main_layout.add_widget(button_layout)
+
+        self.add_widget(main_layout)
+
+class MyApp(App):
+    def build(self):
+        return MainScreen()
+
+app = MyApp()
+app.run()
