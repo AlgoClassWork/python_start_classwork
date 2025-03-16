@@ -39,10 +39,16 @@ create_enemys()
 # создание экрана
 window = display.set_mode( (700,500) )
 display.set_caption('Арканойд')
+
+# оформление
+font.init()
+my_font = font.Font(None, 150) #None
+lose = my_font.render('YOU LOSE', 1, (255,0,0))
 # игровой цикл
 clock = time.Clock()
 game = True
 while game:
+    
     # обработка крестика
     for some_event in event.get():
         if some_event.type == QUIT:
@@ -59,6 +65,8 @@ while game:
         platform.show()
         ball.show()
         enemys.draw(window)
+
+        window.blit(lose, (100,200))
         #движение платформы
         platform.move()
         #движение мяча
@@ -75,3 +83,5 @@ while game:
         display.update()
         # настройка частоты кадров
         clock.tick(120)
+
+    
