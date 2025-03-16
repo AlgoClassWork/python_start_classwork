@@ -46,25 +46,27 @@ while game:
     for some_event in event.get():
         if some_event.type == QUIT:
             game = False
-    # заливка фона
-    window.fill( (200,200,250) )
-    # отображение персонажей
-    platform.show()
-    ball.show()
-    enemys.draw(window)
-    #движение платформы
-    platform.move()
-    #движение мяча
-    ball.rect.x += speed_x
-    ball.rect.y += speed_y
-    if ball.rect.x < 0 or ball.rect.x > 650:
-        speed_x *= -1
-    if ball.rect.y < 0:
-        speed_y *= -1
-    #проверка столкновений
-    if sprite.collide_rect(platform, ball) or sprite.spritecollide(ball, enemys, True):
-        speed_y *= -1
-    # обновление кадров
-    display.update()
-    # настройка частоты кадров
-    clock.tick(120)
+
+    if ball.rect.y < 500:
+        # заливка фона
+        window.fill( (200,200,250) )
+        # отображение персонажей
+        platform.show()
+        ball.show()
+        enemys.draw(window)
+        #движение платформы
+        platform.move()
+        #движение мяча
+        ball.rect.x += speed_x
+        ball.rect.y += speed_y
+        if ball.rect.x < 0 or ball.rect.x > 650:
+            speed_x *= -1
+        if ball.rect.y < 0:
+            speed_y *= -1
+        #проверка столкновений
+        if sprite.collide_rect(platform, ball) or sprite.spritecollide(ball, enemys, True):
+            speed_y *= -1
+        # обновление кадров
+        display.update()
+        # настройка частоты кадров
+        clock.tick(120)
