@@ -23,18 +23,19 @@ platform = Platform(img='platform.png', x=300, y=450)
 ball = GameSprite(img='ball.png', x=300, y=300)
 speed_x, speed_y = 3, 3
 
-
+def create_enemys():
+    count = 10
+    for i in range(3): 
+        y = 10 + (70 * i) 
+        x = 10 + (30 * i) 
+        for i in range(count):
+            enemy = GameSprite('enemy.png', x, y)
+            enemys.add(enemy)
+            x += 70
+        count -= 1
+        
 enemys = sprite.Group()
-count = 10
-for i in range(3): 
-    y = 10 + (70 * i) 
-    x = 10 + (30 * i) 
-    for i in range(count):
-        enemy = GameSprite('enemy.png', x, y)
-        enemys.add(enemy)
-        x += 70
-    count -= 1
-
+create_enemys()
 # создание экрана
 window = display.set_mode( (700,500) )
 display.set_caption('Арканойд')
@@ -46,6 +47,10 @@ while game:
     for some_event in event.get():
         if some_event.type == QUIT:
             game = False
+        elif some_event.type == KEYDOWN:
+            if some_event.key == K_r:
+                ball.rect.y = 200
+                create_enemys()
 
     if ball.rect.y < 500:
         # заливка фона
