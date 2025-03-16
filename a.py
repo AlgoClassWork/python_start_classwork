@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.textinput import TextInput
 from kivy.uix.screenmanager import Screen, ScreenManager
 
 class MyButton(Button):
@@ -50,6 +51,34 @@ class FirstScreen(Screen):
 
         self.add_widget(main_layout)
 
+class SecondScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        main_layout = BoxLayout(orientation='vertical')
+        h1 = BoxLayout(size_hint=(0.8, 0.1), pos_hint={'center_x':0.5})
+        h2 = BoxLayout(size_hint=(0.8, 0.1), pos_hint={'center_x':0.5})
+
+        self.text = Label(text='Выбор')
+        input_label = Label(text='Введите пароль')
+        self.input = TextInput()
+
+        button = Button(text='ОК')
+        button.on_press = self.change_text
+        back_button = MyButton(self, 'up', 'main', text='Назад')
+
+        h1.add_widget(input_label)
+        h1.add_widget(self.input)
+        h2.add_widget(button)
+        h2.add_widget(back_button)
+        main_layout.add_widget(self.text)
+        main_layout.add_widget(h1)
+        main_layout.add_widget(h2)
+
+        self.add_widget(main_layout)
+
+    def change_text(self):
+        self.text.text = self.input.text
+
 class ThirdScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -70,7 +99,7 @@ class MyApp(App):
         screen_manager.add_widget( MainScreen(name='main') )
         screen_manager.add_widget( FirstScreen(name='first') )
         screen_manager.add_widget( ThirdScreen(name='third') )
-        return screen_manager
+        return SecondScreen()
 
 app = MyApp()
 app.run()
