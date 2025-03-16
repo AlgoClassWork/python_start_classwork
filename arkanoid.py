@@ -24,14 +24,14 @@ ball = GameSprite(img='ball.png', x=300, y=300)
 speed_x, speed_y = 3, 3
 
 def create_enemys():
-    count = 10
+    count = 8
     for i in range(3): 
         y = 10 + (70 * i) 
         x = 10 + (30 * i) 
         for i in range(count):
             enemy = GameSprite('enemy.png', x, y)
             enemys.add(enemy)
-            x += 70
+            x += 100
         count -= 1
         
 enemys = sprite.Group()
@@ -46,6 +46,8 @@ my_font = font.Font(None, 150)
 my_font2 = font.Font(None, 50) 
 lose = my_font.render('YOU LOSE', 1, (255,0,0))
 reset_game = my_font2.render('PRESS R TO RESET GAME', 1, (255,0,0))
+# подсчет врагов
+total = 0
 # игровой цикл
 clock = time.Clock()
 finish = False
@@ -78,8 +80,12 @@ while game:
         if ball.rect.y < 0:
             speed_y *= -1
         #проверка столкновений
-        if sprite.collide_rect(platform, ball) or sprite.spritecollide(ball, enemys, True):
+        if sprite.collide_rect(platform, ball):
             speed_y *= -1
+        if sprite.spritecollide(ball, enemys, True):
+            speed_y *= -1
+            total += 1
+            print(total)
         # проигрыш
         if ball.rect.y > 500:
             window.blit(lose, (100,200))
