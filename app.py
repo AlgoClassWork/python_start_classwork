@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.screenmanager import Screen
 
 class MyButton(Button):
     def __init__(self, screen, goal, **data):
@@ -12,8 +13,9 @@ class MyButton(Button):
     def on_press(self):
         self.screen.manager.current = self.goal
 
-class MyApp(App):
-    def build(self):
+class MainScreen(Screen):
+    def __init__(self, **data):
+        super().__init__(**data)
         label = Label(text='Выбери экран')
         layout = BoxLayout()
         button_layout = BoxLayout(orientation='vertical', padding=20, spacing=20)
@@ -26,7 +28,11 @@ class MyApp(App):
         layout.add_widget(label)
         layout.add_widget(button_layout)
 
-        return layout
+        self.add_widget(layout)
+
+class MyApp(App):
+    def build(self):
+        return MainScreen()
     
 app = MyApp()
 app.run()
