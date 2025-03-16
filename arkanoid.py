@@ -45,7 +45,8 @@ font.init()
 my_font = font.Font(None, 150) 
 my_font2 = font.Font(None, 50) 
 lose = my_font.render('YOU LOSE', 1, (255,0,0))
-reset_game = my_font2.render('PRESS R TO RESET GAME', 1, (255,0,0))
+win = my_font.render('YOU WIN!', 1, (0,255,0))
+reset_game = my_font2.render('PRESS R TO RESET GAME', 1, (0,0,255))
 # подсчет врагов
 total = 0
 # игровой цикл
@@ -60,6 +61,7 @@ while game:
         elif some_event.type == KEYDOWN:
             if some_event.key == K_r:
                 ball.rect.y = 200
+                total = 0
                 finish = False
                 create_enemys()
 
@@ -85,10 +87,13 @@ while game:
         if sprite.spritecollide(ball, enemys, True):
             speed_y *= -1
             total += 1
-            print(total)
         # проигрыш
         if ball.rect.y > 500:
             window.blit(lose, (100,200))
+            window.blit(reset_game, (150,300))
+            finish = True
+        if total == 1:
+            window.blit(win, (100,200))
             window.blit(reset_game, (150,300))
             finish = True
         # обновление кадров
