@@ -48,7 +48,7 @@ class TaskWidget(BoxLayout):
 
     def update_label(self):
         if self.task['статус']:
-            self.label.text = f'[s] {self.task['описание']} [/s]'
+            self.label.text = f'Выполнено: {self.task['описание']} '
         else:
             self.label.text = f' {self.task['описание']} '
 
@@ -86,6 +86,9 @@ class ToDoApp(App):
             self.tasks.append(task)
             task_widget = TaskWidget(task = task, tasks = self.tasks)
             self.tasks_layout.add_widget(task_widget)
+            self.text_input.text = ''
+            task_widget.opacity = 0
+            Animation(opacity=1, duration=1).start(task_widget)
     
 app = ToDoApp()
 app.run()
