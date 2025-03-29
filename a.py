@@ -29,14 +29,14 @@ answer_line.addLayout(h2)
 answer_box.setLayout(answer_line)
 # Размещение элементов интерфейса
 main_line = QVBoxLayout()
-main_line.addWidget(question, alignment=(Qt.AlignHCenter | Qt.AlignTop) )
+main_line.addWidget(question, alignment=(Qt.AlignHCenter | Qt.AlignVCenter) )
 main_line.addWidget(answer_box)
 main_line.addWidget(button)
 window.setLayout(main_line)
 # Стилизация элементов интерфейса
 window.setStyleSheet('background:white')
-question.setStyleSheet('font-size:40px;')
-button.setStyleSheet('font-size:30px; padding:20px; background-color:lightgreen; border: 5px solid black')
-answer_box.setStyleSheet('font-size:30px; padding:30px; background-color:lightgray')
+question.setStyleSheet('font-size:40px;color:red')
+button.setStyleSheet('font-size:30px; padding:20px; background-color:lightgray')
+answer_box.setStyleSheet('font-size:30px; padding:30px;')
 # Запуск приложения
 app.exec()
