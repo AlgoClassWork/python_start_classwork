@@ -27,10 +27,20 @@ h2.addWidget(button4)
 answer_line.addLayout(h1)
 answer_line.addLayout(h2)
 answer_box.setLayout(answer_line)
+# Создание формы с результатом
+result_box = QGroupBox('Результат теста')
+result_label = QLabel('Правильно')
+correct_label = QLabel('яблоко')
+
+result_line = QVBoxLayout()
+result_line.addWidget(result_label)
+result_line.addWidget(correct_label)
+result_box.setLayout(result_line)
 # Размещение элементов интерфейса
 main_line = QVBoxLayout()
 main_line.addWidget(question, alignment=(Qt.AlignHCenter | Qt.AlignVCenter) )
 main_line.addWidget(answer_box)
+main_line.addWidget(result_box)
 main_line.addWidget(button)
 window.setLayout(main_line)
 # Стилизация элементов интерфейса
