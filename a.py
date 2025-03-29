@@ -1,3 +1,4 @@
+from random import shuffle
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QPushButton,
@@ -8,8 +9,8 @@ window = QWidget()
 window.setWindowTitle('Memory card')
 window.show()
 # Создание элементов интерфейса
-question = QLabel('Как переводится apple?')
-button = QPushButton('ответить')
+question_label = QLabel('Как переводится apple?')
+button = QPushButton('Ответить')
 # Создание формы с вариантами ответов
 answer_box = QGroupBox('Варианты ответов:')
 button1 = QRadioButton('груша')
@@ -28,25 +29,52 @@ answer_line.addLayout(h1)
 answer_line.addLayout(h2)
 answer_box.setLayout(answer_line)
 # Создание формы с результатом
-result_box = QGroupBox('Результат теста')
+result_box = QGroupBox('Результат теста:')
 result_label = QLabel('Правильно')
 correct_label = QLabel('яблоко')
 
 result_line = QVBoxLayout()
 result_line.addWidget(result_label)
-result_line.addWidget(correct_label)
+result_line.addWidget(correct_label, alignment=Qt.AlignHCenter)
 result_box.setLayout(result_line)
 # Размещение элементов интерфейса
 main_line = QVBoxLayout()
-main_line.addWidget(question, alignment=(Qt.AlignHCenter | Qt.AlignVCenter) )
+main_line.addWidget(question_label, alignment=(Qt.AlignHCenter | Qt.AlignVCenter) )
 main_line.addWidget(answer_box)
 main_line.addWidget(result_box)
 main_line.addWidget(button)
 window.setLayout(main_line)
 # Стилизация элементов интерфейса
 window.setStyleSheet('background:white')
-question.setStyleSheet('font-size:40px;color:red')
+question_label.setStyleSheet('font-size:40px;color:red')
 button.setStyleSheet('font-size:30px; padding:20px; background-color:lightgray')
 answer_box.setStyleSheet('font-size:30px; padding:30px;')
+result_box.setStyleSheet('font-size:30px; padding:30px;')
+# Функционал приложения
+buttons = [button1, button2, button3, button4]
+
+def ask(question, right, wrong1, wrong2, wrong3):
+    question_label.setText(question)
+    shuffle(buttons)
+    buttons[0].setText(right)
+    buttons[1].setText(wrong1)
+    buttons[2].setText(wrong2)
+    buttons[3].setText(wrong3)
+    correct_label.setText(right)
+
+    answer_box.show()
+    result_box.hide()
+
+def check_answer():
+    if buttons[0].isChecked():
+        result_label.setText('Правильно!')
+    else:
+        result_label.setText('Неверно!')
+
+    answer_box.hide()
+    result_box.show()
+
+button.clicked.connect(check_answer)
 # Запуск приложения
+ask('На каком языке говорят в Бразилии?','Португальский','Бразильский','Испанский','Итальянский')
 app.exec()
