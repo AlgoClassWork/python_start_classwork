@@ -36,7 +36,9 @@ display.set_caption('Арканойд')
 # работа со шрифтами
 font.init()
 my_font = font.Font(None, 150)
+my_font2 = font.Font(None, 50)
 lose_text = my_font.render('YOU LOSE',1,(255,0,0))
+restart_text = my_font2.render('PRESS R TO RESTART GAME',1,(255,255,255))
 
 clock = time.Clock()
 
@@ -46,7 +48,7 @@ while game:
         if some_event.type == QUIT:
             game = False
         elif some_event.type == KEYDOWN and some_event.key == K_r:
-            ball.rect.y = 250
+            ball.rect.x, ball.rect.y = 250, 350
             create_enemys()
     # Отображение фона и персонажей
     window.fill( (200,200,255) )
@@ -71,6 +73,7 @@ while game:
     # Условия победы и поражения
     if ball.rect.y > 500:
         window.blit(lose_text, (100,200))
+        window.blit(restart_text, (130,300))
         
     display.update()
     clock.tick(60)
