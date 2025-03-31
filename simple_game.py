@@ -38,33 +38,39 @@ font.init()
 my_font = font.Font(None, 150)
 my_font2 = font.Font(None, 50)
 lose_text = my_font.render('YOU LOSE',1,(255,0,0))
+win_text = my_font.render('YOU WIN',1,(0,255,0))
 restart_text = my_font2.render('PRESS R TO RESTART GAME',1,(255,255,255))
 
 clock = time.Clock()
 
+not_finish = True
 game = True
 while game:
     for some_event in event.get():
         if some_event.type == QUIT:
             game = False
         elif some_event.type == KEYDOWN and some_event.key == K_r:
+            not_finish = True
             ball.rect.x, ball.rect.y = 250, 350
+            enemys.empty()
             create_enemys()
     # Отображение фона и персонажей
     window.fill( (200,200,255) )
     platform.show()
     ball.show()
     enemys.draw(window)
-    # Движение платформы
-    mouse_x, mouse_y = mouse.get_pos() 
-    platform.rect.centerx = mouse_x
-    # Движение мяча
-    ball.rect.x += speed_x 
-    ball.rect.y += speed_y
-    if ball.rect.x > 650 or ball.rect.x < 0:
-        speed_x *= -1
-    if ball.rect.y < 0:
-        speed_y *= -1
+
+    if not_finish:
+        # Движение платформы
+        mouse_x, mouse_y = mouse.get_pos() 
+        platform.rect.centerx = mouse_x
+        # Движение мяча
+        ball.rect.x += speed_x 
+        ball.rect.y += speed_y
+        if ball.rect.x > 650 or ball.rect.x < 0:
+            speed_x *= -1
+        if ball.rect.y < 0:
+            speed_y *= -1
     # Проверка столкновений
     if sprite.collide_rect(ball, platform):
         speed_y *= -1
@@ -74,6 +80,11 @@ while game:
     if ball.rect.y > 500:
         window.blit(lose_text, (100,200))
         window.blit(restart_text, (130,300))
+        not_finish = False
+
+    if len(enemys) == 0:
+        window.blit(win_text, (90,200))
+        not_finish = False
         
     display.update()
     clock.tick(60)
