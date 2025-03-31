@@ -16,18 +16,27 @@ ball = GameSprite('ball.png', 350, 250)
 speed_x, speed_y = 5, 5
 
 enemys = sprite.Group()
-count = 9
-for i in range(3): 
-    x = 20 + (35 * i)
-    y = 20 + (60 * i)
-    for i in range(count):
-        enemy = GameSprite('enemy.png', x, y)
-        enemys.add(enemy)
-        x += 75
-    count -= 1
+
+def create_enemys():
+    count = 9
+    for i in range(3): 
+        x = 20 + (35 * i)
+        y = 20 + (60 * i)
+        for i in range(count):
+            enemy = GameSprite('enemy.png', x, y)
+            enemys.add(enemy)
+            x += 75
+        count -= 1
+
+create_enemys()
 
 window = display.set_mode( (700,500) )
 display.set_caption('Арканойд')
+
+# работа со шрифтами
+font.init()
+my_font = font.Font(None, 150)
+lose_text = my_font.render('YOU LOSE',1,(255,0,0))
 
 clock = time.Clock()
 
@@ -36,6 +45,9 @@ while game:
     for some_event in event.get():
         if some_event.type == QUIT:
             game = False
+        elif some_event.type == KEYDOWN and some_event.key == K_r:
+            ball.rect.y = 250
+            create_enemys()
     # Отображение фона и персонажей
     window.fill( (200,200,255) )
     platform.show()
@@ -56,6 +68,9 @@ while game:
         speed_y *= -1
     if sprite.spritecollide(ball, enemys, True):
         speed_y *= -1
+    # Условия победы и поражения
+    if ball.rect.y > 500:
+        window.blit(lose_text, (100,200))
         
     display.update()
     clock.tick(60)
