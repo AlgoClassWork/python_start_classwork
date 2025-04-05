@@ -9,7 +9,7 @@ class Question():
         self.question = question
         self.correct = correct
         self.wrong1 = w1
-        self.worng2 = w2
+        self.wrong2 = w2
         self.wrong3 = w3
 
 questions_list = [
@@ -24,7 +24,6 @@ questions_list = [
     Question('Кто является автором картины "Мона Лиза"?', 'Леонардо да Винчи', 'Пабло Пикассо', 'Винсент Ван Гог', 'Рембрандт'),
     Question('Что является символом Франции?', 'Эйфелева башня', 'Статуя Свободы', 'Колизей', 'Биг-Бен'),
 ]
-
 
 
 # Создание приложения
@@ -77,14 +76,14 @@ result_box.setStyleSheet('font-size:30px; padding:30px;')
 # Функционал приложения
 buttons = [button1, button2, button3, button4]
 
-def ask(question, right, wrong1, wrong2, wrong3):
-    question_label.setText(question)
+def ask(question: Question):
+    question_label.setText(question.question)
     shuffle(buttons)
-    buttons[0].setText(right)
-    buttons[1].setText(wrong1)
-    buttons[2].setText(wrong2)
-    buttons[3].setText(wrong3)
-    correct_label.setText(right)
+    buttons[0].setText(question.correct)
+    buttons[1].setText(question.wrong1)
+    buttons[2].setText(question.wrong2)
+    buttons[3].setText(question.wrong3)
+    correct_label.setText(question.correct)
 
     answer_box.show()
     result_box.hide()
@@ -100,5 +99,5 @@ def check_answer():
 
 button.clicked.connect(check_answer)
 # Запуск приложения
-ask('На каком языке говорят в Бразилии?','Португальский','Бразильский','Испанский','Итальянский')
+ask( questions_list[3] )
 app.exec()
