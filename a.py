@@ -1,4 +1,4 @@
-from random import shuffle
+from random import randint, shuffle
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QPushButton,
@@ -62,7 +62,7 @@ result_line.addWidget(correct_label, alignment=Qt.AlignHCenter)
 result_box.setLayout(result_line)
 # Размещение элементов интерфейса
 main_line = QVBoxLayout()
-main_line.addWidget(question_label, alignment=(Qt.AlignHCenter | Qt.AlignVCenter) )
+main_line.addWidget(question_label, alignment=(Qt.AlignHCenter | Qt.AlignBottom) )
 main_line.addWidget(answer_box)
 main_line.addWidget(result_box)
 main_line.addWidget(button)
@@ -85,6 +85,9 @@ def ask(question: Question):
     buttons[3].setText(question.wrong3)
     correct_label.setText(question.correct)
 
+def next_question():
+    ask( questions_list[ randint(0, len(questions_list) - 1 ) ] )
+    button.setText('Ответить')
     answer_box.show()
     result_box.hide()
 
@@ -94,10 +97,17 @@ def check_answer():
     else:
         result_label.setText('Неверно!')
 
+    button.setText('Следующий вопрос')
     answer_box.hide()
     result_box.show()
 
-button.clicked.connect(check_answer)
+def change_form():
+    if button.text() == 'Ответить':
+        check_answer()
+    else:
+        next_question()
+
+button.clicked.connect(change_form)
 # Запуск приложения
-ask( questions_list[3] )
+next_question()
 app.exec()
