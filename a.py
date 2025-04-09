@@ -1,11 +1,9 @@
-#7137462050:AAHh2d2TVPe3xS88xQ1vkZ23jax9usVgqIQ
-#❌ ⭕ ⬜
-
 from telegram import Update
 from telegram.ext import (ApplicationBuilder, CommandHandler,
                           MessageHandler, ContextTypes, filters)
 
-board = [ '⬜' for _ in range(9) ] 
+board = [ '⬜','⬜','⬜','⬜','⬜','⬜','⬜','⬜','⬜' ] 
+
 
 def format_bord():
     return f'{board[0]}   {board[1]}   {board[2]}\n' \
@@ -29,7 +27,7 @@ async def move(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     current_player = '⭕' if current_player == '❌' else '❌'
 
-app = ApplicationBuilder().token('7137462050:AAHh2d2TVPe3xS88xQ1vkZ23jax9usVgqIQ').build()
+app = ApplicationBuilder().token('ВАШ ТОКЕН').build()
 app.add_handler(CommandHandler('start', start))
 app.add_handler(MessageHandler(filters.TEXT, move))
 app.run_polling()
