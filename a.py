@@ -1,39 +1,35 @@
-#pip install python-telegram-bot
-from telegram import Update 
-from telegram.ext import (
-    Application, CommandHandler,
-    MessageHandler, filters, ContextTypes
-)
+#7137462050:AAHh2d2TVPe3xS88xQ1vkZ23jax9usVgqIQ
+#❌ ⭕ ⬜
 
-async def start(user: Update, context: ContextTypes.DEFAULT_TYPE):
-    await user.message.reply_text('Я БОТ ГЕНАДИЙ ЧЕМ МОГУ ВАМ ПОМОЧЬ? /help')
+from telegram import Update
+from telegram.ext import (ApplicationBuilder, CommandHandler,
+                          MessageHandler, ContextTypes, filters)
 
-async def help(user: Update, context: ContextTypes.DEFAULT_TYPE):
-    await user.message.reply_text('Могу порекомендовать тебе фильмы и что нибудь еще')
+board = [ '⬜' for _ in range(9) ] 
 
-async def bot_message(user: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = user.message.text.lower()
-    context.user_data['жанр'] = False
-    if 'привет' in text:
-        await user.message.reply_text('Привет бро!')
-    elif 'как' in text:
-        await user.message.reply_text('Отлично как сам?')
-    elif 'фильм' in text:
-        await user.message.reply_text('Какой жанр вас интересует?')
-        context.user_data['жанр'] = True
-    elif context.user_data['жанр']:
-        if 'боевик' in text:
-            await user.message.reply_text('https://www.kinopoisk.ru/film/41519/')
-        elif 'комедия' in text:
-             await user.message.reply_text('https://www.kinopoisk.ru/film/361/')
-        context.user_data['жанр'] = False
-    else:
-        await user.message.reply_text('Ищвини я тебя не понимаю')
+def format_bord():
+    return f'{board[0]}   {board[1]}   {board[2]}\n' \
+           f'\n' \
+           f'{board[3]}   {board[4]}   {board[5]}\n' \
+           f'\n' \
+           f'{board[6]}   {board[7]}   {board[8]}\n' 
 
-app = Application.builder().token('Ваш токен').build()
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    global current_player
+    current_player = '❌'
+    await update.message.reply_text('Игра началась! Ходит ❌. Пиши номер клетки (0-8):')
+    await update.message.reply_text( format_bord() )
 
+async def move(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    global current_player
+    pos = int(update.message.text) 
+    if 0 <= pos <= 8 and board[pos] == '⬜':
+        board[pos] = current_player
+        await update.message.reply_text( format_bord() )
+
+    current_player = '⭕' if current_player == '❌' else '❌'
+
+app = ApplicationBuilder().token('7137462050:AAHh2d2TVPe3xS88xQ1vkZ23jax9usVgqIQ').build()
 app.add_handler(CommandHandler('start', start))
-app.add_handler(CommandHandler('help', help))
-app.add_handler(MessageHandler(filters.TEXT, bot_message))
-
+app.add_handler(MessageHandler(filters.TEXT, move))
 app.run_polling()
