@@ -1,113 +1,39 @@
-from random import randint, shuffle
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
-    QApplication, QWidget, QLabel, QPushButton,
-    QVBoxLayout, QGroupBox, QRadioButton, QHBoxLayout)
+#pip install python-telegram-bot
+from telegram import Update 
+from telegram.ext import (
+    Application, CommandHandler,
+    MessageHandler, filters, ContextTypes
+)
 
-class Question():
-    def __init__(self, question, correct, w1, w2, w3):
-        self.question = question
-        self.correct = correct
-        self.wrong1 = w1
-        self.wrong2 = w2
-        self.wrong3 = w3
+async def start(user: Update, context: ContextTypes.DEFAULT_TYPE):
+    await user.message.reply_text('Я БОТ ГЕНАДИЙ ЧЕМ МОГУ ВАМ ПОМОЧЬ? /help')
 
-questions_list = [
-    Question('На каком языке говорят в Бразилии?', 'Португальский', 'Бразильский', 'Испанский', 'Итальянский'),
-    Question('Какая самая большая страна в мире по площади?', 'Россия', 'Канада', 'США', 'Китай'),
-    Question('Кто написал роман "Преступление и наказание"?', 'Фёдор Достоевский', 'Лев Толстой', 'Антон Чехов', 'Александр Пушкин'),
-    Question('Какая планета самая большая в Солнечной системе?', 'Юпитер', 'Сатурн', 'Земля', 'Марс'),
-    Question('Какой элемент периодической таблицы имеет символ O?', 'Кислород', 'Азот', 'Углерод', 'Гелий'),
-    Question('Как называется столица Японии?', 'Токио', 'Пекин', 'Сеул', 'Ханой'),
-    Question('Сколько цветов в радуге?', '7', '6', '8', '9'),
-    Question('Какой океан самый большой?', 'Тихий океан', 'Атлантический океан', 'Индийский океан', 'Северный Ледовитый океан'),
-    Question('Кто является автором картины "Мона Лиза"?', 'Леонардо да Винчи', 'Пабло Пикассо', 'Винсент Ван Гог', 'Рембрандт'),
-    Question('Что является символом Франции?', 'Эйфелева башня', 'Статуя Свободы', 'Колизей', 'Биг-Бен'),
-]
+async def help(user: Update, context: ContextTypes.DEFAULT_TYPE):
+    await user.message.reply_text('Могу порекомендовать тебе фильмы и что нибудь еще')
 
-
-# Создание приложения
-app = QApplication([])
-window = QWidget()
-window.setWindowTitle('Memory card')
-window.show()
-# Создание элементов интерфейса
-question_label = QLabel('Как переводится apple?')
-button = QPushButton('Ответить')
-# Создание формы с вариантами ответов
-answer_box = QGroupBox('Варианты ответов:')
-button1 = QRadioButton('груша')
-button2 = QRadioButton('яблоко')
-button3 = QRadioButton('апельсин')
-button4 = QRadioButton('банан')
-
-answer_line = QVBoxLayout()
-h1 = QHBoxLayout()
-h2 = QHBoxLayout()
-h1.addWidget(button1)
-h1.addWidget(button2)
-h2.addWidget(button3)
-h2.addWidget(button4)
-answer_line.addLayout(h1)
-answer_line.addLayout(h2)
-answer_box.setLayout(answer_line)
-# Создание формы с результатом
-result_box = QGroupBox('Результат теста:')
-result_label = QLabel('Правильно')
-correct_label = QLabel('яблоко')
-
-result_line = QVBoxLayout()
-result_line.addWidget(result_label)
-result_line.addWidget(correct_label, alignment=Qt.AlignHCenter)
-result_box.setLayout(result_line)
-# Размещение элементов интерфейса
-main_line = QVBoxLayout()
-main_line.addWidget(question_label, alignment=(Qt.AlignHCenter | Qt.AlignBottom) )
-main_line.addWidget(answer_box)
-main_line.addWidget(result_box)
-main_line.addWidget(button)
-window.setLayout(main_line)
-# Стилизация элементов интерфейса
-window.setStyleSheet('background:white')
-question_label.setStyleSheet('font-size:40px;color:red')
-button.setStyleSheet('font-size:30px; padding:20px; background-color:lightgray')
-answer_box.setStyleSheet('font-size:30px; padding:30px;')
-result_box.setStyleSheet('font-size:30px; padding:30px;')
-# Функционал приложения
-buttons = [button1, button2, button3, button4]
-
-def ask(question: Question):
-    question_label.setText(question.question)
-    shuffle(buttons)
-    buttons[0].setText(question.correct)
-    buttons[1].setText(question.wrong1)
-    buttons[2].setText(question.wrong2)
-    buttons[3].setText(question.wrong3)
-    correct_label.setText(question.correct)
-
-def next_question():
-    ask( questions_list[ randint(0, len(questions_list) - 1 ) ] )
-    button.setText('Ответить')
-    answer_box.show()
-    result_box.hide()
-
-def check_answer():
-    if buttons[0].isChecked():
-        result_label.setText('Правильно!')
+async def bot_message(user: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = user.message.text.lower()
+    context.user_data['жанр'] = False
+    if 'привет' in text:
+        await user.message.reply_text('Привет бро!')
+    elif 'как' in text:
+        await user.message.reply_text('Отлично как сам?')
+    elif 'фильм' in text:
+        await user.message.reply_text('Какой жанр вас интересует?')
+        context.user_data['жанр'] = True
+    elif context.user_data['жанр']:
+        if 'боевик' in text:
+            await user.message.reply_text('https://www.kinopoisk.ru/film/41519/')
+        elif 'комедия' in text:
+             await user.message.reply_text('https://www.kinopoisk.ru/film/361/')
+        context.user_data['жанр'] = False
     else:
-        result_label.setText('Неверно!')
+        await user.message.reply_text('Ищвини я тебя не понимаю')
 
-    button.setText('Следующий вопрос')
-    answer_box.hide()
-    result_box.show()
+app = Application.builder().token('Ваш токен').build()
 
-def change_form():
-    if button.text() == 'Ответить':
-        check_answer()
-    else:
-        next_question()
+app.add_handler(CommandHandler('start', start))
+app.add_handler(CommandHandler('help', help))
+app.add_handler(MessageHandler(filters.TEXT, bot_message))
 
-button.clicked.connect(change_form)
-# Запуск приложения
-next_question()
-app.exec()
+app.run_polling()
