@@ -1,8 +1,9 @@
-#место для твоего кода
 import pandas 
+import matplotlib.pyplot
 
 data = pandas.read_csv('countries of the world.csv')
 
+# Подготовка данных
 def repair(value):
     value = str(value)
     if ',' in value:
@@ -40,4 +41,13 @@ data['Agriculture'].fillna( data['Agriculture'].median(), inplace=True )
 data['Industry'].fillna( data['Industry'].median(), inplace=True )
 data['Service'].fillna( data['Service'].median(), inplace=True )
 
-print(data.info())
+# Анализ данных 
+
+# Связь между ВВП и Уровнем Грамотности населения
+#data.plot(x='GDP',y='Literacy', kind='scatter')
+# Связь между ВВП и Уровнем Миграции населения
+#data.plot(x='GDP',y='Migration', kind='scatter')
+# Cвязь между ВВП и Детской смертностью
+#data.plot(x='GDP',y='Mortality', kind='scatter')
+
+matplotlib.pyplot.show()
