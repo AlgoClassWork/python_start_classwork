@@ -1,33 +1,43 @@
-from telegram import Update
-from telegram.ext import (ApplicationBuilder, CommandHandler,
-                          MessageHandler, ContextTypes, filters)
+#место для твоего кода
+import pandas 
 
-board = [ '⬜','⬜','⬜','⬜','⬜','⬜','⬜','⬜','⬜' ] 
+data = pandas.read_csv('countries of the world.csv')
 
+def repair(value):
+    value = str(value)
+    if ',' in value:
+        return  float(value.replace(',','.'))
+    return float(value)
 
-def format_bord():
-    return f'{board[0]}   {board[1]}   {board[2]}\n' \
-           f'\n' \
-           f'{board[3]}   {board[4]}   {board[5]}\n' \
-           f'\n' \
-           f'{board[6]}   {board[7]}   {board[8]}\n' 
+data['Literacy'] = data['Literacy'].apply(repair)
+data['Density'] = data['Density'].apply(repair)
+data['Coastline'] = data['Coastline'].apply(repair)
+data['Migration'] = data['Migration'].apply(repair)
+data['Mortality'] = data['Mortality'].apply(repair)
+data['Phones'] = data['Phones'].apply(repair)
+data['Arable'] = data['Arable'].apply(repair)
+data['Crops'] = data['Crops'].apply(repair)
+data['Other'] = data['Other'].apply(repair)
+data['Climate'] = data['Climate'].apply(repair)
+data['Birthrate'] = data['Birthrate'].apply(repair)
+data['Deathrate'] = data['Deathrate'].apply(repair)
+data['Agriculture'] = data['Agriculture'].apply(repair)
+data['Industry'] = data['Industry'].apply(repair)
+data['Service'] = data['Service'].apply(repair)
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    global current_player
-    current_player = '❌'
-    await update.message.reply_text('Игра началась! Ходит ❌. Пиши номер клетки (0-8):')
-    await update.message.reply_text( format_bord() )
+data['Literacy'].fillna( data['Literacy'].median(), inplace=True )
+data['Migration'].fillna( data['Migration'].median(), inplace=True )
+data['Mortality'].fillna( data['Mortality'].median(), inplace=True )
+data['GDP'].fillna( data['GDP'].median(), inplace=True )
+data['Phones'].fillna( data['Phones'].median(), inplace=True )
+data['Arable'].fillna( data['Arable'].median(), inplace=True )
+data['Crops'].fillna( data['Crops'].median(), inplace=True )
+data['Other'].fillna( data['Other'].median(), inplace=True )
+data['Climate'].fillna( data['Climate'].median(), inplace=True )
+data['Birthrate'].fillna( data['Birthrate'].median(), inplace=True )
+data['Deathrate'].fillna( data['Deathrate'].median(), inplace=True )
+data['Agriculture'].fillna( data['Agriculture'].median(), inplace=True )
+data['Industry'].fillna( data['Industry'].median(), inplace=True )
+data['Service'].fillna( data['Service'].median(), inplace=True )
 
-async def move(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    global current_player
-    pos = int(update.message.text) 
-    if 0 <= pos <= 8 and board[pos] == '⬜':
-        board[pos] = current_player
-        await update.message.reply_text( format_bord() )
-
-    current_player = '⭕' if current_player == '❌' else '❌'
-
-app = ApplicationBuilder().token('ВАШ ТОКЕН').build()
-app.add_handler(CommandHandler('start', start))
-app.add_handler(MessageHandler(filters.TEXT, move))
-app.run_polling()
+print(data.info())
