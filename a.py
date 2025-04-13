@@ -1,59 +1,16 @@
 import pandas 
-import matplotlib.pyplot
 
-data = pandas.read_csv('countries of the world.csv')
+data = pandas.read_csv('countries.csv')
 
-# Подготовка данных
 def repair(value):
     value = str(value)
-    if ',' in value:
-        return  float(value.replace(',','.'))
-    return float(value)
+    return float(value.replace(',','.'))
 
-data['Literacy'] = data['Literacy'].apply(repair)
-data['Density'] = data['Density'].apply(repair)
-data['Coastline'] = data['Coastline'].apply(repair)
-data['Migration'] = data['Migration'].apply(repair)
-data['Mortality'] = data['Mortality'].apply(repair)
-data['Phones'] = data['Phones'].apply(repair)
-data['Arable'] = data['Arable'].apply(repair)
-data['Crops'] = data['Crops'].apply(repair)
-data['Other'] = data['Other'].apply(repair)
-data['Climate'] = data['Climate'].apply(repair)
-data['Birthrate'] = data['Birthrate'].apply(repair)
-data['Deathrate'] = data['Deathrate'].apply(repair)
-data['Agriculture'] = data['Agriculture'].apply(repair)
-data['Industry'] = data['Industry'].apply(repair)
-data['Service'] = data['Service'].apply(repair)
+columns = ['Pop','Coastline','Migration','Mortality','Literacy',
+           'Phones','Arable','Crops','Other','Climate','Birthrate',
+           'Deathrate','Agriculture','Industry','Service']
 
-data['Literacy'].fillna( data['Literacy'].median(), inplace=True )
-data['Migration'].fillna( data['Migration'].median(), inplace=True )
-data['Mortality'].fillna( data['Mortality'].median(), inplace=True )
-data['GDP'].fillna( data['GDP'].median(), inplace=True )
-data['Phones'].fillna( data['Phones'].median(), inplace=True )
-data['Arable'].fillna( data['Arable'].median(), inplace=True )
-data['Crops'].fillna( data['Crops'].median(), inplace=True )
-data['Other'].fillna( data['Other'].median(), inplace=True )
-data['Climate'].fillna( data['Climate'].median(), inplace=True )
-data['Birthrate'].fillna( data['Birthrate'].median(), inplace=True )
-data['Deathrate'].fillna( data['Deathrate'].median(), inplace=True )
-data['Agriculture'].fillna( data['Agriculture'].median(), inplace=True )
-data['Industry'].fillna( data['Industry'].median(), inplace=True )
-data['Service'].fillna( data['Service'].median(), inplace=True )
+for column in columns:
+    data[column] = data[column].apply(repair)
 
-# Анализ данных 
-
-# Связь между ВВП и Уровнем Грамотности населения
-#data.plot(x='GDP',y='Literacy', kind='scatter')
-# Связь между ВВП и Уровнем Миграции населения
-#data.plot(x='GDP',y='Migration', kind='scatter')
-# Cвязь между ВВП и Детской смертностью
-#data.plot(x='GDP',y='Mortality', kind='scatter')
-# Связь между Уровнем грамотности и Рождаемостью
-#data.plot(x='Literacy',y='Birthrate', kind='scatter')
-data.plot(x='Climate',y='Birthrate', kind='scatter')
-
-#data['Region'].value_counts().plot(kind='pie')
-#data.groupby('Region')['GDP'].agg(['min', 'mean', 'max']).plot(kind='barh')
-
-matplotlib.pyplot.show()
+print(data.info())
