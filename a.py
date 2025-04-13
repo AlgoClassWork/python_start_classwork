@@ -8,9 +8,12 @@ def repair(value):
 
 columns = ['Pop','Coastline','Migration','Mortality','Literacy',
            'Phones','Arable','Crops','Other','Climate','Birthrate',
-           'Deathrate','Agriculture','Industry','Service']
+           'Deathrate','Agriculture','Industry','Service','GDP']
 
 for column in columns:
     data[column] = data[column].apply(repair)
+
+for column in columns:
+    data[column].fillna(data[column].mean(), inplace=True)
 
 print(data.info())
