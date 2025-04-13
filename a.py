@@ -49,5 +49,11 @@ data['Service'].fillna( data['Service'].median(), inplace=True )
 #data.plot(x='GDP',y='Migration', kind='scatter')
 # Cвязь между ВВП и Детской смертностью
 #data.plot(x='GDP',y='Mortality', kind='scatter')
+# Связь между Уровнем грамотности и Рождаемостью
+#data.plot(x='Literacy',y='Birthrate', kind='scatter')
+data.plot(x='Climate',y='Birthrate', kind='scatter')
+
+#data['Region'].value_counts().plot(kind='pie')
+#data.groupby('Region')['GDP'].agg(['min', 'mean', 'max']).plot(kind='barh')
 
 matplotlib.pyplot.show()
