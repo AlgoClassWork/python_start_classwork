@@ -2,7 +2,6 @@ from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout,
     QTextEdit, QListWidget, QPushButton, QLineEdit
 )
-from PyQt5.QtCore import Qt
 
 # Интерфейс приложения
 app = QApplication([])
@@ -24,6 +23,7 @@ save_film = QPushButton('Сохранить фильм')
 # Список жанров
 list_genres = QListWidget()
 search_field = QLineEdit()
+search_field.setPlaceholderText("Введите жанр фильма...")
 create_genre = QPushButton('Добавить жанр')
 delete_genre = QPushButton('Удалить жанр')
 search_button = QPushButton('Поиск по жанру')
@@ -66,7 +66,7 @@ window.setStyleSheet("""
         border-radius: 12px;
         padding: 15px;
         background-color: #ffffff;
-        font-size: 16px;
+        font-size: 26px;
         color: #333;
         min-width: 400px;
         max-width: 600px;
@@ -77,14 +77,13 @@ window.setStyleSheet("""
     }
 
     QListWidget {
+        border: 2px solid #00796b;
         background-color: #ffffff;
         border-radius: 10px;
         padding: 15px;
         color: #333;
-        font-size: 14px;
+        font-size: 24px;
         margin-bottom: 20px;
-        min-width: 200px;
-        max-width: 300px;
     }
 
     QListWidget::item {
@@ -103,11 +102,9 @@ window.setStyleSheet("""
         border-radius: 12px;
         background-color: #ffffff;
         padding: 10px;
-        font-size: 14px;
+        font-size: 24px;
         color: #333;
         margin-bottom: 15px;
-        min-width: 200px;
-        max-width: 300px;
     }
 
     QLineEdit::placeholder {
@@ -124,17 +121,14 @@ window.setStyleSheet("""
         margin: 8px;
         min-width: 150px;
         text-align: center;
-        transition: background-color 0.3s, transform 0.3s;
     }
 
     QPushButton:hover {
         background-color: #004d40;
-        transform: scale(1.05);
     }
 
     QPushButton:pressed {
         background-color: #00332d;
-        transform: scale(0.98);
     }
 
     QPushButton:focus {
@@ -155,24 +149,7 @@ window.setStyleSheet("""
         margin-right: 15px;
     }
 
-    /* Анимация для появления элементов */
-    QWidget {
-        animation: fadeIn 0.7s ease-out;
-    }
-
-    @keyframes fadeIn {
-        0% { opacity: 0; }
-        100% { opacity: 1; }
-    }
 """)
-
-# Подсказки
-create_film.setToolTip("Нажмите, чтобы добавить новый фильм.")
-delete_film.setToolTip("Нажмите, чтобы удалить выбранный фильм.")
-save_film.setToolTip("Нажмите, чтобы сохранить изменения фильма.")
-create_genre.setToolTip("Нажмите, чтобы добавить новый жанр.")
-delete_genre.setToolTip("Нажмите, чтобы удалить выбранный жанр.")
-search_button.setToolTip("Нажмите для поиска по жанру.")
 
 # Запуск приложения
 window.show()
