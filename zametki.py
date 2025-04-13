@@ -1,3 +1,4 @@
+import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout,
     QTextEdit, QListWidget, QPushButton, QLineEdit
@@ -80,16 +81,13 @@ window.setStyleSheet("""
         border: 2px solid #00796b;
         background-color: #ffffff;
         border-radius: 10px;
-        padding: 15px;
+        padding: 5px;
         color: #333;
-        font-size: 24px;
-        margin-bottom: 20px;
+        font-size: 20px;
     }
 
     QListWidget::item {
-        padding: 10px;
         border-radius: 5px;
-        margin: 5px 0;
     }
 
     QListWidget::item:hover {
@@ -151,6 +149,24 @@ window.setStyleSheet("""
 
 """)
 
+# Функционал приложения
+def show_info():
+    film = list_films.selectedItems()[0].text()
+    text_field.setText(films[film]['описание'])
+    list_genres.clear()
+    list_genres.addItems(films[film]['жанры'])
+
+# Подключение обработки событий
+list_films.itemClicked.connect(show_info)
+
 # Запуск приложения
+file = open('films.json', encoding='utf-8')
+films = json.load(file)
+
+list_films.addItems(films)
+
 window.show()
 app.exec()
+
+
+
