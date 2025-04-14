@@ -134,22 +134,25 @@ button:hover {
 
 
 
+
+
+
 class Card {
-    constructor(number, fullName ) {
+    constructor(number, fullName) {
         this.number = number;
         this.fullName = fullName;
         this.balance = 1000;
     }
 
     toHTML(index) {
-        `
-        <div class="card">
-        <strong> Карта ${ index + 1}<strong><br>
-        Номер: ${ this.number } <br>
-        Владелец ${ this.fullName } <br>
-        Баланс ${ this.balance } руб.
-        </div>
-        `
+        return `
+            <div class="card">
+                <strong>Карта ${index + 1}</strong><br>
+                Номер: ${this.number}<br>
+                Владелец: ${this.fullName}<br>
+                Баланс: ${this.balance} руб.
+            </div>
+        `;
     }
 }
 
@@ -159,28 +162,29 @@ class CardManager {
     }
 
     init() {
-        let addCardButton = document.getElementById('addCardButton')
-
-        addCardButton.addEventListener('click', this.addCard())
+        let addCardButton = document.getElementById('addCardButton');
+        addCardButton.addEventListener('click', () => this.addCard());
     }
 
     addCard() {
-        let number = document.getElementById('cardNumber').value
-        let fullName = document.getElementById('fullName').value
+        let number = document.getElementById('cardNumber').value;
+        let fullName = document.getElementById('fullName').value;
 
-        let card = new Card(number, fullName)
-        this.cards.push(card)
+        let card = new Card(number, fullName);
+        this.cards.push(card);
 
-        this.updateCardList()
+        this.updateCardList();
     }
 
     updateCardList() {
-        let cardList = document.getElementById('cardList')
+        let cardList = document.getElementById('cardList');
+        cardList.innerHTML = ''; // очищаем список перед добавлением
+
         this.cards.forEach((card, index) => {
-            cardList.innerHTML += card.toHTML(index)
-        })
+            cardList.innerHTML += card.toHTML(index);
+        });
     }
 }
 
-let cardManager = new CardManager()
-cardManager.init()
+let cardManager = new CardManager();
+cardManager.init();
