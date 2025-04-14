@@ -39,6 +39,10 @@ async def move(update: Update, context: ContextTypes.DEFAULT_TYPE):
         board[pos] = current_player
         await update.message.reply_text( format_bord() )
 
+        winner = check_winner()
+        if winner:
+            await update.message.reply_text(f'{winner} победил! Напиши /start для новой игры')
+
     current_player = '⭕' if current_player == '❌' else '❌'
 
 app = ApplicationBuilder().token('7137462050:AAHh2d2TVPe3xS88xQ1vkZ23jax9usVgqIQ').build()
