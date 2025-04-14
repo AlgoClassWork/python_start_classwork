@@ -4,6 +4,20 @@ from telegram.ext import (ApplicationBuilder, CommandHandler,
 
 board = [ '⬜','⬜','⬜','⬜','⬜','⬜','⬜','⬜','⬜' ] 
 
+def check_winner():
+    win_combo = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], #Горизонтали
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], #Вертикали
+        [0, 4, 8], [2, 4, 6], #Диагонали
+    ]
+    for combo in win_combo:
+        a, b, c = combo 
+        if board[a] == board[b] == board[c] and board[a] != '⬜':
+            return board[a]
+    return None
+        
+
+
 
 def format_bord():
     return f'{board[0]}   {board[1]}   {board[2]}\n' \
@@ -27,7 +41,7 @@ async def move(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     current_player = '⭕' if current_player == '❌' else '❌'
 
-app = ApplicationBuilder().token('ВАШ ТОКЕН').build()
+app = ApplicationBuilder().token('7137462050:AAHh2d2TVPe3xS88xQ1vkZ23jax9usVgqIQ').build()
 app.add_handler(CommandHandler('start', start))
 app.add_handler(MessageHandler(filters.TEXT, move))
 app.run_polling()
