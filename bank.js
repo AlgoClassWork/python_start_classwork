@@ -152,3 +152,35 @@ class Card {
         `
     }
 }
+
+class CardManager {
+    constructor() {
+        this.cards = [];
+    }
+
+    init() {
+        let addCardButton = document.getElementById('addCardButton')
+
+        addCardButton.addEventListener('click', this.addCard())
+    }
+
+    addCard() {
+        let number = document.getElementById('cardNumber').value
+        let fullName = document.getElementById('fullName').value
+
+        let card = new Card(number, fullName)
+        this.cards.push(card)
+
+        this.updateCardList()
+    }
+
+    updateCardList() {
+        let cardList = document.getElementById('cardList')
+        this.cards.forEach((card, index) => {
+            cardList.innerHTML += card.toHTML(index)
+        })
+    }
+}
+
+let cardManager = new CardManager()
+cardManager.init()
