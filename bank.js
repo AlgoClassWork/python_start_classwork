@@ -131,3 +131,24 @@ button:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
+
+
+
+class Card {
+    constructor(number, fullName ) {
+        this.number = number;
+        this.fullName = fullName;
+        this.balance = 1000;
+    }
+
+    toHTML(index) {
+        `
+        <div class="card">
+        <strong> Карта ${ index + 1}<strong><br>
+        Номер: ${ this.number } <br>
+        Владелец ${ this.fullName } <br>
+        Баланс ${ this.balance } руб.
+        </div>
+        `
+    }
+}
