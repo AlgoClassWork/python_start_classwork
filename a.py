@@ -32,6 +32,18 @@ def do_wealth(gdp):
 data['Wealth'] = data['GDP'].apply(do_wealth)
 print(data.groupby('Wealth')['Literacy'].mean())
 # Простой способ
-data.plot(x='GDP', y='Literacy', kind='scatter')
+#data.plot(x='GDP', y='Literacy', kind='scatter')
+
+# Гипотеза 2 Выход к морю влияет на показатель ВВП
+def sea(coasline):
+    if coasline > 0:
+        return 'open'
+    else:
+        return 'close'
+
+data['Sea'] = data['Coastline'].apply(sea)
+print(data.groupby('Sea')['GDP'].mean())
+
+data.groupby('Sea')['GDP'].mean().plot(kind='bar')
 
 matplotlib.pyplot.show()
