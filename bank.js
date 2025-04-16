@@ -3,188 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Банковские карты</title>
+    <title>Банк</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>Банковские карты</h1>
-
     <div class="form">
-        <h2>Добавить карту</h2>
-        <label> Номер карты: </label>
-        <input type="text" id="cardNumber" placeholder="4166 7099 6433 7822">
-        <label> ФИО: </label>
-        <input type="text" id="fullName" placeholder="Иван Иванов Иванович"> 
-        <button id="addCardButton"> Добавить карту </button>
-    </div>
-
-    <div id="cardList">
-        <h2>Ваши карты</h2>
+        <h3>Добавить</h3>
+        <input id="name" placeholder="Имя">
+        <button class="button">Добавить</button>
     </div>
 
     <div class="transfer">
-        <h2>Перевод между картами</h2>
-        <label>С карты:</label>
-        <select id="fromCard">
-            <option value=""> Выберите карту </option>
-        </select>
-        <label>На карту:</label>
-        <select id="toCard">
-            <option value=""> Выберите карту </option>
-        </select>
-        <label>Сумма перевода:</label>
-        <input type="number" id="transferAmount" placeholder="100">
-        <button id="transferButton"> Перевести </button>
+        <h3>Перевод</h3>
+        <input id="from" placeholder="От кого">
+        <input id="to" placeholder="Кому">
+        <input id="sum" placeholder="Сумма">
+        <button class="btn">Перевести</button>
     </div>
-    
+
+    <div class="client">
+        <h3>Клиенты</h3>
+    </div>
+
     <script src="main.js"></script>
+    
 </body>
 </html>
 
 
-
-
-
-
-
-
-/* Общие стили */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f2f4f8;
-    margin: 0;
-    padding: 20px;
-    color: #333;
+    font-family: sans-serif;
 }
 
-/* Заголовок */
-h1 {
-    text-align: center;
-    color: #2a2a2a;
-    margin-bottom: 30px;
+.form, .transfer {
+    border: 1px solid lightgray;
+    padding: 10px;
+    margin: 10px 0;
 }
 
-/* Универсальный блок */
-.form, .transfer, #cardList {
-    background: #fff;
-    padding: 25px;
-    margin: 20px auto;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-}
-
-/* Заголовки секций */
-.form h2, .transfer h2, #cardList h2 {
-    margin-top: 0;
-    color: #3a3a3a;
-}
-
-/* Метки и инпуты */
-label {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
-    font-weight: 500;
-}
-
-input, select {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px;
-    box-sizing: border-box;
-}
-
-input:focus, select:focus {
-    border-color: #5a9cf2;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(90, 156, 242, 0.2);
-}
-
-/* Кнопки */
-button {
-    background-color: #5a9cf2;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    margin-top: 10px;
-}
-
-button:hover {
-    background-color: #3f82db;
-}
-
-/* Список карт (будешь добавлять сюда карточки) */
-#cardList .card {
-    background-color: #eaf0f7;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+input, button {
+    padding: 5px;
+    margin: 5px;
 }
 
 
-
-
-
-
-
-class Card {
-    constructor(number, fullName) {
-        this.number = number;
-        this.fullName = fullName;
-        this.balance = 1000;
+class Client {
+    constructor(name) {
+        this.name = name
+        this.balance = 1000
     }
 
-    toHTML(index) {
-        return `
-            <div class="card">
-                <strong>Карта ${index + 1}</strong><br>
-                Номер: ${this.number}<br>
-                Владелец: ${this.fullName}<br>
-                Баланс: ${this.balance} руб.
-            </div>
-        `;
+    card() {
+        return '<div class="card">' + this.name + ' ' + this.balance + '</div>'
     }
 }
 
-class CardManager {
-    constructor() {
-        this.cards = [];
-    }
+let clients = []
 
-    init() {
-        let addCardButton = document.getElementById('addCardButton');
-        addCardButton.addEventListener('click', () => this.addCard());
-    }
-
-    addCard() {
-        let number = document.getElementById('cardNumber').value;
-        let fullName = document.getElementById('fullName').value;
-
-        let card = new Card(number, fullName);
-        this.cards.push(card);
-
-        this.updateCardList();
-    }
-
-    updateCardList() {
-        let cardList = document.getElementById('cardList');
-        cardList.innerHTML = ''; // очищаем список перед добавлением
-
-        this.cards.forEach((card, index) => {
-            cardList.innerHTML += card.toHTML(index);
-        });
-    }
+function add() {
+    let name = document.getElementById('name').value
+    clients.push( new Client(name) )
+    show()
 }
 
-let cardManager = new CardManager();
-cardManager.init();
+function show() {
+    let list = '<h3>Клиенты</h3>'
+    for ( let client of clients ) {
+        list += client.card()
+    }
+    document.querySelector('.client').innerHTML = list
+}
+
+function transfer() {
+    let client_from = document.getElementById('from').value 
+    let client_to = document.getElementById('to').value 
+    let client_sum = document.getElementById('sum').value 
+    let otpravitel, poluchatel
+    for (let client of clients) {
+        if (client.name == client_from) otpravitel = client
+        if (client.name == client_to) poluchatel = client
+    }
+    otpravitel.balance -= client_sum 
+    poluchatel.balance += +client_sum
+    show()
+}
+
+let button = document.querySelector('.button')
+let btn = document.querySelector('.btn')
+button.addEventListener('click', add)
+btn.addEventListener('click', transfer)
