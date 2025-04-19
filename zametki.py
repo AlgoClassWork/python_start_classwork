@@ -167,7 +167,19 @@ def film_save():
     if list_films.selectedItems():
         film = list_films.selectedItems()[0].text()
         films[film]['описание'] = text_field.toPlainText()
-        
+
+    file = open('films.json', 'w', encoding='utf-8')
+    json.dump(films, file, ensure_ascii=False)
+
+def film_delete():
+    if list_films.selectedItems():
+        film = list_films.selectedItems()[0].text()
+        del films[film]
+        list_films.clear()
+        list_genres.clear()
+        text_field.clear()
+        list_films.addItems(films)
+   
     file = open('films.json', 'w', encoding='utf-8')
     json.dump(films, file, ensure_ascii=False)
 
@@ -175,7 +187,7 @@ def film_save():
 list_films.itemClicked.connect(show_info) 
 create_film.clicked.connect(film_create)
 save_film.clicked.connect(film_save)
-
+delete_film.clicked.connect(film_delete)
 
 
 # Запуск приложения
