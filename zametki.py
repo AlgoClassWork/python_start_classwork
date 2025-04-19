@@ -167,6 +167,3 @@ list_films.addItems(films)
 
 window.show()
 app.exec()
-
-
-
