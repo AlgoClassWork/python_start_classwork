@@ -30,4 +30,27 @@ data['Sex'] = data['Sex'].apply(fill_sex)
 data.drop(['PassengerId','Pclass','Name','Ticket','Fare','Cabin','Embarked'],
           axis=1, inplace=True)
 
-print( data.info() )
+# ПОСТРОЕНИЕ МАТЕМАТИЧЕСКОЙ МОДЕЛИ
+
+# Разделение на признаки и целевую переменную
+# pip install scikit-learn
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+X = data.drop('Survived', axis=1)
+Y = data['Survived']
+# Разделение данных на обучающие и тестовые
+x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.25)
+# Изменяем масштаб данных
+scaler = StandardScaler()
+x_train_scaled = scaler.fit_transform(x_train)
+x_test_scaled = scaler.transform(x_test)
+# Обучение нашей модели
+model = KNeighborsClassifier(n_neighbors=3)
+model.fit(x_train_scaled, y_train)
+# Предсказания и оценка точности нашей модели
+y_pred = model.predict(x_test_scaled)
+
+print('Точность на тестовой выборке:', accuracy_score(y_test, y_pred) * 100, '%')
