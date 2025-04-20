@@ -37,7 +37,7 @@ data.drop(['PassengerId','Pclass','Name','Ticket','Fare','Cabin','Embarked'],
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
 X = data.drop('Survived', axis=1)
 Y = data['Survived']
@@ -54,3 +54,5 @@ model.fit(x_train_scaled, y_train)
 y_pred = model.predict(x_test_scaled)
 
 print('Точность на тестовой выборке:', accuracy_score(y_test, y_pred) * 100, '%')
+print('Матрица ошибок:\n', confusion_matrix(y_test, y_pred))
+print('Отчет по классам:\n', classification_report(y_test, y_pred))
