@@ -159,7 +159,7 @@ def show_info():
 
 def film_create(): 
     film, input = QInputDialog.getText(window,'Добавить фильм','Название фильма:')
-    if film != '':
+    if film != '' and film not in films:
         films[film] = {'описание':'', 'жанры':[]}
         list_films.addItem(film)
 
@@ -183,11 +183,21 @@ def film_delete():
     file = open('films.json', 'w', encoding='utf-8')
     json.dump(films, file, ensure_ascii=False)
 
+def genre_create():
+    if list_films.selectedItems():
+        film = list_films.selectedItems()[0].text()
+        genre = search_field.text()
+        if genre != '' and genre not in films[film]['жанры']:
+            films[film]['жанры'].append(genre)
+            list_genres.addItem(genre)
+
+
 # Подключение обработки событий
 list_films.itemClicked.connect(show_info) 
 create_film.clicked.connect(film_create)
 save_film.clicked.connect(film_save)
 delete_film.clicked.connect(film_delete)
+create_genre.clicked.connect(genre_create)
 
 
 # Запуск приложения
