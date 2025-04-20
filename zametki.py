@@ -190,7 +190,18 @@ def genre_create():
         if genre != '' and genre not in films[film]['жанры']:
             films[film]['жанры'].append(genre)
             list_genres.addItem(genre)
+            search_field.clear()
 
+def genre_delete():
+    if list_genres.selectedItems():
+        film = list_films.selectedItems()[0].text()
+        genre = list_genres.selectedItems()[0].text()
+        films[film]['жанры'].remove(genre)
+        list_genres.clear()
+        list_genres.addItems( films[film]['жанры'] )
+
+    file = open('films.json', 'w', encoding='utf-8')
+    json.dump(films, file, ensure_ascii=False)
 
 # Подключение обработки событий
 list_films.itemClicked.connect(show_info) 
@@ -198,6 +209,7 @@ create_film.clicked.connect(film_create)
 save_film.clicked.connect(film_save)
 delete_film.clicked.connect(film_delete)
 create_genre.clicked.connect(genre_create)
+delete_genre.clicked.connect(genre_delete)
 
 
 # Запуск приложения
