@@ -56,3 +56,17 @@ y_pred = model.predict(x_test_scaled)
 print('Точность на тестовой выборке:', accuracy_score(y_test, y_pred) * 100, '%')
 print('Матрица ошибок:\n', confusion_matrix(y_test, y_pred))
 print('Отчет по классам:\n', classification_report(y_test, y_pred))
+
+# Предсказание судьбы одного пассажира
+
+def predict_single_passenger(passenger_info): 
+
+    scaled = scaler.transform(passenger_info)
+    prediction = model.predict(scaled)[0]
+    probs = model.predict_proba(scaled)[0]
+
+    print('Новый пассажир:', passenger_info)
+    print('Предсказание', 'Выжил' if prediction == 1 else 'Не выжил')
+    print(f'Уверенность: Не выжил - {int(probs[0] * 100)}% Выжил - {int(probs[1] * 100)}%')
+
+predict_single_passenger( [[0,10,1,1]] )
