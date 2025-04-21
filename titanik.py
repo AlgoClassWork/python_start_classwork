@@ -51,3 +51,14 @@ model.fit(x_train, y_train)
 # Оценка качества нашей модели
 y_pred = model.predict(x_test) 
 print('Точность предсказаний на тестовых данных', int(accuracy_score(y_test, y_pred) * 100), '%')
+
+# Функция для предсказания исхода нашего выдуманного пассажира
+def predict_passenger( passenger ): 
+    passenger_info = scaler.transform(passenger)
+    prediction = model.predict(passenger_info)[0]
+    chance = model.predict_proba(passenger_info)[0] 
+    print('Судьба пассажира:', 'Выжил' if prediction == 1 else 'Умер' )
+    print(f'Шанс на смерть {chance[0] * 100}% Шанс на жизнь {chance[1] * 100}%')
+
+predict_passenger( [[0, 40, 0, 0]] )
+
