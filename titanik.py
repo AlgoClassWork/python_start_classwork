@@ -28,3 +28,13 @@ data['Sex'] = data['Sex'].apply(fill_sex)
 
 data.drop(['PassengerId','Pclass','Name','Ticket','Fare','Cabin','Embarked'],
           axis=1, inplace=True)
+
+
+# CОЗДАНИЕ МАТЕМАТИЧЕСКОЙ МОДЕЛИ
+# pip install scikit-learn
+from sklearn.model_selection import train_test_split
+# Разделение признаков (возраст пол и тд) и целевой переменной (итог выживания)
+x = data.drop('Survived', axis=1)
+y = data['Survived']
+# Разделение данных на те что будут обучать модель и на те что будут ее тестировать
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
