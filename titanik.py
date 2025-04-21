@@ -33,8 +33,21 @@ data.drop(['PassengerId','Pclass','Name','Ticket','Fare','Cabin','Embarked'],
 # CОЗДАНИЕ МАТЕМАТИЧЕСКОЙ МОДЕЛИ
 # pip install scikit-learn
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
 # Разделение признаков (возраст пол и тд) и целевой переменной (итог выживания)
 x = data.drop('Survived', axis=1)
 y = data['Survived']
 # Разделение данных на те что будут обучать модель и на те что будут ее тестировать
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
+# Мастштабирование наших данных (превращаем числа в проценты)
+scaler = StandardScaler()
+x_train = scaler.fit_transform(x_train)
+x_test = scaler.transform(x_test)
+# Обучение нашей математической модели
+model = KNeighborsClassifier(n_neighbors=3)
+model.fit(x_train, y_train)
+# Оценка качества нашей модели
+y_pred = model.predict(x_test) 
+print('Точность предсказаний на тестовых данных', int(accuracy_score(y_test, y_pred) * 100), '%')
