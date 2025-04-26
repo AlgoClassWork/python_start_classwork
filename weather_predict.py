@@ -1,43 +1,54 @@
-import pandas
-from sklearn.model_selection import train_test_split
+import pandas as pd
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.naive_bayes import GaussianNB
-from sklearn.linear_model import SGDClassifier
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
-# Извлечение данных
-data = pandas.read_csv('weatherData.csv')
-# Разделение данных на целевую переменную и признаки
-y = data['Summary']
-x = data.drop(['date', 'Summary', 'Precip Type'], axis=1)
-# Разделение данных на тренировачные и тестовые
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.9)
-# Масштабирование данных
-#scaler = StandardScaler()
-#x_train = scaler.fit_transform(x_train)
-#x_test = scaler.transform(x_test)
-# Создание и обучение модели (KNN)
-model_knn = KNeighborsClassifier(n_neighbors=11)
-model_knn.fit(x_train, y_train)
-# Оценка точности предсказаний (KNN)
-y_pred = model_knn.predict(x_test)
-print('Точность предсказаний алгоритма KNN', accuracy_score(y_test, y_pred) * 100, '%')
-# Создание и обучение модели (Байеса)
-model_gauss = GaussianNB()
-model_gauss.fit(x_train, y_train)
-# Оценка точности предсказаний (Байеса)
-y_pred = model_gauss.predict(x_test)
-print('Точность предсказаний алгоритма Байеса', accuracy_score(y_test, y_pred) * 100, '%')
-# Создание и обучение модели (SGD)
-model_sgd = SGDClassifier()
-model_sgd.fit(x_train, y_train)
-# Оценка точности предсказаний (SGD)
-y_pred = model_sgd.predict(x_test)
-print('Точность предсказаний алгоритма SGD', accuracy_score(y_test, y_pred) * 100, '%')
-# Создание и обучение модели (Tree)
-model_tree = DecisionTreeClassifier()
-model_tree.fit(x_train, y_train)
-# Оценка точности предсказаний (Tree)
-y_pred = model_tree.predict(x_test)
-print('Точность предсказаний алгоритма Tree', accuracy_score(y_test, y_pred) * 100, '%')
+
+# Загрузка данных
+df = pd.read_csv("./weatherData.csv")
+
+# Упрощаем Summary до 4 категорий
+def simplify_summary(s):
+    s = s.lower()
+    if 'rain' in s:
+        return 'Rainy'
+    elif 'snow' in s:
+        return 'Snowy'
+    elif 'cloud' in s:
+        return 'Cloudy'
+    elif 'clear' in s or 'sun' in s:
+        return 'Clear'
+    else:
+        return 'Other'
+
+df['SimpleSummary'] = df['Summary'].apply(simplify_summary)
+
+# Удаляем ненужные столбцы
+X = df.drop(['date', 'Summary', 'SimpleSummary', 'Precip Type'], axis=1)
+y = df['SimpleSummary']
+
+# Нормализация
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Разделение на обучающую и тестовую выборки
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.3, random_state=42)
+
+# Список моделей
+models = {
+    'KNN': KNeighborsClassifier(n_neighbors=5),
+    'Random Forest': RandomForestClassifier(n_estimators=100, random_state=42),
+    'Logistic Regression': LogisticRegression(max_iter=1000)
+}
+
+# Обучение и оценка каждой модели
+for name, model in models.items():
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    acc = accuracy_score(y_test, y_pred)
+    cv_scores = cross_val_score(model, X_scaled, y, cv=5)
+    print(f"{name} Accuracy: {acc:.3f}")
+    print(f"{name} Cross-Validation Mean Accuracy: {cv_scores.mean():.3f}")
+    print("-" * 40)
