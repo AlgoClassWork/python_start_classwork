@@ -1,54 +1,50 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB
+from sklearn.linear_model import SGDClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 
 # Загрузка данных
-df = pd.read_csv("./weatherData.csv")
+df = pd.read_csv("weatherData.csv")
 
-# Упрощаем Summary до 4 категорий
-def simplify_summary(s):
-    s = s.lower()
-    if 'rain' in s:
-        return 'Rainy'
-    elif 'snow' in s:
-        return 'Snowy'
-    elif 'cloud' in s:
-        return 'Cloudy'
-    elif 'clear' in s or 'sun' in s:
-        return 'Clear'
-    else:
-        return 'Other'
+# Подготовка данных
+y = df['Summary']
+X = df.drop(['date', 'Summary', 'Precip Type'], axis=1)
 
-df['SimpleSummary'] = df['Summary'].apply(simplify_summary)
+# Делим выборку
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.9, random_state=42)
 
-# Удаляем ненужные столбцы
-X = df.drop(['date', 'Summary', 'SimpleSummary', 'Precip Type'], axis=1)
-y = df['SimpleSummary']
-
-# Нормализация
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
-
-# Разделение на обучающую и тестовую выборки
-X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.3, random_state=42)
-
-# Список моделей
+# Модели
 models = {
-    'KNN': KNeighborsClassifier(n_neighbors=5),
-    'Random Forest': RandomForestClassifier(n_estimators=100, random_state=42),
-    'Logistic Regression': LogisticRegression(max_iter=1000)
+    "KNN": KNeighborsClassifier(n_neighbors=11),
+    "GaussianNB": GaussianNB(),
+    "SGDClassifier": SGDClassifier(),
+    "DecisionTree": DecisionTreeClassifier()
 }
 
-# Обучение и оценка каждой модели
+results = []
+
+# Обучение и оценка
 for name, model in models.items():
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
-    cv_scores = cross_val_score(model, X_scaled, y, cv=5)
-    print(f"{name} Accuracy: {acc:.3f}")
-    print(f"{name} Cross-Validation Mean Accuracy: {cv_scores.mean():.3f}")
-    print("-" * 40)
+    cv_acc = cross_val_score(model, X, y, cv=5).mean()
+    results.append((name, acc * 100, cv_acc * 100))
+
+# Визуализация
+labels, test_accs, cv_accs = zip(*results)
+x = range(len(labels))
+plt.figure(figsize=(10, 6))
+plt.bar(x, test_accs, width=0.4, label='Test Accuracy', align='center')
+plt.bar([i + 0.4 for i in x], cv_accs, width=0.4, label='CV Mean Accuracy', align='center')
+plt.xticks([i + 0.2 for i in x], labels)
+plt.ylabel("Accuracy (%)")
+plt.title("Сравнение точности моделей")
+plt.legend()
+plt.tight_layout()
+plt.show()
