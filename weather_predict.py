@@ -2,6 +2,7 @@ import pandas
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 
 data = pandas.read_csv('weatherData.csv')
@@ -29,3 +30,11 @@ model_knn.fit(x_train, y_train)
 # Оценка качества KNN
 y_pred = model_knn.predict(x_test) 
 print('Результат KNN:', accuracy_score(y_test, y_pred) * 100, '%')
+
+# Обучение модели Байеса
+model_gauss = GaussianNB()
+model_gauss.fit(x_train, y_train)
+# Оценка качества Байеса
+y_pred = model_gauss.predict(x_test) 
+print('Результат Байеса:', accuracy_score(y_test, y_pred) * 100, '%')
+
