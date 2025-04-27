@@ -2,41 +2,27 @@ from vosk import Model, KaldiRecognizer
 import wave
 import json
 from pydub import AudioSegment
-from vosk import Model, KaldiRecognizer
-import wave
-import json
 
 
-def initial_convert(filename):
-   audio = AudioSegment.from_file(filename)
+def recognize_speech(wav_path, model_path='vosk-model-small-ru-0.22'):
 
-   audio = audio.set_channels(1)  # Преобразуем в моно
-   audio = audio.set_frame_rate(16000)  # Устанавливаем частоту дискретизации на 16000 Гц
-   audio = audio.set_sample_width(2)  # Устанавливаем ширину выборки (16 бит)
+    model = Model(model_path)
+    recognizer = KaldiRecognizer(model, 16000)
 
-   audio.export(f'{filename.split(".")[0]}_converted.wav', format='wav')
+    sound = wave.open(wav_path, 'rb')
+    texts = []
+    while True:
+        data = sound.readframes(4000)
+        if not data:
+            break
+        if recognizer.AcceptWaveform(data):
+            result = json.loads(recognizer.Result())
+            texts.append(result.get('text',''))
+    
+    final_result = json.loads(recognizer.FinalResult())
+    texts.append(result.get('text',''))
 
-model = Model('vosk-model-small-ru-0.22')
-rec = KaldiRecognizer(model, 16000)
-initial_convert("first_test.wav")
-wf = wave.open("first_test_converted.wav", "rb")
+    return ' '.join(texts)
 
-
-full_text = []
-while True:
-  data = wf.readframes(4000)
-  if len(data) == 0:
-      break
-  if rec.AcceptWaveform(data):
-      result = rec.Result()
-      text = json.loads(result)["text"]
-      full_text.append(text)
-      print(full_text)
-
-
-result = rec.FinalResult()
-text = dict(json.loads(result))["text"]
-full_text.append(text)
-final_text = " ".join(full_text)
-print("Полный распознанный текст:")
-print(final_text)
+full_text = recognize_speech('first_test.wav')
+print(full_text)
