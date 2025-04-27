@@ -1,5 +1,6 @@
 import os
 from PIL import Image
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
@@ -127,7 +128,7 @@ class ImageWorker:
         self.image = Image.open(fullname)
 
     def show_image(self, dir):
-        image = QPixmap(dir)
+        image = QPixmap(dir).scaled(label_image.width(), label_image.height(), Qt.KeepAspectRatio)
         label_image.setPixmap(image)
 
 # Подписки на события
