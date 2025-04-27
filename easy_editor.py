@@ -1,4 +1,6 @@
 import os
+from PIL import Image
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QPushButton, QListWidget, QLabel,
@@ -108,7 +110,28 @@ def show_files():
     filenames = filter( os.listdir(workdir) )
     list_files.addItems(filenames)
 
+def show_chosen_image():
+    filename = list_files.currentItem().text()
+    ImageWorker().load_image(filename)
+    ImageWorker().show_image( os.path.join( workdir, filename ) )
+
+class ImageWorker:
+    def __init__(self):
+        self.image = None 
+        self.dir = None 
+        self.filename = None 
+
+    def load_image(self, filename):
+        self.filename = filename
+        fullname = os.path.join(workdir, filename)
+        self.image = Image.open(fullname)
+
+    def show_image(self, dir):
+        image = QPixmap(dir)
+        label_image.setPixmap(image)
+
 # Подписки на события
+list_files.currentRowChanged.connect(show_chosen_image)
 btn_folder.clicked.connect(show_files)
 
 # Запуск приложения
