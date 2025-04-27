@@ -1,8 +1,9 @@
+import os
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QPushButton, QListWidget, QLabel,
-    QHBoxLayout, QVBoxLayout
-)
+    QHBoxLayout, QVBoxLayout,
+    QFileDialog)
 
 # Создание приложения и настройка главного окна
 app = QApplication([])
@@ -89,6 +90,26 @@ for btn in [btn_left, btn_right, btn_mirror, btn_sharp, btn_gray]:
 
 window.setLayout(line_main)
 window.show()
+
+# Функционал
+def filter(files):
+    images = []
+    for file in files:
+        if file.endswith('.jpg') or file.endswith('.png'):
+            images.append(file)
+    return images
+
+def get_workdir():
+    global workdir
+    workdir = QFileDialog.getExistingDirectory() 
+
+def show_files():
+    get_workdir()
+    filenames = filter( os.listdir(workdir) )
+    list_files.addItems(filenames)
+
+# Подписки на события
+btn_folder.clicked.connect(show_files)
 
 # Запуск приложения
 app.exec()
