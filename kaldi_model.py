@@ -22,5 +22,12 @@ def recognize_speech(sound_name, model_path='vosk-model-small-ru-0.22'):
 
     return ' '.join(text)
 
-text = recognize_speech('first_test.wav')
+sound_path = 'input_good.wav' 
+sound = AudioSegment.from_file(sound_path)
+sound = sound.set_frame_rate(16000)
+
+sound_path = sound_path.rsplit('.', 1)[0] + '_converted.wav'
+sound.export(sound_path, format='wav')
+
+text = recognize_speech(sound_path)
 print(text)
