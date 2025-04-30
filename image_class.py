@@ -1,30 +1,21 @@
-import tensorflow_hub as hub
-import tensorflow as tf
-import numpy as np
+import tensorflow_hub
+import tensorflow
+import numpy
 from PIL import Image
 import requests
 
-# Загружаем модель классификации изображений
-model = hub.load("https://tfhub.dev/google/imagenet/efficientnet_v2_imagenet1k_s/classification/2")
+# pip install tensorflow, tensorflow_hub, numpy, pillow
+# visual c++ с сайта microsoft и python версии не выше 3.12
 
-# Загружаем метки классов (названия объектов)
+model = tensorflow_hub.load('https://tfhub.dev/google/imagenet/efficientnet_v2_imagenet1k_l/classification/2')
 labels = requests.get("https://storage.googleapis.com/download.tensorflow.org/data/ImageNetLabels.txt").text.splitlines()
 
-# Загружаем и подготавливаем изображение
-img = Image.open("img1.jpg").resize((224, 224))  # Изменяем размер
-x = np.expand_dims(np.array(img) / 255.0, axis=0).astype(np.float32)  # Преобразуем в массив
+image = Image.open('bars.jpg').resize((500,500))
+x = numpy.expand_dims( numpy.array(image) / 255, axis=0).astype(numpy.float32)
 
-# Делаем предсказание
-preds = model(x)
-probs = tf.nn.softmax(preds)[0].numpy()  # Преобразуем в вероятности
+predict = model(x)
+probs = tensorflow.nn.softmax(predict)[0].numpy()
 
-# Показываем топ-5 предсказаний
-top = probs.argsort()[-5:][::-1]
-for i in top:
-    print(f"{labels[i]}: {probs[i]*100:.2f}%")
-
-# Проверяем наличие конкретного объекта (например, "banana")
-name = "banana"
-if name in labels:
-    i = labels.index(name)
-    print(f"\nВероятность, что на изображении {name}: {probs[i]*100:.2f}%")
+top_five = probs.argsort()[-5:][::-1]
+for element in top_five:
+    print(f' {labels[element]} : {probs[element] * 100}%')
