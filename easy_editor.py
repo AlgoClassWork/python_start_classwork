@@ -146,11 +146,19 @@ class ImageWorker:
         dir = os.path.join(workdir, self.save_dir, self.filename)
         self.show_image(dir)
 
+    def do_right(self):
+        self.image = self.image.transpose(Image.ROTATE_270)
+        self.save_image()
+        dir = os.path.join(workdir, self.save_dir, self.filename)
+        self.show_image(dir)
+    
+
 image_worker = ImageWorker()
 # Подписки на события
 list_files.currentRowChanged.connect(show_chosen_image)
 btn_folder.clicked.connect(show_files)
 btn_left.clicked.connect(image_worker.do_left)
+btn_right.clicked.connect(image_worker.do_right)
 
 # Запуск приложения
 app.exec()
