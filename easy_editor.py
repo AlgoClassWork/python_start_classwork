@@ -113,14 +113,15 @@ def show_files():
 
 def show_chosen_image():
     filename = list_files.currentItem().text()
-    ImageWorker().load_image(filename)
-    ImageWorker().show_image( os.path.join( workdir, filename ) )
+    image_worker.load_image(filename)
+    image_worker.show_image( os.path.join( workdir, filename ) )
 
 class ImageWorker:
     def __init__(self):
         self.image = None 
         self.dir = None 
         self.filename = None 
+        self.save_dir = 'Mod/'
 
     def load_image(self, filename):
         self.filename = filename
@@ -131,9 +132,25 @@ class ImageWorker:
         image = QPixmap(dir).scaled(label_image.width(), label_image.height(), Qt.KeepAspectRatio)
         label_image.setPixmap(image)
 
+    def save_image(self):
+        dir = os.path.join(workdir, self.save_dir)
+        if not os.path.exists(dir):
+            os.mkdir(dir)
+
+        fullname = os.path.join(dir, self.filename)
+        self.image.save(fullname)
+
+    def do_left(self):
+        self.image = self.image.transpose(Image.ROTATE_90)
+        self.save_image()
+        dir = os.path.join(workdir, self.save_dir, self.filename)
+        self.show_image(dir)
+
+image_worker = ImageWorker()
 # Подписки на события
 list_files.currentRowChanged.connect(show_chosen_image)
 btn_folder.clicked.connect(show_files)
+btn_left.clicked.connect(image_worker.do_left)
 
 # Запуск приложения
 app.exec()
