@@ -7,10 +7,10 @@ import tensorflow
 import requests
 import numpy
 
-model = tensorflow_hub.load('https://tfhub.dev/google/imagenet/efficientnet_v2_imagenet1k_s/classification/2')
+model = tensorflow_hub.load('https://tfhub.dev/google/imagenet/mobilenet_v3_small_075_224/classification/5')
 labels = requests.get("https://storage.googleapis.com/download.tensorflow.org/data/ImageNetLabels.txt").text.splitlines()
 
-image = Image.open('bars.jpg').resize((200,200))
+image = Image.open('bars.jpg').resize((224,224))
 image = numpy.expand_dims(numpy.array(image) / 255, axis=0 ).astype(numpy.float32)
 
 predict = model(image)
