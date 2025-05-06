@@ -1,42 +1,18 @@
 # pip install opencv-python
-# pip install matplotlib
 import cv2
+# pip install matplotlib
 import matplotlib.pyplot as plt
 
-original = cv2.imread('face.jpg')
-gray = cv2.cvtColor(original, cv2.COLOR_BGR2GRAY)
-rgb = cv2.cvtColor(original, cv2.COLOR_BGR2RGB)
+original_img = cv2.imread('face1.jpg')
+gray_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2GRAY)
+rgb_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)
 
 face = cv2.CascadeClassifier('face.xml')
-
-result = face.detectMultiScale(gray)
+result = face.detectMultiScale(gray_img)
 
 for (x, y, w, h) in result:
-    cv2.rectangle(rgb, (x, y), (x + w, y + h), (0,255,0), 1)
+    cv2.rectangle( rgb_img, (x, y), (x + w, y + h), (0, 255, 0), 5 )
 
-
-
-# ВИДЕО ДЕТЕКЦИЯ
-import cv2
-
-face = cv2.CascadeClassifier('face.xml')
-
-cap = cv2.VideoCapture(0)
-
-while True:
-    ret, frame = cap.read()
-
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    result = face.detectMultiScale(gray)
-
-    for (x, y, w, h) in result:
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (0,255,0), 1)
-
-    cv2.imshow('Webcam', frame)
-
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-plt.imshow(rgb)
+plt.imshow(rgb_img)
 plt.axis('off')
 plt.show()
