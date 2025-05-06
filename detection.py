@@ -16,3 +16,27 @@ for (x, y, w, h) in result:
 plt.imshow(rgb_img)
 plt.axis('off')
 plt.show()
+
+
+
+# ВИДЕО ДЕТЕКЦИЯ
+import cv2
+
+face = cv2.CascadeClassifier('face.xml')
+
+camera = cv2.VideoCapture(0)
+
+while True:
+    _ , frame = camera.read()
+
+    gray_img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    result = face.detectMultiScale(gray_img)
+
+    for (x, y, w, h) in result:
+        cv2.rectangle( frame, (x, y), (x + w, y + h), (0, 255, 0), 5 )
+
+    cv2.imshow('Camera', frame)
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
