@@ -22,6 +22,10 @@ window = display.set_mode( (WINDOW_WIDTH, WINDOW_HEIGHT) )
 display.set_caption('Лабиринт')
 # Загрузка изображений
 BACKGROUND = transform.scale(image.load('background.jpg') , (WINDOW_WIDTH, WINDOW_HEIGHT))
+# Добавление музыки на задний фон
+#mixer.init()
+#mixer.music.load('music.mp3')
+#mixer.music.play()
 #Игровой цикл
 while True:
     # Обработка выхода из игры 
