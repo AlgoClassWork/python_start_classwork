@@ -11,6 +11,11 @@ let platformX = (canvas.width - platformWidth) / 2
 let rightPressed = false
 let leftPressed = false
 
+// Параметры мяча
+const ballRadius = 10
+let ballX = canvas.width / 2
+let ballY = canvas.height / 2
+
 // Обработчик событий нажатия
 document.addEventListener('keydown', keyDownHandler, false)
 document.addEventListener('keyup', keyUpHandler, false)
@@ -47,9 +52,18 @@ function drawPlatform() {
     ctx.closePath()
 }
 
+function drawBall() {
+    ctx.beginPath()
+    ctx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2)
+    ctx.fillStyle = 'red'
+    ctx.fill()
+    ctx.closePath()
+}
+
 function draw() {
     ctx.clearRect(0, 0 , canvas.width, canvas.height)
     drawPlatform()
+    drawBall()
     updatePlatformPosition()
 }
 
