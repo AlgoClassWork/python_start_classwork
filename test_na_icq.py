@@ -1,3 +1,4 @@
+from random import shuffle
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
         QApplication, QWidget,
@@ -10,7 +11,7 @@ class Question():
         self.question = question
         self.answer = answer
         self.wrong1 = w1
-        self.worng2 = w2
+        self.wrong2 = w2
         self.wrong3 = w3
 
 question_list = [
@@ -175,7 +176,6 @@ layout_line1.addWidget(lb_Question, alignment=(Qt.AlignHCenter | Qt.AlignVCenter
 # Размещаем в одной строке обе панели, одна из них будет скрываться, другая показываться:
 layout_line2.addWidget(RadioGroupBox)
 layout_line2.addWidget(AnsGroupBox)
-RadioGroupBox.hide() # эту панель мы уже видели, скроем, посмотрим, как получилась панель с ответом
 
 layout_line3.addStretch(1)
 layout_line3.addWidget(btn_OK, stretch=2) # кнопка должна быть большой
@@ -196,5 +196,31 @@ window.setLayout(layout_card)
 window.setWindowTitle('Memory Card')
 window.resize(500, 450) # Сделаем окно немного больше для лучшего отображения стилей
 window.show()
+
+
+# Функционал приложения
+rbtns = [rbtn_1, rbtn_2, rbtn_3, rbtn_4]
+
+def ask(question : Question):
+    shuffle(rbtns)
+    rbtns[0].setText(question.answer)
+    rbtns[1].setText(question.wrong1)
+    rbtns[2].setText(question.wrong2)
+    rbtns[3].setText(question.wrong3)
+    lb_Question.setText(question.question)
+    lb_Correct.setText(question.answer)
+    show_question()
+
+def show_question():
+    RadioGroupBox.show()
+    AnsGroupBox.hide()
+    btn_OK.setText('Ответить')
+
+def show_result():
+    RadioGroupBox.hide()
+    AnsGroupBox.show()
+    btn_OK.setText('Следующий вопрос')
+
+ask( question_list[0] )
 
 app.exec()
