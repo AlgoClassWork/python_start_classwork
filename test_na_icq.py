@@ -164,8 +164,11 @@ layout_card.setSpacing(15) # Немного увеличим интервалы 
 window = QWidget()
 window.setLayout(layout_card)
 window.setWindowTitle('Memory Card')
-window.resize(500, 450) # Сделаем окно немного больше для лучшего отображения стилей
+window.resize(600, 500) # Сделаем окно немного больше для лучшего отображения стилей
 window.show()
+
+window.score = 0
+window.total = 0
 
 # Функционал приложения
 rbtns = [rbtn_1, rbtn_2, rbtn_3, rbtn_4]
@@ -192,13 +195,14 @@ def show_result():
 
 def check_answer():
     if rbtns[0].isChecked():
-        lb_Result.setText('Правильно!')
-    else:
-        lb_Result.setText('Неверно!')
+        window.score += 1
+
+    lb_Result.setText('Вы правильно ответили на ' + str(window.score) + ' из ' + str(window.total))
     show_result()
 
 def next_question():
     ask( question_list[ randint(0, len(question_list) - 1) ] )
+    window.total += 1
 
 def click_OK():
     if btn_OK.text() == 'Ответить':
