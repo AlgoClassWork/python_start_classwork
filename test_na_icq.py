@@ -1,4 +1,4 @@
-from random import shuffle
+from random import randint, shuffle
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
         QApplication, QWidget,
@@ -99,36 +99,6 @@ app.setStyleSheet("""
         width: 18px;  /* Размер индикатора */
         height: 18px;
     }
-
-    QRadioButton::indicator::unchecked {
-        border: 2px solid #999999;
-        border-radius: 9px;
-        background-color: white;
-    }
-
-    QRadioButton::indicator::unchecked:hover {
-        border: 2px solid #007bff;
-    }
-
-    QRadioButton::indicator::checked {
-        border: 2px solid #007bff;
-        border-radius: 9px;
-        background-color: #007bff; /* Синий фон для выбранного */
-        /* Можно добавить внутренний кружок для лучшего вида */
-        image: none; /* Убираем стандартное изображение, если оно есть */
-    }
-    
-    /* Для отображения "точки" внутри выбранного радио-баттона */
-    QRadioButton::indicator::checked::after {
-        content: '';
-        display: block;
-        width: 8px;
-        height: 8px;
-        margin: 3px; /* (18-2*2-8)/2 = 3 чтобы было по центру, где 2*2 - border width*/
-        border-radius: 4px;
-        background-color: white;
-    }
-
 """)
 
 
@@ -197,7 +167,6 @@ window.setWindowTitle('Memory Card')
 window.resize(500, 450) # Сделаем окно немного больше для лучшего отображения стилей
 window.show()
 
-
 # Функционал приложения
 rbtns = [rbtn_1, rbtn_2, rbtn_3, rbtn_4]
 
@@ -221,6 +190,23 @@ def show_result():
     AnsGroupBox.show()
     btn_OK.setText('Следующий вопрос')
 
-ask( question_list[0] )
+def check_answer():
+    if rbtns[0].isChecked():
+        lb_Result.setText('Правильно!')
+    else:
+        lb_Result.setText('Неверно!')
+    show_result()
 
+def next_question():
+    ask( question_list[ randint(0, len(question_list) - 1) ] )
+
+def click_OK():
+    if btn_OK.text() == 'Ответить':
+        check_answer()
+    else:
+        next_question()
+
+btn_OK.clicked.connect(click_OK)
+
+next_question()
 app.exec()
