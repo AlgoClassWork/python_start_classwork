@@ -50,7 +50,10 @@ function updateBallPosition() {
     if (ballX > canvas.width || ballX < 0) {
         ballSpeedX = -ballSpeedX
     }
-    if (ballY > canvas.height || ballY < 0) {
+    if (ballY < 0) {
+        ballSpeedY = -ballSpeedY
+    }
+    if (ballY > canvas.height - ballRadius - platformHeight && ballX > platformX && ballX < platformX + platformWidth) {
         ballSpeedY = -ballSpeedY
     }
     ballX += ballSpeedX
