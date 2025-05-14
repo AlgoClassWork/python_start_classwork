@@ -15,6 +15,8 @@ let leftPressed = false
 const ballRadius = 10
 let ballX = canvas.width / 2
 let ballY = canvas.height / 2
+let ballSpeedX = 2
+let ballSpeedY = 2
 
 // Обработчик событий нажатия
 document.addEventListener('keydown', keyDownHandler, false)
@@ -44,6 +46,17 @@ function updatePlatformPosition() {
     }
 }
 
+function updateBallPosition() {
+    if (ballX > canvas.width || ballX < 0) {
+        ballSpeedX = -ballSpeedX
+    }
+    if (ballY > canvas.height || ballY < 0) {
+        ballSpeedY = -ballSpeedY
+    }
+    ballX += ballSpeedX
+    ballY += ballSpeedY
+}
+
 function drawPlatform() {
     ctx.beginPath()
     ctx.rect(platformX, canvas.height - platformHeight - 10, platformWidth, platformHeight)
@@ -65,6 +78,7 @@ function draw() {
     drawPlatform()
     drawBall()
     updatePlatformPosition()
+    updateBallPosition()
 }
 
 setInterval(draw, 10)
