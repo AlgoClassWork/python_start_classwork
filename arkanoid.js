@@ -1,3 +1,34 @@
+index.html 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Арканойд</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            background-color: azure;
+            height: 500px;
+        }
+        canvas {
+            border: 1px solid black;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="500px" height="300px"></canvas>
+    <script src="game.js"></script>
+</body>
+</html>
+
+game.js
+
 const canvas = document.getElementById('gameCanvas')
 const ctx = canvas.getContext('2d')
 
