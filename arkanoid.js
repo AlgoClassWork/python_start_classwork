@@ -28,11 +28,12 @@ const brickOffsetTop = 30
 const brickOffsetLeft = 30
 
 // Массив блоков
-const bricks = [] 
-for (let c = 0; c < brickColumnCount; c++) {
-    bricks[c] = []
-    for (let r = 0; r < brickRowCount; r++) {
-        bricks[c][r] = {x : 0, y : 0, status: 1}
+
+const bricks = [ ] 
+for (let column = 0; column < brickColumnCount; column++) {
+    bricks[column] = []
+    for (let row = 0; row < brickRowCount; row++) {
+        bricks[column][row] = {x : 0, y : 0, status: 1}
     }
 }
 
@@ -95,18 +96,32 @@ function drawBall() {
 }
 
 function drawBricks () {
-    for (let c = 0; c < brickColumnCount; c++) {
-        for (let r = 0; r < brickRowCount; r++) {
-            if (bricks[c][r].status == 1) {
-                const brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft
-                const brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop
-                bricks[c][r].x = brickX
-                bricks[c][r].y = brickY
+    for (let column = 0; column < brickColumnCount; column++) {
+        for (let row = 0; row < brickRowCount; row++) {
+            if (bricks[column][row].status == 1) {
+                const brickX = (column * (brickWidth + brickPadding)) + brickOffsetLeft
+                const brickY = (row * (brickHeight + brickPadding)) + brickOffsetTop
+                bricks[column][row].x = brickX
+                bricks[column][row].y = brickY
                 ctx.beginPath()
                 ctx.rect(brickX, brickY, brickWidth, brickHeight)
                 ctx.fillStyle = 'green'
                 ctx.fill()
                 ctx.closePath()
+            }
+        }
+    }
+}
+
+function collideDetection() {
+    for (let column = 0; column < brickColumnCount; column++) {
+        for (let row = 0; row < brickRowCount; row++) {
+            const brick = bricks[column][row]
+            if (brick.status == 1) {
+                if (ballX > brick.x && ballX < brick.x + brickWidth && ballY > brick.y && ballY < brick.y + brickHeight ) {
+                    ballSpeedY = -ballSpeedY
+                    brick.status = 0
+                }
             }
         }
     }
@@ -119,6 +134,7 @@ function draw() {
     drawBricks()
     updatePlatformPosition()
     updateBallPosition()
+    collideDetection()
 }
 
 setInterval(draw, 10)
