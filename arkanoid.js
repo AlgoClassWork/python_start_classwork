@@ -49,6 +49,24 @@ let ballY = canvas.height / 2
 let ballSpeedX = 2
 let ballSpeedY = 2
 
+// Параметры блоков
+const brickRowCount = 3
+const brickColumnCount = 5
+const brickWidth = 80
+const brickHeight = 20
+const brickPadding = 10
+const brickOffsetTop = 30
+const brickOffsetLeft = 30
+
+// Массив блоков
+const bricks = [] 
+for (let c = 0; c < brickColumnCount; c++) {
+    bricks[c] = []
+    for (let r = 0; r < brickRowCount; r++) {
+        bricks[c][r] = {x : 0, y : 0, status: 1}
+    }
+}
+
 // Обработчик событий нажатия
 document.addEventListener('keydown', keyDownHandler, false)
 document.addEventListener('keyup', keyUpHandler, false)
