@@ -1,144 +1,91 @@
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout, QListWidget,
-    QPushButton, QVBoxLayout, QLineEdit, QLabel
+    QPushButton, QVBoxLayout, QLineEdit
 )
-from PyQt5.QtCore import Qt
 
 # Создаем приложение
 app = QApplication([])
 
-# --- Настройка основного окна ---
 window = QWidget()
-window.setWindowTitle("Менеджер Фильмов")
+window.resize(700, 500)
+window.setWindowTitle("Менеджер Фильмов") 
 window.setStyleSheet("""
     QWidget {
-        background-color: #F5F5F5; /* Светло-серый фон */
-        color: #333; /* Темно-серый текст */
-        font-size: 14px;
+        background-color: lightgray; 
+        font-size: 15px;
     }
-""")
-
-# --- Создание элементов интерфейса ---
-# Блок описания фильма
-description_label = QLabel("Описание фильма:")
-description_field = QTextEdit()
-description_field.setPlaceholderText("Введите описание фильма...")
-description_field.setStyleSheet("""
     QTextEdit {
-        background-color: #FFF;
-        color: #333;
-        border: 1px solid #DDD;
+        background-color: white;
+        color: black;
+        border: 1px solid green;
         border-radius: 5px;
-        padding: 8px;
+        padding: 5px;
     }
-""")
-
-# Блок списка фильмов и кнопок управления
-films_label = QLabel("Фильмы:")
-films_list = QListWidget()
-films_list.addItems(["Интерстеллар", "Начало", "Драйв"])
-films_list.setStyleSheet("""
     QListWidget {
-        background-color: #FFF;
-        color: #333;
-        border: 1px solid #DDD;
+        background-color: white;
+        color: black;
+        border: 1px solid green;
         border-radius: 5px;
-        padding: 8px;
-        min-height: 150px; /* Зададим минимальную высоту для списка */
+        padding: 5px;
     }
-    QListWidget::item:selected {
-        background-color: #E0F2F7; /* Цвет выделения */
-        color: #2196F3;
-    }
-""")
-add_film_btn = QPushButton('Добавить')
-del_film_btn = QPushButton('Удалить')
-films_btns_layout = QHBoxLayout()
-films_btns_layout.addWidget(add_film_btn)
-films_btns_layout.addWidget(del_film_btn)
-
-save_film_btn = QPushButton('Сохранить описание')
-save_film_btn.setStyleSheet("""
     QPushButton {
-        background-color: #4CAF50; /* Зеленый цвет для сохранения */
+        background-color: #006b52; 
         color: white;
         border: none;
         border-radius: 5px;
         padding: 8px 15px;
-        font-weight: bold;
     }
     QPushButton:hover {
-        background-color: #43A047;
+        background-color: #018c7c;
     }
-""")
-
-films_layout = QVBoxLayout()
-films_layout.addWidget(films_label)
-films_layout.addWidget(films_list)
-films_layout.addLayout(films_btns_layout)
-films_layout.addWidget(save_film_btn)
-
-# Блок списка жанров и поиска
-genres_label = QLabel("Жанры:")
-genres_list = QListWidget()
-genres_list.addItems(["Фантастика", "Драма", "Триллер"])
-genres_list.setStyleSheet(films_list.styleSheet()) # Используем стиль как у списка фильмов
-genre_field = QLineEdit()
-genre_field.setPlaceholderText("Введите жанр для поиска...")
-genre_field.setStyleSheet("""
     QLineEdit {
-        background-color: #FFF;
-        color: #333;
-        border: 1px solid #DDD;
+        background-color: white;
+        color: black;
+        border: 1px solid green;
         border-radius: 5px;
-        padding: 8px;
-        min-width: 150px; /* Зададим минимальную ширину для поля ввода */
+        padding: 5px;
     }
 """)
-add_genre_btn = QPushButton('Добавить')
-del_genre_btn = QPushButton('Удалить')
-search_genre_btn = QPushButton('Поиск')
-search_genre_btn.setStyleSheet("""
-    QPushButton {
-        background-color: #2196F3; /* Синий цвет для поиска */
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 8px 15px;
-        font-weight: bold;
-    }
-    QPushButton:hover {
-        background-color: #1E88E5;
-    }
-""")
-genres_btns_layout = QHBoxLayout()
-genres_btns_layout.addWidget(add_genre_btn)
-genres_btns_layout.addWidget(del_genre_btn)
-genres_btns_layout.addWidget(search_genre_btn)
 
-genres_layout = QVBoxLayout()
-genres_layout.addWidget(genres_label)
-genres_layout.addWidget(genres_list)
-genres_layout.addWidget(genre_field)
-genres_layout.addLayout(genres_btns_layout)
+# Создание элементов интерфейса
+description_field = QTextEdit()
+description_field.setPlaceholderText("Описание фильма...") 
 
-# --- Размещение элементов интерфейса ---
-main_layout = QHBoxLayout()
+films_list = QListWidget()
+add_film_btn = QPushButton('Добавить фильм')
+del_film_btn = QPushButton('Удалить фильм')
+save_film_btn = QPushButton('Сохранить')
 
-# Левая часть - списки и кнопки
-left_layout = QVBoxLayout()
-left_layout.addLayout(films_layout)
-left_layout.addLayout(genres_layout)
-main_layout.addLayout(left_layout)
+genres_list = QListWidget()
+genre_field = QLineEdit()
+genre_field.setPlaceholderText("Введите жанр...") 
+add_genre_btn = QPushButton('Добавить жанр')
+del_genre_btn = QPushButton('Удалить жанр')
+search_genre_btn = QPushButton('Поиск по жанру')
+# Размещение элементов интерфейса
+main_line = QHBoxLayout()
+lists_line = QVBoxLayout()
+films_btns_line = QHBoxLayout()
+genres_btns_line = QHBoxLayout()
 
-# Правая часть - описание фильма
-right_layout = QVBoxLayout()
-right_layout.addWidget(description_label)
-right_layout.addWidget(description_field)
-main_layout.addLayout(right_layout, 1) # Вес 1, чтобы занимало больше места
+main_line.addLayout(lists_line)
 
-window.setLayout(main_layout)
+lists_line.addWidget(films_list)
+lists_line.addLayout(films_btns_line)
+films_btns_line.addWidget(add_film_btn)
+films_btns_line.addWidget(del_film_btn)
+lists_line.addWidget(save_film_btn)
 
-# --- Запуск приложения ---
+lists_line.addWidget(genres_list)
+lists_line.addWidget(genre_field)
+lists_line.addLayout(genres_btns_line)
+genres_btns_line.addWidget(add_genre_btn)
+genres_btns_line.addWidget(del_genre_btn)
+lists_line.addWidget(search_genre_btn)
+
+main_line.addWidget(description_field)
+
+window.setLayout(main_line)
+# Запуск приложения
 window.show()
 app.exec()
