@@ -1,6 +1,7 @@
+import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QTextEdit, QHBoxLayout, QListWidget,
-    QPushButton, QVBoxLayout, QLineEdit
+    QPushButton, QVBoxLayout, QLineEdit, QInputDialog
 )
 
 # Создаем приложение
@@ -86,6 +87,27 @@ lists_line.addWidget(search_genre_btn)
 main_line.addWidget(description_field)
 
 window.setLayout(main_line)
+# Функционал приложения
+def show_film_info():
+    film = films_list.selectedItems()[0].text()
+    description_field.setText( films[film]['описание'] )
+    genres_list.clear()
+    genres_list.addItems(films[film]['жанры'])
+
+def add_film():
+    film = QInputDialog.getText(window, 'Добавить фильм', 'Название фильма:')[0]
+    if film:
+        films[film] = {'описание': '', 'жанры': []}
+        films_list.addItem(film)
+        json.dump(films, open('films.json', 'w', encoding='utf-8'), ensure_ascii=False)
+
+# Подписки на события
+films_list.itemClicked.connect(show_film_info)
+add_film_btn.clicked.connect(add_film)
+
 # Запуск приложения
+films = json.load( open('films.json', encoding='utf-8') )
+films_list.addItems(films)
+
 window.show()
 app.exec()
