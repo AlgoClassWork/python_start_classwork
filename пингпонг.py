@@ -38,16 +38,30 @@ while True:
     # Заливка фона
     window.fill( (255,255,255) )
 
+    # Отображение обьектов
     player.show()
     computer.show()
     ball.show()
 
+    # Движение игрока
     mouse_x, mouse_y = mouse.get_pos()
     player.rect.centery = mouse_y
 
+    # Движение мяча
     ball.rect.x += speed_x
+    ball.rect.y += speed_y
+
+    # Движение компьютера
+    if computer.rect.y < ball.rect.y:
+        computer.rect.y += computer.speed
+    else:
+        computer.rect.y -= computer.speed
+
+    # Проверка столкновений
     if ball.rect.x > 650 or ball.rect.x < 0:
         speed_x *= -1
+    if ball.rect.y > 450 or ball.rect.y < 0:
+        speed_y *= -1
 
     # Обновление экрана
     display.update()
