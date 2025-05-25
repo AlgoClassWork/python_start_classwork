@@ -58,10 +58,15 @@ while True:
         computer.rect.y -= computer.speed
 
     # Проверка столкновений
-    if ball.rect.x > 650 or ball.rect.x < 0:
+    if sprite.collide_rect(ball, player) or sprite.collide_rect(ball, computer):
         speed_x *= -1
     if ball.rect.y > 450 or ball.rect.y < 0:
         speed_y *= -1
+
+    # Возвращение мячика
+    if ball.rect.x > 1000 or ball.rect.x < - 300:
+        ball.rect.x = 350
+        ball.rect.y = 200
 
     # Обновление экрана
     display.update()
