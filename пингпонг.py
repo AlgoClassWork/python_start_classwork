@@ -17,9 +17,13 @@ class GameSprite(sprite.Sprite):
         """Метод отображения спрайта на экране"""
         window.blit(self.image, (self.rect.x, self.rect.y))
 
+player = GameSprite('block.png', 20, 100, 10, 200, 0)
+computer = GameSprite('block.png', 20, 100, 670, 200, 3)
+ball = GameSprite('ball.png', 50, 50, 350, 200, 5)
+
 # Настройка окна игры
 window = display.set_mode((700, 500))  # Установка размеров окна
-display.set_caption('Шутер')  # Заголовок окна
+display.set_caption('ПИНГ ПОНГ')  # Заголовок окна
 
 # Игровой цикл
 clock = time.Clock()  # Таймер для управления частотой кадров
@@ -32,6 +36,10 @@ while True:
 
     # Заливка фона
     window.fill( (255,255,255) )
+
+    player.show()
+    computer.show()
+    ball.show()
 
     # Обновление экрана
     display.update()
