@@ -105,9 +105,14 @@ def add_film():
         database_writer()
 
 def del_film():
-    film = films_list.selectedItems()[0].text()
-    del films[film]
-    database_writer()
+    if films_list.selectedItems():
+        film = films_list.selectedItems()[0].text()
+        del films[film]
+        films_list.clear()
+        genres_list.clear()
+        description_field.clear()
+        films_list.addItems(films)
+        database_writer()
 
 # Подписки на события
 films_list.itemClicked.connect(show_film_info)
