@@ -114,10 +114,60 @@ def del_film():
         films_list.addItems(films)
         database_writer()
 
+def save_film():
+    if films_list.selectedItems():
+        film = films_list.selectedItems()[0].text()
+        films[film]['описание'] = description_field.toPlainText()
+        database_writer()
+
+def add_genre():
+    if films_list.selectedItems():
+        film = films_list.selectedItems()[0].text()
+        genre = genre_field.text()
+        if genre not in films[film]['жанры']:
+            films[film]['жанры'].append(genre)
+            genres_list.addItem(genre)
+            genre_field.clear()
+            database_writer()
+
+def del_genre():
+    if films_list.selectedItems():
+        film = films_list.selectedItems()[0].text()
+        genre = genres_list.selectedItems()[0].text()
+        films[film]['жанры'].remove(genre)
+        genres_list.clear()
+        genres_list.addItems( films[film]['жанры'] )
+        database_writer()
+
+def search_genre():
+    if search_genre_btn.text() == 'Поиск по жанру':
+        genre = genre_field.text()
+        filtred_films = {}
+        for film in films:
+            if genre in films[film]['жанры']:
+                filtred_films[film] = films[film]
+
+        genre_field.clear()
+        films_list.clear()
+        films_list.addItems(filtred_films)
+
+        search_genre_btn.setText('Сбросить')
+    elif search_genre_btn.text() == 'Сбросить':
+        films_list.clear()
+        films_list.addItems(films)
+
+        search_genre_btn.setText('Поиск по жанру')
+
 # Подписки на события
 films_list.itemClicked.connect(show_film_info)
+
 add_film_btn.clicked.connect(add_film)
 del_film_btn.clicked.connect(del_film)
+save_film_btn.clicked.connect(save_film)
+
+add_genre_btn.clicked.connect(add_genre)
+del_genre_btn.clicked.connect(del_genre)
+search_genre_btn.clicked.connect(search_genre)
 
 # Запуск приложения
 films = json.load( open('films.json', encoding='utf-8') )
