@@ -88,6 +88,9 @@ main_line.addWidget(description_field)
 
 window.setLayout(main_line)
 # Функционал приложения
+def database_writer():
+    json.dump(films, open('films.json', 'w', encoding='utf-8'), ensure_ascii=False)
+
 def show_film_info():
     film = films_list.selectedItems()[0].text()
     description_field.setText( films[film]['описание'] )
@@ -99,11 +102,17 @@ def add_film():
     if film:
         films[film] = {'описание': '', 'жанры': []}
         films_list.addItem(film)
-        json.dump(films, open('films.json', 'w', encoding='utf-8'), ensure_ascii=False)
+        database_writer()
+
+def del_film():
+    film = films_list.selectedItems()[0].text()
+    del films[film]
+    database_writer()
 
 # Подписки на события
 films_list.itemClicked.connect(show_film_info)
 add_film_btn.clicked.connect(add_film)
+del_film_btn.clicked.connect(del_film)
 
 # Запуск приложения
 films = json.load( open('films.json', encoding='utf-8') )
