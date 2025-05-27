@@ -1,163 +1,93 @@
-import os
-from PIL import Image
-from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
-    QApplication, QWidget,
-    QVBoxLayout, QHBoxLayout,
-    QPushButton, QListWidget, QLabel,
-    QFileDialog)
+    QApplication, QWidget, QVBoxLayout, QHBoxLayout,
+    QPushButton, QListWidget, QLabel)
+from PyQt5.QtCore import Qt # Импортируем Qt для выравнивания
 
-# ИНТЕРФЕЙС
+# Интерфейс приложения
 app = QApplication([])
 window = QWidget()
-window.setWindowTitle('Фотошоп')
-window.resize(1600,800)
+window.setWindowTitle('Фотошоп на минималках')
+window.resize(800,400)
 
-btn_folder = QPushButton('Папка')
-list_files = QListWidget()
-
-label_image = QLabel('Это картинка')
-btn_left = QPushButton('Лево')
-btn_right = QPushButton('Право')
-btn_mirror = QPushButton('Зеркало')
-btn_sharp = QPushButton('Резкость')
-btn_bw = QPushButton('Ч\Б')
-btn_save = QPushButton('Сохранить')
-btn_reset = QPushButton('Сбросить')
-
-# РАЗМЕЩЕНИЕ
-main_line = QHBoxLayout()
-left_line = QVBoxLayout()
-right_line = QVBoxLayout()
-btn_line = QHBoxLayout()
-
-main_line.addLayout(left_line, 20)
-main_line.addLayout(right_line, 80)
-
-left_line.addWidget(btn_folder)
-left_line.addWidget(list_files)
-
-right_line.addWidget(label_image)
-right_line.addLayout(btn_line)
-
-btn_line.addWidget(btn_left)
-btn_line.addWidget(btn_right)
-btn_line.addWidget(btn_mirror)
-btn_line.addWidget(btn_sharp)
-btn_line.addWidget(btn_bw)
-btn_line.addWidget(btn_save)
-btn_line.addWidget(btn_reset)
-
-# СТИЛИЗАЦИЯ
+# Устанавливаем общий стиль для всего приложения в светлых тонах
 window.setStyleSheet("""
     QWidget {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
+        background-color: lightgray; /* Очень светло-серый фон */
+        color: black; /* Темный текст для контраста */
+        font-family: 'Segoe UI', sans-serif;
+        font-size: 15px;
     }
     QPushButton {
-        background-color: #4CAF50;
-        color: white;
-        border-radius: 5px;
-        font-size: 18px;
-        padding: 10px;
-        margin: 5px;
-        border: none;
+        background-color: lightblue; /* Светло-серый фон кнопок */
+        border: 1px solid black; /* Более светлая рамка */
+        border-radius: 5px; /* Скругленные углы */
+        padding: 10px 15px; /* Отступы внутри кнопки */
+        color: black; /* Темный текст кнопок */
+        font-weight: bold;
     }
     QPushButton:hover {
-        background-color: #45a049;
-    }
-    QPushButton:pressed {
-        background-color: #388e3c;
+        background-color: blue; /* Чуть темнее при наведении */
     }
     QListWidget {
-        background-color: #ffffff;
-        border: 1px solid #ddd;
+        background-color: white; /* Белый фон списка */
+        border: 1px solid black; /* Светлая рамка */
         border-radius: 5px;
         padding: 5px;
-        font-size: 14px;
-        color: #333;
+        color: black; /* Темный текст списка */
     }
     QListWidget::item {
-        padding: 8px;
+        padding: 5px;
     }
     QListWidget::item:selected {
-        background-color: #2196F3;
-        color: white;
+        background-color: lightblue; /* Светло-голубой фон для выбранных элементов */
+        color: black;
     }
-    QHBoxLayout, QVBoxLayout {
-        margin: 0;
-        padding: 10px;
+    QLabel {
+        color: black; /* Темный текст для меток */
     }
-    QHBoxLayout {
-        spacing: 15px;
-    }
-    QVBoxLayout {
-        spacing: 10px;
+    #image_lbl { /* Стиль для конкретного QLabel с objectName 'image_lbl' */
+        background-color: white; /* Очень светлый фон для области изображения */
+        border: 1px solid black; /* Светлая пунктирная рамка */
+        qproperty-alignment: AlignCenter; /* Выравнивание содержимого по центру */
+        font-weight: bold;
     }
 """)
-# ФУНКЦИОНАЛ
-workdir = ''
 
-class ImageEditor():
-    def __init__(self):
-        self.image = None
-        self.directory = None
-        self.filename = None
-        self.save_directory = 'mod/'
 
-    def load_image(self, filename):
-        self.filename = filename
-        fullname = os.path.join(workdir,filename)
-        self.image = Image.open(fullname)
+folder_btn = QPushButton('Папка')
+files_list = QListWidget()
 
-    def show_image(self, path):
-        pixmap_image = QPixmap(path)
-        w, h = label_image.width(), label_image.height()
-        pixmap_image = pixmap_image.scaled(w,h)
-        label_image.setPixmap(pixmap_image)
+image_lbl = QLabel('Картинка')
+image_lbl.setObjectName('image_lbl') # Присваиваем objectName для стилизации
 
-    def save_image(self):
-        path = os.path.join(workdir, self.save_directory)
-        if not os.path.exists(path):
-            os.mkdir(path)
-        fullname = os.path.join(path, self.filename)
-        self.image.save(fullname)
+left_btn = QPushButton('Лево')
+right_btn = QPushButton('Право')
+flip_btn = QPushButton('Зеркало')
+sharpen_btn = QPushButton('Резкость')
+gray_btn = QPushButton('Ч/Б')
 
-    def do_bw(self):
-        self.image = self.image.convert('L')
-        self.save_image()
-        path = os.path.join(workdir,self.save_directory,self.filename)
-        self.show_image(path)
+# Размещение
+main_line = QHBoxLayout()
+v1_line = QVBoxLayout()
+v2_line = QVBoxLayout()
+btns_line = QHBoxLayout()
 
-    def do_mirror(self):
-        self.image = self.image.transpose(Image.FLIP_LEFT_RIGHT)
-        self.save_image()
-        path = os.path.join(workdir,self.save_directory,self.filename)
-        self.show_image(path)
+v1_line.addWidget(folder_btn)
+v1_line.addWidget(files_list)
+v2_line.addWidget(image_lbl)
 
-def show_images():
-    global workdir
-    list_files.clear()
-    workdir = QFileDialog().getExistingDirectory()
-    files = os.listdir(workdir)
-    for file in files:
-        if file.endswith('.jpg') or file.endswith('.png'):
-            list_files.addItem(file)
+btns_line.addWidget(left_btn)
+btns_line.addWidget(right_btn)
+btns_line.addWidget(flip_btn)
+btns_line.addWidget(sharpen_btn)
+btns_line.addWidget(gray_btn)
 
-def show_chosen_image():
-    if list_files.currentRow() >= 0 :
-        filename = list_files.currentItem().text()
-        work_image.load_image(filename)
-        work_image.show_image( os.path.join(workdir, filename) )
+main_line.addLayout(v1_line, 30)
+main_line.addLayout(v2_line, 70)
+v2_line.addLayout(btns_line)
 
-# ПОДПИСКИ
-work_image = ImageEditor()
-list_files.currentRowChanged.connect(show_chosen_image)
-btn_folder.clicked.connect(show_images)
-btn_bw.clicked.connect(work_image.do_bw)
-btn_mirror.clicked.connect(work_image.do_mirror)
-
-# ЗАПУСК
 window.setLayout(main_line)
+
+# Запуск приложения
 window.show()
 app.exec()
