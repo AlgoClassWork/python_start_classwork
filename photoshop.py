@@ -1,7 +1,7 @@
+import os
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout,
-    QPushButton, QListWidget, QLabel)
-from PyQt5.QtCore import Qt # Импортируем Qt для выравнивания
+    QPushButton, QListWidget, QLabel, QFileDialog)
 
 # Интерфейс приложения
 app = QApplication([])
@@ -24,9 +24,6 @@ window.setStyleSheet("""
         padding: 10px 15px; /* Отступы внутри кнопки */
         color: black; /* Темный текст кнопок */
         font-weight: bold;
-    }
-    QPushButton:hover {
-        background-color: blue; /* Чуть темнее при наведении */
     }
     QListWidget {
         background-color: white; /* Белый фон списка */
@@ -88,6 +85,16 @@ v2_line.addLayout(btns_line)
 
 window.setLayout(main_line)
 
+# Функционал
+def show_files():
+    directory = QFileDialog.getExistingDirectory() 
+    filenames = os.listdir(directory) 
+    for file in filenames:
+        if file.endswith('.jpg') or file.endswith('.png'):
+            files_list.addItem(file)
+
+# Подписки на события
+folder_btn.clicked.connect(show_files)
 # Запуск приложения
 window.show()
 app.exec()
