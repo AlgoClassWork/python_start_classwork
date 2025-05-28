@@ -1,4 +1,5 @@
 import os
+from PIL import Image
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout,
     QPushButton, QListWidget, QLabel, QFileDialog)
@@ -86,15 +87,35 @@ v2_line.addLayout(btns_line)
 window.setLayout(main_line)
 
 # Функционал
+class ImageWorker():
+    def __init__(self):
+        self.image = None
+        self.directory = None
+        self.filename = None
+        self.save_directory = 'Mod/'
+
+    def load_image(self, filename):
+        self.filename = filename
+        fullname = os.path.join(directory, filename)
+        self.image = Image.open(fullname)
+
 def show_files():
+    global directory
     directory = QFileDialog.getExistingDirectory() 
     filenames = os.listdir(directory) 
     for file in filenames:
         if file.endswith('.jpg') or file.endswith('.png'):
             files_list.addItem(file)
 
+def show_chosen_image():
+    filename = files_list.currentItem().text()
+    image_worker.load_image(filename)
+
 # Подписки на события
+image_worker = ImageWorker()
+
 folder_btn.clicked.connect(show_files)
+files_list.itemClicked.connect(show_chosen_image)
 # Запуск приложения
 window.show()
 app.exec()
