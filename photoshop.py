@@ -1,5 +1,7 @@
 import os
 from PIL import Image
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout,
     QPushButton, QListWidget, QLabel, QFileDialog)
@@ -42,10 +44,8 @@ window.setStyleSheet("""
     }
     QLabel {
         color: black; /* Темный текст для меток */
-    }
-    #image_lbl { /* Стиль для конкретного QLabel с objectName 'image_lbl' */
         background-color: white; /* Очень светлый фон для области изображения */
-        border: 1px solid black; /* Светлая пунктирная рамка */
+        border: 1px solid black;
         qproperty-alignment: AlignCenter; /* Выравнивание содержимого по центру */
         font-weight: bold;
     }
@@ -56,7 +56,7 @@ folder_btn = QPushButton('Папка')
 files_list = QListWidget()
 
 image_lbl = QLabel('Картинка')
-image_lbl.setObjectName('image_lbl') # Присваиваем objectName для стилизации
+image_lbl.setFixedSize(image_lbl.width() - 50, image_lbl.height() - 100)
 
 left_btn = QPushButton('Лево')
 right_btn = QPushButton('Право')
@@ -99,6 +99,12 @@ class ImageWorker():
         fullname = os.path.join(directory, filename)
         self.image = Image.open(fullname)
 
+    def show_image(self, fullname):
+        image = QPixmap(fullname)
+        width, height = image_lbl.width(), image_lbl.height()
+        image = image.scaled(width, height, Qt.KeepAspectRatio)
+        image_lbl.setPixmap( image )
+
 def show_files():
     global directory
     directory = QFileDialog.getExistingDirectory() 
@@ -108,8 +114,9 @@ def show_files():
             files_list.addItem(file)
 
 def show_chosen_image():
-    filename = files_list.currentItem().text()
+    filename = files_list.currentItem().text() 
     image_worker.load_image(filename)
+    image_worker.show_image( os.path.join(directory, filename) )
 
 # Подписки на события
 image_worker = ImageWorker()
