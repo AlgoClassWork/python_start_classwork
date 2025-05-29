@@ -1,5 +1,6 @@
 import os
 from PIL import Image
+from PIL.ImageFilter import SHARPEN
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
@@ -116,6 +117,26 @@ class ImageWorker():
         self.save_image()
         self.show_image(os.path.join(directory, self.save_directory, self.filename))
 
+    def do_right(self):
+        self.image = self.image.transpose(Image.ROTATE_270)
+        self.save_image()
+        self.show_image(os.path.join(directory, self.save_directory, self.filename))
+
+    def do_flip(self):
+        self.image = self.image.transpose(Image.FLIP_LEFT_RIGHT)
+        self.save_image()
+        self.show_image(os.path.join(directory, self.save_directory, self.filename))
+    
+    def do_sharpen(self):
+        self.image = self.image.filter(SHARPEN)
+        self.save_image()
+        self.show_image(os.path.join(directory, self.save_directory, self.filename))
+
+    def do_gray(self):
+        self.image = self.image.convert('L')
+        self.save_image()
+        self.show_image(os.path.join(directory, self.save_directory, self.filename))
+
 def show_files():
     global directory
     directory = QFileDialog.getExistingDirectory() 
@@ -136,6 +157,10 @@ image_worker = ImageWorker()
 files_list.itemClicked.connect(show_chosen_image)
 folder_btn.clicked.connect(show_files)
 left_btn.clicked.connect(image_worker.do_left)
+right_btn.clicked.connect(image_worker.do_right)
+flip_btn.clicked.connect(image_worker.do_flip)
+sharpen_btn.clicked.connect(image_worker.do_sharpen)
+gray_btn.clicked.connect(image_worker.do_gray)
 # Запуск приложения
 window.show()
 app.exec()
