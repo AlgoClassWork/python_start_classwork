@@ -105,6 +105,9 @@ class ImageWorker():
         image = image.scaled(width, height, Qt.KeepAspectRatio)
         image_lbl.setPixmap( image )
 
+    def do_left(self):
+        pass
+
 def show_files():
     global directory
     directory = QFileDialog.getExistingDirectory() 
@@ -121,8 +124,9 @@ def show_chosen_image():
 # Подписки на события
 image_worker = ImageWorker()
 
-folder_btn.clicked.connect(show_files)
 files_list.itemClicked.connect(show_chosen_image)
+folder_btn.clicked.connect(show_files)
+left_btn.clicked.connect(image_worker.do_left)
 # Запуск приложения
 window.show()
 app.exec()
