@@ -105,12 +105,21 @@ class ImageWorker():
         image = image.scaled(width, height, Qt.KeepAspectRatio)
         image_lbl.setPixmap( image )
 
+    def save_image(self):
+        save_directory = os.path.join( directory, self.save_directory )
+        if not os.path.exists(save_directory):
+            os.mkdir(save_directory)
+        self.image.save( os.path.join(save_directory, self.filename) )
+
     def do_left(self):
-        pass
+        self.image = self.image.transpose(Image.ROTATE_90)
+        self.save_image()
+        self.show_image(os.path.join(directory, self.save_directory, self.filename))
 
 def show_files():
     global directory
     directory = QFileDialog.getExistingDirectory() 
+    print(directory)
     filenames = os.listdir(directory) 
     for file in filenames:
         if file.endswith('.jpg') or file.endswith('.png'):
