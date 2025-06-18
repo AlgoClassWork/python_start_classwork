@@ -3,6 +3,12 @@ from PyQt5.QtWidgets import (
     QVBoxLayout, QGroupBox, QRadioButton,
     QHBoxLayout, QPushButton
 )
+
+questions = [ 
+    {'question' : '2 + 2', 'correct' : '4',
+    'wrong1': '5', 'wrong2' : 'хз', 'wrong3': 'ыыы'},
+]
+
 # Стили приложения
 style = """                 
     QWidget {
@@ -118,12 +124,12 @@ def submit():
     if button_submit.text() == 'Ответить':
         show_result()
     else:
-        show_question(question='2 + 2', ans1='5', ans2='4', ans3='Хз', ans4='ыыы') 
+        show_question() 
 # Подписки на события
 button_submit.clicked.connect(submit)
 
 # Запуск приложения
-show_question(question='2 + 2', ans1='5', ans2='4', ans3='Хз', ans4='ыыы')  
+show_question()  
 window.setStyleSheet(style)
 window.show()
 app.exec()
