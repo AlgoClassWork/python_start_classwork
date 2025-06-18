@@ -1,216 +1,129 @@
-from random import randint, shuffle
-from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
-        QApplication, QWidget,
-        QHBoxLayout, QVBoxLayout,
-        QGroupBox, QRadioButton,
-        QPushButton, QLabel)
-
-class Question():
-    def __init__(self, question, answer, w1, w2, w3):
-        self.question = question
-        self.answer = answer
-        self.wrong1 = w1
-        self.wrong2 = w2
-        self.wrong3 = w3
-
-question_list = [
-    Question('Какого цвета чернокожие', 'Черные', 'Белые', 'Зеленые', 'Голубые'),
-    Question('Что бросают, когда хотят что-то поднять?', 'Якорь', 'Камень', 'Палку', 'Настроение'),
-    Question('Что будет, если слон упадет на рояль?', 'Джаз', 'Громкий звук', 'Сломанный рояль', 'Ничего, слоны не падают'),
-    Question('Чем кончается день и начинается ночь?', 'Мягким знаком', 'Буквой "Ч"', 'Тишиной', 'Звездами'),
-    Question('Что можно увидеть с закрытыми глазами?', 'Сон', 'Темноту', 'Ничего', 'Будущее'),
-    Question('Какая самая маленькая единица длины?', 'Миллиметр', 'Атом', 'Сантиметр', 'Секунда'),
-    Question('Что у коровы между передними и задними ногами?', 'Туловище', 'Хвост', 'Вымя', 'Грязь'),
-    Question('Сколько месяцев в году имеют 28 дней?', 'Все', 'Один', 'Два', 'Ни одного'),
-    Question('Что всегда идет, но никогда не приходит?', 'Завтра', 'Время', 'Поезд', 'Ветер'),
-    Question('Что становится больше, если из него забирают?', 'Яма', 'Долг', 'Мусор', 'Воздух'),
-    Question('Где вода стоит столбом?', 'В стакане', 'В море', 'У водопада', 'На экваторе')
-]
-
+    QApplication, QWidget, QLabel,
+    QVBoxLayout, QGroupBox, QRadioButton,
+    QHBoxLayout, QPushButton
+)
+# Стили приложения
+style = """                 
+    QWidget {
+        background-color: white;
+        font-family: sans-serif;
+        padding: 10px
+    }
+    QLabel {
+        font-size: 30px;
+        font-weight: bold;
+        qproperty-alignment: 'AlignCenter';
+    }
+    QGroupBox {
+        border: none;
+    }
+    QRadioButton {
+        font-size: 20px;
+        spacing: 20px;
+        margin-top: 20px;
+    }
+    QRadioButton::indicator {
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        border: 1px solid black;
+        background: lightgray;
+    }
+    QRadioButton::indicator:checked {
+        border: 1px solid yellow;
+        background-color: yellow;
+    }
+    QPushButton {
+        font-size: 20px;
+        font-weight: bold;
+        background-color: lightgray;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 50px;
+        margin-top: 20px;
+    }
+    QPushButton:hover {
+        background-color: yellow;
+    }
+                     
+"""
+# Создание виджетов приложения
 app = QApplication([])
 
-# Применяем стили ко всему приложению
-app.setStyleSheet("""
-    QWidget {
-        font-family: 'Segoe UI', Arial, sans-serif; /* Используем более современный шрифт */
-        font-size: 11pt; /* Базовый размер шрифта */
-        background-color: #f0f0f0; /* Светлый фон для окна */
-    }
+window = QWidget()
+window.setWindowTitle('ТЕСТ НА ICQ')
+window.resize(400, 250)
 
-    QGroupBox {
-        background-color: #ffffff; /* Белый фон для групп */
-        border: 1px solid #cccccc;
-        border-radius: 8px;
-        margin-top: 1ex; /* Отступ сверху для заголовка */
-        padding: 15px; /* Внутренние отступы */
-    }
+label_question = QLabel('Кто такой Шрек?')
+button_submit = QPushButton('Ответить')
 
-    QGroupBox::title {
-        subcontrol-origin: margin;
-        subcontrol-position: top center; /* Заголовок по центру */
-        padding: 0 10px;
-        background-color: #007bff; /* Синий цвет для фона заголовка */
-        color: white; /* Белый цвет текста заголовка */
-        border-radius: 4px;
-        font-weight: bold;
-    }
-
-    QLabel#lb_Question { /* Специфичный стиль для метки с вопросом */
-        font-size: 16pt;
-        font-weight: bold;
-        color: #333333;
-        padding: 10px;
-        qproperty-alignment: 'AlignCenter'; /* Выравнивание текста по центру */
-        background-color: transparent; /* Убираем фон по умолчанию от QWidget */
-    }
-
-    QLabel {
-        color: #444444; /* Темно-серый цвет для обычных меток */
-        background-color: transparent; /* Убираем фон по умолчанию от QWidget */
-    }
-
-    QPushButton {
-        background-color: #007bff; /* Основной синий цвет */
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        font-size: 12pt;
-        border-radius: 5px;
-        min-height: 20px; /* Минимальная высота кнопки */
-    }
-
-    QPushButton:hover {
-        background-color: #0056b3; /* Темнее при наведении */
-    }
-
-    QPushButton:pressed {
-        background-color: #004085; /* Еще темнее при нажатии */
-    }
-
-    QRadioButton {
-        spacing: 8px; /* Расстояние между индикатором и текстом */
-        color: #333333;
-        background-color: transparent; /* Убираем фон по умолчанию от QWidget */
-        padding: 2px;
-    }
-
-    QRadioButton::indicator {
-        width: 18px;  /* Размер индикатора */
-        height: 18px;
-    }
-""")
-
-
-# Создаем панель вопроса
-btn_OK = QPushButton('Ответить')
-lb_Question = QLabel('Самый сложный вопрос в мире!')
-lb_Question.setObjectName("lb_Question") # Добавляем ID для специфичного стиля
-
-RadioGroupBox = QGroupBox("Варианты ответов")
-
+# Создание формы с ответами
+group_answers = QGroupBox('')
 rbtn_1 = QRadioButton('Вариант 1')
 rbtn_2 = QRadioButton('Вариант 2')
 rbtn_3 = QRadioButton('Вариант 3')
 rbtn_4 = QRadioButton('Вариант 4')
 
-layout_ans1 = QHBoxLayout()
-layout_ans2 = QVBoxLayout()
-layout_ans3 = QVBoxLayout()
-layout_ans2.addWidget(rbtn_1) # два ответа в первый столбец
-layout_ans2.addWidget(rbtn_2)
-layout_ans3.addWidget(rbtn_3) # два ответа во второй столбец
-layout_ans3.addWidget(rbtn_4)
+line_answers = QVBoxLayout()
+line_h1 = QHBoxLayout()
+line_h2 = QHBoxLayout()
+line_h1.addWidget(rbtn_1)
+line_h1.addWidget(rbtn_2)
+line_h2.addWidget(rbtn_3)
+line_h2.addWidget(rbtn_4)
+line_answers.addLayout(line_h1)
+line_answers.addLayout(line_h2)
+group_answers.setLayout(line_answers)
 
-layout_ans1.addLayout(layout_ans2)
-layout_ans1.addLayout(layout_ans3)
+# Создание формы с результатом
+group_result = QGroupBox('')
+label_result = QLabel('Правильно')
+label_correct = QLabel('___')
 
-RadioGroupBox.setLayout(layout_ans1)
+line_result = QVBoxLayout()
+line_result.addWidget(label_result)
+line_result.addWidget(label_correct)
+group_result.setLayout(line_result)
 
-# Создаем панель результата
-AnsGroupBox = QGroupBox("Результат теста")
-lb_Result = QLabel('прав ты или нет?') # здесь размещается надпись "правильно" или "неправильно"
-lb_Correct = QLabel('ответ будет тут!') # здесь будет написан текст правильного ответа
+# Размещение виджетов
+line_main = QVBoxLayout()
+line_main.addWidget(label_question)
+line_main.addWidget(group_answers)
+line_main.addWidget(group_result)
+line_main.addWidget(button_submit)
+window.setLayout(line_main)
 
-layout_res = QVBoxLayout()
-layout_res.addWidget(lb_Result, alignment=(Qt.AlignLeft | Qt.AlignTop))
-layout_res.addWidget(lb_Correct, alignment=Qt.AlignHCenter, stretch=2)
-AnsGroupBox.setLayout(layout_res)
-
-# Размещаем все виджеты в окне:
-layout_line1 = QHBoxLayout() # вопрос
-layout_line2 = QHBoxLayout() # варианты ответов или результат теста
-layout_line3 = QHBoxLayout() # кнопка "Ответить"
-
-layout_line1.addWidget(lb_Question, alignment=(Qt.AlignHCenter | Qt.AlignVCenter))
-# Размещаем в одной строке обе панели, одна из них будет скрываться, другая показываться:
-layout_line2.addWidget(RadioGroupBox)
-layout_line2.addWidget(AnsGroupBox)
-
-layout_line3.addStretch(1)
-layout_line3.addWidget(btn_OK, stretch=2) # кнопка должна быть большой
-layout_line3.addStretch(1)
-
-# Теперь созданные строки разместим друг под другой:
-layout_card = QVBoxLayout()
-
-layout_card.addLayout(layout_line1, stretch=2)
-layout_card.addLayout(layout_line2, stretch=8)
-layout_card.addStretch(1)
-layout_card.addLayout(layout_line3, stretch=1)
-layout_card.addStretch(1)
-layout_card.setSpacing(15) # Немного увеличим интервалы для нового стиля
-
-window = QWidget()
-window.setLayout(layout_card)
-window.setWindowTitle('Memory Card')
-window.resize(600, 500) # Сделаем окно немного больше для лучшего отображения стилей
-window.show()
-
-window.score = 0
-window.total = 0
-
-# Функционал приложения
-rbtns = [rbtn_1, rbtn_2, rbtn_3, rbtn_4]
-
-def ask(question : Question):
-    shuffle(rbtns)
-    rbtns[0].setText(question.answer)
-    rbtns[1].setText(question.wrong1)
-    rbtns[2].setText(question.wrong2)
-    rbtns[3].setText(question.wrong3)
-    lb_Question.setText(question.question)
-    lb_Correct.setText(question.answer)
-    show_question()
-
-def show_question():
-    RadioGroupBox.show()
-    AnsGroupBox.hide()
-    btn_OK.setText('Ответить')
+# Функционал
+def show_question(question, ans1, ans2, ans3, ans4):
+    group_answers.show()
+    group_result.hide()
+    button_submit.setText('Ответить')
+    label_question.setText(question)
+    rbtn_1.setText(ans1)
+    rbtn_2.setText(ans2)
+    rbtn_3.setText(ans3)
+    rbtn_4.setText(ans4)
 
 def show_result():
-    RadioGroupBox.hide()
-    AnsGroupBox.show()
-    btn_OK.setText('Следующий вопрос')
-
-def check_answer():
-    if rbtns[0].isChecked():
-        window.score += 1
-
-    lb_Result.setText('Вы правильно ответили на ' + str(window.score) + ' из ' + str(window.total))
-    show_result()
-
-def next_question():
-    ask( question_list[ randint(0, len(question_list) - 1) ] )
-    window.total += 1
-
-def click_OK():
-    if btn_OK.text() == 'Ответить':
-        check_answer()
+    group_answers.hide()
+    group_result.show()
+    button_submit.setText('Следующий вопрос')
+    if rbtn_2.isChecked():
+        label_result.setText('Правильно')
     else:
-        next_question()
+        label_result.setText('Не правильно')
 
-btn_OK.clicked.connect(click_OK)
+def submit():
+    if button_submit.text() == 'Ответить':
+        show_result()
+    else:
+        show_question(question='2 + 2', ans1='5', ans2='4', ans3='Хз', ans4='ыыы') 
+# Подписки на события
+button_submit.clicked.connect(submit)
 
-next_question()
+# Запуск приложения
+show_question(question='2 + 2', ans1='5', ans2='4', ans3='Хз', ans4='ыыы')  
+window.setStyleSheet(style)
+window.show()
 app.exec()
