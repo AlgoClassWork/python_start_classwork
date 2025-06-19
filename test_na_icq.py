@@ -112,35 +112,48 @@ window.setLayout(line_main)
 
 
 # Функционал
+finish = False
+score = 0
 current_question = 0
 rbtns = [rbtn_1, rbtn_2, rbtn_3, rbtn_4]
 
 def show_question():
+    global current_question, finish
     group_answers.show()
     group_result.hide()
     button_submit.setText('Ответить')
-    question_data = questions[ 5 ]
+    question_data = questions[ current_question ]
     label_question.setText(question_data['question'])
     shuffle(rbtns)
     rbtns[0].setText(question_data['correct'])
     rbtns[1].setText(question_data['wrong1'])
     rbtns[2].setText(question_data['wrong2'])
     rbtns[3].setText(question_data['wrong3'])
+    if current_question < len(questions) - 1:
+        current_question += 1
+    else:
+        finish = True
 
 def show_result():
+    global score
     group_answers.hide()
     group_result.show()
     button_submit.setText('Следующий вопрос')
     if rbtns[0].isChecked():
         label_result.setText('Правильно')
+        score += 1
     else:
         label_result.setText('Не правильно')
+    
+    label_correct.setText(f'Статистика: {score} | {current_question}')
+    if finish:
+        button_submit.hide()
 
 def submit():
-    if button_submit.text() == 'Ответить':
-        show_result()
+    if button_submit.text() == 'Следующий вопрос' and not finish:
+        show_question()
     else:
-        show_question() 
+        show_result() 
 # Подписки на события
 button_submit.clicked.connect(submit)
 
