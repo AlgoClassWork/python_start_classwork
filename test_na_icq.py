@@ -4,10 +4,19 @@ from PyQt5.QtWidgets import (
     QHBoxLayout, QPushButton
 )
 
-questions = [ 
-    {'question' : '2 + 2', 'correct' : '4',
-    'wrong1': '5', 'wrong2' : 'хз', 'wrong3': 'ыыы'},
+questions = [
+    {'question': '2 + 2', 'correct': '4', 'wrong1': '5', 'wrong2': 'хз', 'wrong3': 'ыыы'},
+    {'question': 'Столица Франции?', 'correct': 'Париж', 'wrong1': 'Берлин', 'wrong2': 'Лондон', 'wrong3': 'Рим'},
+    {'question': 'Сколько дней в неделе?', 'correct': '7', 'wrong1': '5', 'wrong2': '10', 'wrong3': '8'},
+    {'question': 'Цвет неба в ясный день?', 'correct': 'Синий', 'wrong1': 'Зелёный', 'wrong2': 'Красный', 'wrong3': 'Чёрный'},
+    {'question': '5 * 5', 'correct': '25', 'wrong1': '20', 'wrong2': '15', 'wrong3': '30'},
+    {'question': 'Сколько ног у паука?', 'correct': '8', 'wrong1': '6', 'wrong2': '10', 'wrong3': '4'},
+    {'question': 'Какой металл самый лёгкий?', 'correct': 'Литий', 'wrong1': 'Железо', 'wrong2': 'Золото', 'wrong3': 'Медь'},
+    {'question': 'Какой океан самый большой?', 'correct': 'Тихий', 'wrong1': 'Атлантический', 'wrong2': 'Индийский', 'wrong3': 'Северный Ледовитый'},
+    {'question': 'Кто написал "Войну и мир"?', 'correct': 'Толстой', 'wrong1': 'Достоевский', 'wrong2': 'Пушкин', 'wrong3': 'Чехов'},
+    {'question': 'Сколько будет 10 / 2?', 'correct': '5', 'wrong1': '2', 'wrong2': '10', 'wrong3': '0'},
 ]
+
 
 # Стили приложения
 style = """                 
@@ -101,11 +110,11 @@ line_main.addWidget(button_submit)
 window.setLayout(line_main)
 
 # Функционал
-def show_question(question, ans1, ans2, ans3, ans4):
+def show_question():
     group_answers.show()
     group_result.hide()
     button_submit.setText('Ответить')
-    label_question.setText(question)
+    label_question.setText(    )
     rbtn_1.setText(ans1)
     rbtn_2.setText(ans2)
     rbtn_3.setText(ans3)
