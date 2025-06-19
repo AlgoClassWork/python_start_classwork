@@ -1,3 +1,4 @@
+from random import shuffle
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel,
     QVBoxLayout, QGroupBox, QRadioButton,
@@ -16,7 +17,6 @@ questions = [
     {'question': 'Кто написал "Войну и мир"?', 'correct': 'Толстой', 'wrong1': 'Достоевский', 'wrong2': 'Пушкин', 'wrong3': 'Чехов'},
     {'question': 'Сколько будет 10 / 2?', 'correct': '5', 'wrong1': '2', 'wrong2': '10', 'wrong3': '0'},
 ]
-
 
 # Стили приложения
 style = """                 
@@ -109,22 +109,29 @@ line_main.addWidget(group_result)
 line_main.addWidget(button_submit)
 window.setLayout(line_main)
 
+
+
 # Функционал
+current_question = 0
+rbtns = [rbtn_1, rbtn_2, rbtn_3, rbtn_4]
+
 def show_question():
     group_answers.show()
     group_result.hide()
     button_submit.setText('Ответить')
-    label_question.setText(    )
-    rbtn_1.setText(ans1)
-    rbtn_2.setText(ans2)
-    rbtn_3.setText(ans3)
-    rbtn_4.setText(ans4)
+    question_data = questions[ 5 ]
+    label_question.setText(question_data['question'])
+    shuffle(rbtns)
+    rbtns[0].setText(question_data['correct'])
+    rbtns[1].setText(question_data['wrong1'])
+    rbtns[2].setText(question_data['wrong2'])
+    rbtns[3].setText(question_data['wrong3'])
 
 def show_result():
     group_answers.hide()
     group_result.show()
     button_submit.setText('Следующий вопрос')
-    if rbtn_2.isChecked():
+    if rbtns[0].isChecked():
         label_result.setText('Правильно')
     else:
         label_result.setText('Не правильно')
