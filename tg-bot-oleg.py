@@ -1,4 +1,5 @@
 # Импортируем нужные нам функции из библиотеки телеграм
+from random import shuffle
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 
@@ -24,6 +25,10 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text('Вечер в хату!')
     elif 'как дела' in text:
         await update.message.reply_text('Отлично как у вас?')
+    elif 'шутка' in text:
+        jokes = ['Колобок повесился', 'Русалка села шпагат', 'Рыба утонула']
+        shuffle(jokes)
+        await update.message.reply_text( jokes[0] )
     else:
         await update.message.reply_text('Извините я вас не понимаю')
 
