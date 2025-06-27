@@ -1,20 +1,40 @@
-# ТОКЕН
+# Импортируем нужные нам функции из библиотеки телеграм
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 
+# Реакция на команду /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text('Здравствуйте меня зовут Олег!')
+    # update - информация о входящем сообщении
+    # context - информация о пользовательских данных
+    # reply_text - отправить ответ пользователю
+    await update.message.reply_text('Здравствуйте меня зовут Олег! /help')
 
+# Реакция на команду /help
+async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # update - информация о входящем сообщении
+    # context - информация о пользовательских данных
+    # reply_text - отправить ответ пользователю
+    await update.message.reply_text('Я умею шутить шутки и рекомендовать фильмы')
+
+# Реакция на любое текстовое сообщение пользователя
 async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = update.message.text
-    await update.message.reply_text(text)
+    # Получаем текст сообщения пользователя
+    text = update.message.text.lower()
+    if 'привет' in text:
+        await update.message.reply_text('Вечер в хату!')
+    elif 'как дела' in text:
+        await update.message.reply_text('Отлично как у вас?')
+    else:
+        await update.message.reply_text('Извините я вас не понимаю')
 
-# Соединение
-TOKEN = 'ТОКЕН'
+# ТОКЕН - позволяет соеденить вашего бота и код
+TOKEN = 'ВАШ ТОКЕН'
+# Создаем наше телеграм приложение
 app = Application.builder().token(TOKEN).build()
-# Подписки на события
+# Отслеживание событий
 app.add_handler(CommandHandler('start', start))
+app.add_handler(CommandHandler('help', help))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message))
-# Запуск
+# Запуск приложения
+print('Запуск бота . . .')
 app.run_polling()
-
