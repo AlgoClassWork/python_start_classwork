@@ -29,11 +29,22 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         jokes = ['Колобок повесился', 'Русалка села шпагат', 'Рыба утонула']
         shuffle(jokes)
         await update.message.reply_text( jokes[0] )
+    elif 'фильм' in text:
+        await update.message.reply_text('Какой жанр вас интересует?')
+        context.user_data['ожидание жанра'] = True
+    elif context.user_data.get('ожидание жанра'):
+        context.user_data['ожидание жанра'] = False
+        if 'боевик' in text:
+            await update.message.reply_text('Форсаж')
+        elif 'комедия' in text:
+            await update.message.reply_text('Один дома')
+        else:
+            await update.message.reply_text('Таких жанров я не знаю')
     else:
         await update.message.reply_text('Извините я вас не понимаю')
 
 # ТОКЕН - позволяет соеденить вашего бота и код
-TOKEN = 'ВАШ ТОКЕН'
+TOKEN = '7962898757:AAEqwj-9f2sYh0u7_ar7XDUoDFjcVI99kOs'
 # Создаем наше телеграм приложение
 app = Application.builder().token(TOKEN).build()
 # Отслеживание событий
