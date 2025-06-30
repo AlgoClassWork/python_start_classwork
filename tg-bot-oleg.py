@@ -1,14 +1,20 @@
 # Импортируем нужные нам функции из библиотеки телеграм
 from random import shuffle
-from telegram import Update
+from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
+
+menu = ReplyKeyboardMarkup ([
+    [KeyboardButton('Привет'), KeyboardButton('Как дела?')],
+    [KeyboardButton('Шутка'), KeyboardButton('Посоветуй фильм')]
+])
 
 # Реакция на команду /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # update - информация о входящем сообщении
     # context - информация о пользовательских данных
     # reply_text - отправить ответ пользователю
-    await update.message.reply_text('Здравствуйте меня зовут Олег! /help')
+    await update.message.reply_text('Здравствуйте меня зовут Олег! /help',
+                                    reply_markup=menu)
 
 # Реакция на команду /help
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
