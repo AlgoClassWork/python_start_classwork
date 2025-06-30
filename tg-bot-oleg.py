@@ -8,6 +8,8 @@ menu = ReplyKeyboardMarkup ([
     [KeyboardButton('Шутка'), KeyboardButton('Посоветуй фильм')]
 ], resize_keyboard=True)
 
+meme_url = 'https://avatars.mds.yandex.net/i?id=c79301499be578b27f389bc921733542_l-10289644-images-thumbs&n=13'
+
 # Реакция на команду /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # update - информация о входящем сообщении
@@ -31,6 +33,10 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text('Вечер в хату!')
     elif 'как дела' in text:
         await update.message.reply_text('Отлично как у вас?')
+
+    elif 'мем' in text:
+        await update.message.reply_photo(photo=meme_url, caption='ахахахах')
+
     elif 'шутка' in text:
         jokes = ['Колобок повесился', 'Русалка села шпагат', 'Рыба утонула']
         shuffle(jokes)
