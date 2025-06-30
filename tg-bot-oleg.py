@@ -6,7 +6,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandl
 menu = ReplyKeyboardMarkup ([
     [KeyboardButton('Привет'), KeyboardButton('Как дела?')],
     [KeyboardButton('Шутка'), KeyboardButton('Посоветуй фильм')]
-])
+], resize_keyboard=True)
 
 # Реакция на команду /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
