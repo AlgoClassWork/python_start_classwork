@@ -1,6 +1,7 @@
+
 # Импортируем нужные нам функции из библиотеки телеграм
 from random import shuffle
-from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
+from telegram import Update, KeyboardButton, ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 
 menu = ReplyKeyboardMarkup ([
@@ -16,6 +17,12 @@ meme_url = ['https://avatars.mds.yandex.net/i?id=c79301499be578b27f389bc92173354
             'https://avatars.mds.yandex.net/i?id=5bae6c294e9c9a3c1b97bddc8a89d3c093420b23-3937533-images-thumbs&n=13',
             'https://images.steamusercontent.com/ugc/2053118509456565596/FDAC81B4F62A7BC79CB914DEA27C1815EA3DE698/'
             ]
+
+quiz_question = 'Какого цвета чернокожие?'
+quiz_answers = [
+    InlineKeyboardButton('Черные', callback_data='right'),
+    InlineKeyboardButton('Зеленые', callback_data='wrong'),
+]
 
 # Реакция на команду /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -55,7 +62,7 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif context.user_data.get('ожидание жанра'):
         context.user_data['ожидание жанра'] = False
         if 'боевик' in text:
-            await update.message.reply_text('Форсаж')
+            await update.message.reply_text('https://www.kinopoisk.ru/film/666/?utm_referrer=yandex.ru')
         elif 'комедия' in text:
             await update.message.reply_text('Один дома')
         else:
