@@ -1,4 +1,3 @@
-
 # Импортируем нужные нам функции из библиотеки телеграм
 from random import shuffle
 from telegram import Update, KeyboardButton, ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup
@@ -55,6 +54,10 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif 'шутка' in text:
         shuffle(jokes)
         await update.message.reply_text( jokes[0] )
+
+    elif 'викторина' in text:
+        answer_buttons = InlineKeyboardMarkup.from_row(quiz_answers)
+        await update.message.reply_text(quiz_question, reply_markup=answer_buttons)
 
     elif 'фильм' in text:
         await update.message.reply_text('Какой жанр вас интересует?')
