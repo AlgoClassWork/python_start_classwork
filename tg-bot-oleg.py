@@ -4,11 +4,18 @@ from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 
 menu = ReplyKeyboardMarkup ([
-    [KeyboardButton('Привет'), KeyboardButton('Как дела?')],
-    [KeyboardButton('Шутка'), KeyboardButton('Посоветуй фильм')]
+    [KeyboardButton('Привет 😀'), KeyboardButton('Как дела? 😴')],
+    [KeyboardButton('Шутка 💀'), KeyboardButton('Посоветуй фильм 💯')],
+    [KeyboardButton('Мем 👽')]
+
 ], resize_keyboard=True)
 
-meme_url = 'https://avatars.mds.yandex.net/i?id=c79301499be578b27f389bc921733542_l-10289644-images-thumbs&n=13'
+jokes = ['Колобок повесился', 'Русалка села шпагат', 'Рыба утонула']
+
+meme_url = ['https://avatars.mds.yandex.net/i?id=c79301499be578b27f389bc921733542_l-10289644-images-thumbs&n=13',
+            'https://avatars.mds.yandex.net/i?id=5bae6c294e9c9a3c1b97bddc8a89d3c093420b23-3937533-images-thumbs&n=13',
+            'https://images.steamusercontent.com/ugc/2053118509456565596/FDAC81B4F62A7BC79CB914DEA27C1815EA3DE698/'
+            ]
 
 # Реакция на команду /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -35,12 +42,13 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text('Отлично как у вас?')
 
     elif 'мем' in text:
-        await update.message.reply_photo(photo=meme_url, caption='ахахахах')
+        shuffle(meme_url)
+        await update.message.reply_photo(photo=meme_url[0], caption='ахахахах')
 
     elif 'шутка' in text:
-        jokes = ['Колобок повесился', 'Русалка села шпагат', 'Рыба утонула']
         shuffle(jokes)
         await update.message.reply_text( jokes[0] )
+
     elif 'фильм' in text:
         await update.message.reply_text('Какой жанр вас интересует?')
         context.user_data['ожидание жанра'] = True
