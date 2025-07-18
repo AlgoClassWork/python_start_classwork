@@ -34,6 +34,10 @@ while 'выкл' not in answer:
             else:
                 print('Поздравляем вы победили')
                 break
+
+    elif 'филь' in answer:
+        # Логика для рекомендаций фильмов
+        pass
     else:
         print('Я не понимаю такой команды')
     answer = input('Что бы вы хотели?').lower()
