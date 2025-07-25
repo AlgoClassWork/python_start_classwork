@@ -21,13 +21,22 @@ while True:
 
     keys = key.get_pressed()
     if keys[K_w] and pica_y > 0:
-        pica_y -= 1
+        pica_y -= 3
     if keys[K_s] and pica_y < 400:
-        pica_y += 1
+        pica_y += 3
     if keys[K_a] and pica_x > 0:
-        pica_x -= 1
+        pica_x -= 3
     if keys[K_d] and pica_x < 600:
-        pica_x += 1
+        pica_x += 3
+
+    if enemy_x > pica_x:
+        enemy_x -= 1
+    if enemy_x < pica_x:
+        enemy_x += 1
+    if enemy_y > pica_y:
+        enemy_y -= 1
+    if enemy_y < pica_y:
+        enemy_y += 1
     # Отображение картинок
     window.blit(background, (0, 0) )
     window.blit(pica, (pica_x, pica_y) )
