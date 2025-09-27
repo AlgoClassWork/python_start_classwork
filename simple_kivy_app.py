@@ -14,17 +14,17 @@ class StartScreen(Screen):
         layout = BoxLayout(orientation='vertical', spacing=50, padding=[50, 150])
 
         title = Label(
-            text='[b]Тест на слабоумие[/b]',
-            font_size='48sp',
+            text='Тест на \n слабоумие',
+            font_size='50px',
+            bold=True,
             color=(0.2, 0.2, 0.4, 1),
-            markup=True,
             halign='center',
             valign='middle'
         )
 
         button = Button(
             text='Начать',
-            font_size='24sp',
+            font_size='30px',
             size_hint=(0.6, 0.2),
             pos_hint={'center_x': 0.5},
             background_normal='',
