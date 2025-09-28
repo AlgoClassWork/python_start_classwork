@@ -31,12 +31,19 @@ class QuestionScreen(Screen):
         button2 = Button(text='-1', font_size='20px', background_color=(0.5, 0.5, 1, 1), size_hint=(1, 0.2))
         button3 = Button(text='Низнаю', font_size='20px', background_color=(0.5, 0.5, 1, 1), size_hint=(1, 0.2))
         button4 = Button(text='Другое', font_size='20px', background_color=(0.5, 0.5, 1, 1), size_hint=(1, 0.2))
+        button1.on_press = self.show_result
+        button2.on_press = self.show_result
+        button3.on_press = self.show_result
+        button4.on_press = self.show_result
         layout.add_widget(question)
         layout.add_widget(button1)
         layout.add_widget(button2)
         layout.add_widget(button3)
         layout.add_widget(button4)
         self.add_widget(layout)
+
+    def show_result(self):
+        self.manager.current = 'result'
 
 class ResultScreen(Screen):
     def __init__(self, **data):
