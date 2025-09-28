@@ -14,9 +14,14 @@ class StartScreen(Screen):
         layout = BoxLayout(orientation='vertical', padding=50)
         title = Label(text='Тест на \n слабоумие', color=(0, 0, 0, 1), font_size='50px', halign ='center')
         button = Button(text='Начать', font_size='30px', background_color=(0.5, 1, 0.5, 1), size_hint=(0.75, 0.25), pos_hint={'center_x': 0.5})
+        button.on_press = self.start_test
         layout.add_widget(title)
         layout.add_widget(button)
         self.add_widget(layout)
+
+    def start_test(self):
+        self.manager.current = 'question'
+
 
 class QuestionScreen(Screen):
     def __init__(self, **data):
