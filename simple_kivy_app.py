@@ -45,19 +45,24 @@ class QuestionScreen(Screen):
 
     def correct(self):
         app = App.get_running_app()
-        app.result = 'Поздравляю у тебя нет деменции'
+        app.result = 'Поздравляю \n у тебя нет \n деменции'
         self.manager.current = 'result'
 
     def incorrect(self):
         app = App.get_running_app()
-        app.result = 'Ты брат Ивана Золо'
+        app.result = 'Ты брат \n Ивана Золо'
         self.manager.current = 'result'
 
 class ResultScreen(Screen):
     def __init__(self, **data):
         super().__init__(**data)
+        self.result = Label(text='', color=(0,0,0,1), font_size='50px', halign='center')
+        self.add_widget(self.result)
 
-        
+    def on_enter(self):
+        app = App.get_running_app()
+        self.result.text = app.result
+
 class MyApp(App):
     result = ''
     def build(self):
