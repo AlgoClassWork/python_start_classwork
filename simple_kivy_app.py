@@ -26,19 +26,46 @@ class StartScreen(Screen):
 class QuestionScreen(Screen):
     def __init__(self, **data):
         super().__init__(**data)
+        layout = BoxLayout(orientation='vertical', padding=20, spacing=10)
+        question = Label(text='Сколько континентов?', color=(0,0,0,1), font_size='30px')
+        button1 = Button(text='48', font_size='20px', background_color=(0.5,0.5,1,1), size_hint=(1,0.2))
+        button2 = Button(text='-1', font_size='20px', background_color=(0.5,0.5,1,1), size_hint=(1,0.2))
+        button3 = Button(text='синий', font_size='20px', background_color=(0.5,0.5,1,1), size_hint=(1,0.2))
+        button4 = Button(text='7', font_size='20px', background_color=(0.5,0.5,1,1), size_hint=(1,0.2))
+        button1.on_press = self.incorrect
+        button2.on_press = self.incorrect
+        button3.on_press = self.incorrect
+        button4.on_press = self.correct
+        layout.add_widget(question)
+        layout.add_widget(button1)
+        layout.add_widget(button2)
+        layout.add_widget(button3)
+        layout.add_widget(button4)
+        self.add_widget(layout)
+
+    def correct(self):
+        app = App.get_running_app()
+        app.result = 'Поздравляю у тебя нет деменции'
+        self.manager.current = 'result'
+
+    def incorrect(self):
+        app = App.get_running_app()
+        app.result = 'Ты брат Ивана Золо'
+        self.manager.current = 'result'
 
 class ResultScreen(Screen):
     def __init__(self, **data):
         super().__init__(**data)
+
         
 class MyApp(App):
-    last_result = ''
+    result = ''
     def build(self):
         screen_manager = ScreenManager()
         screen_manager.add_widget(StartScreen(name='start'))
         screen_manager.add_widget(QuestionScreen(name='question'))
         screen_manager.add_widget(ResultScreen(name='result'))
         return screen_manager
-
+    
 app = MyApp()
 app.run()
