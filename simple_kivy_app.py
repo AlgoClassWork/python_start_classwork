@@ -25,6 +25,18 @@ class StartScreen(Screen):
 class QuestionScreen(Screen):
     def __init__(self, **data):
         super().__init__(**data)
+        layout = BoxLayout(orientation='vertical', padding=20, spacing=10)
+        question = Label(text='Сколько вам лет?', color=(0,0,0,1), font_size='30px')
+        button1 = Button(text='500', font_size='20px', background_color=(0.5, 0.5, 1, 1), size_hint=(1, 0.2))
+        button2 = Button(text='-1', font_size='20px', background_color=(0.5, 0.5, 1, 1), size_hint=(1, 0.2))
+        button3 = Button(text='Низнаю', font_size='20px', background_color=(0.5, 0.5, 1, 1), size_hint=(1, 0.2))
+        button4 = Button(text='Другое', font_size='20px', background_color=(0.5, 0.5, 1, 1), size_hint=(1, 0.2))
+        layout.add_widget(question)
+        layout.add_widget(button1)
+        layout.add_widget(button2)
+        layout.add_widget(button3)
+        layout.add_widget(button4)
+        self.add_widget(layout)
 
 class ResultScreen(Screen):
     def __init__(self, **data):
