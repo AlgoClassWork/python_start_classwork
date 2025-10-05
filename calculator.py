@@ -119,7 +119,30 @@ h4_line.addWidget(button_0)
 h4_line.addWidget(button_equal)
 h4_line.addWidget(button_devide)
 
+# Функционал
+def button_text(symbol, operation_field):
+    current_text = operation_field.text()
+    new_text = current_text + symbol
+    operation_field.setText(new_text)
+
+# Подписки на события
+button_0.clicked.connect( lambda: button_text('0', operation_field) )
+button_1.clicked.connect( lambda: button_text('1', operation_field) )
+button_2.clicked.connect( lambda: button_text('2', operation_field) )
+button_3.clicked.connect( lambda: button_text('3', operation_field) )
+button_4.clicked.connect( lambda: button_text('4', operation_field) )
+button_5.clicked.connect( lambda: button_text('5', operation_field) )
+button_6.clicked.connect( lambda: button_text('6', operation_field) )
+button_7.clicked.connect( lambda: button_text('7', operation_field) )
+button_8.clicked.connect( lambda: button_text('8', operation_field) )
+button_9.clicked.connect( lambda: button_text('9', operation_field) )
+button_plus.clicked.connect( lambda: button_text('+', operation_field) )
+button_minus.clicked.connect( lambda: button_text('-', operation_field) )
+button_multiply.clicked.connect( lambda: button_text('*', operation_field) )
+button_devide.clicked.connect( lambda: button_text('/', operation_field) )
+
+
 window.setLayout(main_line)
-window.resize(400, 500)
+window.resize(500, 300)
 window.show()
 app.exec()
