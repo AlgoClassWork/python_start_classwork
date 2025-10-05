@@ -120,6 +120,14 @@ h4_line.addWidget(button_equal)
 h4_line.addWidget(button_devide)
 
 # Функционал
+def calculate(operation_field):
+    try:
+        current_text = operation_field.text() 
+        result = str( eval(current_text) )
+        operation_field.setText( result )
+    except:
+        operation_field.setText('Error')
+
 def button_text(symbol, operation_field):
     current_text = operation_field.text()
     new_text = current_text + symbol
@@ -145,6 +153,7 @@ button_multiply.clicked.connect( lambda: button_text('*', operation_field) )
 button_devide.clicked.connect( lambda: button_text('/', operation_field) )
 
 button_reset.clicked.connect( lambda: clear_field(operation_field) )
+button_equal.clicked.connect( lambda: calculate(operation_field) )
 
 window.setLayout(main_line)
 window.resize(500, 300)
