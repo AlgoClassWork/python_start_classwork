@@ -125,6 +125,9 @@ def button_text(symbol, operation_field):
     new_text = current_text + symbol
     operation_field.setText(new_text)
 
+def clear_field(operation_field):
+    operation_field.clear()
+
 # Подписки на события
 button_0.clicked.connect( lambda: button_text('0', operation_field) )
 button_1.clicked.connect( lambda: button_text('1', operation_field) )
@@ -141,6 +144,7 @@ button_minus.clicked.connect( lambda: button_text('-', operation_field) )
 button_multiply.clicked.connect( lambda: button_text('*', operation_field) )
 button_devide.clicked.connect( lambda: button_text('/', operation_field) )
 
+button_reset.clicked.connect( lambda: clear_field(operation_field) )
 
 window.setLayout(main_line)
 window.resize(500, 300)
