@@ -53,6 +53,69 @@ line_main.addWidget(button_ok)
 
 window.setLayout(line_main)
 
+# Стилизация
+app.setStyleSheet("""
+    QWidget {
+        background-color: #e0e5ec;
+        font-family: "Segoe UI", Arial;
+        font-size: 16px;
+        color: #333;
+    }
+
+    QLabel {
+        font-size: 18px;
+        padding: 5px;
+        color: #2a2a2a;
+    }
+
+    QGroupBox {
+        border: none;
+        border-radius: 12px;
+        background-color: #e0e5ec;
+        padding: 15px;
+        margin-top: 15px;
+        font-weight: bold;
+        color: #2a2a2a;
+        box-shadow: inset 3px 3px 7px #bec4cc, inset -3px -3px 7px #ffffff;
+    }
+
+    QGroupBox::title {
+        subcontrol-origin: margin;
+        left: 10px;
+        top: -7px;
+        padding: 0 5px;
+        background-color: #e0e5ec;
+    }
+
+    QRadioButton {
+        spacing: 12px;
+        padding: 8px;
+        border-radius: 6px;
+    }
+
+    QRadioButton:hover {
+        background-color: #d6dbdf;
+    }
+
+    QPushButton {
+        background-color: #4a90e2;
+        color: white;
+        padding: 10px 18px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    QPushButton:hover {
+        background-color: #3f7fc1;
+    }
+
+    QPushButton:pressed {
+        background-color: #356aad;
+    }
+""")
+
 # Запуск приложения
 group_result.hide()
 window.show()
