@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, shuffle
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QVBoxLayout, QHBoxLayout,
@@ -214,14 +214,17 @@ app.setStyleSheet("""
     }
 """)
 
-def ask(question : Question):
-    label_question.setText( question.question )
-    rbutton1.setText( question.correct )
-    rbutton2.setText( question.wrong1 )
-    rbutton3.setText( question.wrong2 )
-    rbutton4.setText( question.wrong3 )
-
 # Функционал
+rbuttons = [rbutton1, rbutton2, rbutton3, rbutton4]
+
+def ask(question : Question):
+    shuffle(rbuttons)
+    label_question.setText( question.question )
+    rbuttons[0].setText( question.correct )
+    rbuttons[1].setText( question.wrong1 )
+    rbuttons[2].setText( question.wrong2 )
+    rbuttons[3].setText( question.wrong3 )
+
 def show_question():
     group_answer.show()
     group_result.hide()
@@ -235,7 +238,7 @@ def show_result():
     check_answer()
 
 def check_answer():
-    if rbutton4.isChecked():
+    if rbuttons[0].isChecked():
         label_result.setText('Правильно')
     else:
         label_result.setText('Не правильно')
@@ -250,6 +253,6 @@ def change_screen():
 
 button_ok.clicked.connect(change_screen)
 # Запуск приложения
-group_result.hide()
+show_question()
 window.show()
 app.exec()
