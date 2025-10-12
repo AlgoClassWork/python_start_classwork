@@ -1,3 +1,4 @@
+from random import randint
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QVBoxLayout, QHBoxLayout,
@@ -27,7 +28,6 @@ questions = [
     Question('Зачем компьютеру тапочки?', 'Чтобы не мёрзли USB-порты', 'Для комфорта', 'Он идёт гулять', 'Чтобы не скользил по столу'),
     Question('Можно ли сварить чай в Wi-Fi?', 'Нет, но можно попробовать', 'Да, если сильно верить', 'Только в микроволновом облаке', 'Wi-Fi не кипит, он парит'),
 ]
-
 
 # Создание обьектов интерфейса
 app = QApplication([])
@@ -219,6 +219,14 @@ def show_question():
     group_answer.show()
     group_result.hide()
     button_ok.setText('ОТВЕТИТЬ')
+
+    # Показ нового вопроса
+    question = questions[ randint(0, len(questions) - 1) ]
+    label_question.setText( question.question )
+    rbutton1.setText( question.correct )
+    rbutton2.setText( question.wrong1 )
+    rbutton3.setText( question.wrong2 )
+    rbutton4.setText( question.wrong3 )
 
 def show_result():
     group_answer.hide()
