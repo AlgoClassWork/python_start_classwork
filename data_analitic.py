@@ -1,6 +1,10 @@
 import pandas 
+
 # Извлечение данных
 apps = pandas.read_csv('apps.csv')
+
+'''БАЗОВЫЕ КОМАНДЫ'''
+
 # Информация о таблице
 apps.info()
 # Вывести всю таблицу
@@ -9,6 +13,9 @@ print( apps )
 print( apps['App'] )
 # Вывести средний рейтинг всех приложений
 print( apps['Rating'].mean() )
+
+'''ФИЛЬТРАЦИЯ'''
+
 # Вывести все дорогие приложения (дороже 100 баксов)
 print( apps[ apps['Price'] > 99 ] )
 # Вывести кол-во отзывов всех приложений для знакомств
@@ -21,3 +28,17 @@ print( apps[ ( apps['Size'] > 99 ) & ( apps['Price'] < 20 ) ] )
 print( apps[ ( apps['Installs'] > 100000 ) & ( apps['Rating'] > 4.8 ) ]['App'] )
 # Вывести среднее количество оценок всех приложения которые весят меньше 1 мб и они платные
 print( apps[ ( apps['Type'] == 'Paid' ) & ( apps['Size'] < 1 ) ]['Reviews'].mean() )
+
+'''ГРУППИРОВКА'''
+
+# Узнать сколько всего платных и бесплатных приложений
+print( apps['Type'].value_counts() )
+# Узнать среднее количество установок среди разных целевых аудиторий
+print( apps.groupby(by='Content Rating')['Installs'].mean() )
+# Узнать минимальное и максимальное количество отзывов среди разных категорий
+print( apps.groupby(by='Category')['Reviews'].agg(['min','max']) )
+# Узнать средний и медианный рейтинг платных и бесплатных приложений в каждой ЦА
+print( apps.groupby(by=['Type', 'Content Rating'])['Rating'].agg(['mean', 'median']))
+# Решение через сводную таблица 
+print( apps.pivot_table(values='Rating', index='Content Rating', columns='Type', aggfunc=['mean', 'median']) )
+# Узнать медианное количество установок среди платных и бесплатных приложений в каждой Категории
