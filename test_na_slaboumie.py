@@ -191,6 +191,19 @@ app.setStyleSheet("""
     }
 """)
 
+# Функционал
+def change_screen():
+    if button_ok.text() == 'ОТВЕТИТЬ':
+        group_answer.hide()
+        group_result.show()
+        button_ok.setText('Следующий вопрос')
+
+    elif button_ok.text() == 'Следующий вопрос':
+        group_answer.show()
+        group_result.hide()
+        button_ok.setText('ОТВЕТИТЬ')
+
+button_ok.clicked.connect(change_screen)
 # Запуск приложения
 group_result.hide()
 window.show()
