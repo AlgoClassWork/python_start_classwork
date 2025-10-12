@@ -42,3 +42,4 @@ print( apps.groupby(by=['Type', 'Content Rating'])['Rating'].agg(['mean', 'media
 # Решение через сводную таблица 
 print( apps.pivot_table(values='Rating', index='Content Rating', columns='Type', aggfunc=['mean', 'median']) )
 # Узнать медианное количество установок среди платных и бесплатных приложений в каждой Категории
+print( apps.pivot_table(values='Installs', index='Category', columns='Type', aggfunc='median') )
