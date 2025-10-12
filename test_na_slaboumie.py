@@ -192,16 +192,30 @@ app.setStyleSheet("""
 """)
 
 # Функционал
+def show_question():
+    group_answer.show()
+    group_result.hide()
+    button_ok.setText('ОТВЕТИТЬ')
+
+def show_result():
+    group_answer.hide()
+    group_result.show()
+    button_ok.setText('Следующий вопрос')
+    check_answer()
+
+def check_answer():
+    if rbutton4.isChecked():
+        label_result.setText('Правильно')
+    else:
+        label_result.setText('Не правильно')
+
+    label_correct.setText('Тут нет моего имени')
+
 def change_screen():
     if button_ok.text() == 'ОТВЕТИТЬ':
-        group_answer.hide()
-        group_result.show()
-        button_ok.setText('Следующий вопрос')
-
+        show_result()
     elif button_ok.text() == 'Следующий вопрос':
-        group_answer.show()
-        group_result.hide()
-        button_ok.setText('ОТВЕТИТЬ')
+        show_question()
 
 button_ok.clicked.connect(change_screen)
 # Запуск приложения
