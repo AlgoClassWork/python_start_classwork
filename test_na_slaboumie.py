@@ -224,12 +224,15 @@ def ask(question : Question):
     rbuttons[1].setText( question.wrong1 )
     rbuttons[2].setText( question.wrong2 )
     rbuttons[3].setText( question.wrong3 )
+    return question.correct
 
 def show_question():
     group_answer.show()
     group_result.hide()
     button_ok.setText('ОТВЕТИТЬ')
-    ask( questions[ randint(0, len(questions) - 1) ] )
+
+    correct = ask( questions[ randint(0, len(questions) - 1) ] )
+    label_correct.setText( correct )
 
 def show_result():
     group_answer.hide()
@@ -242,8 +245,6 @@ def check_answer():
         label_result.setText('Правильно')
     else:
         label_result.setText('Не правильно')
-
-    label_correct.setText('Тут нет моего имени')
 
 def change_screen():
     if button_ok.text() == 'ОТВЕТИТЬ':
