@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QVBoxLayout, QHBoxLayout,
     QLabel, QGroupBox,
-    QRadioButton, QPushButton,
+    QRadioButton, QPushButton, QButtonGroup
 )
 from PyQt5.QtCore import Qt
 
@@ -47,10 +47,16 @@ button_ok.setFixedHeight(50)
 # Форма с вариантами ответов
 group_answer = QGroupBox('📝 Варианты ответов') # Добавим иконку
 group_answer.setObjectName("GroupBoxAnswer")
-rbutton1 = QRadioButton('Забыл')
-rbutton2 = QRadioButton('Зеленый')
-rbutton3 = QRadioButton('Сорок семь')
-rbutton4 = QRadioButton('Тут нет моего имени')
+rbutton1 = QRadioButton('')
+rbutton2 = QRadioButton('')
+rbutton3 = QRadioButton('')
+rbutton4 = QRadioButton('')
+
+button_group = QButtonGroup()
+button_group.addButton(rbutton1)
+button_group.addButton(rbutton2)
+button_group.addButton(rbutton3)
+button_group.addButton(rbutton4)
 
 # Форма с результатами
 group_result = QGroupBox('✅ Результаты') # Добавим иконку
@@ -230,6 +236,13 @@ def show_question():
     group_answer.show()
     group_result.hide()
     button_ok.setText('ОТВЕТИТЬ')
+
+    button_group.setExclusive(False)
+    rbutton1.setChecked(False)
+    rbutton2.setChecked(False)
+    rbutton3.setChecked(False)
+    rbutton4.setChecked(False)
+    button_group.setExclusive(True)
 
     correct = ask( questions[ randint(0, len(questions) - 1) ] )
     label_correct.setText( correct )
