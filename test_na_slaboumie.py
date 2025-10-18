@@ -44,6 +44,8 @@ button_ok = QPushButton('ОТВЕТИТЬ')
 button_ok.setObjectName("ActionButton")
 button_ok.setFixedHeight(50)
 
+label_answer_stat = QLabel('')
+
 # Форма с вариантами ответов
 group_answer = QGroupBox('📝 Варианты ответов') # Добавим иконку
 group_answer.setObjectName("GroupBoxAnswer")
@@ -100,6 +102,7 @@ group_result.setMinimumHeight(120)
 
 # Размещение всех виджетов
 line_main.addWidget(label_question)
+line_main.addWidget(label_answer_stat)
 line_main.addSpacing(15)
 line_main.addWidget(group_answer)
 line_main.addWidget(group_result)
@@ -255,9 +258,15 @@ def show_result():
 
 def check_answer():
     if rbuttons[0].isChecked():
+        window.correct_answer += 1
         label_result.setText('Правильно')
     else:
         label_result.setText('Не правильно')
+    
+    window.total_question += 1  
+    procent = int(window.correct_answer / window.total_question * 100)
+    result_text = f'Ваш винрейт {procent} %'
+    label_answer_stat.setText(result_text)
 
 def change_screen():
     if button_ok.text() == 'ОТВЕТИТЬ':
@@ -267,6 +276,11 @@ def change_screen():
 
 button_ok.clicked.connect(change_screen)
 # Запуск приложения
+window.total_question = 0
+window.correct_answer = 0
 show_question()
 window.show()
 app.exec()
+
+
+
