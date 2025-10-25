@@ -26,19 +26,24 @@ main_line = QHBoxLayout()
 left_line = QVBoxLayout()
 right_line = QVBoxLayout()
 
+films_btn_line = QHBoxLayout()
+genres_btn_line = QHBoxLayout()
+
 main_line.addLayout(left_line)
 main_line.addLayout(right_line)
 
 left_line.addWidget(description_field)
 
 right_line.addWidget(films_list)
-right_line.addWidget(add_film_btn)
-right_line.addWidget(del_film_btn)
+right_line.addLayout(films_btn_line)
+films_btn_line.addWidget(add_film_btn)
+films_btn_line.addWidget(del_film_btn)
 right_line.addWidget(update_description_btn)
 right_line.addWidget(genres_list)
 right_line.addWidget(genre_field)
-right_line.addWidget(add_genre_btn)
-right_line.addWidget(del_genre_btn)
+right_line.addLayout(genres_btn_line)
+genres_btn_line.addWidget(add_genre_btn)
+genres_btn_line.addWidget(del_genre_btn)
 right_line.addWidget(search_film_btn)
 
 window.setLayout(main_line)
