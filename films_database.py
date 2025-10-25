@@ -1,21 +1,30 @@
 from PyQt5.QtWidgets import (
     QApplication, QWidget, 
-    QPushButton, QLabel, QListWidget, QLineEdit, QTextEdit,
+    QPushButton, QListWidget, QLineEdit, QTextEdit,
     QHBoxLayout, QVBoxLayout
 )
 # Создание интерфейса
 app = QApplication([])
 window = QWidget()
+window.resize(800,500)
+window.setWindowTitle('Кинопоиск')
+
 
 description_field = QTextEdit()
+description_field.setPlaceholderText('Введите описание')
 
 films_list = QListWidget()
+films_list.addItem('Форсаж')
+films_list.addItem('Мстители')
 add_film_btn = QPushButton('Добавить фильм')
 del_film_btn = QPushButton('Удалить фильм')
 update_description_btn = QPushButton('Обновить описание')
 
 genres_list = QListWidget()
+genres_list.addItem('Боевик')
+genres_list.addItem('Фантастика')
 genre_field = QLineEdit()
+genre_field.setPlaceholderText('Введите жанр')
 add_genre_btn = QPushButton('Добавить жанр')
 del_genre_btn = QPushButton('Удалить жанр')
 search_film_btn = QPushButton('Поиск по жанру')
