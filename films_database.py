@@ -1,19 +1,9 @@
+import json
 from PyQt5.QtWidgets import (
     QApplication, QWidget, 
-    QPushButton, QListWidget, QLineEdit, QTextEdit,
+    QPushButton, QListWidget, QLineEdit, QTextEdit, QInputDialog,
     QHBoxLayout, QVBoxLayout
 )
-
-# База данных
-
-films = {
-    'хатико': { 'описание' : 'грустный фильм',
-                'жанры': ['боевик', 'ужасы']  },
-    'оно': { 'описание' : 'страшный фильм',
-                'жанры': ['романтика', 'комедия']  },  
-    'семь': { 'описание' : 'обычный фильм',
-                'жанры': ['триллер', 'военный']  },      
-}
 
 # Создание интерфейса
 app = QApplication([])
@@ -72,10 +62,20 @@ def show_film():
     genres_list.clear()
     genres_list.addItems(films[film]['жанры'])
 
+def add_film():
+    film, ok = QInputDialog().getText(window, 'Добавить фильм', 'Название фильма:')
+    if film and ok:
+        films_list.addItem( film )
+        films[ film ] = { 'описание' : '','жанры': []  }
+
 # Подписки на события
 films_list.itemClicked.connect( show_film )
+add_film_btn.clicked.connect( add_film )
 
 # Запуск приложения
+file = open('films.json', 'r', encoding='utf-8') 
+films = json.load(file)
+
 films_list.addItems(films)
 
 window.show()
