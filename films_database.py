@@ -3,6 +3,18 @@ from PyQt5.QtWidgets import (
     QPushButton, QListWidget, QLineEdit, QTextEdit,
     QHBoxLayout, QVBoxLayout
 )
+
+# База данных
+
+films = {
+    'хатико': { 'описание' : 'грустный фильм',
+                'жанры': ['боевик', 'ужасы']  },
+    'оно': { 'описание' : 'страшный фильм',
+                'жанры': ['романтика', 'комедия']  },  
+    'семь': { 'описание' : 'обычный фильм',
+                'жанры': ['триллер', 'военный']  },      
+}
+
 # Создание интерфейса
 app = QApplication([])
 window = QWidget()
@@ -14,15 +26,11 @@ description_field = QTextEdit()
 description_field.setPlaceholderText('Введите описание')
 
 films_list = QListWidget()
-films_list.addItem('Форсаж')
-films_list.addItem('Мстители')
 add_film_btn = QPushButton('Добавить фильм')
 del_film_btn = QPushButton('Удалить фильм')
 update_description_btn = QPushButton('Обновить описание')
 
 genres_list = QListWidget()
-genres_list.addItem('Боевик')
-genres_list.addItem('Фантастика')
 genre_field = QLineEdit()
 genre_field.setPlaceholderText('Введите жанр')
 add_genre_btn = QPushButton('Добавить жанр')
@@ -56,6 +64,19 @@ genres_btn_line.addWidget(del_genre_btn)
 right_line.addWidget(search_film_btn)
 
 window.setLayout(main_line)
+
+# Фукнционал приложения
+def show_film():
+    film = films_list.selectedItems()[0].text() 
+    description_field.setText(films[film]['описание'])
+    genres_list.clear()
+    genres_list.addItems(films[film]['жанры'])
+
+# Подписки на события
+films_list.itemClicked.connect( show_film )
+
 # Запуск приложения
+films_list.addItems(films)
+
 window.show()
 app.exec()
