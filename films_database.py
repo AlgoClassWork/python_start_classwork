@@ -83,11 +83,29 @@ def del_film():
         films_list.addItems(films)
         update_db()
 
-
 def update_description():
     if films_list.selectedItems():
         film = films_list.selectedItems()[0].text()
         films[film]['описание'] = description_field.toPlainText()
+        update_db()
+
+def add_genre():
+    if films_list.selectedItems():
+        film = films_list.selectedItems()[0].text()
+        genre = genre_field.text()
+        if genre:
+            films[film]['жанры'].append(genre)
+            genres_list.addItem(genre)
+            genre_field.clear()
+            update_db()
+
+def del_genre():
+    if films_list.selectedItems():
+        film = films_list.selectedItems()[0].text()
+        genre = genres_list.selectedItems()[0].text()
+        films[film]['жанры'].remove(genre)
+        genres_list.clear()
+        genres_list.addItems(films[film]['жанры'])
         update_db()
 
 # Подписки на события
@@ -95,6 +113,8 @@ films_list.itemClicked.connect( show_film )
 add_film_btn.clicked.connect( add_film )
 del_film_btn.clicked.connect( del_film )
 update_description_btn.clicked.connect( update_description )
+add_genre_btn.clicked.connect(add_genre)
+del_genre_btn.clicked.connect(del_genre)
 
 # Запуск приложения
 file = open('films.json', 'r', encoding='utf-8') 
