@@ -71,12 +71,17 @@ def add_film():
     if film and ok:
         films_list.addItem( film )
         films[ film ] = { 'описание' : '','жанры': []  }
-        
         update_db()
+
+def update_description():
+    film = films_list.selectedItems()[0].text()
+    films[film]['описание'] = description_field.toPlainText()
+    update_db()
 
 # Подписки на события
 films_list.itemClicked.connect( show_film )
 add_film_btn.clicked.connect( add_film )
+update_description_btn.clicked.connect( update_description )
 
 # Запуск приложения
 file = open('films.json', 'r', encoding='utf-8') 
