@@ -100,7 +100,7 @@ def add_genre():
             update_db()
 
 def del_genre():
-    if films_list.selectedItems():
+    if films_list.selectedItems() and genres_list.selectedItems():
         film = films_list.selectedItems()[0].text()
         genre = genres_list.selectedItems()[0].text()
         films[film]['жанры'].remove(genre)
