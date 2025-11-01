@@ -56,6 +56,10 @@ right_line.addWidget(search_film_btn)
 window.setLayout(main_line)
 
 # Фукнционал приложения
+def update_db():
+    file = open('films.json', 'w', encoding='utf-8') 
+    json.dump(films, file, ensure_ascii=False)
+
 def show_film():
     film = films_list.selectedItems()[0].text() 
     description_field.setText(films[film]['описание'])
@@ -67,6 +71,8 @@ def add_film():
     if film and ok:
         films_list.addItem( film )
         films[ film ] = { 'описание' : '','жанры': []  }
+        
+        update_db()
 
 # Подписки на события
 films_list.itemClicked.connect( show_film )
