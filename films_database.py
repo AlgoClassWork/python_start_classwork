@@ -73,14 +73,27 @@ def add_film():
         films[ film ] = { 'описание' : '','жанры': []  }
         update_db()
 
+def del_film():
+    if films_list.selectedItems():
+        film = films_list.selectedItems()[0].text() 
+        del films[film]
+        films_list.clear()
+        genres_list.clear()
+        description_field.clear()
+        films_list.addItems(films)
+        update_db()
+
+
 def update_description():
-    film = films_list.selectedItems()[0].text()
-    films[film]['описание'] = description_field.toPlainText()
-    update_db()
+    if films_list.selectedItems():
+        film = films_list.selectedItems()[0].text()
+        films[film]['описание'] = description_field.toPlainText()
+        update_db()
 
 # Подписки на события
 films_list.itemClicked.connect( show_film )
 add_film_btn.clicked.connect( add_film )
+del_film_btn.clicked.connect( del_film )
 update_description_btn.clicked.connect( update_description )
 
 # Запуск приложения
