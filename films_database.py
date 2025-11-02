@@ -137,6 +137,83 @@ add_genre_btn.clicked.connect(add_genre)
 del_genre_btn.clicked.connect(del_genre)
 search_film_btn.clicked.connect(search_film)
 
+
+# Стилизация приложения
+app.setStyleSheet("""
+    QWidget {
+        background-color: #f7f7f7;
+        color: #2e2e2e;
+        font-family: 'Segoe UI', 'Roboto', sans-serif;
+        font-size: 16px;
+    }
+
+    QTextEdit, QListWidget, QLineEdit {
+        background-color: #ffffff;
+        border: 1px solid #dcdcdc;
+        border-radius: 6px;
+        padding: 6px;
+    }
+
+    QTextEdit:focus, QListWidget:focus, QLineEdit:focus {
+        border: 1px solid #6c63ff;
+    }
+
+    QPushButton {
+        background-color: #6c63ff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 6px 12px;
+        font-weight: 500;
+    }
+
+    QPushButton:hover {
+        background-color: #5a54e3;
+    }
+
+    QPushButton:pressed {
+        background-color: #4e49c7;
+    }
+
+    QPushButton#search_film_btn {
+        background-color: #00bfa5;
+    }
+
+    QPushButton#search_film_btn:hover {
+        background-color: #00a48e;
+    }
+
+    QPushButton#search_film_btn:pressed {
+        background-color: #008c78;
+    }
+
+    QListWidget {
+        border: 1px solid #dcdcdc;
+        border-radius: 6px;
+    }
+
+    QListWidget::item:selected {
+        background-color: #6c63ff;
+        color: white;
+        border-radius: 4px;
+    }
+
+    QScrollBar:vertical {
+        background: transparent;
+        width: 8px;
+        margin: 2px;
+    }
+
+    QScrollBar::handle:vertical {
+        background: #cccccc;
+        border-radius: 4px;
+    }
+
+    QScrollBar::handle:vertical:hover {
+        background: #b3b3b3;
+    }
+""")
+
 # Запуск приложения
 file = open('films.json', 'r', encoding='utf-8') 
 films = json.load(file)
