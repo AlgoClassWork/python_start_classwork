@@ -1,7 +1,8 @@
 import os
+from PIL import Image
 from PyQt5.QtWidgets import (
    QApplication, QWidget,
-   QFileDialog, # Диалог открытия файлов (и папок)
+   QFileDialog,
    QLabel, QPushButton, QListWidget,
    QHBoxLayout, QVBoxLayout
 )
@@ -43,6 +44,18 @@ window.setLayout(main_line)
 
 
 # Функционал
+class ImageEditor():
+   def __init__(self):
+      self.image = None 
+      self.dir = None 
+      self.filename = None
+
+   def load_image(self, dir, filename):
+      self.dir = dir # c:/Users/Kyxec/Desktop/easy/
+      self.filename = filename # cat.jpg
+      image_path = os.path.join(dir, filename) # c:/Users/Kyxec/Desktop/easy/cat.jpg
+      self.image = Image.open( image_path )
+
 def show_images():
    workdir = QFileDialog().getExistingDirectory()
    if workdir:
