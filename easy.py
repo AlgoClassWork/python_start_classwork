@@ -1,11 +1,12 @@
 import os
 from PIL import Image
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
    QApplication, QWidget,
    QFileDialog,
    QLabel, QPushButton, QListWidget,
    QHBoxLayout, QVBoxLayout)
-from PyQt5.QtGui import QPixmap
 
 app = QApplication([])
 window = QWidget()       
@@ -59,6 +60,7 @@ class ImageEditor():
 
    def show_image(self):
       image = QPixmap(self.path)
+      image = image.scaled(image_lable.width(), image_lable.height(), Qt.KeepAspectRatio)
       image_lable.setPixmap(image)
 
 def show_files():
