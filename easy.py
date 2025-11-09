@@ -4,8 +4,8 @@ from PyQt5.QtWidgets import (
    QApplication, QWidget,
    QFileDialog,
    QLabel, QPushButton, QListWidget,
-   QHBoxLayout, QVBoxLayout
-)
+   QHBoxLayout, QVBoxLayout)
+from PyQt5.QtGui import QPixmap
 
 app = QApplication([])
 window = QWidget()       
@@ -49,12 +49,17 @@ class ImageEditor():
       self.image = None 
       self.dir = None 
       self.filename = None
+      self.path = None
 
    def load_image(self, dir, filename):
       self.dir = dir # c:/Users/Kyxec/Desktop/easy/
       self.filename = filename # cat.jpg
-      image_path = os.path.join(dir, filename) # c:/Users/Kyxec/Desktop/easy/cat.jpg
-      self.image = Image.open( image_path )
+      self.path = os.path.join(dir, filename) # c:/Users/Kyxec/Desktop/easy/cat.jpg
+      self.image = Image.open( self.path )
+
+   def show_image(self):
+      image = QPixmap(self.path)
+      image_lable.setPixmap(image)
 
 def show_files():
    global workdir
@@ -69,6 +74,7 @@ def show_files():
 def show_chosen_image():
    filename = files_list.currentItem().text()
    image_editor.load_image( workdir, filename)
+   image_editor.show_image()
 
 # Подписки на события
 files_list.itemClicked.connect(show_chosen_image)
