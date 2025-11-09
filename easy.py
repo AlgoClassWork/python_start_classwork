@@ -1,3 +1,4 @@
+import os
 from PyQt5.QtWidgets import (
    QApplication, QWidget,
    QFileDialog, # Диалог открытия файлов (и папок)
@@ -40,6 +41,19 @@ main_line.addLayout(col1, 20)
 main_line.addLayout(col2, 80)
 window.setLayout(main_line)
 
+
+# Функционал
+def show_images():
+   workdir = QFileDialog().getExistingDirectory()
+   if workdir:
+      files = os.listdir( workdir )
+      files_list.clear()
+      for file in files:
+         if file.endswith('.jpg'):
+            files_list.addItem(file)
+
+# Подписки на события
+folder_button.clicked.connect(show_images)
 
 window.show()
 app.exec()
