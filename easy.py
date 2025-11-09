@@ -56,7 +56,8 @@ class ImageEditor():
       image_path = os.path.join(dir, filename) # c:/Users/Kyxec/Desktop/easy/cat.jpg
       self.image = Image.open( image_path )
 
-def show_images():
+def show_files():
+   global workdir
    workdir = QFileDialog().getExistingDirectory()
    if workdir:
       files = os.listdir( workdir )
@@ -65,8 +66,14 @@ def show_images():
          if file.endswith('.jpg'):
             files_list.addItem(file)
 
-# Подписки на события
-folder_button.clicked.connect(show_images)
+def show_chosen_image():
+   filename = files_list.currentItem().text()
+   image_editor.load_image( workdir, filename)
 
+# Подписки на события
+files_list.itemClicked.connect(show_chosen_image)
+folder_button.clicked.connect(show_files)
+
+image_editor = ImageEditor()
 window.show()
 app.exec()
