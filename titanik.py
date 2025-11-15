@@ -1,64 +1,46 @@
-import pandas
-
-data = pandas.read_csv('titanic.csv')
-
-age_1 = data[ data['Pclass'] == 1 ]['Age'].median()
-age_2 = data[ data['Pclass'] == 2 ]['Age'].median()
-age_3 = data[ data['Pclass'] == 3 ]['Age'].median()
-
-def fill_age(row):
-    if pandas.isnull( row['Age'] ):
-        if row['Pclass'] == 1:
-            return age_1
-        if row['Pclass'] == 2:
-            return age_2
-        if row['Pclass'] == 3:
-            return age_3
-    else:
-        return row['Age']
-    
-def fill_sex(sex):
-    if sex == 'male':
-        return 1
-    else:
-        return 0
-
-data['Age'] = data.apply(fill_age, axis = 1)
-data['Sex'] = data['Sex'].apply(fill_sex)
-
-data.drop(['PassengerId','Pclass','Name','Ticket','Fare','Cabin','Embarked'],
-          axis=1, inplace=True)
-
-
-# CОЗДАНИЕ МАТЕМАТИЧЕСКОЙ МОДЕЛИ
-# pip install scikit-learn
+import pandas 
+#pip install scikit-learn
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
-# Разделение признаков (возраст пол и тд) и целевой переменной (итог выживания)
-x = data.drop('Survived', axis=1)
-y = data['Survived']
-# Разделение данных на те что будут обучать модель и на те что будут ее тестировать
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
-# Мастштабирование наших данных (превращаем числа в проценты)
+# Подготовка данных для построения математической модели
+data = pandas.read_csv('titanic.csv')
+
+data = data.drop(['PassengerId','Name','Ticket','Fare','Cabin','Embarked'], axis=1)
+
+data['Age'] = data['Age'].fillna( data['Age'].mean() )
+
+def repair_gender(gender):
+    if gender == 'male':
+        return 1
+    return 0
+    
+data['Sex'] = data['Sex'].apply( repair_gender )
+
+# Создание математической модели для предсказаний
+# Этап 1 Разделение признаков (возраст пол и тд) и цели (итог выживания)
+info = data.drop('Survived', axis=1)
+goal = data['Survived']
+# Этап 2 Разделение данных на обучающие и тестировачные
+info_train, info_test, goal_train, goal_test = train_test_split(info, goal, test_size=0.3)
+# Этап 3 (Опционально) Работа с масштабированием данных
 scaler = StandardScaler()
-x_train = scaler.fit_transform(x_train)
-x_test = scaler.transform(x_test)
-# Обучение нашей математической модели
+info_train = scaler.fit_transform( info_train )
+info_test = scaler.transform( info_test )
+# Этап 4 Обучение нашей модели
 model = KNeighborsClassifier(n_neighbors=3)
-model.fit(x_train, y_train)
-# Оценка качества нашей модели
-y_pred = model.predict(x_test) 
-print('Точность предсказаний на тестовых данных', int(accuracy_score(y_test, y_pred) * 100), '%')
+model.fit(info_train, goal_train)
+# Этап 5 Оценка точности нашей модели
+goal_prediction = model.predict(info_test)
+print('Точность предсказаний:', accuracy_score(goal_test, goal_prediction))
 
-# Функция для предсказания исхода нашего выдуманного пассажира
-def predict_passenger( passenger ): 
-    passenger_info = scaler.transform(passenger)
-    prediction = model.predict(passenger_info)[0]
-    chance = model.predict_proba(passenger_info)[0] 
-    print('Судьба пассажира:', 'Выжил' if prediction == 1 else 'Умер' )
-    print(f'Шанс на смерть {chance[0] * 100}% Шанс на жизнь {chance[1] * 100}%')
+# Функция для предсказания судьбы выдуманного пассажира
+def fate_predict( passanger ):
+    passanger = scaler.transform(passanger)
+    prediction = model.predict(passanger)[0]
+    chance = model.predict_proba(passanger)[0]
+    print('Судьба пассажира:', 'Выжил' if prediction == 1 else 'Умер')
+    print(f'Шанс на выживание {round(chance[1] * 100,2)}%')
 
-predict_passenger( [[0, 40, 0, 0]] )
-
+fate_predict( [[1, 1, 40, 0, 0]] )
