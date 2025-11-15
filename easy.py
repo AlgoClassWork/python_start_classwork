@@ -51,6 +51,7 @@ class ImageEditor():
       self.dir = None 
       self.filename = None
       self.path = None
+      self.save_dir = 'Mod'
 
    def load_image(self, dir, filename):
       self.dir = dir # c:/Users/Kyxec/Desktop/easy/
@@ -62,6 +63,16 @@ class ImageEditor():
       image = QPixmap(self.path)
       image = image.scaled(image_lable.width(), image_lable.height(), Qt.KeepAspectRatio)
       image_lable.setPixmap(image)
+
+   def save_image(self):
+      path = os.path.join(workdir, self.save_dir)
+      if not os.path.exists(path):
+         os.mkdir(path)
+
+   def gray_filter(self):
+      self.image = self.image.convert('L')
+      self.save_image()
+      self.show_image()
 
 def show_files():
    global workdir
@@ -79,9 +90,11 @@ def show_chosen_image():
    image_editor.show_image()
 
 # Подписки на события
+image_editor = ImageEditor()
+
 files_list.itemClicked.connect(show_chosen_image)
 folder_button.clicked.connect(show_files)
+gray_button.clicked.connect(image_editor.gray_filter)
 
-image_editor = ImageEditor()
 window.show()
 app.exec()
