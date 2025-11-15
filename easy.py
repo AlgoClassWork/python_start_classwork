@@ -66,8 +66,10 @@ class ImageEditor():
 
    def save_image(self):
       path = os.path.join(workdir, self.save_dir)
-      if not os.path.exists(path):
+      if not ( os.path.exists(path) or os.path.isdir(path) ) :
          os.mkdir(path)
+      self.path = os.path.join(path, self.filename)
+      self.image.save(self.path)
 
    def gray_filter(self):
       self.image = self.image.convert('L')
