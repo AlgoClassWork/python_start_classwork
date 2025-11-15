@@ -1,5 +1,5 @@
 import os
-from PIL import Image
+from PIL import Image, ImageFilter
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
@@ -71,13 +71,28 @@ class ImageEditor():
       self.path = os.path.join(path, self.filename)
       self.image.save(self.path)
 
-   def gray_filter(self):
-      self.image = self.image.convert('L')
+   def left_filter(self):
+      self.image = self.image.transpose(Image.ROTATE_90)
       self.save_image()
       self.show_image()
 
-   def left_filter(self):
-      self.image = self.image.transpose(Image.ROTATE_90)
+   def right_filter(self):
+      self.image = self.image.transpose(Image.ROTATE_270)
+      self.save_image()
+      self.show_image()
+
+   def flip_filter(self):
+      self.image = self.image.transpose(Image.FLIP_LEFT_RIGHT)
+      self.save_image()
+      self.show_image()
+
+   def sharp_filter(self):
+      self.image = self.image.filter(ImageFilter.SHARPEN)
+      self.save_image()
+      self.show_image()
+
+   def gray_filter(self):
+      self.image = self.image.convert('L')
       self.save_image()
       self.show_image()
 
@@ -101,8 +116,13 @@ image_editor = ImageEditor()
 
 files_list.itemClicked.connect(show_chosen_image)
 folder_button.clicked.connect(show_files)
-gray_button.clicked.connect(image_editor.gray_filter)
+
 left_button.clicked.connect(image_editor.left_filter)
+right_button.clicked.connect(image_editor.right_filter)
+flip_button.clicked.connect(image_editor.flip_filter)
+sharp_button.clicked.connect(image_editor.sharp_filter)
+gray_button.clicked.connect(image_editor.gray_filter)
+
 
 window.show()
 app.exec()
