@@ -51,7 +51,6 @@ class ImageEditor():
       self.dir = None 
       self.filename = None
       self.path = None
-      self.save_dir = 'Mod'
 
    def load_image(self, dir, filename):
       self.dir = dir # c:/Users/Kyxec/Desktop/easy/
@@ -65,7 +64,8 @@ class ImageEditor():
       image_lable.setPixmap(image)
 
    def save_image(self):
-      path = os.path.join(workdir, self.save_dir)
+      current_dir = os.getcwd()
+      path = os.path.join(current_dir, 'mod')
       if not ( os.path.exists(path) or os.path.isdir(path) ) :
          os.mkdir(path)
       self.path = os.path.join(path, self.filename)
@@ -73,6 +73,11 @@ class ImageEditor():
 
    def gray_filter(self):
       self.image = self.image.convert('L')
+      self.save_image()
+      self.show_image()
+
+   def left_filter(self):
+      self.image = self.image.transpose(Image.ROTATE_90)
       self.save_image()
       self.show_image()
 
@@ -97,6 +102,7 @@ image_editor = ImageEditor()
 files_list.itemClicked.connect(show_chosen_image)
 folder_button.clicked.connect(show_files)
 gray_button.clicked.connect(image_editor.gray_filter)
+left_button.clicked.connect(image_editor.left_filter)
 
 window.show()
 app.exec()
