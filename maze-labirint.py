@@ -11,26 +11,19 @@ class GameSprite(sprite.Sprite):
         self.height = height
 
     def show(self):
-        window.blit( self.image, (self.x, self.y) )
-
-    def collide(self, sprite):
-        distance_x = abs(self.x - sprite.x)
-        distance_y = abs(self.y - sprite.y)
-        if distance_x < 50 and distance_y < 50:
-            return True
-        return False
+        window.blit( self.image, (self.rect.x, self.rect.y) )
     
 class Player(GameSprite):
     def move(self):
         keys = key.get_pressed() 
-        if keys[K_d] and self.x < 700 - self.width:
-            self.x += self.speed
-        if keys[K_a] and self.x > 0:
-            self.x -= self.speed
-        if keys[K_w] and self.y > 0:
-            self.y -= self.speed
-        if keys[K_s] and self.y < 500 - self.height:
-            self.y += self.speed
+        if keys[K_d] and self.rect.x < 700 - self.width:
+            self.rect.x += self.speed
+        if keys[K_a] and self.rect.x > 0:
+            self.rect.x -= self.speed
+        if keys[K_w] and self.rect.y > 0:
+            self.rect.y -= self.speed
+        if keys[K_s] and self.rect.y < 500 - self.height:
+            self.rect.y += self.speed
 
 window = display.set_mode( size=(700, 500) )
 display.set_caption('Лабиринт')
@@ -51,9 +44,9 @@ while True:
     enemy.show()
     player.move()
 
-    if player.collide(enemy):
-        player.x = 100
-        player.y = 100
+    if sprite.collide_rect(player, enemy):
+        player.rect.x = 100
+        player.rect.y = 100
 
     display.update()
     clock.tick(60)
