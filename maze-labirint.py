@@ -39,7 +39,7 @@ class Wall(sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = cord_x
         self.rect.y = cord_y
-        
+
     # Отображение стены
     def show(self):
         window.blit( self.image, (self.rect.x, self.rect.y) )
@@ -58,6 +58,10 @@ wall2 = Wall(100, 200, 20, 300)
 wall3 = Wall(500, 100, 20, 300)
 
 walls = [wall1, wall2, wall3]
+
+font.init()
+my_font = font.Font('pixel.ttf', 100)
+lose_text = my_font.render('YOU LOSE!', True, (180, 0, 0))
 
 # Основной цикл игры
 clock = time.Clock()
@@ -78,8 +82,7 @@ while True:
 
     # Проверка столкновений с врагом
     if sprite.collide_rect(player, enemy):
-        player.rect.x = 100
-        player.rect.y = 100
+        window.blit(lose_text, (200, 200))
 
     # Проверка столкновений с стенами
     for wall in walls:
