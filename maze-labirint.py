@@ -29,6 +29,20 @@ class Player(GameSprite):
         if keys[K_s] and self.rect.y < 500 - self.height:
             self.rect.y += self.speed
 
+# Класс врага 
+class Enemy(GameSprite):
+    # Движение врага (патрулирование)
+    def move(self):
+        if self.rect.x <= 300:
+            self.side = 'право'
+        if self.rect.x >= 700 - self.width:
+            self.side = 'лево'
+
+        if self.side == 'лево':
+            self.rect.x -= self.speed
+        else:
+            self.rect.x += self.speed
+
 # Класс стены
 class Wall(sprite.Sprite):
     def __init__(self, cord_x, cord_y, width, height):
@@ -51,7 +65,7 @@ display.set_caption('Лабиринт')
 back = transform.scale(image.load('back.jpg'), (700,500))
 # Создание спрайтов
 player = Player('player.png', 0, 450, 50, 50, 10)
-enemy = GameSprite('enemy.png', 650, 450, 50, 50, 5)
+enemy = Enemy('enemy.png', 650, 450, 50, 50, 5)
 
 wall1 = Wall(100, 200, 400, 20)
 wall2 = Wall(100, 200, 20, 300)
@@ -79,6 +93,7 @@ while True:
         wall.show()
     # Движение спрайтов
     player.move()
+    enemy.move()
 
     # Проверка столкновений с врагом
     if sprite.collide_rect(player, enemy):
