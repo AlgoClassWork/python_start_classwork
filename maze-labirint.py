@@ -60,7 +60,7 @@ wall3 = Wall(500, 100, 20, 300)
 walls = [wall1, wall2, wall3]
 
 font.init()
-my_font = font.Font('pixel.ttf', 100)
+my_font = font.Font(None, 100)
 lose_text = my_font.render('YOU LOSE!', True, (180, 0, 0))
 
 # Основной цикл игры
