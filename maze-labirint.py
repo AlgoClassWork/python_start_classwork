@@ -66,6 +66,7 @@ back = transform.scale(image.load('back.jpg'), (700,500))
 # Создание спрайтов
 player = Player('player.png', 0, 450, 50, 50, 10)
 enemy = Enemy('enemy.png', 650, 450, 50, 50, 5)
+goal = GameSprite('goal.png', 440, 230, 50, 50, 0)
 
 wall1 = Wall(100, 200, 400, 20)
 wall2 = Wall(100, 200, 20, 300)
@@ -74,8 +75,9 @@ wall3 = Wall(500, 100, 20, 300)
 walls = [wall1, wall2, wall3]
 
 font.init()
-my_font = font.Font(None, 100)
-lose_text = my_font.render('YOU LOSE!', True, (180, 0, 0))
+my_font = font.Font(None, 150)
+lose_text = my_font.render('YOU LOSE!', True, (255, 0, 0))
+win_text = my_font.render('YOU WIN!', True, (0, 255, 0))
 
 # Основной цикл игры
 pause = False
@@ -90,12 +92,13 @@ while True:
                 player.rect.x = 0
                 player.rect.y = 450
                 pause = False
-                
+
     # Отрисовка фона
     window.blit(back, (0, 0))
     # Отображение спрайтов
     player.show()
     enemy.show()
+    goal.show()
     for wall in walls:
         wall.show()
     # Движение спрайтов
@@ -105,7 +108,12 @@ while True:
 
     # Проверка столкновений с врагом
     if sprite.collide_rect(player, enemy):
-        window.blit(lose_text, (200, 200))
+        window.blit(lose_text, (100, 200))
+        pause = True
+
+    # Проверка столкновений с целью
+    if sprite.collide_rect(player, goal):
+        window.blit(win_text, (100, 200))
         pause = True
 
     # Проверка столкновений с стенами
