@@ -78,12 +78,19 @@ my_font = font.Font(None, 100)
 lose_text = my_font.render('YOU LOSE!', True, (180, 0, 0))
 
 # Основной цикл игры
+pause = False
 clock = time.Clock()
 while True:
     # Обработка событий
     for some_event in event.get():
         if some_event.type == QUIT:
             exit()
+        elif some_event.type == KEYDOWN:
+            if some_event.key == K_r and pause:
+                player.rect.x = 0
+                player.rect.y = 450
+                pause = False
+                
     # Отрисовка фона
     window.blit(back, (0, 0))
     # Отображение спрайтов
@@ -92,12 +99,14 @@ while True:
     for wall in walls:
         wall.show()
     # Движение спрайтов
-    player.move()
-    enemy.move()
+    if not pause:
+        player.move()
+        enemy.move()
 
     # Проверка столкновений с врагом
     if sprite.collide_rect(player, enemy):
         window.blit(lose_text, (200, 200))
+        pause = True
 
     # Проверка столкновений с стенами
     for wall in walls:
