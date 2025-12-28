@@ -71,6 +71,12 @@ while True:
         speed_x *= -1
     if ball.rect.y > 450 or ball.rect.y < 0:
         speed_y *= -1
+
+    # возврат мяча и подсчет баллов
+    if ball.rect.x > 1200 or ball.rect.x < -500:
+        ball.rect.x = 330
+        ball.rect.y = 230
+        speed_x *= -1
     
     display.update()
     clock.tick(60)
