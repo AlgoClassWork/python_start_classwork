@@ -33,6 +33,7 @@ window = display.set_mode((700, 500))
 # создаем спрайты
 player = GameSprite(platform_img, 10, 200, 20, 100)
 ai = GameSprite(platform_img, 670, 200, 20, 100)
+ball = GameSprite(ball_img, 330, 230, 50, 50)
 
 # Основной цикл игры
 clock = time.Clock()
@@ -44,6 +45,16 @@ while True:
 
     # заливка фона цветом
     window.fill( (150, 250, 250) )
+    # отображение спрайтов
+    player.show()
+    ai.show()
+    ball.show()
+    # управление игроком
+    mouse_x, mouse_y = mouse.get_pos()
+    if player.rect.centery > mouse_y:
+        player.rect.y -= 5
+    if player.rect.centery < mouse_y:
+        player.rect.y += 5
 
     display.update()
     clock.tick(60)
