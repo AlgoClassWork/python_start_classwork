@@ -34,7 +34,7 @@ window = display.set_mode((700, 500))
 player = GameSprite(platform_img, 10, 200, 20, 100)
 ai = GameSprite(platform_img, 670, 200, 20, 100)
 ball = GameSprite(ball_img, 330, 230, 50, 50)
-speed_x, speed_y = 10, 10
+speed_x, speed_y = 7, 7
 
 # Основной цикл игры
 clock = time.Clock()
@@ -50,6 +50,7 @@ while True:
     player.show()
     ai.show()
     ball.show()
+
     # управление игроком
     mouse_x, mouse_y = mouse.get_pos()
     if player.rect.centery > mouse_y:
@@ -57,15 +58,19 @@ while True:
     if player.rect.centery < mouse_y:
         player.rect.y += 5
 
+    # управление игроком
+    if ai.rect.centery > ball.rect.y:
+        ai.rect.y -= 5
+    if ai.rect.centery < ball.rect.y:
+        ai.rect.y += 5
+
     # движение мяча
     ball.rect.x += speed_x
     ball.rect.y += speed_y
-    if ball.rect.x > 650 or ball.rect.x < 0:
+    if sprite.collide_rect(player, ball) or sprite.collide_rect(ai, ball):
         speed_x *= -1
     if ball.rect.y > 450 or ball.rect.y < 0:
         speed_y *= -1
     
-        
-
     display.update()
     clock.tick(60)
