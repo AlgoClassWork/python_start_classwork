@@ -2,9 +2,11 @@ from pygame import *
 
 # подключение шрифтов
 font.init()
-font_count = font.Font(None, 40)
+font_count = font.Font(None, 80)
 
 # игровые переменные
+player_score = 0
+ai_score = 0
 
 # нам нужны такие картинки:
 platform_img = "platform.png"  
@@ -50,6 +52,8 @@ while True:
     player.show()
     ai.show()
     ball.show()
+    # отображение счета
+    window.blit( font_count.render(f'{player_score}  |  {ai_score}', 1, (0,0,0)), (280, 10) )
 
     # управление игроком
     mouse_x, mouse_y = mouse.get_pos()
