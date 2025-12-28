@@ -34,6 +34,7 @@ window = display.set_mode((700, 500))
 player = GameSprite(platform_img, 10, 200, 20, 100)
 ai = GameSprite(platform_img, 670, 200, 20, 100)
 ball = GameSprite(ball_img, 330, 230, 50, 50)
+speed_x, speed_y = 10, 10
 
 # Основной цикл игры
 clock = time.Clock()
@@ -55,6 +56,16 @@ while True:
         player.rect.y -= 5
     if player.rect.centery < mouse_y:
         player.rect.y += 5
+
+    # движение мяча
+    ball.rect.x += speed_x
+    ball.rect.y += speed_y
+    if ball.rect.x > 650 or ball.rect.x < 0:
+        speed_x *= -1
+    if ball.rect.y > 450 or ball.rect.y < 0:
+        speed_y *= -1
+    
+        
 
     display.update()
     clock.tick(60)
