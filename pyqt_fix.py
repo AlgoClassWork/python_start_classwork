@@ -1,5 +1,6 @@
 import os
 import PyQt5
+import random
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QPushButton
 
 # Что бы работал PyQt5
@@ -19,6 +20,12 @@ layout.addWidget(text)
 layout.addWidget(winner)
 layout.addWidget(button)
 window.setLayout(layout)
+# Функция генерации победителя
+def generate_winner():
+    winner_number = random.randint(1, 100)
+    winner.setText( f"Победитель: {winner_number} ")
+
+button.clicked.connect(generate_winner)
 # Запуск
 window.show()
 app.exec()
