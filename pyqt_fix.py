@@ -5,7 +5,7 @@ import PyQt5
 pyqt_path = os.path.dirname(PyQt5.__file__)
 os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(pyqt_path, "Qt5", "plugins", "platforms")
 
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QRadioButton, QFrame
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QRadioButton, QFrame, QMessageBox
 
 app = QApplication([])
 
@@ -92,6 +92,18 @@ QRadioButton::indicator:checked{
     border-radius:9px;
 }
 """)
+# Функция для обработки выбора ответа
+def correct_answer():
+    QMessageBox.information(window, "Ответ", "Правильно!")
 
+def wrong_answer():
+    QMessageBox.information(window, "Ответ", "Неправильно!")
+
+# Подключить функцию к каждому варианту
+option_a.clicked.connect(correct_answer)
+option_b.clicked.connect(wrong_answer)
+option_c.clicked.connect(wrong_answer)
+option_d.clicked.connect(wrong_answer)
+# Показать окно
 window.show()
 app.exec()
