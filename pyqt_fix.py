@@ -59,23 +59,22 @@ QWidget{
 }
 
 QFrame{
-    background-color:#2a2a40;
+    background-color:white;
     border-radius:15px;
-    padding:30px;
+    padding:50px;
 }
 
 QLabel#question{
-    font-size:26px;
+    font-size:35px;
     font-weight:bold;
-    color:white;
-    margin-bottom:20px;
+    color:black;
 }
 
 QRadioButton{
     background-color:#3a3a5a;
-    padding:15px;
-    border-radius:10px;
-    font-size:18px;
+    padding:30px;
+    border-radius:15px;
+    font-size:25px;
     color:white;
 }
 
