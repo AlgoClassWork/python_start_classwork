@@ -133,5 +133,37 @@ QPushButton[class="clear"]:hover{
 }
 """)
 
+# Логика калькулятора
+def on_button_clicked(value):
+    current_text = output.text()
+    new_text = current_text + value
+    output.setText(new_text)
+
+def on_equal_clicked():
+    try:
+        result = eval(output.text())
+        output.setText(str(result)) 
+    except Exception:
+        output.setText("Ошибка")
+    
+    
+# Подписки на кнопки
+button0.clicked.connect(lambda: on_button_clicked('0'))
+button1.clicked.connect(lambda: on_button_clicked('1'))
+button2.clicked.connect(lambda: on_button_clicked('2'))
+button3.clicked.connect(lambda: on_button_clicked('3'))
+button4.clicked.connect(lambda: on_button_clicked('4'))
+button5.clicked.connect(lambda: on_button_clicked('5'))
+button6.clicked.connect(lambda: on_button_clicked('6'))
+button7.clicked.connect(lambda: on_button_clicked('7'))
+button8.clicked.connect(lambda: on_button_clicked('8'))
+button9.clicked.connect(lambda: on_button_clicked('9'))
+button_plus.clicked.connect(lambda: on_button_clicked('+'))
+button_minus.clicked.connect(lambda: on_button_clicked('-'))
+button_multiply.clicked.connect(lambda: on_button_clicked('*'))
+button_divide.clicked.connect(lambda: on_button_clicked('/'))
+button_equal.clicked.connect(on_equal_clicked)
+button_clear.clicked.connect(lambda: output.setText(''))
+
 window.show()
 app.exec()
