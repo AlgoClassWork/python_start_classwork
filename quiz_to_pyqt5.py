@@ -39,7 +39,6 @@ main_layout.addWidget(result_group)
 main_layout.addWidget(button)
 window.setLayout(main_layout)
 # Стилизация элементов интерфейса
-answer_group.setStyleSheet('background-color: white;')
 # Запуск приложения
 result_group.hide()
 window.show()
