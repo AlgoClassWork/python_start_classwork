@@ -25,15 +25,22 @@ answer_h1_layout.addWidget(answer2_radio)
 answer_h2_layout.addWidget(answer3_radio)
 answer_h2_layout.addWidget(answer4_radio)
 answer_group.setLayout(answer_layout)
+# Группа для результата
+result_group = QGroupBox('Результат')
+result_label = QLabel('Правильный ответ: Эверест')
+result_layout = QVBoxLayout()
+result_layout.addWidget(result_label)
+result_group.setLayout(result_layout)
 # Расположение элементов интерфейса
 main_layout = QVBoxLayout()
 main_layout.addWidget(question_label)
 main_layout.addWidget(answer_group)
+main_layout.addWidget(result_group)
 main_layout.addWidget(button)
 window.setLayout(main_layout)
 # Стилизация элементов интерфейса
 answer_group.setStyleSheet('background-color: white;')
-
 # Запуск приложения
+result_group.hide()
 window.show()
 app.exec()
