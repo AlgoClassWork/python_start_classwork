@@ -33,7 +33,6 @@ questions = [
     Question('Какой язык самый простой?', 'Эсперанто', 'Английский', 'Испанский', 'Итальянский'),
 ]
 
-
 app = QApplication([])
 
 
@@ -117,7 +116,6 @@ def change_screen():
         if window.current_question < len(questions) - 1:
             window.current_question += 1
         show_question(window.current_question)
-
 
 rbtns = [rbtn_1, rbtn_2, rbtn_3, rbtn_4]
 
