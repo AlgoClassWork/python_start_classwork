@@ -114,7 +114,9 @@ def change_screen():
         btn_OK.setText('Следующий вопрос')
     elif btn_OK.text() == 'Следующий вопрос':
         btn_OK.setText('Ответить')
-        show_question(0)
+        if window.current_question < len(questions) - 1:
+            window.current_question += 1
+        show_question(window.current_question)
 
 
 rbtns = [rbtn_1, rbtn_2, rbtn_3, rbtn_4]
@@ -137,6 +139,7 @@ window = QWidget()
 window.setLayout(layout_card)
 window.setWindowTitle('Memory Card')
 window.show()
+window.current_question = 0
 
-show_question(0)
+show_question(window.current_question)
 app.exec()
