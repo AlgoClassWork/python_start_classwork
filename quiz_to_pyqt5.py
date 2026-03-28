@@ -1,4 +1,5 @@
 import os
+from random import shuffle
 import PyQt5
 
 # Чтобы работал PyQt5
@@ -39,7 +40,6 @@ app = QApplication([])
 # Создаем панель вопроса
 btn_OK = QPushButton('Ответить')
 lb_Question = QLabel('Самый сложный вопрос в мире!')
-
 
 RadioGroupBox = QGroupBox("Варианты ответов")
 
@@ -113,9 +113,21 @@ def change_screen():
         AnsGroupBox.show()
         btn_OK.setText('Следующий вопрос')
     elif btn_OK.text() == 'Следующий вопрос':
-        RadioGroupBox.show()
-        AnsGroupBox.hide()
         btn_OK.setText('Ответить')
+        show_question(0)
+
+
+rbtns = [rbtn_1, rbtn_2, rbtn_3, rbtn_4]
+
+def show_question(index):
+    shuffle(rbtns)
+    lb_Question.setText(questions[index].question)
+    rbtns[0].setText(questions[index].right_answer)
+    rbtns[1].setText(questions[index].wrong1)
+    rbtns[2].setText(questions[index].wrong2)
+    rbtns[3].setText(questions[index].wrong3)
+    RadioGroupBox.show()
+    AnsGroupBox.hide()
 
 # Подписка на событие клика по кнопке ответа:
 btn_OK.clicked.connect(change_screen)
@@ -126,6 +138,5 @@ window.setLayout(layout_card)
 window.setWindowTitle('Memory Card')
 window.show()
 
-AnsGroupBox.hide()
-
+show_question(0)
 app.exec()
