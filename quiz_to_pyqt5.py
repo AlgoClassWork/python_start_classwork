@@ -69,7 +69,6 @@ layout_line1.addWidget(lb_Question, alignment=(Qt.AlignHCenter | Qt.AlignVCenter
 # Размещаем в одной строке обе панели, одна из них будет скрываться, другая показываться:
 layout_line2.addWidget(RadioGroupBox)   
 layout_line2.addWidget(AnsGroupBox)  
-RadioGroupBox.hide() # эту панель мы уже видели, скроем, посмотрим, как получилась панель с ответом
 
 
 layout_line3.addStretch(1)
@@ -88,11 +87,26 @@ layout_card.addLayout(layout_line3, stretch=1)
 layout_card.addStretch(1)
 layout_card.setSpacing(5) # пробелы между содержимым
 
+# Функционал нашего приложения:
+def change_screen():
+    if btn_OK.text() == 'Ответить':
+        RadioGroupBox.hide()
+        AnsGroupBox.show()
+        btn_OK.setText('Следующий вопрос')
+    elif btn_OK.text() == 'Следующий вопрос':
+        RadioGroupBox.show()
+        AnsGroupBox.hide()
+        btn_OK.setText('Ответить')
 
+# Подписка на событие клика по кнопке ответа:
+btn_OK.clicked.connect(change_screen)
+
+# Запускаем приложение:
 window = QWidget()
 window.setLayout(layout_card)
 window.setWindowTitle('Memory Card')
 window.show()
 
+AnsGroupBox.hide()
 
 app.exec()
