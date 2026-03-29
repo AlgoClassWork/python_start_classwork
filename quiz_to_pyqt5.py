@@ -131,9 +131,12 @@ def show_question(index):
 def show_result():
     lb_Correct.setText(rbtns[0].text())
     if rbtns[0].isChecked():
-        lb_Result.setText('Правильно')
+        result = 'Правильно'
+        window.correct_answers += 1
     else:
-        lb_Result.setText('Неправильно')
+        result = 'Неправильно'
+        
+    lb_Result.setText(f'{result}! Статистика: {window.correct_answers} из {window.current_question + 1}')
     RadioGroupBox.hide()
     AnsGroupBox.show()
 
@@ -146,6 +149,7 @@ window.setLayout(layout_card)
 window.setWindowTitle('Memory Card')
 window.show()
 window.current_question = 0
+window.correct_answers = 0
 
 show_question(window.current_question)
 app.exec()
