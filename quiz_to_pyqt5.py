@@ -108,9 +108,8 @@ layout_card.setSpacing(5) # пробелы между содержимым
 # Функционал нашего приложения:
 def change_screen():
     if btn_OK.text() == 'Ответить':
-        RadioGroupBox.hide()
-        AnsGroupBox.show()
         btn_OK.setText('Следующий вопрос')
+        show_result()
     elif btn_OK.text() == 'Следующий вопрос':
         btn_OK.setText('Ответить')
         if window.current_question < len(questions) - 1:
@@ -128,6 +127,15 @@ def show_question(index):
     rbtns[3].setText(questions[index].wrong3)
     RadioGroupBox.show()
     AnsGroupBox.hide()
+
+def show_result():
+    lb_Correct.setText(rbtns[0].text())
+    if rbtns[0].isChecked():
+        lb_Result.setText('Правильно')
+    else:
+        lb_Result.setText('Неправильно')
+    RadioGroupBox.hide()
+    AnsGroupBox.show()
 
 # Подписка на событие клика по кнопке ответа:
 btn_OK.clicked.connect(change_screen)
