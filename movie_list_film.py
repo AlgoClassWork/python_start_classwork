@@ -25,13 +25,18 @@ genre_list.addItem('Жанр 2')
 genre_list.addItem('Жанр 3')
 search_field = QLineEdit()
 search_field.setPlaceholderText('Введите жанр для поиска...')
+add_genre_button = QPushButton('Добавить жанр')
+delete_genre_button = QPushButton('Удалить жанр')
+search_button = QPushButton('Поиск')
 
 # Разметка интерфейса
 main_layout = QHBoxLayout()
 list_layout = QVBoxLayout()
 list_buttons_layout = QHBoxLayout()
+list_buttons_layout2 = QHBoxLayout()
 
 main_layout.addLayout(list_layout)
+
 list_layout.addWidget(movie_list)
 list_layout.addLayout(list_buttons_layout)
 list_buttons_layout.addWidget(add_film_button)
@@ -39,6 +44,10 @@ list_buttons_layout.addWidget(delete_film_button)
 
 list_layout.addWidget(genre_list)
 list_layout.addWidget(search_field)
+list_layout.addLayout(list_buttons_layout2)
+list_buttons_layout2.addWidget(add_genre_button)
+list_buttons_layout2.addWidget(delete_genre_button)
+list_layout.addWidget(search_button)
 
 main_layout.addWidget(description_field)
 
