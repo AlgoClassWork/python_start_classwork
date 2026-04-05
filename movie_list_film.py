@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import (
-     QApplication, QWidget, QTextEdit, QListWidget, QPushButton,
+     QApplication, QWidget, QTextEdit, QListWidget, QPushButton, QLineEdit,
      QHBoxLayout, QVBoxLayout
 )
 
@@ -10,7 +10,7 @@ window.setWindowTitle('Мой список фильмов')
 window.resize(800, 600)
 
 description_field = QTextEdit() 
-description_field.setPlaceholderText('Опишите фильм здесь...')
+description_field.setPlaceholderText('Введите описание фильма...')
 
 movie_list = QListWidget()
 movie_list.addItem('Фильм 1')
@@ -23,6 +23,8 @@ genre_list = QListWidget()
 genre_list.addItem('Жанр 1')
 genre_list.addItem('Жанр 2')
 genre_list.addItem('Жанр 3')
+search_field = QLineEdit()
+search_field.setPlaceholderText('Введите жанр для поиска...')
 
 # Разметка интерфейса
 main_layout = QHBoxLayout()
@@ -36,6 +38,7 @@ list_buttons_layout.addWidget(add_film_button)
 list_buttons_layout.addWidget(delete_film_button)
 
 list_layout.addWidget(genre_list)
+list_layout.addWidget(search_field)
 
 main_layout.addWidget(description_field)
 
