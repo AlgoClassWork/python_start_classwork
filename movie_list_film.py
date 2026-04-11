@@ -1,3 +1,4 @@
+import json
 import os
 import PyQt5
 
@@ -56,10 +57,17 @@ main_layout.addWidget(description_field)
 window.setLayout(main_layout)
 
 # Функционал приложения
+def show_film():
+    film = film_list.selectedItems()[0].text()
+    description_field.setText( films[film]['описание'] )
 
 # Подписки на события
+film_list.itemClicked.connect(show_film)
+# Временное хранилище
+file = open('films.json', 'r', encoding='utf-8')
+films = json.load(file)
+film_list.addItems(films)
 
 # Запуск
-
 window.show()
 app.exec()
