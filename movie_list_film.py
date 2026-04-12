@@ -8,8 +8,9 @@ os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(pyqt_path, "Qt5", "plug
 
 
 from PyQt5.QtWidgets import (
-     QApplication, QWidget, QTextEdit, QListWidget, QPushButton, QLineEdit,
-     QHBoxLayout, QVBoxLayout
+    QApplication, QWidget, QTextEdit,
+    QListWidget, QPushButton, QLineEdit, QInputDialog,
+    QHBoxLayout, QVBoxLayout
 )
 
 # Создание интерфейса
@@ -60,9 +61,20 @@ window.setLayout(main_layout)
 def show_film():
     film = film_list.selectedItems()[0].text()
     description_field.setText( films[film]['описание'] )
+    genre_list.clear()
+    genre_list.addItems( films[film]['жанры'] )
+
+def add_film():
+    film, ok = QInputDialog.getText(window, 'Добавить фильм', 'Название фильма:')
+    if film not in films and film != '':
+        films[film] = {'описание': '', 'жанры': []}
+        file = open('films.json', 'w', encoding='utf-8')
+        json.dump(films, file, ensure_ascii=False, indent=4)
+        film_list.addItem(film)
 
 # Подписки на события
 film_list.itemClicked.connect(show_film)
+add_film_button.clicked.connect(add_film)
 # Временное хранилище
 file = open('films.json', 'r', encoding='utf-8')
 films = json.load(file)
