@@ -81,10 +81,18 @@ def delete_film():
         film_list.clear()
         film_list.addItems(films)
 
+def add_description():
+    if film_list.selectedItems():
+        film = film_list.selectedItems()[0].text()
+        films[film]['описание'] = description_field.toPlainText()
+        file = open('films.json', 'w', encoding='utf-8')
+        json.dump(films, file, ensure_ascii=False, indent=4)
+
 # Подписки на события
 film_list.itemClicked.connect(show_film)
 add_film_button.clicked.connect(add_film)
 delete_film_button.clicked.connect(delete_film)
+description_field.textChanged.connect(add_description)
 # Временное хранилище
 file = open('films.json', 'r', encoding='utf-8')
 films = json.load(file)
