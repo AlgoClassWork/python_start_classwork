@@ -97,6 +97,7 @@ def add_genre():
             file = open('films.json', 'w', encoding='utf-8')
             json.dump(films, file, ensure_ascii=False, indent=4)
             genre_list.addItem(genre)
+            search_field.clear()
 
 def delete_genre():
     if genre_list.selectedItems():
@@ -108,6 +109,32 @@ def delete_genre():
         genre_list.clear()
         genre_list.addItems( films[film]['жанры'] )
 
+def search():
+    genre = search_field.text()
+    if search_button.text() == 'Поиск' and genre != '':
+
+        filtred_films = {}
+        for film in films:
+            if genre in films[film]['жанры']:
+                filtred_films[film] = films[film]
+
+        search_field.clear()
+        genre_list.clear()
+        film_list.clear()
+        film_list.addItems(filtred_films)
+
+        search_button.setText('Сброс')
+
+    else:
+        
+        search_field.clear()
+        genre_list.clear()
+        film_list.clear()
+        film_list.addItems(films)
+
+        search_button.setText('Поиск')
+    
+        
 # Подписки на события
 film_list.itemClicked.connect(show_film)
 add_film_button.clicked.connect(add_film)
@@ -115,6 +142,7 @@ delete_film_button.clicked.connect(delete_film)
 description_field.textChanged.connect(add_description)
 add_genre_button.clicked.connect(add_genre)
 delete_genre_button.clicked.connect(delete_genre)
+search_button.clicked.connect(search)
 
 # Временное хранилище
 file = open('films.json', 'r', encoding='utf-8')
