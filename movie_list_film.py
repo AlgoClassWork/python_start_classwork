@@ -98,12 +98,23 @@ def add_genre():
             json.dump(films, file, ensure_ascii=False, indent=4)
             genre_list.addItem(genre)
 
+def delete_genre():
+    if genre_list.selectedItems():
+        film = film_list.selectedItems()[0].text()
+        genre = genre_list.selectedItems()[0].text()
+        films[film]['жанры'].remove(genre)
+        file = open('films.json', 'w', encoding='utf-8')
+        json.dump(films, file, ensure_ascii=False, indent=4)
+        genre_list.clear()
+        genre_list.addItems( films[film]['жанры'] )
+
 # Подписки на события
 film_list.itemClicked.connect(show_film)
 add_film_button.clicked.connect(add_film)
 delete_film_button.clicked.connect(delete_film)
 description_field.textChanged.connect(add_description)
 add_genre_button.clicked.connect(add_genre)
+delete_genre_button.clicked.connect(delete_genre)
 
 # Временное хранилище
 file = open('films.json', 'r', encoding='utf-8')
