@@ -1,45 +1,115 @@
+import os
+import PyQt5
+
+pyqt_path = os.path.dirname(PyQt5.__file__)
+os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(pyqt_path, "Qt5", "plugins", "platforms")
+
+# =========================
+# Импорты
+# =========================
 from PyQt5.QtWidgets import (
     QApplication, QPushButton, QVBoxLayout,
     QHBoxLayout, QWidget, QLabel, QListWidget
 )
+from PyQt5.QtCore import Qt
 
+
+# =========================
+# Создание приложения
+# =========================
 app = QApplication([])
-window = QWidget()
-window.setWindowTitle('Редактор изображений')
-
-folder_button = QPushButton('Выбрать папку')
-image_list = QListWidget()
-
-preview_label = QLabel('Предпросмотр изображения')
-
-left_button = QPushButton('Лево')
-right_button = QPushButton('Право')
-mirror_button = QPushButton('Зеркало')
-sharpness_button = QPushButton('Резкость')
-gray_button = QPushButton('Черно-белое')
+main_window = QWidget()
+main_window.setWindowTitle('Редактор изображений')
+main_window.resize(800, 500)
 
 
-main_layout = QHBoxLayout()
-v1_layout = QVBoxLayout()
-v2_layout = QVBoxLayout()
-buttons_layout = QHBoxLayout()
+# =========================
+# Элементы интерфейса
+# =========================
 
-main_layout.addLayout(v1_layout)
-main_layout.addLayout(v2_layout)
+# Левая панель
+btn_select_folder = QPushButton('Выбрать папку')
+list_images = QListWidget()
 
-v1_layout.addWidget(folder_button)
-v1_layout.addWidget(image_list)
+# Правая панель
+label_preview = QLabel('Предпросмотр изображения')
+label_preview.setAlignment(Qt.AlignCenter)
 
-v2_layout.addWidget(preview_label)
-v2_layout.addLayout(buttons_layout)
+# Кнопки обработки
+btn_rotate_left = QPushButton('⟲ Лево')
+btn_rotate_right = QPushButton('⟳ Право')
+btn_mirror = QPushButton('Зеркало')
+btn_sharpness = QPushButton('Резкость')
+btn_grayscale = QPushButton('Ч/Б')
 
-buttons_layout.addWidget(left_button)
-buttons_layout.addWidget(right_button)
-buttons_layout.addWidget(mirror_button)
-buttons_layout.addWidget(sharpness_button)
-buttons_layout.addWidget(gray_button)
 
-window.setLayout(main_layout)
+# =========================
+# Layout (разметка)
+# =========================
 
-window.show()
+# Главный layout
+layout_main = QHBoxLayout()
+
+# Левая колонка
+layout_left = QVBoxLayout()
+layout_left.addWidget(btn_select_folder)
+layout_left.addWidget(list_images)
+
+# Правая колонка
+layout_right = QVBoxLayout()
+layout_right.addWidget(label_preview)
+
+# Нижние кнопки
+layout_buttons = QHBoxLayout()
+layout_buttons.addWidget(btn_rotate_left)
+layout_buttons.addWidget(btn_rotate_right)
+layout_buttons.addWidget(btn_mirror)
+layout_buttons.addWidget(btn_sharpness)
+layout_buttons.addWidget(btn_grayscale)
+
+layout_right.addLayout(layout_buttons)
+
+# Добавляем в главный layout
+layout_main.addLayout(layout_left, 30)
+layout_main.addLayout(layout_right, 70)
+
+main_window.setLayout(layout_main)
+
+
+# =========================
+# Стили (минимальный UI)
+# =========================
+main_window.setStyleSheet("""
+    QWidget {
+        background-color: #2b2b2b;
+        color: #f0f0f0;
+        font-size: 14px;
+    }
+    
+    QPushButton {
+        background-color: #3c3f41;
+        border-radius: 6px;
+        padding: 6px;
+    }
+    
+    QPushButton:hover {
+        background-color: #505354;
+    }
+
+    QListWidget {
+        background-color: #1e1e1e;
+        border: 1px solid #444;
+    }
+
+    QLabel {
+        border: 1px solid #444;
+        padding: 10px;
+    }
+""")
+
+
+# =========================
+# Запуск приложения
+# =========================
+main_window.show()
 app.exec()
