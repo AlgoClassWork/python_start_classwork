@@ -129,6 +129,34 @@ def rotate_left():
         img.save(image_path)
         show_image(list_images.currentItem())
 
+def rotate_right():
+    if image_path:
+        img = Image.open(image_path)
+        img = img.rotate(270, expand=True)
+        img.save(image_path)
+        show_image(list_images.currentItem())
+
+def mirror_image():
+    if image_path:
+        img = Image.open(image_path)
+        img = img.transpose(Image.FLIP_LEFT_RIGHT)
+        img.save(image_path)
+        show_image(list_images.currentItem())
+
+def apply_sharpness():
+    if image_path:
+        img = Image.open(image_path)
+        img = img.filter(ImageFilter.SHARPEN)
+        img.save(image_path)
+        show_image(list_images.currentItem())
+
+def apply_grayscale():
+    if image_path:
+        img = Image.open(image_path)
+        img = img.convert('L')
+        img.save(image_path)
+        show_image(list_images.currentItem())
+
 # =========================
 # Подписки на события
 # =========================
@@ -136,6 +164,10 @@ list_images.itemClicked.connect(show_image)
 btn_select_folder.clicked.connect(select_folder)
 
 btn_rotate_left.clicked.connect(rotate_left)
+btn_rotate_right.clicked.connect(rotate_right)
+btn_mirror.clicked.connect(mirror_image)
+btn_sharpness.clicked.connect(apply_sharpness)
+btn_grayscale.clicked.connect(apply_grayscale)
 
 # =========================
 # Запуск приложения
