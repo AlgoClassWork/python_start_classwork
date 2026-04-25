@@ -7,13 +7,13 @@ os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(pyqt_path, "Qt5", "plug
 # =========================
 # Импорты
 # =========================
-from PyQt5.QtWidgets import (
-    QApplication, QPushButton, QVBoxLayout,
-    QHBoxLayout, QWidget, QLabel, QListWidget,
-    QFileDialog
-)
+from PIL import Image, ImageFilter
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import (
+    QApplication, QPushButton, QVBoxLayout,
+    QHBoxLayout, QWidget, QLabel, QListWidget, QFileDialog)
+
 
 
 # =========================
@@ -117,15 +117,25 @@ def select_folder():
                 list_images.addItem(file)
 
 def show_image(item):
+    global image_path
     image_path = os.path.join(folder, item.text())
     pixmap = QPixmap(image_path)
     label_preview.setPixmap(pixmap.scaled(label_preview.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation))
+
+def rotate_left():
+    if image_path:
+        img = Image.open(image_path)
+        img = img.rotate(90, expand=True)
+        img.save(image_path)
+        show_image(list_images.currentItem())
 
 # =========================
 # Подписки на события
 # =========================
 list_images.itemClicked.connect(show_image)
 btn_select_folder.clicked.connect(select_folder)
+
+btn_rotate_left.clicked.connect(rotate_left)
 
 # =========================
 # Запуск приложения
