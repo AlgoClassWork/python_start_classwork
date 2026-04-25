@@ -9,8 +9,10 @@ os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(pyqt_path, "Qt5", "plug
 # =========================
 from PyQt5.QtWidgets import (
     QApplication, QPushButton, QVBoxLayout,
-    QHBoxLayout, QWidget, QLabel, QListWidget, QFileDialog
+    QHBoxLayout, QWidget, QLabel, QListWidget,
+    QFileDialog
 )
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 
 
@@ -100,17 +102,13 @@ main_window.setStyleSheet("""
         background-color: #1e1e1e;
         border: 1px solid #444;
     }
-
-    QLabel {
-        border: 1px solid #444;
-        padding: 10px;
-    }
 """)
 
 # =========================
 # Функционал
 # =========================
 def select_folder():
+    global folder
     folder = QFileDialog.getExistingDirectory(main_window, "Выберите папку с изображениями")
     if folder:
         list_images.clear()
@@ -118,9 +116,15 @@ def select_folder():
             if file.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.gif')):
                 list_images.addItem(file)
 
+def show_image(item):
+    image_path = os.path.join(folder, item.text())
+    pixmap = QPixmap(image_path)
+    label_preview.setPixmap(pixmap.scaled(label_preview.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation))
+
 # =========================
 # Подписки на события
 # =========================
+list_images.itemClicked.connect(show_image)
 btn_select_folder.clicked.connect(select_folder)
 
 # =========================
