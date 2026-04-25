@@ -9,7 +9,7 @@ os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(pyqt_path, "Qt5", "plug
 # =========================
 from PyQt5.QtWidgets import (
     QApplication, QPushButton, QVBoxLayout,
-    QHBoxLayout, QWidget, QLabel, QListWidget
+    QHBoxLayout, QWidget, QLabel, QListWidget, QFileDialog
 )
 from PyQt5.QtCore import Qt
 
@@ -107,6 +107,21 @@ main_window.setStyleSheet("""
     }
 """)
 
+# =========================
+# Функционал
+# =========================
+def select_folder():
+    folder = QFileDialog.getExistingDirectory(main_window, "Выберите папку с изображениями")
+    if folder:
+        list_images.clear()
+        for file in os.listdir(folder):
+            if file.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.gif')):
+                list_images.addItem(file)
+
+# =========================
+# Подписки на события
+# =========================
+btn_select_folder.clicked.connect(select_folder)
 
 # =========================
 # Запуск приложения
