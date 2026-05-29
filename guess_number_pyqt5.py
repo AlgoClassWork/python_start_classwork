@@ -10,5 +10,16 @@ os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(pyqt_path, "Qt5", "plug
 app = QApplication([])
 window = QWidget()
 
+label = QLabel("Угадай число от 1 до 100")
+input_field = QLineEdit()
+button = QPushButton("Угадать")
+
+layout = QVBoxLayout()
+window.setLayout(layout)
+layout.addWidget(label)
+layout.addWidget(input_field)
+layout.addWidget(button)
+
+
 window.show()
 app.exec()
