@@ -65,5 +65,18 @@ layout.addWidget(label)
 layout.addWidget(input_field)
 layout.addWidget(button)
 
+number_to_guess = randint(1, 100)
+
+def check_guess():
+    guess = int(input_field.text())
+    if guess > number_to_guess:
+        label.setText('Слишком много!')
+    elif guess < number_to_guess:
+        label.setText('Слишком мало!')
+    else:
+        label.setText('Поздравляю! Вы угадали число!')
+
+button.clicked.connect(check_guess)
+
 window.show()
 app.exec()
