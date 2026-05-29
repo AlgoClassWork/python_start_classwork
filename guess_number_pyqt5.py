@@ -1,4 +1,5 @@
 import os
+from random import randint
 import PyQt5
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QLineEdit
 from PyQt5.QtCore import Qt
@@ -79,6 +80,26 @@ window.setLayout(layout)
 layout.addWidget(label)
 layout.addWidget(input_field)
 layout.addWidget(button)
+
+
+# Подписка на событие нажатия кнопки
+secret_number = randint(1, 100)  # Случайное число от 1 до 100
+
+def check_number():
+    number = input_field.text()
+    if not number.isdigit():
+        label.setText("Пожалуйста, введите число!")
+        return
+    number = int(number)
+    if number < secret_number:
+        label.setText("Слишком мало! Попробуй ещё.")
+    elif number > secret_number:
+        label.setText("Слишком много! Попробуй ещё.")
+    else:
+        label.setText("Поздравляю! Ты угадал число!")
+    
+
+button.clicked.connect(check_number)
 
 window.show()
 app.exec()
