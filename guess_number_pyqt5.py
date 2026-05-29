@@ -13,5 +13,15 @@ QPushButton, QLabel, QLineEdit )
 app = QApplication([])
 window = QWidget()
 
+label = QLabel("Угадай число от 1 до 100")
+input_field = QLineEdit()
+button = QPushButton("Проверить")
+
+layout = QVBoxLayout()
+window.setLayout(layout)
+layout.addWidget(label)
+layout.addWidget(input_field)
+layout.addWidget(button)
+
 window.show()
 app.exec()
