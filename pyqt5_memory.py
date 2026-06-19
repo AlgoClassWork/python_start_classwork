@@ -19,7 +19,13 @@ window = QWidget()
 question_label = QLabel("Почему небо голубое?")
 
 answer_group = QGroupBox("Выберите ответ:")
+
 answer_rbtn1 = QRadioButton("Из-за рассеяния света в атмосфере")
+answer_rbtn2 = QRadioButton("Из-за отражения океанов")
+answer_rbtn3 = QRadioButton("Из-за наличия кислорода в воздухе")
+answer_rbtn4 = QRadioButton("Из-за солнечных лучей")
+
+ok_button = QPushButton("Проверить ответ")
 
 # Размещение виджетов
 main_layout = QVBoxLayout()
@@ -27,7 +33,13 @@ answer_layout = QVBoxLayout()
 
 main_layout.addWidget(question_label)
 main_layout.addWidget(answer_group)
+
 answer_layout.addWidget(answer_rbtn1)
+answer_layout.addWidget(answer_rbtn2)
+answer_layout.addWidget(answer_rbtn3)
+answer_layout.addWidget(answer_rbtn4)
+
+main_layout.addWidget(ok_button)
 
 answer_group.setLayout(answer_layout)
 window.setLayout(main_layout)
