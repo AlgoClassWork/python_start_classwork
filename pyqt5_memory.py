@@ -230,7 +230,9 @@ def ask(question):
     show_question()
 
 def show_result():
-    pass
+    result_group.show()
+    answer_group.hide()
+    ok_button.setText("Проверить ответ")
 
 def show_question():
     result_group.hide()
@@ -238,13 +240,14 @@ def show_question():
     ok_button.setText("Следующий вопрос")
 
 def check_answer():
-    pass
+    if rbtns[0].isChecked():
+        result_label.setText("Правильно!")
+    else:
+        result_label.setText("Неправильно!")
+    show_result()
     
-
 def next_question():
-    result_group.show()
-    answer_group.hide()
-    ok_button.setText("Проверить ответ")
+    check_answer()
     
 
 def click_ok():
