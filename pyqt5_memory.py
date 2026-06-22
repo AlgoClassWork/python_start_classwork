@@ -228,13 +228,20 @@ def show_question():
     pass
 
 def check_answer():
-    pass
+    result_group.show()
+    answer_group.hide()
+    ok_button.setText("Следующий вопрос")
 
 def next_question():
-    pass
+    result_group.hide()
+    answer_group.show()
+    ok_button.setText("Проверить ответ")
 
 def click_ok():
-    pass
+    if ok_button.text() == "Проверить ответ":
+        check_answer()
+    else:
+        next_question()
 
 ok_button.clicked.connect(click_ok)
 
