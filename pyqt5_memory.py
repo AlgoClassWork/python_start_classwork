@@ -5,7 +5,7 @@ pyqt_path = os.path.dirname(PyQt5.__file__)
 os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(pyqt_path, "Qt5", "plugins", "platforms")
 
 # Наше приложение
-from random import shuffle
+from random import choice, shuffle
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
     QLabel, QGroupBox, QRadioButton, QPushButton,
@@ -232,13 +232,13 @@ def ask(question):
 def show_result():
     result_group.show()
     answer_group.hide()
-    ok_button.setText("Проверить ответ")
-
+    ok_button.setText("Следующий вопрос")
+    
 def show_question():
     result_group.hide()
     answer_group.show()
-    ok_button.setText("Следующий вопрос")
-
+    ok_button.setText("Проверить ответ")
+    
 def check_answer():
     if rbtns[0].isChecked():
         result_label.setText("Правильно!")
@@ -247,9 +247,9 @@ def check_answer():
     show_result()
     
 def next_question():
-    check_answer()
+    current_question = choice(questions)
+    ask(current_question)
     
-
 def click_ok():
     if ok_button.text() == "Проверить ответ":
         check_answer()
@@ -259,6 +259,6 @@ def click_ok():
 ok_button.clicked.connect(click_ok)
 
 # Запуск приложения
-ask(questions[2])
+next_question()  # Показываем первый вопрос
 window.show()
 app.exec()
