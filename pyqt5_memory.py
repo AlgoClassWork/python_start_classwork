@@ -217,6 +217,27 @@ style_sheet = """
 app.setStyleSheet(style_sheet)
 # -----------------------------
 
+# Функционал приложения 
+def ask(question):
+    pass
+
+def show_result():
+    pass
+
+def show_question():
+    pass
+
+def check_answer():
+    pass
+
+def next_question():
+    pass
+
+def click_ok():
+    pass
+
+ok_button.clicked.connect(click_ok)
+
 # Запуск приложения
 window.show()
 app.exec()
