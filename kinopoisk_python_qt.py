@@ -1,44 +1,113 @@
 import os
 import PyQt5
-# Чтобы работал PyQt5
+
+# Конфигурация PyQt5
 pyqt_path = os.path.dirname(PyQt5.__file__)
-os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(pyqt_path, "Qt5", "plugins", "platforms")
-
-
-from PyQt5.QtWidgets import (
-    QApplication, QWidget, 
-    QTextEdit, QListWidget,
-    QPushButton, QLineEdit, 
-    QVBoxLayout, QHBoxLayout,
-    QInputDialog
+os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(
+    pyqt_path, "Qt5", "plugins", "platforms"
 )
 
-# Создание интерфейса приложения
+from PyQt5.QtWidgets import (
+    QApplication,
+    QWidget,
+    QTextEdit,
+    QListWidget,
+    QPushButton,
+    QLineEdit,
+    QVBoxLayout,
+    QHBoxLayout,
+)
+
+
+# === Инициализация приложения ===
 app = QApplication([])
 window = QWidget()
+window.setWindowTitle("Кинопоиск")
+window.setGeometry(100, 100, 1000, 600)
 
-description_field = QTextEdit()
 
-film_list = QListWidget()
-add_film_button = QPushButton("Добавить фильм")
-del_film_button = QPushButton("Удалить фильм")
+# === Элементы интерфейса ===
+# Описание фильма
+description_text = QTextEdit()
 
-# Расположение элементов интерфейса
+# Список и управление фильмами
+films_list = QListWidget()
+add_film_btn = QPushButton("Добавить фильм")
+delete_film_btn = QPushButton("Удалить фильм")
+
+# Список и управление жанрами
+genres_list = QListWidget()
+genre_input = QLineEdit()
+genre_input.setPlaceholderText("Введите жанр...")
+search_btn = QPushButton("Найти фильмы по жанру")
+add_genre_btn = QPushButton("Добавить жанр")
+delete_genre_btn = QPushButton("Удалить жанр")
+
+
+# === Структура макета ===
 main_layout = QHBoxLayout()
-list_layout = QVBoxLayout()
-btn1_layout = QHBoxLayout()
+sidebar_layout = QVBoxLayout()
 
-main_layout.addWidget(description_field)
+# Левая часть - описание
+main_layout.addWidget(description_text, 1)
 
-main_layout.addLayout(list_layout)
+# Правая часть - списки и управление
+main_layout.addLayout(sidebar_layout, 1)
 
-list_layout.addWidget(film_list)
-list_layout.addLayout(btn1_layout)
-btn1_layout.addWidget(add_film_button)
-btn1_layout.addWidget(del_film_button)
+# Фильмы
+films_buttons_layout = QHBoxLayout()
+sidebar_layout.addWidget(films_list)
+sidebar_layout.addLayout(films_buttons_layout)
+films_buttons_layout.addWidget(add_film_btn)
+films_buttons_layout.addWidget(delete_film_btn)
+
+# Жанры
+genres_buttons_layout = QHBoxLayout()
+sidebar_layout.addWidget(genres_list)
+sidebar_layout.addWidget(genre_input)
+sidebar_layout.addWidget(search_btn)
+sidebar_layout.addLayout(genres_buttons_layout)
+genres_buttons_layout.addWidget(add_genre_btn)
+genres_buttons_layout.addWidget(delete_genre_btn)
 
 
+# === Стили ===
+stylesheet = """
+    QWidget {
+        background-color: #f5f5f5;
+        color: #333;
+    }
+    
+    QTextEdit, QListWidget, QLineEdit {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        font-size: 11pt;
+    }
+    
+    QPushButton {
+        background-color: #007acc;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px;
+        font-weight: bold;
+    }
+    
+    QPushButton:hover {
+        background-color: #005a9e;
+    }
+    
+    QPushButton:pressed {
+        background-color: #004578;
+    }
+"""
+
+window.setStyleSheet(stylesheet)
 window.setLayout(main_layout)
-# Запуск приложения
+
+
+# === Запуск приложения ===
 window.show()
 app.exec()
