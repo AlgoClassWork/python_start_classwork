@@ -116,8 +116,16 @@ def show_info():
     genres_list.clear()
     genres_list.addItems(films[selected_film]["жанр"])
 
+def save_info():
+    if films_list.currentItem():
+        selected_film = films_list.currentItem().text()
+        films[selected_film]["описание"] = description_text.toPlainText()
+        file = open('films.json', 'w', encoding='utf-8')
+        json.dump(films, file, ensure_ascii=False, indent=4)
+
 # Подписки на события
 films_list.itemClicked.connect(show_info)
+description_text.textChanged.connect(save_info)
 
 # === Запуск приложения ===
 file = open('films.json', 'r', encoding='utf-8')
