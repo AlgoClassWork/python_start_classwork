@@ -7,6 +7,7 @@ os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(
     pyqt_path, "Qt5", "plugins", "platforms"
 )
 
+import json
 from PyQt5.QtWidgets import (
     QApplication,
     QWidget,
@@ -108,6 +109,20 @@ window.setStyleSheet(stylesheet)
 window.setLayout(main_layout)
 
 
+# == Функции для работы с фильмами и жанрами ===
+def show_info():
+    selected_film = films_list.currentItem().text()
+    description_text.setText(films[selected_film]["описание"])
+    genres_list.clear()
+    genres_list.addItems(films[selected_film]["жанр"])
+
+# Подписки на события
+films_list.itemClicked.connect(show_info)
+
 # === Запуск приложения ===
+file = open('films.json', 'r', encoding='utf-8')
+films = json.load(file)
+films_list.addItems(films)
+
 window.show()
 app.exec()
