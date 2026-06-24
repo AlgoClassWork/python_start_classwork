@@ -17,6 +17,7 @@ from PyQt5.QtWidgets import (
     QLineEdit,
     QVBoxLayout,
     QHBoxLayout,
+    QInputDialog,
 )
 
 
@@ -123,9 +124,19 @@ def save_info():
         file = open('films.json', 'w', encoding='utf-8')
         json.dump(films, file, ensure_ascii=False, indent=4)
 
+def add_film():
+    film, ok = QInputDialog.getText(window, 'Добавить фильм', 'Название фильма: ')
+    if film.strip():
+        films[film] = {'описание' : '', 'жанр' : []}
+        films_list.addItem(film)
+        file = open('films.json', 'w', encoding='utf-8')
+        json.dump(films, file, ensure_ascii=False, indent=4)
+
+
 # Подписки на события
 films_list.itemClicked.connect(show_info)
 description_text.textChanged.connect(save_info)
+add_film_btn.clicked.connect(add_film)
 
 # === Запуск приложения ===
 file = open('films.json', 'r', encoding='utf-8')
