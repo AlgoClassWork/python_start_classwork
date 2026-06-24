@@ -155,6 +155,16 @@ def add_genre():
             json.dump(films, file, ensure_ascii=False, indent=4)
 
 
+def delete_genre():
+    if genres_list.selectedItems():
+        selected_film = films_list.currentItem().text()
+        selected_genre = genres_list.currentItem().text()
+        films[selected_film]['жанр'].remove(selected_genre)
+        genres_list.clear()
+        genres_list.addItems(films[selected_film]['жанр'])
+        file = open('films.json', 'w', encoding='utf-8')
+        json.dump(films, file, ensure_ascii=False, indent=4)
+
 # Подписки на события
 films_list.itemClicked.connect(show_info)
 description_text.textChanged.connect(save_info)
@@ -163,6 +173,7 @@ add_film_btn.clicked.connect(add_film)
 delete_film_btn.clicked.connect(delete_film)
 
 add_genre_btn.clicked.connect(add_genre)
+delete_genre_btn.clicked.connect(delete_genre)
 
 
 # === Запуск приложения ===
