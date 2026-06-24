@@ -132,11 +132,22 @@ def add_film():
         file = open('films.json', 'w', encoding='utf-8')
         json.dump(films, file, ensure_ascii=False, indent=4)
 
+def delete_film():
+    if films_list.selectedItems():
+        selected_film = films_list.currentItem().text()
+        del films[selected_film]
+        description_text.clear()
+        genres_list.clear()
+        films_list.clear()
+        films_list.addItems(films)
+        file = open('films.json', 'w', encoding='utf-8')
+        json.dump(films, file, ensure_ascii=False, indent=4)
 
 # Подписки на события
 films_list.itemClicked.connect(show_info)
 description_text.textChanged.connect(save_info)
 add_film_btn.clicked.connect(add_film)
+delete_film_btn.clicked.connect(delete_film)
 
 # === Запуск приложения ===
 file = open('films.json', 'r', encoding='utf-8')
