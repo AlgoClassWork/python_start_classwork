@@ -143,11 +143,27 @@ def delete_film():
         file = open('films.json', 'w', encoding='utf-8')
         json.dump(films, file, ensure_ascii=False, indent=4)
 
+def add_genre():
+    if films_list.selectedItems():
+        selected_film = films_list.currentItem().text()
+        genre = genre_input.text().strip()
+        if genre and genre not in films[selected_film]['жанр']:
+            films[selected_film]['жанр'].append(genre)
+            genre_input.clear()
+            genres_list.addItem(genre)
+            file = open('films.json', 'w', encoding='utf-8')
+            json.dump(films, file, ensure_ascii=False, indent=4)
+
+
 # Подписки на события
 films_list.itemClicked.connect(show_info)
 description_text.textChanged.connect(save_info)
+
 add_film_btn.clicked.connect(add_film)
 delete_film_btn.clicked.connect(delete_film)
+
+add_genre_btn.clicked.connect(add_genre)
+
 
 # === Запуск приложения ===
 file = open('films.json', 'r', encoding='utf-8')
