@@ -165,6 +165,31 @@ def delete_genre():
         file = open('films.json', 'w', encoding='utf-8')
         json.dump(films, file, ensure_ascii=False, indent=4)
 
+
+def search():
+    genre = genre_input.text().strip()
+    if genre and search_btn.text() == 'Найти фильмы по жанру':
+        
+        filtred_films = dict()
+        for film in films:
+            if genre in films[film]['жанр']:
+                filtred_films[film] = films[film]
+
+        description_text.clear()
+        films_list.clear()
+        genres_list.clear()
+        genre_input.clear()
+        films_list.addItems(filtred_films)
+        search_btn.setText('Сбросить')
+
+    elif search_btn.text() == 'Сбросить':
+        description_text.clear()
+        films_list.clear()
+        genres_list.clear()
+        genre_input.clear()
+        films_list.addItems(films)
+        search_btn.setText('Найти фильмы по жанру')
+
 # Подписки на события
 films_list.itemClicked.connect(show_info)
 description_text.textChanged.connect(save_info)
@@ -174,7 +199,7 @@ delete_film_btn.clicked.connect(delete_film)
 
 add_genre_btn.clicked.connect(add_genre)
 delete_genre_btn.clicked.connect(delete_genre)
-
+search_btn.clicked.connect(search)
 
 # === Запуск приложения ===
 file = open('films.json', 'r', encoding='utf-8')
