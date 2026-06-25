@@ -19,6 +19,17 @@ app = QApplication([])
 window = QWidget()
 window.setWindowTitle('Редактор')
 
+# Элементы интерфейса
+button_folder = QPushButton('Папка')
+list_images = QListWidget()
+
+image_preview = QLabel('Предпросмотр изображения')
+button_left = QPushButton('Лево')
+button_right = QPushButton('Право')
+button_mirror = QPushButton('Зеркало')
+button_sharp = QPushButton('Резкость')
+button_gray = QPushButton('Ч | Б')
+
 # Запуск приложения
 window.show()
 app.exec()
