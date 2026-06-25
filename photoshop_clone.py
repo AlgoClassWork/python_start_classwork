@@ -91,6 +91,19 @@ QPushButton:pressed {
 
 app.setStyleSheet(style)
 
+# Функционал приложения
+def select_folder():
+    global folder
+    folder = QFileDialog.getExistingDirectory(window, 'Выбрать папку')
+    if folder:
+        list_images.clear()
+        for file in os.listdir(folder):
+            if file.lower().endswith(('.png', '.jpg', '.jpeg')):
+                list_images.addItem(file)
+
+# Подписки на события
+button_folder.clicked.connect(select_folder)
+
 # Запуск приложения
 window.setLayout(layout_main)
 window.show()
