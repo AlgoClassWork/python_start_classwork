@@ -102,15 +102,51 @@ def select_folder():
             if file.lower().endswith(('.png', '.jpg', '.jpeg')):
                 list_images.addItem(file)
 
-def show_image(item):
+def show_image(image_name):
     global image_path
-    image_path = os.path.join(folder, item.text())
+    image_path = os.path.join(folder, image_name.text())
     image = QPixmap(image_path).scaled(image_preview.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
     image_preview.setPixmap(image)
+
+def rotate_left():
+    image = Image.open(image_path)
+    image = image.rotate(90, expand=True)
+    image.save(image_path)
+    show_image(list_images.currentItem())
+
+def rotate_right():
+    image = Image.open(image_path)
+    image = image.rotate(270, expand=True)
+    image.save(image_path)
+    show_image(list_images.currentItem())
+
+def apply_mirror():
+    image = Image.open(image_path)
+    image = image.transpose(Image.FLIP_LEFT_RIGHT)
+    image.save(image_path)
+    show_image(list_images.currentItem())
+
+def apply_sharp():
+    image = Image.open(image_path)
+    image = image.filter(ImageFilter.SHARPEN)
+    image.save(image_path)
+    show_image(list_images.currentItem())
+
+def apply_gray():
+    image = Image.open(image_path)
+    image = image.convert('L')
+    image.save(image_path)
+    show_image(list_images.currentItem())
 
 # Подписки на события
 button_folder.clicked.connect(select_folder)
 list_images.itemClicked.connect(show_image)
+
+button_left.clicked.connect(rotate_left)
+button_right.clicked.connect(rotate_right)
+button_mirror.clicked.connect(apply_mirror)
+button_sharp.clicked.connect(apply_sharp)
+button_gray.clicked.connect(apply_gray)
 
 # Запуск приложения
 window.setLayout(layout_main)
