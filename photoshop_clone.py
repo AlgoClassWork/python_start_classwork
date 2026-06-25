@@ -6,6 +6,7 @@ os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = os.path.join(pyqt_path, "Qt5", "plug
 
 # Импорты
 from PIL import Image, ImageFilter # pip install pillow
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QApplication, QWidget,
@@ -101,8 +102,15 @@ def select_folder():
             if file.lower().endswith(('.png', '.jpg', '.jpeg')):
                 list_images.addItem(file)
 
+def show_image(item):
+    global image_path
+    image_path = os.path.join(folder, item.text())
+    image = QPixmap(image_path).scaled(image_preview.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
+    image_preview.setPixmap(image)
+
 # Подписки на события
 button_folder.clicked.connect(select_folder)
+list_images.itemClicked.connect(show_image)
 
 # Запуск приложения
 window.setLayout(layout_main)
